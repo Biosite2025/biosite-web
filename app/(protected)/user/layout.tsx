@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TopNav } from "../../../src/components/layout";
+// import { TopNav } from "../../../src/components/layout";
 import Home from "@/app/page";
 
 const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({
@@ -9,11 +9,9 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Top navigation */}
-      <TopNav />
 
-      {children }
-      <main className="flex-1 bg-gray-100">{children}</main>
+
+  <main className="flex-1 bg-gray-100">{children}</main>
     </div>
   );
 };
