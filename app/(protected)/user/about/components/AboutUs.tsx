@@ -22,7 +22,7 @@ const AboutUs = () => {
         </div>
         
         {/* Right: Enhanced text content with modern typography */}
-        <div className=" w-full md:w-[46%] flex flex-col justify-start items-start px-6 md:px-16 pt-10 mt-[10px] md:pt-20 pb-0 transform hover:translate-x-2 transition-transform duration-500 ease-out">
+        <div className="mt-[40px] w-full md:w-[46%] flex flex-col justify-start items-start px-6 md:px-16   md:pt-20 pb-0 transform hover:translate-x-2 transition-transform duration-500 ease-out">
           {/* Modern title with accent line */}
           <div className="relative mb-2">
             <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-[#2356a8] to-[#2356a8]/50 rounded-full transform scale-y-0 hover:scale-y-100 transition-transform duration-500 ease-out origin-top" />
@@ -63,11 +63,8 @@ const AboutUs = () => {
             </p>
           </div>
           
-          {/* Modern call-to-action area */}
-          <div className="mt-8 flex items-center space-x-4 opacity-0 hover:opacity-100 transition-opacity duration-500 ease-out">
-            <div className="w-8 h-0.5 bg-[#2356a8] rounded-full animate-pulse" />
-            <span className="text-sm text-[#2356a8] font-medium">Excellence in Healthcare Solutions</span>
-          </div>
+         
+          
         </div>
       </div>
     </section>

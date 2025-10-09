@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion } from 'framer-motion';
@@ -7,7 +6,7 @@ const WebsiteDetails = () => {
   return (
     <motion.section
       id="website-details"
-      className="py-12 px-4 md:px-8 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden"
+      className="py-12 px-4 md:px-8 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden min-h-screen"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
