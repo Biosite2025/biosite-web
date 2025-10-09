@@ -221,7 +221,7 @@ export default function BiomiFAQ() {
 			setAvatarState('idle');
 		}
 	};
-
+	
 	// Main container styles
 	return (
 		<div className="flex justify-center items-center min-h-[calc(100vh-120px)] py-12 bg-transparent font-[Inter,Poppins,sans-serif]">
