@@ -20,3 +20,198 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+.preloader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 9999;
+  background: #fff;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  pointer-events: all;
+  -webkit-transition: 0.9s;
+  transition: 0.9s;
+}
+
+.preloader .loader {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-block;
+  /* Centering will be handled by inline styles */
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.preloader .loader .loader-outter {
+  position: absolute;
+  border: 4px solid #ffffff;
+  border-left-color: transparent;
+  border-bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+  animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.preloader .loader .loader-inner {
+  position: absolute;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  left: calc(40% - 21px);
+  top: calc(40% - 21px);
+  border-right: 0;
+  border-top-color: transparent;
+  -webkit-animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+  animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.preloader .loader .indicator {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%) scale(1.5);
+  transform: translateY(-50%) scale(1.5);
+}
+
+.preloader .loader .indicator svg polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.preloader .loader .indicator svg polyline#back {
+  stroke: #ffffff;
+}
+
+.preloader .loader .indicator svg polyline#front {
+  stroke: #21409A;
+  stroke-dasharray: 12, 36;
+  stroke-dashoffset: 48;
+  -webkit-animation: dash 1s linear infinite;
+  animation: dash 1s linear infinite;
+}
+
+.preloader::before,
+.preloader::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 60%;
+  z-index: -1;
+  background: #21409A;
+  -webkit-transition: 0.9s;
+  transition: 0.9s;
+}
+
+.preloader::after {
+  left: auto;
+  right: 0;
+}
+
+.preloader.preloader-deactivate {
+  visibility: hidden;
+}
+
+.preloader.preloader-deactivate::after,
+.preloader.preloader-deactivate::before {
+  width: 0;
+}
+
+.preloader.preloader-deactivate .loader {
+  opacity: 0;
+  visibility: hidden;
+}
+@keyframes loader-outter {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+@keyframes loader-inner {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(-360deg);}
+}
+@keyframes dash {
+  0% { stroke-dashoffset: 48;}
+  100% { stroke-dashoffset: 0;}
+}
+
+/* TopNav and Preloader Integration Styles */
+/* Ensure TopNav remains visible during loading transitions */
+.preloader {
+  /* Block all interactions during loading */
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.preloader .loader {
+  pointer-events: none;
+}
+
+/* Prevent scroll when loading */
+body.overflow-hidden {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+html.overflow-hidden {
+  overflow: hidden !important;
+}
+
+/* Ensure proper stacking context for layouts */
+.layout-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent TopNav duplication by ensuring single instance */
+nav[data-topnav="true"] {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Additional scroll prevention */
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100vh !important;
+}
+
+/* Prevent scrolling during loading */
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.no-scroll body {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+}
+
+

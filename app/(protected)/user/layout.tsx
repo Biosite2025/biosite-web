@@ -1,19 +1,17 @@
 "use client";
 
 import React from "react";
-// import { TopNav } from "../../../src/components/layout";
-import Home from "@/app/page";
 
-const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // No authentication required - direct access to user pages
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-
-
-  <main className="flex-1 bg-gray-100">{children}</main>
+    <div className="layout-container relative min-h-screen bg-white">
+      {/* Content area - TopNav is handled in Root Layout */}
+      <div className="relative z-10 min-h-screen bg-white">
+        {children}
+      </div>
     </div>
   );
 };
 
-export default ProtectedLayout;
+export default UserLayout;
