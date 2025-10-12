@@ -25,9 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
+  // Prevent hydration mismatch
   useEffect(() => {
+    setMounted(true);
     setLoading(true);
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
@@ -35,7 +38,10 @@ export default function RootLayout({
 
   // Prevent scrolling when loading - comprehensive approach with event blocking
   useEffect(() => {
-    if (loading) {
+    if (!mounted) return; // Prevent running on server
+    
+    const isCurrentlyLoading = mounted ? loading : false;
+    if (isCurrentlyLoading) {
       // Store the current scroll position
       const scrollY = window.scrollY;
       
@@ -107,13 +113,16 @@ export default function RootLayout({
         }
       };
     }
-  }, [loading]);
+  }, [loading, mounted]);
+
+  // Prevent hydration mismatch by using consistent initial state
+  const isLoading = mounted ? loading : false;
 
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white ${loading ? 'overflow-hidden no-scroll' : ''}`}
-        style={loading ? { height: '100vh', overflow: 'hidden', position: 'fixed', width: '100%', backgroundColor: '#ffffff' } : { backgroundColor: '#ffffff' }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+        style={{ backgroundColor: '#ffffff' }}
       >
         <LoadingProvider value={loading}>
           {/* TopNav - Always visible, never affected by loading */}
@@ -122,12 +131,12 @@ export default function RootLayout({
           {/* Main content area */}
           <div className="relative min-h-screen">
             {/* Page content */}
-            <main className={`relative min-h-screen bg-white transition-opacity duration-300 ${loading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <main className={`relative min-h-screen bg-white transition-opacity duration-300 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {children}
             </main>
             
             {/* Full screen preloader overlay - completely blocks interaction */}
-            {loading && (
+            {isLoading && (
               <div 
                 className="fixed inset-0 top-24 z-[99999] bg-white" 
                 style={{ 
