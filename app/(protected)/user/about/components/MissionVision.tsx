@@ -23,7 +23,7 @@ const MissionVision = () => {
       <div className="absolute inset-0 bg-blue-500/80 backdrop-blur-sm z-0" />
   <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
         {/* Professional TEAM Section with Mission & Vision on the Left */}
-  <div className="w-full flex flex-col lg:flex-row gap-8 scale-110 lg:gap-12 items-start justify-center">
+  <div className="w-full flex flex-col lg:flex-row gap-8 scale-90 lg:gap-12 items-start justify-center">
           
           {/* Enhanced Mission & Vision Cards - Left Side */}
           <div className="flex flex-col gap-8 lg:scale-90 min-w-[300px] max-w-md">

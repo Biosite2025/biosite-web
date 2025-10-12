@@ -6,7 +6,7 @@ const AboutUs = () => {
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-blue-50 to-gray-50 pointer-events-none" />
       
-      <div className="w-full flex flex-col md:flex-row items-stretch md:items-start px-0 m-0 relative z-10">
+      <div className="w-full scale-90 flex flex-col md:flex-row items-stretch md:items-start px-0 m-0 relative z-10">
         {/* Left: Image with modern overlay effects */}
         <div className="relative w-full md:w-[54%] min-h-[350px] md:min-h-[800px] h-[320px] md:h-[800px] flex items-center justify-start overflow-hidden m-0 p-0 group">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out z-10" />
