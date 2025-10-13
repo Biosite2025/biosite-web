@@ -9,19 +9,36 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.4"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fullcalendar/core": "^6.1.19",
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/react": "^6.1.19",
+    "@mui/material": "^7.3.4",
+    "@swc/helpers": "^0.5.17",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.22",
+    "gsap": "^3.13.0",
+    "next": "^15.5.4",
+    "react": "^19.2.0",
+    "react-clock": "^6.0.0",
+    "react-dom": "^19.2.0",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "@types/react": "^19.2.1",
+    "@types/react-clock": "^3.0.1",
+    "@types/react-dom": "^19.2.0",
+    "@types/react-slick": "^0.23.13",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5"
   }
 }

@@ -79,7 +79,7 @@ export default function Contact() {
         <div className="flex flex-col md:flex-row items-center md:items-end justify-between">
           <h1 className="text-3xl md:text-4xl font-bold text-[#2B3990] mb-4 md:mb-0 flex items-center gap-2">
             <span className="relative inline-block">
-              CONTACT WITH US
+              CONTACT US
               <motion.span
                 className="block h-1 bg-gradient-to-r from-[#2B3990] to-blue-500 rounded-full mt-2"
                 initial={{ width: 0 }}

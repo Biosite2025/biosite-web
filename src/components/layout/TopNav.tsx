@@ -7,9 +7,12 @@ import React, { useState, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
-import { SideNav } from './index';
+import { SideNav } from './SideNav';
 
 export function TopNav() {
+  const [immunologyOpen, setImmunologyOpen] = useState(false);
+  const [clinicalOpen, setClinicalOpen] = useState(false);
+  const [chemistryOpen, setChemistryOpen] = useState(false);
 
   const [productsOpen, setProductsOpen] = useState(false);
   const pathname = usePathname();
@@ -74,13 +77,13 @@ export function TopNav() {
                 <span className="ml-4 h-16 w-[2px] bg-[#2B3990] block" />
               </Link>
             </div>
-            <div className="flex -ml-2 items-center space-x-4 h-full relative overflow-visible z-50 flex-1 justify-center">
+            <div className="flex -ml-[120px] items-center space-x-4 h-full relative overflow-visible z-50 flex-1 justify-center">
                 <span className="text-gray-700 -ml-6 font-medium text-lg italic tracking-wide relative opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out whitespace-nowrap">
-                  Empowering Healthcare, One Innovation at a Time
+                  Every Life deserves the Best Care
                   <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#2B3990] transition-all duration-500 group-hover:w-full"></span>
                 </span>
             </div>
-            <div className="flex scale-110 items-center space-x-6 h-full relative overflow-visible z-50 flex-1 justify-end">
+            <div className="flex scale-90 items-center space-x-6 h-full relative overflow-visible z-50 flex-1 justify-end">
               <Link
                 href="/user/about"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 flex items-center justify-center ${
@@ -117,32 +120,119 @@ export function TopNav() {
                 </button>
                 {productsOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 16 }}
+                    exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute left-0 top-full mt-0 w-[250px] bg-white z-50 rounded-none shadow-none border-l-4 border-[#2B3990] origin-top scale-100"
+                    className="absolute left-0 top-full -mt-1 w-[300px] bg-white z-50 rounded-none shadow-xl border-l-4 border-[#2B3990] origin-top scale-100"
                   >
-                    <div className="relative z-10 py-0">
+                    <div className="relative z-10 py-0 ">
+                      <div className="relative group/clinical">
+                        <button
+                          type="button"
+                          className="w-full px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 flex items-center justify-between"
+                          onClick={() => setClinicalOpen((v) => !v)}
+                        >
+                          <span>CLINICAL</span>
+                          <svg className={`ml-2 w-4 h-4 text-[#2B3990] transform transition-transform duration-200 ${clinicalOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div className={`absolute left-0 top-full min-w-[280px] w-[320px] h-[415px] bg-white border-t-4 border-[#2B3990] shadow-2xl z-[60] rounded-none transition-all duration-300 ${clinicalOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`} style={{overflow: 'hidden'}}>
+                          <div className="py-2 h-full overflow-y-auto custom-scrollbar" style={{overflowX: 'hidden'}}>
+                            <div className="group/chemistry px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer relative" title="Clinical Chemistry - Aries, Taurus, Taurus Twin">
+                              <div className="flex items-center justify-between" onClick={e => {e.stopPropagation(); setChemistryOpen((v) => !v);}} style={{cursor: 'pointer'}}>
+                                <div className="truncate">Clinical Chemistry - Aries, Taurus, Taurus Twin</div>
+                                <svg className={`ml-2 w-3 h-3 text-[#2B3990] transform transition-transform duration-200 ${chemistryOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </div>
+                              <div className={`absolute left-0 top-full min-w-[350px] w-[260px] bg-white border-t-4 border-[#2B3990] shadow-xl z-[100] rounded-none transition-all duration-300 ${chemistryOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`}>
+                                <div className="py-2">
+                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="A. Electrolytes - Smartlyte">
+                                    <div className="truncate">Electrolytes - Smartlyte</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="HBA1C - HPLC - Tosoh GX & Tosoh G11">
+                              <div className="truncate">HBA1C - HPLC - Tosoh GX & Tosoh G11</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Immunology">
+                              <div className="flex items-center justify-between" onClick={e => {e.stopPropagation(); setImmunologyOpen((v) => !v);}} style={{cursor: 'pointer'}}>
+                                <div className="truncate">Immunology</div>
+                                <svg className={`ml-2 w-3 h-3 text-[#2B3990] transform transition-transform duration-200 ${immunologyOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </div>
+                              <div className={`absolute left-0 mt-[13px] min-w-[350px] w-[260px] bg-white border-t-4 border-[#2B3990] shadow-xl z-[100] rounded-none transition-all duration-300 ${immunologyOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`}>
+                                <div className="py-2">
+                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Dry - Tosoh AIA 360 and Tosoh AIA 900">
+                                    <div className="truncate">Dry - Tosoh AIA 360 and Tosoh AIA 900</div>
+                                  </div>
+                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Wet - Diasorin XS and Diasorin XL">
+                                    <div className="truncate">Wet - Diasorin XS and Diasorin XL</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Coagulation">
+                              <div className="truncate">Coagulation - ACL Elite Pro, ACL Top 350, ACL Top 550, ACL Top 750</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Blood Bank">
+                              <div className="truncate">Blood Bank</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Arterial Blood Gas, Electrolytes & Co-Oximetry">
+                              <div className="truncate">Arterial Blood Gas, Electrolytes & Co-Oximetry</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="POCT (Point of Care)">
+                              <div className="truncate">POCT (Point of Care)</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Microbiology">
+                              <div className="truncate">Microbiology</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Clinical Microscopy">
+                              <div className="truncate">Clinical Microscopy</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Hematology">
+                              <div className="truncate">Hematology</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Molecular Diagnostics">
+                              <div className="truncate">Molecular Diagnostics</div>
+                            </div>
+                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] transition-all duration-150 cursor-pointer" title="Rapid Test Kits">
+                              <div className="truncate">Rapid Test Kits</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        CLINICAL CHEMISTRY
+                        Histopathology
                       </Link>
                       <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        HBA1C–HPLC
+                        General Lab Equipments
                       </Link>
                       <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        HISTOPATHOLOGY
-                      </Link>
-                      <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        HEMATOLOGY
+                        Medical & Hospital Equipments
                       </Link>
                       <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] transition-all duration-150">
-                        URINALYSIS
+                        Disposables/Consumables
                       </Link>
                     </div>
                   </motion.div>
                 )}
               </div>
+
+              <Link
+                href="/user/events"
+                className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 ${
+                  pathname === '/user/events' 
+                    ? 'text-[#2B3990]' 
+                    : 'text-gray-700 hover:text-[#2B3990]'
+                }`}
+              >
+                <span className="relative z-10">Events</span>
+              </Link>
               
               <Link
                 href="/user/career"
@@ -179,7 +269,7 @@ export function TopNav() {
         </div>
       </motion.nav>
      
-      <SideNav />
+  <SideNav />
     </>
   );
 }
