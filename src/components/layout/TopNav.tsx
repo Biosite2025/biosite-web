@@ -7,7 +7,7 @@ import React, { useState, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
-import { SideNav } from './SideNav';
+import { SideNav } from './index';
 
 export function TopNav() {
   const [immunologyOpen, setImmunologyOpen] = useState(false);
@@ -269,7 +269,7 @@ export function TopNav() {
         </div>
       </motion.nav>
      
-  <SideNav />
+      <SideNav />
     </>
   );
 }
