@@ -1,19 +1,87 @@
 "use client";
 
 import { useState, useRef, useLayoutEffect } from "react";
+import CustomDropdown from "./CustomDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 // Available positions data
 const availablePositions = [
-  { id: 1, title: "Medical Technologist", department: "Laboratory", level: "Entry Level" },
-  { id: 2, title: "Sales Executive", department: "Sales", level: "Mid Level" },
-  { id: 3, title: "Biomedical Engineer", department: "Engineering", level: "Senior Level" },
-  { id: 4, title: "Research Scientist", department: "Research", level: "Senior Level" },
-  { id: 5, title: "Quality Assurance Specialist", department: "Quality", level: "Mid Level" },
-  { id: 6, title: "Marketing Coordinator", department: "Marketing", level: "Entry Level" },
-  { id: 7, title: "IT Support Specialist", department: "IT", level: "Entry Level" },
-  { id: 8, title: "Human Resources Manager", department: "HR", level: "Senior Level" },
+  { id: 1, title: "Cash Disbursement Associate" },
+  { id: 2, title: "Quotation Team Leader" },
+  { id: 3, title: "Order Fulfillment Associate" },
+  { id: 4, title: "Company Driver" },
+  { id: 5, title: "Supply Chain Supervisor" },
+  { id: 6, title: "Shipment Coordinator" },
+  { id: 7, title: "Service Engineer Supervisor" },
+  { id: 8, title: "Service Engineer" },
+  { id: 9, title: "Technical Service Director" },
+  { id: 10, title: "Service Engineer TL" },
+  { id: 11, title: "Bidding Team Leader" },
+  { id: 12, title: "Product Manager" },
+  { id: 13, title: "Product Application Manager" },
+  { id: 14, title: "Regional Sales Manager" },
+  { id: 15, title: "District Sales Manager" },
+  { id: 16, title: "IT Associate" },
+  { id: 17, title: "Product Specialist" },
+  { id: 18, title: "Logistics Staff" },
+  { id: 19, title: "Medical Sales Representative" },
+  { id: 20, title: "Bidding Associate" },
+  { id: 21, title: "Regulatory Pharmacist" },
+  { id: 22, title: "Procurement Team Lead" },
+  { id: 23, title: "Refrigeration Technician" },
+  { id: 24, title: "Operations Director" },
+  { id: 25, title: "Procurement Assistant" },
+  { id: 26, title: "Compliance Liaison" },
+  { id: 27, title: "Equipment Coordinator" },
+  { id: 28, title: "Cash Receipt Associate" },
+  { id: 29, title: "Service Coordinator" },
+  { id: 30, title: "Quotation Associate" },
+  { id: 31, title: "Administrative Associate" },
+  { id: 32, title: "Utility" },
+  { id: 33, title: "Product Specialist" },
+  { id: 34, title: "Picker" },
+  { id: 35, title: "Dispatcher" },
+  { id: 36, title: "Receiving Clerk" },
+  { id: 37, title: "Accounts Payable (Non-Trade)" },
+  { id: 38, title: "Inventory Encoder" },
+  { id: 39, title: "District Sales Manager" },
+  { id: 40, title: "Purchaser Staff" },
+  { id: 41, title: "Bidding Team Leader" },
+  { id: 42, title: "Bookkeeper" },
+  { id: 43, title: "Personal Assistant" },
+  { id: 44, title: "Credit and Collection TL" },
+  { id: 45, title: "Rider" },
+  { id: 46, title: "Credit and Collection Associate" },
+  { id: 47, title: "Order Fulfillment Associate" },
+  { id: 48, title: "Warehouse In Charge" },
+  { id: 49, title: "Business Unit Head" },
+  { id: 50, title: "Quotation Associate" },
+  { id: 51, title: "Respiratory Therapist" },
+  { id: 52, title: "Human Resource Officer" },
+  { id: 53, title: "Executive Assistant" },
+  { id: 54, title: "Customer Engagement Associate" },
+  { id: 55, title: "Accounting Associate" },
+  { id: 56, title: "Invoice Clerk" },
+  { id: 57, title: "Logistics Staff" },
+  { id: 58, title: "Bidding Associate - Reliever" },
+  { id: 59, title: "Inventory Analyst" },
+  { id: 60, title: "Credit & Collection" },
+  { id: 61, title: "Warehouse Personel" },
+  { id: 62, title: "Bidding Associate" },
+  { id: 63, title: "General Manager" },
+  { id: 64, title: "HR Payroll Specialist" },
+  { id: 65, title: "Human Resource Assistant" },
+  { id: 66, title: "Finance&Accounting Manager" },
+  { id: 67, title: "Finance Associate" },
+  { id: 68, title: "IT Officer" },
+  { id: 69, title: "Product Application Specialist" },
+  { id: 70, title: "Human Resource Officer Head" },
+  { id: 71, title: "Logistics Staff" },
+  { id: 72, title: "Marketing Director" },
+  { id: 73, title: "Regional Sales Manager" },
+  { id: 74, title: "HR/ Admin Officer" },
+  { id: 75, title: "Human Resource Generalist" },
 ];
 
 export default function JobListing() {
@@ -22,6 +90,7 @@ export default function JobListing() {
     email: "",
     phone: "",
     selectedPosition: "",
+    location: "",
     resume: null as File | null,
     coverLetter: ""
   });
@@ -30,6 +99,11 @@ export default function JobListing() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [dragActive, setDragActive] = useState(false);
+  const locationOptions = [
+    { id: 1, title: "Manila" },
+    { id: 2, title: "Cebu" },
+    { id: 3, title: "Davao" }
+  ];
 
   // For underline alignment
   const titleRef = useRef<HTMLSpanElement>(null);
@@ -109,14 +183,13 @@ export default function JobListing() {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
     if (!formData.selectedPosition) newErrors.selectedPosition = "Please select a position";
+    if (!formData.location) newErrors.location = "Please select a location";
     if (!formData.resume) newErrors.resume = "Resume is required";
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -137,6 +210,7 @@ export default function JobListing() {
         email: "",
         phone: "",
         selectedPosition: "",
+        location: "",
         resume: null,
         coverLetter: ""
       });
@@ -149,7 +223,7 @@ export default function JobListing() {
 
   return (
     <motion.section
-      className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-12 px-4 relative overflow-hidden"
+      className="w-full min-h-screen -mt-7 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-12 px-4 relative overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -198,7 +272,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 relative">
+      <div className="w-full scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 relative">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
@@ -334,41 +408,52 @@ export default function JobListing() {
               </div>
             </div>
 
-            {/* Position Selection */}
-            <div>
-              <div className="relative">
-                <select
-                  name="selectedPosition"
+            {/* Position and Location Selection - side by side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <CustomDropdown
+                  options={availablePositions}
                   value={formData.selectedPosition}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-4 rounded-xl border-2 text-lg font-medium appearance-none bg-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 pr-10 ${
-                    errors.selectedPosition 
-                      ? 'border-red-400 bg-red-50' 
-                      : 'border-gray-200 hover:border-[#2B3990]/30 focus:border-[#2B3990]'
-                  } ${formData.selectedPosition ? 'text-gray-900' : 'text-gray-400'}`}
-                >
-                  <option value="">-- Select your desired position --</option>
-                  {availablePositions.map((position) => (
-                    <option key={position.id} value={position.title} className="text-gray-900">
-                      {position.title} ({position.department} - {position.level})
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
+                  onChange={(val) => {
+                    setFormData(prev => ({ ...prev, selectedPosition: val }));
+                    if (errors.selectedPosition) {
+                      setErrors(prev => ({ ...prev, selectedPosition: "" }));
+                    }
+                  }}
+                  placeholder="-- Select Position --"
+                />
+                {errors.selectedPosition && (
+                  <motion.p
+                    className="text-red-500 text-sm mt-1 ml-1"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {errors.selectedPosition}
+                  </motion.p>
+                )}
               </div>
-              {errors.selectedPosition && (
-                <motion.p
-                  className="text-red-500 text-sm mt-1 ml-1"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  {errors.selectedPosition}
-                </motion.p>
-              )}
+              <div>
+                <CustomDropdown
+                  options={locationOptions}
+                  value={formData.location}
+                  onChange={(val) => {
+                    setFormData(prev => ({ ...prev, location: val }));
+                    if (errors.location) {
+                      setErrors(prev => ({ ...prev, location: "" }));
+                    }
+                  }}
+                  placeholder="-- Select Location --"
+                />
+                {errors.location && (
+                  <motion.p
+                    className="text-red-500 text-sm mt-1 ml-1"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {errors.location}
+                  </motion.p>
+                )}
+              </div>
             </div>
 
             {/* File Upload */}
@@ -424,7 +509,7 @@ export default function JobListing() {
             {/* Cover Letter */}
             <div>
               <textarea
-                name="message"
+                name="coverLetter"
                 placeholder="Message (optional)"
                 value={formData.coverLetter}
                 onChange={handleInputChange}
