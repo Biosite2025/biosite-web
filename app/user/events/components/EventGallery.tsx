@@ -138,18 +138,7 @@ const EventGallery: React.FC = () => {
         </div>
       </div>
 
-      {/* Call to Action */}
-      <motion.div 
-        className="text-center mt-20"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <button className="bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] hover:from-[#1e2a68] hover:to-[#1e5ba8] text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-          View All Events
-        </button>
-      </motion.div>
+      
     </div>
   );
 };

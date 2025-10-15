@@ -10,10 +10,6 @@ import { motion } from 'framer-motion';
 import { SideNav } from './index';
 
 export function TopNav() {
-  const [immunologyOpen, setImmunologyOpen] = useState(false);
-  const [clinicalOpen, setClinicalOpen] = useState(false);
-  const [chemistryOpen, setChemistryOpen] = useState(false);
-
   const [productsOpen, setProductsOpen] = useState(false);
   const pathname = usePathname();
   const [showNav, setShowNav] = useState(true);
@@ -92,7 +88,7 @@ export function TopNav() {
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}
               >
-                <span className="relative z-10 text-center">ABUOT</span>
+                <span className="relative z-10 text-center">ABOUT</span>
               </Link>
               
               <div
@@ -124,100 +120,276 @@ export function TopNav() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute left-0 top-full -mt-1 w-[300px] bg-white z-50 rounded-none shadow-xl border-l-4 border-[#2B3990] origin-top scale-100"
+                    className="absolute left-1/2 -translate-x-1/2 top-full mt-0 w-[95vw] max-w-[1400px] bg-white z-50 rounded-lg shadow-2xl border-t-4 border-[#2B3990]"
                   >
-                    <div className="relative z-10 py-0 ">
-                      <div className="relative group/clinical">
-                        <button
-                          type="button"
-                          className="w-full px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 flex items-center justify-between"
-                          onClick={() => setClinicalOpen((v) => !v)}
-                        >
-                          <span>CLINICAL</span>
-                          <svg className={`ml-2 w-4 h-4 text-[#2B3990] transform transition-transform duration-200 ${clinicalOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                        <div className={`absolute left-0 top-full min-w-[280px] w-[320px] h-[415px] bg-white border-t-4 border-[#2B3990] shadow-2xl z-[60] rounded-none transition-all duration-300 ${clinicalOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`} style={{overflow: 'hidden'}}>
-                          <div className="py-2 h-full overflow-y-auto custom-scrollbar" style={{overflowX: 'hidden'}}>
-                            <div className="group/chemistry px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer relative" title="Clinical Chemistry - Aries, Taurus, Taurus Twin">
-                              <div className="flex items-center justify-between" onClick={e => {e.stopPropagation(); setChemistryOpen((v) => !v);}} style={{cursor: 'pointer'}}>
-                                <div className="truncate">Clinical Chemistry - Aries, Taurus, Taurus Twin</div>
-                                <svg className={`ml-2 w-3 h-3 text-[#2B3990] transform transition-transform duration-200 ${chemistryOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                              </div>
-                              <div className={`absolute left-0 top-full min-w-[350px] w-[260px] bg-white border-t-4 border-[#2B3990] shadow-xl z-[100] rounded-none transition-all duration-300 ${chemistryOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`}>
-                                <div className="py-2">
-                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="A. Electrolytes - Smartlyte">
-                                    <div className="truncate">Electrolytes - Smartlyte</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="HBA1C - HPLC - Tosoh GX & Tosoh G11">
-                              <div className="truncate">HBA1C - HPLC - Tosoh GX & Tosoh G11</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Immunology">
-                              <div className="flex items-center justify-between" onClick={e => {e.stopPropagation(); setImmunologyOpen((v) => !v);}} style={{cursor: 'pointer'}}>
-                                <div className="truncate">Immunology</div>
-                                <svg className={`ml-2 w-3 h-3 text-[#2B3990] transform transition-transform duration-200 ${immunologyOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                              </div>
-                              <div className={`absolute left-0 mt-[13px] min-w-[350px] w-[260px] bg-white border-t-4 border-[#2B3990] shadow-xl z-[100] rounded-none transition-all duration-300 ${immunologyOpen ? 'opacity-100 visible pointer-events-auto translate-y-0' : 'opacity-0 invisible pointer-events-none -translate-y-2'}`}>
-                                <div className="py-2">
-                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Dry - Tosoh AIA 360 and Tosoh AIA 900">
-                                    <div className="truncate">Dry - Tosoh AIA 360 and Tosoh AIA 900</div>
-                                  </div>
-                                  <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Wet - Diasorin XS and Diasorin XL">
-                                    <div className="truncate">Wet - Diasorin XS and Diasorin XL</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Coagulation">
-                              <div className="truncate">Coagulation - ACL Elite Pro, ACL Top 350, ACL Top 550, ACL Top 750</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Blood Bank">
-                              <div className="truncate">Blood Bank</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Arterial Blood Gas, Electrolytes & Co-Oximetry">
-                              <div className="truncate">Arterial Blood Gas, Electrolytes & Co-Oximetry</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="POCT (Point of Care)">
-                              <div className="truncate">POCT (Point of Care)</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Microbiology">
-                              <div className="truncate">Microbiology</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Clinical Microscopy">
-                              <div className="truncate">Clinical Microscopy</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Hematology">
-                              <div className="truncate">Hematology</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150 cursor-pointer" title="Molecular Diagnostics">
-                              <div className="truncate">Molecular Diagnostics</div>
-                            </div>
-                            <div className="px-6 py-3 text-[#222B45] text-left text-sm font-medium tracking-wide uppercase hover:text-[#2B3990] hover:bg-gray-50 focus:text-[#2B3990] transition-all duration-150 cursor-pointer" title="Rapid Test Kits">
-                              <div className="truncate">Rapid Test Kits</div>
-                            </div>
-                          </div>
-                        </div>
+                    {/* Mega Menu Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-0">
+                      
+                      {/* Column 1: CLINICAL */}
+                      <div className="p-6 border-r border-gray-200/60 hover:bg-gray-50/50 transition-colors duration-200">
+                        <h3 className="text-[#2B3990] font-bold text-base uppercase tracking-wide mb-4 pb-2 border-b-2 border-[#2B3990]/20">
+                          I. Clinical
+                        </h3>
+                        <ul className="space-y-2.5">
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Clinical Chemistry
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              HBA1C - HPLC
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Immunology
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Coagulation
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Blood Bank
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Arterial Blood Gas, Electrolytes & Co-Oximetry
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              POCT (Point of Care)
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Microbiology
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Clinical Microscopy
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Hematology
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Molecular Diagnostics
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Rapid Test Kits
+                            </Link>
+                          </li>
+                        </ul>
                       </div>
-                      <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        Histopathology
-                      </Link>
-                      <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        General Lab Equipments
-                      </Link>
-                      <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] border-b border-dotted border-gray-300 transition-all duration-150">
-                        Medical & Hospital Equipments
-                      </Link>
-                      <Link href="#" className="block px-6 py-4 text-[#222B45] text-left text-base font-semibold tracking-wide uppercase hover:text-[#2B3990] focus:text-[#2B3990] transition-all duration-150">
-                        Disposables/Consumables
-                      </Link>
+
+                      {/* Column 2: HISTOPATHOLOGY */}
+                      <div className="p-6 border-r border-gray-200/60 hover:bg-gray-50/50 transition-colors duration-200">
+                        <h3 className="text-[#2B3990] font-bold text-base uppercase tracking-wide mb-4 pb-2 border-b-2 border-[#2B3990]/20">
+                          II. Histopathology
+                        </h3>
+                        <ul className="space-y-2.5">
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Sakura
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Dakewe
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Hiplaas
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Vitro
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Biogenex
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/user/products" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Nikon Microscopes
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Motic Slide Scanners
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Hamamatsu Slide Scanners
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Fuji Synapse PACS for Digital Pathology
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* Column 3: GENERAL LABORATORY EQUIPMENTS */}
+                      <div className="p-6 border-r border-gray-200/60 hover:bg-gray-50/50 transition-colors duration-200">
+                        <h3 className="text-[#2B3990] font-bold text-base uppercase tracking-wide mb-4 pb-2 border-b-2 border-[#2B3990]/20">
+                          III. General Lab Equipments
+                        </h3>
+                        <ul className="space-y-2.5">
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Microscopes
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Centrifuges
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Pipettors
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Biorefrigerators
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Biosafety Cabinets & Laminar Flow Cabinets
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Lab Oven, Lab Incubator, CO₂ Incubator
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Sterilizer & Autoclave
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* Column 4: MEDICAL & HOSPITAL EQUIPMENTS */}
+                      <div className="p-6 border-r border-gray-200/60 hover:bg-gray-50/50 transition-colors duration-200">
+                        <h3 className="text-[#2B3990] font-bold text-base uppercase tracking-wide mb-4 pb-2 border-b-2 border-[#2B3990]/20">
+                          IV. Medical & Hospital Equipments
+                        </h3>
+                        <ul className="space-y-2.5">
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Medical Diagnostic Imaging
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              ICU Equipments
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              OR Equipments
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              ER Equipments
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              OB Gyn Equipments
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Gastro & Endo
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Anesthesia Equipments
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Autoclave, Plasma Sterilizers, Washers
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Neonatal Intensive Care Products (NICU)
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Hospital Medical Furnitures
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* Column 5: DISPOSABLES / CONSUMABLES */}
+                      <div className="p-6 hover:bg-gray-50/50 transition-colors duration-200">
+                        <h3 className="text-[#2B3990] font-bold text-base uppercase tracking-wide mb-4 pb-2 border-b-2 border-[#2B3990]/20">
+                          V. Disposables / Consumables
+                        </h3>
+                        <ul className="space-y-2.5">
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Laboratory Disposables
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Hospital Disposables
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Histopathology Chemicals & Consumables
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Surgical Disposables
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+
                     </div>
                   </motion.div>
                 )}
