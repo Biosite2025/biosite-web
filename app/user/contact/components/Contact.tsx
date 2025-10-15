@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface LocationData {
@@ -48,8 +48,23 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure proper hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const currentLocation = locations.find(loc => loc.id === activeLocation) || locations[2];
+
+  // Don't render until mounted to prevent hydration issues
+  if (!mounted) {
+    return (
+      <div className="w-full min-h-[700px] flex flex-col items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-12 px-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2B3990]"></div>
+      </div>
+    );
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });

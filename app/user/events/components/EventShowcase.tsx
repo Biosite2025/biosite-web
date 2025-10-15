@@ -365,44 +365,7 @@ const EventShowcase: React.FC = () => {
             </div>
           </div>
 
-          {/* Video Navigation Arrows */}
-          {isMounted && (
-            <>
-              {/* Left Arrow - Previous Video */}
-              <button
-                ref={leftArrowButtonRef}
-                onClick={() => handleVideoSwitch('prev')}
-                className="absolute left-8 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
-                aria-label="Switch to previous video"
-              >
-                <svg 
-                  className="w-6 h-6 text-white transform group-hover:-translate-x-1 transition-transform duration-300" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              {/* Right Arrow - Next Video */}
-              <button
-                ref={arrowButtonRef}
-                onClick={() => handleVideoSwitch('next')}
-                className="absolute right-8 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
-                aria-label="Switch to next video"
-              >
-                <svg 
-                  className="w-6 h-6 text-white transform group-hover:translate-x-1 transition-transform duration-300" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </>
-          )}
+          // ...existing code...
 
           {/* Scroll Indicator */}
           <div 

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
+import Tilt from 'react-parallax-tilt';
 
 // Product categories based on folder structure
 const categories = [
@@ -68,13 +69,28 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						>
 							&times;
 						</button>
-						<div className="relative w-full h-80 mb-6">
-							<Image
-								src={product.image}
-								alt={product.name}
-								fill
-								className="object-contain"
-							/>
+						<div className="relative w-full h-80 mb-6 flex items-center justify-center">
+							<Tilt
+								glareEnable={true}
+								glareMaxOpacity={0.35}
+								glareColor="#ffffff"
+								glarePosition="all"
+								scale={1.08}
+								tiltMaxAngleX={20}
+								tiltMaxAngleY={20}
+								style={{ width: '100%', height: '100%', background: 'none', perspective: 1200 }}
+								className="flex items-center justify-center"
+							>
+								<div className="relative w-full h-full">
+									<Image
+										src={product.image}
+										alt={product.name}
+										fill
+										className="object-contain drop-shadow-2xl"
+										style={{ background: 'none' }}
+									/>
+								</div>
+							</Tilt>
 						</div>
 						<h3 className="text-3xl font-bold text-gray-900 mb-6">{product.name}</h3>
 						<p className="text-gray-700 text-base">
@@ -264,7 +280,7 @@ export default function NikonMicroscopes() {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 1 }}
-				className="relative h-[500px] bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden"
+				className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden"
 			>
 				{/* Animated Background Pattern */}
 				<div className="absolute inset-0 w-full h-full">
@@ -289,33 +305,43 @@ export default function NikonMicroscopes() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+						<motion.h1
+							initial={{ scale: 0.9, opacity: 0, y: 40 }}
+							animate={{ scale: 1.15, opacity: 1, y: 0 }}
+							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+							className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-8 drop-shadow-xl tracking-tight"
+						>
 							Nikon Microscopes
-						</h1>
+						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
 							animate={{ scaleX: 1 }}
-							transition={{ duration: 0.8, delay: 0.5 }}
-							className="h-1.5 w-48 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-8"
+							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-10"
 						/>
-						<p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+						<motion.p
+							initial={{ opacity: 0, y: 30 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+							className="text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-16 drop-shadow-lg"
+						>
 							Explore Nikon's cutting-edge microscopy solutions engineered for precision and performance
-						</p>
+						</motion.p>
 					</motion.div>
 
-					{/* Scroll Indicator */}
+					{/* Scroll Indicator - moved below paragraph */}
 					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 1, delay: 1 }}
-						className="absolute bottom-10"
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1.5 }}
+						className="mt-2"
 					>
 						<motion.div
-							animate={{ y: [0, 10, 0] }}
-							transition={{ duration: 1.5, repeat: Infinity }}
+							animate={{ y: [0, 18, 0] }}
+							transition={{ duration: 1.8, repeat: Infinity }}
 							className="text-white"
 						>
-							<svg className="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
 							</svg>
 						</motion.div>

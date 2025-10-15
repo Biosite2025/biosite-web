@@ -122,7 +122,6 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
-        style={{ backgroundColor: '#ffffff' }}
       >
         <LoadingProvider value={loading}>
           {/* TopNav - Always visible, never affected by loading */}
