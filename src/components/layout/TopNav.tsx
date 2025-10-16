@@ -201,7 +201,7 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/sakura" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Sakura
                             </Link>
                           </li>
@@ -226,7 +226,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/nikonmicroscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Nikon Microscopes
                             </Link>
                           </li>

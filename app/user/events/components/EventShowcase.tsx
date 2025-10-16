@@ -150,62 +150,64 @@ const EventShowcase: React.FC = () => {
             refreshPriority: 0,
             onUpdate: (self) => {
               const progress = self.progress;
-              
-              // Video scaling animation
+
+              // Video scaling animation - start small and scale up with scroll
               if (videoWrapperRef.current) {
-                const scale = gsap.utils.interpolate(0.8, 1.3, 
+                const scale = gsap.utils.interpolate(0.8, 1.3,
                   progress < 0.3 ? progress / 0.3 :
                   progress < 0.7 ? 1 :
                   progress < 1 ? 1 + ((progress - 0.7) / 0.3) * 0.3 : 1.3
                 );
                 gsap.set(videoWrapperRef.current, { scale: scale });
-                
+
                 const opacity = gsap.utils.interpolate(0.9, 0.8,
                   progress < 0.9 ? 0 : (progress - 0.9) / 0.1
                 );
                 gsap.set(videoWrapperRef.current, { opacity: Math.max(0.8, 1 - opacity) });
               }
-              
+
               // Title animations
               if (titleRef.current) {
-                const titleOpacity = progress < 0.2 ? 0 :
-                  progress < 0.4 ? (progress - 0.2) / 0.2 :
+                // Hide title until user scrolls significantly into the section (progress > 0.15)
+                const titleOpacity = progress < 0.15 ? 0 :
+                  progress < 0.35 ? (progress - 0.15) / 0.2 :
                   progress < 0.8 ? 1 :
                   progress < 0.95 ? 1 - ((progress - 0.8) / 0.15) : 0;
-                
-                const titleY = progress < 0.2 ? 50 :
-                  progress < 0.4 ? 50 - ((progress - 0.2) / 0.2) * 50 :
+
+                const titleY = progress < 0.15 ? 50 :
+                  progress < 0.35 ? 50 - ((progress - 0.15) / 0.2) * 50 :
                   progress < 0.8 ? 0 :
                   progress < 0.95 ? -((progress - 0.8) / 0.15) * 30 : -30;
-                
-                const titleScale = progress < 0.2 ? 0.9 :
-                  progress < 0.4 ? 0.9 + ((progress - 0.2) / 0.2) * 0.1 :
+
+                const titleScale = progress < 0.15 ? 0.9 :
+                  progress < 0.35 ? 0.9 + ((progress - 0.15) / 0.2) * 0.1 :
                   progress < 0.8 ? 1 :
                   progress < 0.95 ? 1 + ((progress - 0.8) / 0.15) * 0.05 : 1.05;
-                
-                gsap.set(titleRef.current, { 
+
+                gsap.set(titleRef.current, {
                   opacity: titleOpacity,
                   y: titleY,
                   scale: titleScale
                 });
               }
-              
-              // Overlay opacity for text readability
+
+              // Overlay opacity for text readability - only show when text appears
               if (overlayRef.current) {
-                const overlayOpacity = progress < 0.3 ? 0.2 - (progress / 0.3) * 0.1 :
-                  progress < 0.6 ? 0.1 + ((progress - 0.3) / 0.3) * 0.2 :
-                  progress < 0.9 ? 0.3 + ((progress - 0.6) / 0.3) * 0.2 : 0.5;
-                
+                const overlayOpacity = progress < 0.15 ? 0 :
+                  progress < 0.35 ? (progress - 0.15) / 0.2 * 0.3 :
+                  progress < 0.8 ? 0.3 :
+                  progress < 0.95 ? 0.3 + ((progress - 0.8) / 0.15) * 0.2 : 0.5;
+
                 gsap.set(overlayRef.current, { opacity: overlayOpacity });
               }
-              
+
               // Scroll indicator
               if (scrollIndicatorRef.current) {
                 const indicatorOpacity = progress < 0.6 ? 0 :
                   progress < 0.75 ? (progress - 0.6) / 0.15 :
                   progress < 0.85 ? 1 :
                   progress < 0.95 ? 1 - ((progress - 0.85) / 0.1) : 0;
-                
+
                 gsap.set(scrollIndicatorRef.current, { opacity: indicatorOpacity });
               }
             }
@@ -268,6 +270,7 @@ const EventShowcase: React.FC = () => {
         <div 
           ref={videoWrapperRef}
           className="relative w-full h-full"
+          style={{ transform: 'scale(0.8)' }}
         >
           {/* Video Container with 3D Box Transition */}
           <div className="absolute inset-0 w-full h-full">
@@ -333,13 +336,14 @@ const EventShowcase: React.FC = () => {
           {/* Dynamic overlay for text readability */}
           <div 
             ref={overlayRef}
-            className="absolute inset-0 bg-black z-10" 
+            className="absolute inset-0 bg-black z-10 opacity-0" 
           />
 
           {/* Title Overlay with GSAP-controlled animations */}
           <div 
             ref={titleRef}
-            className="absolute inset-0 flex items-center justify-center text-center text-white z-20"
+            className="absolute inset-0 flex items-center justify-center text-center text-white z-20 opacity-0"
+            style={{ opacity: 0 }}
           >
             <div className="max-w-6xl px-8">
               {/* Main Title */}
@@ -365,7 +369,6 @@ const EventShowcase: React.FC = () => {
             </div>
           </div>
 
-          // ...existing code...
 
           {/* Scroll Indicator */}
           <div 

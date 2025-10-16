@@ -4,6 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+// Removed invalid AutoHeightPlugin import; not needed for auto-resizing
 import type { EventClickArg, EventContentArg } from '@fullcalendar/core';
 
 interface Event {
@@ -196,7 +198,7 @@ const EventCalendar: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-[900px] mx-auto p-2 bg-white mb-16 pt-8"
+      className="w-[900px] mx-auto p-2 bg-white mb-[150px] pt-8"
     >
       {/* Header Section */}
       <div className="text-center mb-8">
@@ -204,7 +206,7 @@ const EventCalendar: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-2xl font-bold text-gray-800 mb-3"
+          className="text-4xl font-bold text-gray-800 mb-3"
         >
           Event Calendar
         </motion.h1>
@@ -299,19 +301,19 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-hidden transition-opacity duration-300 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
+        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
       >
         <div className="p-2 pt-0">
           <FullCalendar
             ref={calendarRef}
-            plugins={[dayGridPlugin]}
+            plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             events={calendarEvents}
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             datesSet={handleDatesSet}
             headerToolbar={false} // We're using custom header
-            height={500} // Set calendar height to 600px
+            height="auto" // Let calendar auto-resize
             dayMaxEvents={2}
             moreLinkClick="popover"
             eventDisplay="block"
@@ -324,8 +326,11 @@ const EventCalendar: React.FC = () => {
               month: 'Month'
             }}
             titleFormat={{ year: 'numeric', month: 'long' }}
-            fixedWeekCount={false}
+            fixedWeekCount={false} // Allow variable number of weeks per month
             showNonCurrentDates={false}
+            // contentHeight removed; height="auto" and fixedWeekCount={false} handle auto-resizing
+            scrollTimeReset={true} // Prevent scroll position retention
+            handleWindowResize={true} // Respond to window resize
           />
         </div>
       </motion.div>

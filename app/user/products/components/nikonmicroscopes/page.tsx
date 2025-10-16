@@ -1,6 +1,7 @@
 
-import NikonMicroscopes from './components/nikonmicroscopes';
-import Footer from './components/Footer';
+import NikonMicroscopes from './nikonmicroscopes';
+import Footer from './Footer';
+
 
 export default function ProductsPage() {
   return (

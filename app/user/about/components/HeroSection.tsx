@@ -7,30 +7,30 @@ import { useState, useEffect, useRef } from "react";
 
 const slides = [
 	{
-		src: "/asset/istockphoto-1183500324-612x612.jpg",
-		headline: "Innovating Diagnostics, Elevating Care",
+		src: "/asset/slide (1).png",
+		headline: "Reliable Medical & Diagnostic Solution",
 		subheadline:
-			"Empowering healthcare professionals with advanced solutions for a healthier tomorrow.",
+			"Discover a trusted source for medical and diagnostic instruments. We specialize in the importation and distribution of high-quality diagnostic devices, laboratory supplies, and medical consumables to meet your healthcare and laboratory needs.",
 		buttons: [
 			{ label: "Get Quote", href: "/contact" },
 			{ label: "About Us", href: "/user/about" },
 		],
 	},
 	{
-		src: "/asset/istockphoto-511061090-612x612.jpg",
-		headline: "Precision. Quality. Reliability.",
+		src: "/asset/slide (2).png",
+		headline: "Innovating Diagnostics, Elevating Care",
 		subheadline:
-			"Delivering trusted laboratory and medical products to support your success.",
+			"Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical consumables designed to support excellence in medical practice.",
 		buttons: [
 			{ label: "Our Products", href: "/products" },
 			{ label: "Contact", href: "/contact" },
 		],
 	},
 	{
-		src: "/asset/istockphoto-511061090-612x612 (1).jpg",
-		headline: "Innovation in Every Step",
+		src: "/asset/slide (3).png",
+		headline: "Your Partner in Advanced Healthcare",
 		subheadline:
-			"Discover the future of biotechnology and diagnostics with our innovative solutions.",
+			"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",
 		buttons: [
 			{ label: "Learn More", href: "/user/about" },
 			{ label: "Join Us", href: "/careers" },
@@ -145,8 +145,8 @@ const HeroSection = () => {
 								className={`absolute inset-0 transition-all duration-[1400ms] ease-out
                   ${
                   	idx === current
-                   	? 'bg-gradient-to-br from-white/85 via-white/50 to-[#2B3990]/15 backdrop-blur-[10px]'
-                   	: 'bg-gradient-to-br from-white/70 via-white/30 to-[#2B3990]/5 backdrop-blur-[6px]'
+                   	? 'bg-gradient-to-br from-white/85 via-white/50 to-[#2B3990]/15 backdrop-blur-[3px]'
+                   	: 'bg-gradient-to-br from-white/70 via-white/30 to-[#2B3990]/5 backdrop-blur-[3px]'
                   }`}
 								initial={false}
 								animate={idx === current ? { opacity: 1 } : { opacity: 0.7 }}
@@ -161,7 +161,7 @@ const HeroSection = () => {
 				{/* Animated navigation arrows only visible on group hover with fade-in */}
 				{/* Left hover area */}
 				<motion.div
-					className="absolute left-0 top-0 h-full w-1/2 z-40 pointer-events-none"
+					className="absolute left-0 top-0 h-full w-1/2 z-40 pointer-events-none  "
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 				>
@@ -242,7 +242,7 @@ const HeroSection = () => {
 
 				{/* Enhanced content section with modern styling */}
 				<div
-					className="absolute left-[150px] top-0 h-full flex flex-col justify-center z-20 px-10 md:px-20"
+					className="absolute left-[250px] top-0 h-full flex flex-col justify-center z-20 px-10 md:px-20 scale-150"
 					style={{
 						pointerEvents: "none",
 						width: "60%",

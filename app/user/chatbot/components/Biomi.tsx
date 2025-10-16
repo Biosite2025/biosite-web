@@ -224,7 +224,7 @@ export default function BiomiFAQ() {
 	
 	// Main container styles
 	return (
-		<div className="flex justify-center items-center min-h-[calc(100vh-120px)] py-12 bg-transparent font-[Inter,Poppins,sans-serif]">
+		<div className="mb-[100px] scale-115 flex justify-center items-center min-h-[calc(100vh-120px)] py-12 bg-transparent font-[Inter,Poppins,sans-serif]">
 			<motion.div
 				className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-row min-h-[420px]"
 				initial={{ opacity: 0, scale: 0.96 }}

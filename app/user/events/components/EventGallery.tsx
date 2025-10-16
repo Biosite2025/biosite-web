@@ -10,28 +10,32 @@ import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
 import Image from 'next/image';
 
 const EventGallery: React.FC = () => {
-  // Video sources
+  // Video sources (use encoded URLs for safety)
   const videoSources = [
-    '/asset/My Video11.mp4',
-    '/asset/My Video10.mp4',
+    '/asset/My%20Video11.mp4',
+    '/asset/My%20Video10.mp4',
+    '/asset/My%20Video10.mp4',
+    '/asset/My%20Video11.mp4',
+    
   ];
 
-  // Video navigation state
-  const [videoIndex, setVideoIndex] = useState(0);
+  // Video navigation state (show 2 at a time)
+  const [videoPairIndex, setVideoPairIndex] = useState(0);
 
-  // Navigation handlers (for more than 2 videos)
-  const handlePrevVideo = () => {
-    setVideoIndex((prev) => (prev === 0 ? videoSources.length - 1 : prev - 1));
+  // Navigation handlers for pairs
+  const totalPairs = Math.ceil(videoSources.length / 2);
+  const handlePrevVideoPair = () => {
+    setVideoPairIndex((prev) => (prev === 0 ? totalPairs - 1 : prev - 1));
   };
-  const handleNextVideo = () => {
-    setVideoIndex((prev) => (prev === videoSources.length - 1 ? 0 : prev + 1));
+  const handleNextVideoPair = () => {
+    setVideoPairIndex((prev) => (prev === totalPairs - 1 ? 0 : prev + 1));
   };
-  // Ref for video element
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Refs for video elements
+  const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
 
   // Play/pause on single click
-  const handleVideoClick = () => {
-    const video = videoRef.current;
+  const handleVideoClick = (idx: number) => {
+    const video = videoRefs[idx].current;
     if (video) {
       if (video.paused) {
         video.play();
@@ -42,8 +46,8 @@ const EventGallery: React.FC = () => {
   };
 
   // Fullscreen on double click
-  const handleVideoDoubleClick = () => {
-    const video = videoRef.current;
+  const handleVideoDoubleClick = (idx: number) => {
+    const video = videoRefs[idx].current;
     if (video) {
       if (video.requestFullscreen) {
         video.requestFullscreen();
@@ -183,7 +187,7 @@ const EventGallery: React.FC = () => {
       </div>
 
       {/* Video Section - moved below gallery and made larger */}
-      <div className="container mx-auto px-6 mt-20 mb-16">
+      <div className="container max-w-full px-6 mt-20 mb-[150px]">
         {/* Video Title Section - outside video, same layout as heading */}
         <motion.div 
           className="text-center text-white mb-10"
@@ -192,7 +196,7 @@ const EventGallery: React.FC = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-3xl mt-[200px] md:text-4xl lg:text-5xl font-bold mb-4">
             Event Highlight Video
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
@@ -206,72 +210,56 @@ const EventGallery: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {/* If two videos, show side by side. If more, show one with navigation. */}
-          {videoSources.length === 2 ? (
-            videoSources.map((src, idx) => (
-              <motion.div
-                key={src}
-                className="relative w-[800px] h-[500px] rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-4 border-[#2B3990]/40"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              >
-                <video
-                  ref={idx === 0 ? videoRef : undefined}
-                  src={src}
-                  controls
-                  autoPlay
-                  muted
-                  className="absolute inset-0 w-full h-full object-cover rounded-2xl cursor-pointer"
-                  poster="/asset/image.png"
-                  style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
-                  onClick={handleVideoClick}
-                  onDoubleClick={handleVideoDoubleClick}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              </motion.div>
-            ))
-          ) : (
-            <div className="relative w-[900px] h-[500px]">
-              <motion.div
-                className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-4 border-[#2B3990]/40"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              >
-                <video
-                  ref={videoRef}
-                  src={videoSources[videoIndex]}
-                  controls
-                  autoPlay
-                  muted
-                  className="absolute inset-0 w-full h-full object-cover rounded-2xl cursor-pointer"
-                  poster="/asset/image.png"
-                  style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
-                  onClick={handleVideoClick}
-                  onDoubleClick={handleVideoDoubleClick}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              </motion.div>
-              {/* Navigation buttons for more than 2 videos */}
-              <button
-                onClick={handlePrevVideo}
-                className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
-                aria-label="Previous video"
-              >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={handleNextVideo}
-                className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
-                aria-label="Next video"
-              >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          )}
+          {/* Show two videos at a time, with navigation for pairs */}
+          <div className="relative w-full flex justify-center items-center">
+            {[0, 1].map((offset) => {
+              const idx = videoPairIndex * 2 + offset;
+              if (idx >= videoSources.length) return null;
+              return (
+                <motion.div
+                  key={videoSources[idx] + idx}
+                  className="relative w-[850px] h-[600px] rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-4 border-[#2B3990]/40 mx-4"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <video
+                    ref={videoRefs[offset]}
+                    src={videoSources[idx]}
+                    controls
+                    autoPlay
+                    muted
+                    className="absolute inset-0 w-full h-full object-cover rounded-2xl cursor-pointer"
+                    poster="/asset/image.png"
+                    style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
+                    onClick={() => handleVideoClick(offset)}
+                    onDoubleClick={() => handleVideoDoubleClick(offset)}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </motion.div>
+              );
+            })}
+            {/* Navigation buttons for video pairs */}
+            <button
+              onClick={handlePrevVideoPair}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
+              aria-label="Previous video pair"
+              style={{ left: 0 }}
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={handleNextVideoPair}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
+              aria-label="Next video pair"
+              style={{ right: 0 }}
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </motion.div>
       </div>
 

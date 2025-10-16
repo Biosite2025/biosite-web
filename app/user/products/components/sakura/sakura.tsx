@@ -9,28 +9,40 @@ import Tilt from 'react-parallax-tilt';
 // Product categories based on folder structure
 const categories = [
 	{
-		id: 'confocal',
-		title: 'Confocal and Multiphoton Microscopes',
-		description: 'Advanced imaging solutions for detailed 3D visualization and live-cell imaging',
-		folder: 'Confocal and Multiphoton Microscopes',
+		id: 'coverslipping',
+		title: 'Coverslipping',
+		description: 'Automated and manual coverslipping solutions for histology and cytology labs.',
+		folder: 'Coverslipping',
 	},
 	{
-		id: 'inverted',
-		title: 'Inverted Microscopes',
-		description: 'Versatile systems designed for cell culture and live-cell imaging applications',
-		folder: 'Inverted Microscopes',
+		id: 'cryotomy',
+		title: 'Cryotomy',
+		description: 'Precision cryostats and accessories for frozen sectioning and sample preparation.',
+		folder: 'Cryotomy',
 	},
 	{
-		id: 'super-resolution',
-		title: 'Super-Resolution Microscopes',
-		description: 'Breaking the diffraction barrier for unprecedented resolution and clarity',
-		folder: 'Super-Resolution Microscopes',
+		id: 'embedding',
+		title: 'Embedding',
+		description: 'Embedding centers and consumables for efficient tissue processing workflows.',
+		folder: 'Embedding',
 	},
 	{
-		id: 'upright',
-		title: 'Upright Microscopes',
-		description: 'Precision optical systems for research, clinical, and industrial applications',
-		folder: 'upright microscopes',
+		id: 'microtomy',
+		title: 'Microtomy',
+		description: 'Microtomes and blades for high-quality sectioning of paraffin-embedded tissues.',
+		folder: 'Microtomy',
+	},
+	{
+		id: 'staining',
+		title: 'Staining',
+		description: 'Automated stainers and reagents for consistent and reliable staining results.',
+		folder: 'Staining',
+	},
+	{
+		id: 'tissue-processing',
+		title: 'Tissue Processing',
+		description: 'Tissue processors for rapid and gentle specimen preparation.',
+		folder: 'Tissue Processing',
 	},
 ];
 
@@ -219,49 +231,47 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 export default function NikonMicroscopes() {
 
-	const [products, setProducts] = useState<any>({});
-	const [loading, setLoading] = useState(true);
-	const [selectedProduct, setSelectedProduct] = useState<any>(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	useEffect(() => {
-		// Simulated product data - in production, this would fetch from your asset folder
-		const productData: any = {
-			'Confocal and Multiphoton Microscopes': [
-				{ id: 1, name: 'A1 HD25/A1R HD25', image: '/asset/nikon microscopes/Confocal and Multiphoton Microscopes/A1 HD25 A1R HD25.png' },
-				{ id: 2, name: 'AX/AX R with NSPARC.png', image: '/asset/nikon microscopes/Confocal and Multiphoton Microscopes/AX AX R with NSPARC.png' },
-				{ id: 3, name: 'AX/R MP with NSPARC', image: '/asset/nikon microscopes/Confocal and Multiphoton Microscopes/AX R MP with NSPARC.png' },
-				{ id: 4, name: 'CSU series', image: '/asset/nikon microscopes/Confocal and Multiphoton Microscopes/CSU series.png' },
-			],
-			'Inverted Microscopes': [
-				{ id: 5, name: 'ECLIPSE Ji', image: '/asset/nikon microscopes/Inverted Microscopes/ECLIPSE Ji.png' },
-				{ id: 6, name: 'ECLIPSE Ti2-I', image: '/asset/nikon microscopes/Inverted Microscopes/ECLIPSE Ti2-I.png' },
-				{ id: 7, name: 'Eclipse Ti2', image: '/asset/nikon microscopes/Inverted Microscopes/ECLIPSE Ti2.png' },
-				{ id: 8, name: 'Eclipse Ts2', image: '/asset/nikon microscopes/Inverted Microscopes/Eclipse Ts2.png' },
-				{ id: 9, name: 'Eclipse Ts2R', image: '/asset/nikon microscopes/Inverted Microscopes/Eclipse Ts2R.png' },
-			],
-			'Super-Resolution Microscopes': [
-				{ id: 10, name: 'AX/AX R with NSPARC', image: '/asset/nikon microscopes/Super-Resolution Microscopes/AX  AX R with NSPARC.png' },
-				{ id: 11, name: 'AX R MP with NSPARC', image: '/asset/nikon microscopes/Super-Resolution Microscopes/AX R MP with NSPARC.png' },
-				{ id: 12, name: 'CSU-W1 SoRa', image: '/asset/nikon microscopes/Super-Resolution Microscopes/CSU-W1 SoRa.png' },
-				{ id: 13, name: 'N-SIM E', image: '/asset/nikon microscopes/Super-Resolution Microscopes/N-SIM E.png' },
-				{ id: 14, name: 'N-STORM', image: '/asset/nikon microscopes/Super-Resolution Microscopes/N-STORM.png' },
-			],
-			'upright microscopes': [
-				{ id: 12, name: 'ECLIPSE Ci-L plus', image: '/asset/nikon microscopes/upright microscopes/Eclipse Ci-L plus.png' },
-				{ id: 13, name: 'Eclipse Ci', image: '/asset/nikon microscopes/upright microscopes/Eclipse Ci.png' },
-				{ id: 14, name: 'ECLIPSE E100', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE E100.png' },
-				{ id: 15, name: 'ECLIPSE Ei', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE Ei.png' },
-				{ id: 16, name: 'ECLIPSE FN1', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE FN1.png' },
-				{ id: 17, name: 'ECLIPSE Ni', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE Ni.png' },
-				{ id: 18, name: 'ECLIPSE Si', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE Si.png' },
-				{ id: 19, name: 'ECLIPSE Ui', image: '/asset/nikon microscopes/upright microscopes/ECLIPSE Ui.png' },
-			],
-		};
+  const [products, setProducts] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-		setProducts(productData);
-		setLoading(false);
-	}, []);
+  useEffect(() => {
+    // Simulated Sakura product data - in production, this would fetch from your asset folder
+    const productData: any = {
+      'Coverslipping': [
+        { id: 1, name: 'Tissue-Tek Film', image: '/asset/Sakura/Coverslipping/Tissue-Tek Film.jpg' },
+        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: '/asset/Sakura/Coverslipping/Tissue-Tek® Glas™ g2.jpg' },
+      ],
+      'Cryotomy': [
+        { id: 3, name: 'Tissue-Tek Polar', image: '/asset/Sakura/Cryotomy/Tissue-Tek Polar.jpg' },
+      ],
+      'Embedding': [
+        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: '/asset/Sakura/Embedding/Tissue-Tek AutoTEC a120.jpg' },
+        { id: 5, name: 'Tissue-Tek TEC6', image: '/asset/Sakura/Embedding/Tissue-Tek TEC6.jpg' },
+		
+      ],
+      'Microtomy': [
+        { id: 6, name: 'Tissue-Tek Autosection', image: '/asset/Sakura/Microtomy/Tissue-Tek Autosection.jpg' },
+        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: '/asset/Sakura/Microtomy/Tissue-Tek® Sledge Microtome IVS-410.jpg' } ,
+		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: '/asset/Sakura/Microtomy/Tissue-Tek® Slide Warmer PS-53.jpg' },
+
+      ], 
+      'Staining': [
+        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: '/asset/Sakura/Staining/Tissue-Tek Prisma® Plus.jpg' },
+        
+      ],
+      'Tissue Processing': [      
+        { id: 11, name: 'Histo-Tek VP1', image: '/asset/Sakura/Tissue Processing/Histo-Tek VP1.jpg' },
+        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: '/asset/Sakura/Tissue Processing/Tissue-Tek VIP-6-AI.jpg' },
+		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: '/asset/Sakura/Tissue Processing/Tissue-Tek Xpress x120.jpg' },
+      ],
+    };
+
+    setProducts(productData);
+    setLoading(false);
+  }, []);
 
 	const handleViewDetails = (product: any) => {
 		setSelectedProduct(product);
@@ -276,78 +286,84 @@ export default function NikonMicroscopes() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
 			{/* Hero Section */}
-			<motion.section
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 1 }}
-				className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden"
-			>
-				{/* Animated Background Pattern */}
-				<div className="absolute inset-0 w-full h-full">
-					<div
-						className="absolute inset-0 w-full h-full "
-						style={{
-							backgroundImage: "url('/asset/nikon microscopes/nikonbackground.jpg')",
-							backgroundSize: 'cover',
-							backgroundPosition: 'center',
-							filter: 'blur(1px)',
-							opacity: 0.35,
-							zIndex: 1,
-                            
-						}}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-blue-900 opacity-40 mix-blend-multiply z-2" />
-				</div>
-
-				<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
-					<motion.div
-						initial={{ y: 30, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.8, delay: 0.2 }}
+					<motion.section
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 1 }}
+						className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden"
 					>
-						<motion.h1
-							initial={{ scale: 0.9, opacity: 0, y: 40 }}
-							animate={{ scale: 1.15, opacity: 1, y: 0 }}
-							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-							className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-8 drop-shadow-xl tracking-tight"
-						>
-							Nikon Microscopes
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-10"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-16 drop-shadow-lg"
-						>
-							Explore Nikon's cutting-edge microscopy solutions engineered for precision and performance
-						</motion.p>
-					</motion.div>
+						{/* Animated Background Pattern */}
+						<div className="absolute inset-0 w-full h-full">
+							<div
+								className="absolute inset-0 w-full h-full "
+								style={{
+									backgroundImage: "url('/asset/Sakura/backgroundforsakura.jpg')",
+									backgroundSize: 'cover',
+									backgroundPosition: 'center',
+									filter: 'blur(1px)',
+									opacity: 0.35,
+									zIndex: 1,
+								}}
+							/>
+							<div className="absolute inset-0 w-full h-full bg-blue-900 opacity-40 mix-blend-multiply z-2" />
+						</div>
 
-					{/* Scroll Indicator - moved below paragraph */}
-					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1, delay: 1.5 }}
-						className="mt-2"
-					>
-						<motion.div
-							animate={{ y: [0, 18, 0] }}
-							transition={{ duration: 1.8, repeat: Infinity }}
-							className="text-white"
-						>
-							<svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-							</svg>
-						</motion.div>
-					</motion.div>
-				</div>
-			</motion.section>
+						<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
+							<motion.div
+								initial={{ y: 30, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								transition={{ duration: 0.8, delay: 0.2 }}
+							>
+								<motion.div
+									initial={{ scale: 0.9, opacity: 0, y: 40 }}
+									animate={{ scale: 1.15, opacity: 1, y: 0 }}
+									transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+									className="mb-8 flex justify-center"
+								>
+									<Image
+										src="/asset/Sakura/Asset 67@300x.png"
+										alt="Sakura Logo"
+										width={300}
+										height={120}
+										className="object-contain drop-shadow-xl"
+										priority
+									/>
+								</motion.div>
+								<motion.div
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+									className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-10"
+								/>
+								<motion.p
+									initial={{ opacity: 0, y: 30 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+									className="text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-16 drop-shadow-lg"
+								>
+									Explore Sakura's advanced laboratory solutions for histology, cytology, and tissue processing.
+								</motion.p>
+							</motion.div>
+
+							{/* Scroll Indicator - moved below paragraph */}
+							<motion.div
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 1, delay: 1.5 }}
+								className="mt-2"
+							>
+								<motion.div
+									animate={{ y: [0, 18, 0] }}
+									transition={{ duration: 1.8, repeat: Infinity }}
+									className="text-white"
+								>
+									<svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+									</svg>
+								</motion.div>
+							</motion.div>
+						</div>
+					</motion.section>
 
 			{/* Main Content */}
 			<div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -385,7 +401,7 @@ export default function NikonMicroscopes() {
 						Need Expert Consultation?
 					</h2>
 					<p className="text-xl text-gray-200 mb-8">
-						Our team of specialists is ready to help you find the perfect microscopy solution for your research needs.
+						Our team of specialists is ready to help you choose the ideal Sakura equipment and solutions for your laboratory and tissue processing needs.
 					</p>
 					<Link href="/user/contact">
 						<motion.button
