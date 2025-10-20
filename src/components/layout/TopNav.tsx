@@ -24,12 +24,22 @@ export function TopNav() {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           setScrollY(currentScrollY);
-          if (currentScrollY > lastScrollY && currentScrollY > 80) {
-            setScrollDirection('down');
-            setShowNav(false);
-          } else if (currentScrollY < lastScrollY) {
-            setScrollDirection('up');
+          
+          // On mobile screens or events page, always show nav
+          const isMobile = window.innerWidth < 1024;
+          const isEventsPage = window.location.pathname.includes('/events');
+          
+          if (isMobile || isEventsPage) {
             setShowNav(true);
+          } else {
+            // Original desktop logic
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+              setScrollDirection('down');
+              setShowNav(false);
+            } else if (currentScrollY < lastScrollY) {
+              setScrollDirection('up');
+              setShowNav(true);
+            }
           }
           lastScrollY = currentScrollY;
           ticking = false;
@@ -52,7 +62,7 @@ export function TopNav() {
             { y: { type: 'spring', stiffness: 180, damping: 22 }, opacity: { duration: 0.12 }, boxShadow: { duration: 0.18 } }
           }
         whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
-        className="hidden md:block bg-white backdrop-blur-md w-full sticky top-0 z-50 border-b border-gray-200/50 shadow-sm hover:shadow-md transition-[transform,box-shadow,background-color] duration-300 will-change-transform h-24 group"
+        className="hidden lg:block bg-white backdrop-blur-md w-full sticky top-0 z-50 border-b border-gray-200/50 shadow-sm hover:shadow-md transition-[transform,box-shadow,background-color] duration-300 will-change-transform h-24 group"
         style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white via-gray-50/30 to-white opacity-60" />

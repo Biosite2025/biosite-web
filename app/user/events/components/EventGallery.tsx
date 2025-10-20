@@ -103,8 +103,8 @@ const EventGallery: React.FC = () => {
   const handleResume = () => setPaused(false);
 
   return (
-    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-20 min-h-[600px]">
-      <div className="container mx-auto px-6 mb-16 mt-14">
+    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-12 lg:py-20 min-h-[400px] lg:min-h-[600px]">
+      <div className="container mx-auto px-4 lg:px-6 mb-10 lg:mb-16 mt-8 lg:mt-14">
         <motion.div 
           className="text-center text-white"
           initial={{ opacity: 0, y: 50 }}
@@ -112,10 +112,10 @@ const EventGallery: React.FC = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-4">
             Snaps from Our Events
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-2xl mx-auto px-4 lg:px-0">
             Capturing the energy, innovation, and connections that make our events truly special
           </p>
         </motion.div>
@@ -124,15 +124,15 @@ const EventGallery: React.FC = () => {
       {/* Infinite Scrolling Image Gallery */}
       <div className="relative overflow-hidden">
         {/* Top Row - Right to Left */}
-        <div className="flex mb-8">
+        <div className="flex mb-4 lg:mb-8">
           <motion.div
-            className="flex gap-6 min-w-max"
+            className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: topRowX }}
           >
             {[...eventImages, ...eventImages].map((image, index) => (
               <motion.div
                 key={`top-${index}`}
-                className="relative flex-shrink-0 w-80 h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
+                className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
@@ -157,13 +157,13 @@ const EventGallery: React.FC = () => {
         {/* Bottom Row - Left to Right */}
         <div className="flex">
           <motion.div
-            className="flex gap-6 min-w-max"
+            className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
           >
             {[...eventImages, ...eventImages].map((image, index) => (
               <motion.div
                 key={`bottom-${index}`}
-                className="relative flex-shrink-0 w-80 h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
+                className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
@@ -187,24 +187,24 @@ const EventGallery: React.FC = () => {
       </div>
 
       {/* Video Section - moved below gallery and made larger */}
-      <div className="container max-w-full px-6 mt-20 mb-[150px]">
+      <div className="container max-w-full px-4 lg:px-6 mt-12 lg:mt-20 mb-16 lg:mb-[150px]">
         {/* Video Title Section - outside video, same layout as heading */}
         <motion.div 
-          className="text-center text-white mb-10"
+          className="text-center text-white mb-6 lg:mb-10"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl mt-[200px] md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-4 mt-16 lg:mt-[200px]">
             Event Highlight Video
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-2xl mx-auto px-4 lg:px-0">
             Relive the best moments from our recent event
           </p>
         </motion.div>
         <motion.div
-          className={`flex justify-center gap-10`}
+          className={`flex justify-center gap-4 lg:gap-10`}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -218,7 +218,7 @@ const EventGallery: React.FC = () => {
               return (
                 <motion.div
                   key={videoSources[idx] + idx}
-                  className="relative w-[850px] h-[600px] rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-4 border-[#2B3990]/40 mx-4"
+                  className="relative w-full max-w-[300px] h-[200px] lg:w-[850px] lg:h-[600px] rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-2 lg:border-4 border-[#2B3990]/40 mx-1 lg:mx-4"
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -228,7 +228,7 @@ const EventGallery: React.FC = () => {
                     controls
                     autoPlay
                     muted
-                    className="absolute inset-0 w-full h-full object-cover rounded-2xl cursor-pointer"
+                    className="absolute inset-0 w-full h-full object-cover rounded-xl lg:rounded-2xl cursor-pointer"
                     poster="/asset/image.png"
                     style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
                     onClick={() => handleVideoClick(offset)}
@@ -241,21 +241,21 @@ const EventGallery: React.FC = () => {
             {/* Navigation buttons for video pairs */}
             <button
               onClick={handlePrevVideoPair}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
+              className="absolute left-0 lg:left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 lg:p-4 transition-all duration-300 z-30 group"
               aria-label="Previous video pair"
               style={{ left: 0 }}
             >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={handleNextVideoPair}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-4 transition-all duration-300 z-30 group"
+              className="absolute right-0 lg:right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 lg:p-4 transition-all duration-300 z-30 group"
               aria-label="Next video pair"
               style={{ right: 0 }}
             >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>

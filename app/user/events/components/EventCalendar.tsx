@@ -198,15 +198,15 @@ const EventCalendar: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-[900px] mx-auto p-2 bg-white mb-[150px] pt-8"
+      className="w-full max-w-[900px] mx-auto p-2 lg:p-2 px-4 lg:px-2 bg-white mb-[150px] lg:mb-[150px] mb-16 pt-8 lg:pt-8 pt-6"
     >
       {/* Header Section */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-6 lg:mb-8 px-2">
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-4xl font-bold text-gray-800 mb-3"
+          className="text-2xl lg:text-4xl font-bold text-gray-800 mb-3"
         >
           Event Calendar
         </motion.h1>
@@ -220,7 +220,7 @@ const EventCalendar: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-gray-600 max-w-2xl mx-auto text-base"
+          className="text-gray-600 max-w-2xl mx-auto text-sm lg:text-base px-4 lg:px-0"
         >
           Stay updated with our upcoming activities and programs.
         </motion.p>
@@ -231,7 +231,7 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8 px-2"
       >
         {getEventStats().map((stat, index) => (
           <motion.div
@@ -239,12 +239,12 @@ const EventCalendar: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.1 * index }}
-            className="bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300"
+            className="bg-white rounded-lg shadow-md border border-gray-200 p-3 lg:p-4 hover:shadow-lg transition-shadow duration-300"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 capitalize">{stat.category}</p>
-                <p className="text-2xl font-bold text-gray-800">{stat.count}</p>
+                <p className="text-xs lg:text-sm text-gray-600 capitalize">{stat.category}</p>
+                <p className="text-xl lg:text-2xl font-bold text-gray-800">{stat.count}</p>
               </div>
               <div 
                 className="w-3 h-3 rounded-full"
@@ -260,35 +260,35 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-white rounded-t-xl shadow-lg border border-gray-200 border-b-0"
+        className="bg-white rounded-t-xl shadow-lg border border-gray-200 border-b-0 mx-2 lg:mx-0"
       >
-        <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#2B3990] to-[#1e2875] text-white rounded-t-xl">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-[#2B3990] to-[#1e2875] text-white rounded-t-xl">
+          <div className="flex items-center space-x-2 lg:space-x-4">
             <button
               onClick={() => handleMonthChange('prev')}
-              className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200 hover:scale-105"
+              className="p-1.5 lg:p-2 hover:bg-white/20 rounded-lg transition-all duration-200 hover:scale-105"
               disabled={isLoading}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h2 className="text-lg font-bold min-w-[180px] text-center">
+            <h2 className="text-base lg:text-lg font-bold min-w-[140px] lg:min-w-[180px] text-center">
               {currentMonth || 'October 2025'}
             </h2>
             <button
               onClick={() => handleMonthChange('next')}
-              className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200 hover:scale-105"
+              className="p-1.5 lg:p-2 hover:bg-white/20 rounded-lg transition-all duration-200 hover:scale-105"
               disabled={isLoading}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
           <button
             onClick={goToToday}
-            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all duration-200 font-medium hover:scale-105"
+            className="px-3 py-1.5 lg:px-4 lg:py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all duration-200 font-medium hover:scale-105 text-xs lg:text-sm"
             disabled={isLoading}
           >
             Today
@@ -301,9 +301,9 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
+        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 mx-2 lg:mx-0 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
       >
-        <div className="p-2 pt-0">
+        <div className="p-1 lg:p-2 pt-0">
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin]}
@@ -318,7 +318,7 @@ const EventCalendar: React.FC = () => {
             moreLinkClick="popover"
             eventDisplay="block"
             displayEventTime={false}
-            dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-3 text-sm uppercase tracking-wide"
+            dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
             buttonText={{
@@ -340,25 +340,25 @@ const EventCalendar: React.FC = () => {
         <>
           {/* Invisible overlay to prevent background clicks */}
           <div 
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-40 bg-black/50 lg:bg-transparent"
             onClick={closeModal}
           />
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4 lg:mx-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full border-2 border-gray-200"
+              className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[90vh] overflow-y-auto"
             >
             {/* Modal Header */}
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex justify-between items-start mb-3 lg:mb-4">
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-1">
+                <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-1">
                   {selectedEvent.title}
                 </h3>
                 <span 
-                  className="inline-block px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
+                  className="inline-block px-2 lg:px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
                   style={{ backgroundColor: getCategoryColor(selectedEvent.category) }}
                 >
                   {selectedEvent.category}
@@ -374,13 +374,13 @@ const EventCalendar: React.FC = () => {
             </div>
 
             {/* Modal Content */}
-            <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-4">
+            <div className="space-y-3 lg:space-y-4">
+              <div className="bg-gray-50 rounded-lg p-3 lg:p-4">
                 <div className="flex items-center text-gray-600 mb-2">
-                  <svg className="w-5 h-5 mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <span className="font-medium">
+                  <span className="font-medium text-sm lg:text-base">
                     {new Date(selectedEvent.date).toLocaleDateString('en-US', { 
                       weekday: 'long', 
                       year: 'numeric', 
@@ -392,28 +392,28 @@ const EventCalendar: React.FC = () => {
 
                 {selectedEvent.time && (
                   <div className="flex items-center text-gray-600 mb-2">
-                    <svg className="w-5 h-5 mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>{selectedEvent.time}</span>
+                    <span className="text-sm lg:text-base">{selectedEvent.time}</span>
                   </div>
                 )}
 
                 {selectedEvent.location && (
                   <div className="flex items-center text-gray-600">
-                    <svg className="w-5 h-5 mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>{selectedEvent.location}</span>
+                    <span className="text-sm lg:text-base">{selectedEvent.location}</span>
                   </div>
                 )}
               </div>
 
               {selectedEvent.description && (
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
-                  <p className="text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg">
+                  <h4 className="font-semibold text-gray-800 mb-2 text-sm lg:text-base">Description</h4>
+                  <p className="text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg text-sm lg:text-base">
                     {selectedEvent.description}
                   </p>
                 </div>
@@ -443,14 +443,27 @@ const EventCalendar: React.FC = () => {
         .fc-daygrid-day,
         .fc-col-header-cell {
           width: 14.2857% !important;
-          min-width: 110px !important;
+          min-width: 60px !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-daygrid-day,
+          .fc-col-header-cell {
+            min-width: 110px !important;
+          }
         }
         .fc-daygrid-day-frame {
-          height: 5.5rem !important;
-          min-height: 5.5rem !important;
-          max-height: 5.5rem !important;
+          height: 4rem !important;
+          min-height: 4rem !important;
+          max-height: 4rem !important;
           position: relative !important;
           overflow: hidden !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-daygrid-day-frame {
+            height: 5.5rem !important;
+            min-height: 5.5rem !important;
+            max-height: 5.5rem !important;
+          }
         }
         
         .fc-toolbar {
@@ -488,7 +501,12 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-daygrid-day-top {
-          padding: 0.5rem !important;
+          padding: 0.25rem !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-daygrid-day-top {
+            padding: 0.5rem !important;
+          }
         }
         
         .fc-day-today {
@@ -510,10 +528,16 @@ const EventCalendar: React.FC = () => {
         .fc-event {
           border-radius: 0.375rem !important;
           border: none !important;
-          font-size: 0.75rem !important;
+          font-size: 0.625rem !important;
           font-weight: 500 !important;
           margin: 0.125rem !important;
-          padding: 0.25rem 0.5rem !important;
+          padding: 0.125rem 0.25rem !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-event {
+            font-size: 0.75rem !important;
+            padding: 0.25rem 0.5rem !important;
+          }
         }
         
         .fc-col-header-cell {
@@ -521,10 +545,16 @@ const EventCalendar: React.FC = () => {
           color: #2B3990 !important;
           font-weight: 600 !important;
           text-transform: uppercase !important;
-          font-size: 0.75rem !important;
+          font-size: 0.625rem !important;
           letter-spacing: 0.05em !important;
-          padding: 0.75rem !important;
+          padding: 0.5rem !important;
           border-bottom: 2px solid #e5e7eb !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-col-header-cell {
+            font-size: 0.75rem !important;
+            padding: 0.75rem !important;
+          }
         }
         
         .fc-scrollgrid {
@@ -534,22 +564,38 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-daygrid-day-number {
-          padding: 0.5rem !important;
+          padding: 0.25rem !important;
           font-weight: 500 !important;
           color: #374151 !important;
+          font-size: 0.75rem !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-daygrid-day-number {
+            padding: 0.5rem !important;
+            font-size: 0.875rem !important;
+          }
         }
         
         .fc-day-today .fc-daygrid-day-number {
           background: linear-gradient(135deg, #2B3990, #1e2875) !important;
           color: white !important;
           border-radius: 50% !important;
-          width: 2rem !important;
-          height: 2rem !important;
+          width: 1.5rem !important;
+          height: 1.5rem !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           font-weight: 600 !important;
-          margin: 0.25rem !important;
+          margin: 0.125rem !important;
+          font-size: 0.75rem !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-day-today .fc-daygrid-day-number {
+            width: 2rem !important;
+            height: 2rem !important;
+            margin: 0.25rem !important;
+            font-size: 0.875rem !important;
+          }
         }
         
         .fc-more-link {
@@ -575,12 +621,18 @@ const EventCalendar: React.FC = () => {
         
         .fc-h-event {
           border-radius: 0.375rem !important;
-          font-size: 0.75rem !important;
+          font-size: 0.625rem !important;
           font-weight: 500 !important;
-          padding: 0.25rem 0.5rem !important;
+          padding: 0.125rem 0.25rem !important;
           margin: 0.125rem 0 !important;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
           border: none !important;
+        }
+        @media (min-width: 1024px) {
+          .fc-h-event {
+            font-size: 0.75rem !important;
+            padding: 0.25rem 0.5rem !important;
+          }
         }
       `}</style>
     </motion.div>

@@ -1,4 +1,30 @@
-'use client';
+
+
+  'use client';
+  // iPad Air fix: inject style for subtitle
+  const ipadAirStyle = `
+    @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
+      .eventshowcase-ipadair-parent .eventshowcase-ipadair-subtitle {
+        font-size: 1.05rem !important;
+        line-height: 1.3 !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-width: 0 !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        text-align: center !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        display: block !important;
+      }
+      .eventshowcase-ipadair-parent {
+        max-width: none !important;
+      }
+    }
+  `;
 
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
@@ -264,7 +290,9 @@ const EventShowcase: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden bg-gray-900">
+    <>
+      <style>{ipadAirStyle}</style>
+      <div ref={containerRef} className="relative overflow-hidden bg-gray-900">
       {/* Video Section - Will be pinned by GSAP ScrollTrigger */}
       <div className="h-screen overflow-hidden">
         <div 
@@ -342,15 +370,15 @@ const EventShowcase: React.FC = () => {
           {/* Title Overlay with GSAP-controlled animations */}
           <div 
             ref={titleRef}
-            className="absolute inset-0 flex items-center justify-center text-center text-white z-20 opacity-0"
+            className="absolute inset-0 flex items-center justify-center text-center text-white z-20 opacity-0 px-4 lg:px-8"
             style={{ opacity: 0 }}
           >
-            <div className="max-w-6xl px-8">
+            <div className="max-w-6xl eventshowcase-ipadair-parent">
               {/* Main Title */}
               <h1 
-                className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-none"
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-black mb-4 lg:mb-8 leading-none"
               >
-                <span className="block text-white mb-6 font-black">Experience Our</span>
+                <span className="block text-white mb-3 lg:mb-6 font-black">Experience Our</span>
                 <span className="block text-[#2B3990] font-black tracking-tight">
                   Amazing Events
                 </span>
@@ -358,7 +386,7 @@ const EventShowcase: React.FC = () => {
               
               {/* Subtitle */}
               <p 
-                className="text-2xl md:text-3xl lg:text-4xl text-white max-w-5xl mx-auto leading-relaxed font-light"
+                className="eventshowcase-ipadair-subtitle text-sm sm:text-base md:text-xl lg:text-3xl xl:text-4xl text-white max-w-5xl mx-auto leading-relaxed font-light px-4 lg:px-0"
                 style={{
                   textShadow: '0 6px 30px rgba(0,0,0,0.9), 0 3px 15px rgba(0,0,0,0.8), 0 1px 8px rgba(0,0,0,0.7)',
                   filter: 'drop-shadow(0 3px 15px rgba(0,0,0,0.5))'
@@ -373,18 +401,19 @@ const EventShowcase: React.FC = () => {
           {/* Scroll Indicator */}
           <div 
             ref={scrollIndicatorRef}
-            className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30"
+            className="absolute bottom-8 lg:bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30"
           >
-            <span className="text-white/90 text-base font-medium mb-4 tracking-wide uppercase">
+            <span className="text-white/90 text-xs lg:text-base font-medium mb-2 lg:mb-4 tracking-wide uppercase">
               Continue Scrolling
             </span>
-            <div className="w-8 h-12 border-2 border-white/70 rounded-full flex justify-center">
-              <div className="scroll-dot w-1.5 h-4 bg-white/90 rounded-full mt-3" />
+            <div className="w-6 h-8 lg:w-8 lg:h-12 border-2 border-white/70 rounded-full flex justify-center">
+              <div className="scroll-dot w-1 h-2 lg:w-1.5 lg:h-4 bg-white/90 rounded-full mt-2 lg:mt-3" />
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

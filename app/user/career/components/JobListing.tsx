@@ -222,47 +222,56 @@ export default function JobListing() {
   };
 
   return (
-    <motion.section
-      className="w-full min-h-screen -mt-7 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-12 px-4 relative overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
+    <>
+      <style>{`
+        @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
+          .joblisting-section-ipad {
+            margin-top: 3px !important;
+          }
+        }
+      `}</style>
+      <motion.section
+        className="joblisting-section-ipad w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+    
       {/* Decorative background */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-[#2B7CD3] rounded-full blur-3xl opacity-10" />
-        <div className="absolute bottom-10 right-10 w-24 h-24 bg-[#2B3990] rounded-full blur-3xl opacity-10" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#2B3990]/5 to-[#2B7CD3]/5 rounded-full blur-3xl" />
+        <div className="absolute top-4 sm:top-6 md:top-8 lg:top-10 left-4 sm:left-6 md:left-8 lg:left-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-[#2B7CD3] rounded-full blur-2xl sm:blur-3xl opacity-10" />
+        <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 right-4 sm:right-6 md:right-8 lg:right-10 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-[#2B3990] rounded-full blur-2xl sm:blur-3xl opacity-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-gradient-to-r from-[#2B3990]/5 to-[#2B7CD3]/5 rounded-full blur-2xl sm:blur-3xl" />
       </div>
 
       {/* Success Modal */}
       <AnimatePresence>
         {showSuccess && (
           <motion.div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 md:p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowSuccess(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl"
+              className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-sm sm:max-w-md w-full shadow-2xl mx-3"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Application Submitted!</h3>
-                <p className="text-gray-600 mb-6">Thank you for your interest. We'll review your application and get back to you soon.</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#2B3990] mb-2">Application Submitted!</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Thank you for your interest. We'll review your application and get back to you soon.</p>
                 <button
                   onClick={() => setShowSuccess(false)}
-                  className="bg-[#2B3990] text-white px-6 py-2 rounded-lg hover:bg-[#1e2a6b] transition-colors"
+                  className="bg-[#2B3990] text-white px-4 sm:px-6 py-2 sm:py-2 text-sm sm:text-base rounded-lg hover:bg-[#1e2a6b] transition-colors"
                 >
                   Close
                 </button>
@@ -272,7 +281,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="w-full scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 relative">
+      <div className="w-full scale-90 sm:scale-95 md:scale-100 lg:scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center z-10 relative">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
@@ -280,9 +289,9 @@ export default function JobListing() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="mb-8 w-full">
+          <div className="mb-4 sm:mb-6 md:mb-8 w-full">
             <motion.h1
-              className="text-4xl md:text-5xl font-bold text-[#6B7280] mb-4 text-center lg:text-left"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#6B7280] mb-2 sm:mb-3 md:mb-4 text-center lg:text-left px-2 sm:px-0"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
@@ -290,15 +299,15 @@ export default function JobListing() {
               <span className="text-[#2B3990]">JOB LISTING </span> 
             </motion.h1>
             <motion.div
-              className="h-1 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full"
+              className="h-0.5 sm:h-1 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full mx-auto lg:mx-0 w-[120px] sm:w-[150px] md:w-[180px] lg:w-[200px]"
               initial={{ width: 0 }}
               animate={{ width: "200px" }}
               transition={{ duration: 0.8, delay: 0.7 }}
             />
           </div>
-          <div className="relative w-full max-w-xl h-[520px] flex items-center">
+          <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl h-[300px] sm:h-[350px] md:h-[400px] lg:h-[520px] flex items-center">
             {/* Job Listing PNG Container */}
-            <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl p-0 shadow-2xl relative overflow-hidden w-full h-full flex items-center justify-center">
+            <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl sm:rounded-3xl p-0 shadow-lg sm:shadow-xl md:shadow-2xl relative overflow-hidden w-full h-full flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
               <div className="relative z-10 w-full h-full flex items-center justify-center">
                 <Image
@@ -306,13 +315,13 @@ export default function JobListing() {
                   alt="Biosite Job Listing"
                   width={900}
                   height={520}
-                  className="w-full h-full object-cover drop-shadow-xl rounded-3xl"
+                  className="w-full h-full object-cover drop-shadow-lg sm:drop-shadow-xl rounded-2xl sm:rounded-3xl"
                   priority
                 />
               </div>
               {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-[#2B3990] rounded-full opacity-20 animate-pulse" />
-              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-[#2B7CD3] rounded-full opacity-30" />
+              <div className="absolute -top-2 sm:-top-3 md:-top-4 -right-2 sm:-right-3 md:-right-4 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-[#2B3990] rounded-full opacity-20 animate-pulse" />
+              <div className="absolute -bottom-1 sm:-bottom-1.5 md:-bottom-2 -left-1 sm:-left-1.5 md:-left-2 w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 bg-[#2B7CD3] rounded-full opacity-30" />
             </div>
             {/* Award/Certificate Mockup */}
             
@@ -328,7 +337,7 @@ export default function JobListing() {
         >
           <motion.form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-5 md:space-y-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
@@ -341,7 +350,7 @@ export default function JobListing() {
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-4 rounded-xl border-2 text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                className={`w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 text-base sm:text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                   errors.name 
                     ? 'border-red-400 bg-red-50' 
                     : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -359,7 +368,7 @@ export default function JobListing() {
             </div>
 
             {/* Email and Phone Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <input
                   type="email"
@@ -367,7 +376,7 @@ export default function JobListing() {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-4 rounded-xl border-2 text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                  className={`w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 text-base sm:text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                     errors.email 
                       ? 'border-red-400 bg-red-50' 
                       : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -390,7 +399,7 @@ export default function JobListing() {
                   placeholder="Phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-4 rounded-xl border-2 text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                  className={`w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 text-base sm:text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                     errors.phone 
                       ? 'border-red-400 bg-red-50' 
                       : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -409,7 +418,7 @@ export default function JobListing() {
             </div>
 
             {/* Position and Location Selection - side by side */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <CustomDropdown
                   options={availablePositions}
@@ -459,7 +468,7 @@ export default function JobListing() {
             {/* File Upload */}
             <div>
               <div
-                className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-300 ${
+                className={`relative border-2 border-dashed rounded-lg sm:rounded-xl p-4 sm:p-6 text-center transition-all duration-300 ${
                   dragActive 
                     ? 'border-[#2B3990] bg-[#2B3990]/5' 
                     : errors.resume 
@@ -538,6 +547,7 @@ export default function JobListing() {
           </motion.form>
         </motion.div>
       </div>
-    </motion.section>
+      </motion.section>
+    </>
   );
 }

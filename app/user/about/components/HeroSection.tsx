@@ -113,7 +113,7 @@ const HeroSection = () => {
 		<>
 			<motion.section
 				id="hero"
-				className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white group"
+				className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white group lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px]"
 				initial={{ opacity: 0, y: 40 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.8, ease: "easeOut" }}
@@ -240,14 +240,14 @@ const HeroSection = () => {
 					</motion.button>
 				</motion.div>
 
-				{/* Enhanced content section with modern styling */}
+				{/* Enhanced content section with modern styling - Responsive */}
 				<div
-					className="absolute left-[250px] top-0 h-full flex flex-col justify-center z-20 px-10 md:px-20 scale-150"
+					className="absolute left-2 sm:left-4 md:left-8 lg:left-[250px] top-0 h-full flex flex-col justify-center z-20 px-3 sm:px-4 md:px-6 lg:px-20 scale-90 sm:scale-100 md:scale-110 lg:scale-150"
 					style={{
 						pointerEvents: "none",
-						width: "60%",
+						width: "calc(100% - 1rem)",
 						maxWidth: "800px",
-						marginTop: "-70px"
+						marginTop: "0",
 					}}
 				>
 					<motion.div
@@ -275,7 +275,7 @@ const HeroSection = () => {
 							style={{ pointerEvents: "none" }}
 						/>
 						<motion.h1
-							className="text-2xl md:text-5xl font-bold text-[#2B3990] text-left leading-tight mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group"
+							className="text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group"
 							initial={false}
 							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
 							transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
@@ -284,27 +284,27 @@ const HeroSection = () => {
 							<motion.div
 								className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#2B3990] to-blue-500 rounded-full"
 								initial={{ width: 0 }}
-								animate={showText ? { width: 250 } : { width: 0 }}
+								animate={showText ? { width: "min(250px, 80%)" } : { width: 0 }}
 								transition={{ duration: 0.7, ease: "easeOut" }}
 							/>
 						</motion.h1>
 						<motion.p
-							className="text-lg md:text-xl text-[#333] text-left mb-8 max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
+							className="text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-left mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
 							initial={false}
 							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
 							transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
 						>
 							{translate(slides[current].subheadline)}
 						</motion.p>
-						<div className="flex flex-row gap-6 mt-2">
+						<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 mt-2">
 							{slides[current].buttons.map((btn, idx) => (
 								<motion.a
 									key={btn.label}
 									href={btn.href}
 									className={
 										idx === 0
-											? `bg-gradient-to-r from-[#2B3990] to-blue-700 hover:from-blue-700 hover:to-[#2B3990] text-white font-semibold rounded-xl px-8 py-4 text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#2B3990]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
-											: `bg-gradient-to-r from-[#333] to-[#222] hover:from-[#222] hover:to-[#111] text-white font-semibold rounded-xl px-8 py-4 text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#333]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
+											? `bg-gradient-to-r from-[#2B3990] to-blue-700 hover:from-blue-700 hover:to-[#2B3990] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#2B3990]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
+											: `bg-gradient-to-r from-[#333] to-[#222] hover:from-[#222] hover:to-[#111] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#333]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
 									}
 									tabIndex={0}
 									initial={false}
@@ -322,25 +322,25 @@ const HeroSection = () => {
 				</div>
 			</motion.section>
 
-			{/* Enhanced Location Boxes Section - Adjusted to prevent overlapping */}
+			{/* Enhanced Location Boxes Section - Fully Responsive */}
 			<div
-				className="absolute bottom-0 w-full flex justify-center items-center pointer-events-none"
-				style={{ position: "relative", zIndex: 30, marginTop: "80px" }}
+				className="absolute bottom-0 mb-6 w-full flex justify-center items-center pointer-events-none"
+				style={{ position: "relative", zIndex: 30, marginTop: "40px" }}
 			>
-				<div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-8 px-4 md:px-0 pointer-events-auto">
-					{/* Enhanced Manila Box */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-2xl shadow-2xl p-8 flex flex-col min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+				<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto">
+					{/* Enhanced Manila Box - Responsive */}
+					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-xl font-bold mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							MANILA
 						</div>
-						<div className="text-white/90 text-sm mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila,
 							Philippines
 						</div>
-						<div className="flex items-center gap-3 text-white text-base font-semibold mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"
@@ -377,19 +377,19 @@ const HeroSection = () => {
 						</div>
 					</div>
 
-					{/* Enhanced Cebu Box */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-2xl shadow-2xl p-8 flex flex-col min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					{/* Enhanced Cebu Box - Responsive */}
+					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-xl font-bold mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							CEBU
 						</div>
-						<div className="text-white/90 text-sm mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu
 							City, Philippines
 						</div>
-						<div className="flex items-center gap-3 text-white text-base font-semibold mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"
@@ -426,18 +426,18 @@ const HeroSection = () => {
 						</div>
 					</div>
 
-					{/* Enhanced Davao Box */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-2xl shadow-2xl p-8 flex flex-col min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					{/* Enhanced Davao Box - Responsive */}
+					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-xl font-bold mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							DAVAO
 						</div>
-						<div className="text-white/90 text-sm mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							555 Manga St., Juna Subd, Matina, 8000 Davao City, Philippines
 						</div>
-						<div className="flex items-center gap-3 text-white text-base font-semibold mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"

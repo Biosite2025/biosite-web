@@ -223,29 +223,29 @@ export default function BiomiFAQ() {
 	};
 	
 	// Main container styles
-	return (
-		<div className="mb-[100px] scale-115 flex justify-center items-center min-h-[calc(100vh-120px)] py-12 bg-transparent font-[Inter,Poppins,sans-serif]">
+				return (
+					<div className="mb-6 sm:mb-[40px] md:mb-[60px] scale-90 sm:scale-95 md:scale-100 lg:scale-115 flex justify-center items-center min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] py-3 sm:py-5 md:py-8 lg:py-12 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 lg:pt-12 pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
 			<motion.div
-				className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-row min-h-[420px]"
+				className="w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl md:shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-col sm:flex-row min-h-[350px] sm:min-h-[380px] md:min-h-[420px] max-[912px]:min-h-0 max-[912px]:mt-0 max-[912px]:mb-0"
 				initial={{ opacity: 0, scale: 0.96 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.5, ease: 'easeOut' }}
-				style={{ marginTop: 32, marginBottom: 32 }}
+				style={{ marginTop: 0, marginBottom: 0 }}
 			>
 				{/* Left: Header and categories/questions/answers */}
 				<div className="flex-1 flex flex-col justify-between">
 					{/* Header */}
-					<div className="bg-[#0056D2] px-8 py-7 flex items-center gap-4 rounded-t-2xl rounded-bl-2xl relative min-h-[110px]">
-						<div className="absolute left-8 top-7">
-							<BiomiAvatar size={44} animationState={avatarState} />
+					<div className="bg-[#0056D2] px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-7 flex items-center gap-3 sm:gap-4 rounded-t-xl sm:rounded-t-2xl rounded-bl-xl sm:rounded-bl-2xl relative min-h-[80px] sm:min-h-[90px] md:min-h-[110px] max-[912px]:py-2 max-[912px]:min-h-0">
+						<div className="absolute left-4 sm:left-6 md:left-8 top-4 sm:top-5 md:top-7">
+							<BiomiAvatar size={view === 'categories' ? 32 : 28} animationState={avatarState} />
 						</div>
-						<div className="flex flex-col justify-center items-start ml-16">
-							<h2 className="text-white text-2xl font-bold leading-tight">Hi there! <span className="align-middle">👋</span></h2>
-							<p className="text-white text-base opacity-90 mt-1">How can Biomi help you today?</p>
+						<div className="flex flex-col justify-center items-start ml-10 sm:ml-12 md:ml-16">
+							<h2 className="text-white text-lg sm:text-xl md:text-2xl font-bold leading-tight">Hi there! <span className="align-middle text-base sm:text-lg md:text-xl">👋</span></h2>
+							<p className="text-white text-sm sm:text-base opacity-90 mt-0.5 sm:mt-1">How can Biomi help you today?</p>
 						</div>
 					</div>
 					{/* Main Content */}
-					<div className="px-8 py-8 bg-[#f7fafd] flex-1 flex flex-col gap-6 justify-center min-h-[320px]">
+					<div className="px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8 bg-[#f7fafd] flex-1 flex flex-col gap-4 sm:gap-5 md:gap-6 justify-center min-h-[240px] sm:min-h-[280px] md:min-h-[320px] max-[912px]:py-2 max-[912px]:min-h-0">
 						<AnimatePresence mode="wait">
 							{view === "categories" && (
 								<motion.div
@@ -254,17 +254,17 @@ export default function BiomiFAQ() {
 									initial="hidden"
 									animate="visible"
 									exit="exit"
-									className="flex flex-col gap-6"
+									className="flex flex-col gap-4 sm:gap-5 md:gap-6"
 								>
-									<div className="text-xl font-semibold text-[#0056D2] mb-2">Select a category:</div>
-									<div className="grid grid-cols-2 gap-4">
+									<div className="text-base sm:text-lg md:text-xl font-semibold text-[#0056D2] mb-1 sm:mb-2">Select a category:</div>
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 										{FAQ_DATA.map((cat, idx) => (
 											<button
 												key={cat.category}
-												className="w-full flex items-center gap-3 px-5 py-4 rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-[#0056D2] font-semibold text-base focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
+												className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-[#0056D2] font-semibold text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
 												onClick={() => handleCategoryClick(idx)}
 											>
-												<span className="text-base font-semibold">{cat.category}</span>
+												<span className="text-sm sm:text-base font-semibold text-center">{cat.category}</span>
 											</button>
 										))}
 									</div>
@@ -278,23 +278,23 @@ export default function BiomiFAQ() {
 									initial="hidden"
 									animate="visible"
 									exit="exit"
-									className="flex flex-col gap-6"
+									className="flex flex-col gap-4 sm:gap-5 md:gap-6"
 								>
 									<button
-										className="mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
+										className="mb-1 sm:mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-3 sm:px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
 										onClick={handleBack}
 									>
 										← Back to Categories
 									</button>
-									<div className="text-xl font-semibold text-[#0056D2] mb-2">{FAQ_DATA[selectedCategory].category}</div>
-									<div className="flex flex-col gap-3">
+									<div className="text-base sm:text-lg md:text-xl font-semibold text-[#0056D2] mb-1 sm:mb-2">{FAQ_DATA[selectedCategory].category}</div>
+									<div className="flex flex-col gap-2 sm:gap-3">
 										{FAQ_DATA[selectedCategory].questions.map((q, idx) => (
 											<button
 												key={q.q}
-												className="text-left px-5 py-4 rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-[#0056D2] font-medium focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
+												className="text-left px-3 sm:px-4 md:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-[#0056D2] font-medium focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
 												onClick={() => handleQuestionClick(idx)}
 											>
-												<span className="text-base">{q.q}</span>
+												<span className="text-sm sm:text-base">{q.q}</span>
 											</button>
 										))}
 									</div>
@@ -308,24 +308,24 @@ export default function BiomiFAQ() {
 									initial="hidden"
 									animate="visible"
 									exit="exit"
-									className="flex flex-col gap-6"
+									className="flex flex-col gap-4 sm:gap-5 md:gap-6"
 								>
 									<button
-										className="mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
+										className="mb-1 sm:mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-3 sm:px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
 										onClick={handleBack}
 									>
 										← Back to Questions
 									</button>
 									{/* User question bubble */}
-									<div className="flex items-end gap-2 self-end">
-										<div className="rounded-2xl bg-[#0056D2] text-white px-5 py-3 text-base font-medium max-w-[80%] shadow-md">
+									<div className="flex items-end gap-1 sm:gap-2 self-end">
+										<div className="rounded-xl sm:rounded-2xl bg-[#0056D2] text-white px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md">
 											{FAQ_DATA[selectedCategory].questions[selectedQuestion].q}
 										</div>
 									</div>
 									{/* Biomi answer bubble */}
-									<div className="flex items-start gap-2">
-										<BiomiAvatar size={32} />
-										<div className="rounded-2xl bg-white border border-[#e3eaf7] text-[#0056D2] px-5 py-3 text-base font-medium max-w-[80%] shadow-md">
+									<div className="flex items-start gap-1 sm:gap-2">
+										<BiomiAvatar size={24} />
+										<div className="rounded-xl sm:rounded-2xl bg-white border border-[#e3eaf7] text-[#0056D2] px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md">
 											{FAQ_DATA[selectedCategory].questions[selectedQuestion].a}
 										</div>
 									</div>
@@ -335,7 +335,7 @@ export default function BiomiFAQ() {
 					</div>
 
 					{/* Footer */}
-					<div className="px-8 py-4 bg-[#f7fafd] rounded-b-2xl text-center">
+					<div className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-[#f7fafd] rounded-b-xl sm:rounded-b-2xl text-center max-[912px]:py-2">
 						<span className="text-xs text-gray-400">Powered by Biomi – Your Biosite AI Assistant.</span>
 					</div>
 				</div>

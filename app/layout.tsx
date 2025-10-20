@@ -137,10 +137,9 @@ export default function RootLayout({
             {/* Full screen preloader overlay - completely blocks interaction */}
             {isLoading && (
               <div 
-                className="fixed inset-0 top-24 z-[99999] bg-white" 
+                className="fixed inset-0 top-16 lg:top-24 z-[99999] bg-white" 
                 style={{ 
                   position: 'fixed',
-                  top: '96px', // Below TopNav (24 * 4 = 96px)
                   left: '0',
                   right: '0',
                   bottom: '0',
