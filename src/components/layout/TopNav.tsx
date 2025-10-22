@@ -32,12 +32,21 @@ export function TopNav() {
           if (isMobile || isEventsPage) {
             setShowNav(true);
           } else {
-            // Original desktop logic
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            // Improved desktop logic with better threshold
+            const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+            
+            if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) {
+              // Scrolling down - hide nav
               setScrollDirection('down');
               setShowNav(false);
-            } else if (currentScrollY < lastScrollY) {
+            } else if (currentScrollY < lastScrollY && scrollDifference > 5) {
+              // Scrolling up - show nav
               setScrollDirection('up');
+              setShowNav(true);
+            }
+            
+            // Always show nav when at top
+            if (currentScrollY <= 50) {
               setShowNav(true);
             }
           }
@@ -47,7 +56,7 @@ export function TopNav() {
         ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -57,10 +66,11 @@ export function TopNav() {
         data-topnav="true"
         initial={false}
         animate={showNav ? { y: 0, opacity: 1, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.08)' } : { y: -100, opacity: 0, boxShadow: 'none' }}
-          transition={showNav ? 
-            { y: { duration: 0 }, opacity: { duration: 0 }, boxShadow: { duration: 0 } } : 
-            { y: { type: 'spring', stiffness: 180, damping: 22 }, opacity: { duration: 0.12 }, boxShadow: { duration: 0.18 } }
-          }
+        transition={{
+          y: { type: 'spring', stiffness: 400, damping: 40, duration: 0.6 },
+          opacity: { duration: 0.4, ease: 'easeInOut' },
+          boxShadow: { duration: 0.4, ease: 'easeInOut' }
+        }}
         whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
         className="hidden lg:block bg-white backdrop-blur-md w-full sticky top-0 z-50 border-b border-gray-200/50 shadow-sm hover:shadow-md transition-[transform,box-shadow,background-color] duration-300 will-change-transform h-24 group"
         style={{ background: '#ffffff', backgroundColor: '#ffffff' }}

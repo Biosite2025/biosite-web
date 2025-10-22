@@ -1,6 +1,22 @@
-'use client';
-
+"use client";
+import React from "react";
+const surfaceprostyles = `
+@media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px) {
+  #about-us {
+    min-height: 700px !important;
+    height: 700px !important;
+  }
+}
+`;
 const AboutUs = () => {
+  React.useEffect(() => {
+    const styleTag = document.createElement("style");
+    styleTag.innerHTML = surfaceprostyles;
+    document.head.appendChild(styleTag);
+    return () => {
+      document.head.removeChild(styleTag);
+    };
+  }, []);
   return (
     <section id="about-us" className="w-full min-h-screen bg-white flex flex-col lg:flex-row items-stretch relative overflow-hidden mb-6 sm:mb-8 lg:mb-20 mt-6 sm:mt-8 lg:mt-20">
       {/* Subtle background pattern */}

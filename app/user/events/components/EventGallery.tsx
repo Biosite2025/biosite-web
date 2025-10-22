@@ -121,6 +121,7 @@ const EventGallery: React.FC = () => {
         </motion.div>
       </div>
 
+
       {/* Infinite Scrolling Image Gallery */}
       <div className="relative overflow-hidden">
         {/* Top Row - Right to Left */}
@@ -185,6 +186,7 @@ const EventGallery: React.FC = () => {
           </motion.div>
         </div>
       </div>
+      
 
       {/* Video Section - moved below gallery and made larger */}
       <div className="container max-w-full px-4 lg:px-6 mt-12 lg:mt-20 mb-16 lg:mb-[150px]">
@@ -203,6 +205,23 @@ const EventGallery: React.FC = () => {
             Relive the best moments from our recent event
           </p>
         </motion.div>
+        {/* Drag to swipe instruction (moved below video section) */}
+      <div className="flex justify-center mt-2 mb-8">
+        <span className="text-base lg:text-lg text-gray-300 bg-gray-900/70 px-4 py-2 rounded-full shadow-md border border-gray-700 flex items-center gap-2">
+          <motion.svg
+            className="w-5 h-5 text-[#2B3990]"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 12h16M10 18l-6-6 6-6" />
+          </motion.svg>
+          Drag to swipe videos
+        </span>
+      </div>
         <motion.div
           className={`flex justify-center gap-4 lg:gap-10`}
           initial={{ opacity: 0, y: 50 }}
@@ -211,14 +230,27 @@ const EventGallery: React.FC = () => {
           viewport={{ once: true }}
         >
           {/* Show two videos at a time, with navigation for pairs */}
-          <div className="relative w-full flex justify-center items-center">
+          <motion.div
+            className="relative w-full flex justify-center items-center cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+              if (info.offset.x < -100) {
+                handleNextVideoPair();
+              } else if (info.offset.x > 100) {
+                handlePrevVideoPair();
+              }
+            }}
+            style={{ touchAction: 'pan-x' }}
+          >
             {[0, 1].map((offset) => {
               const idx = videoPairIndex * 2 + offset;
               if (idx >= videoSources.length) return null;
               return (
                 <motion.div
                   key={videoSources[idx] + idx}
-                  className="relative w-full max-w-[300px] h-[200px] lg:w-[850px] lg:h-[600px] rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-2 lg:border-4 border-[#2B3990]/40 mx-1 lg:mx-4"
+                  className="relative w-full lg:w-[850px] h-[200px] lg:w-[850px] lg:h-[600px] rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] border-2 lg:border-4 border-[#2B3990]/40 mx-1 lg:mx-4"
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -238,28 +270,7 @@ const EventGallery: React.FC = () => {
                 </motion.div>
               );
             })}
-            {/* Navigation buttons for video pairs */}
-            <button
-              onClick={handlePrevVideoPair}
-              className="absolute left-0 lg:left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 lg:p-4 transition-all duration-300 z-30 group"
-              aria-label="Previous video pair"
-              style={{ left: 0 }}
-            >
-              <svg className="w-4 h-4 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={handleNextVideoPair}
-              className="absolute right-0 lg:right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 lg:p-4 transition-all duration-300 z-30 group"
-              aria-label="Next video pair"
-              style={{ right: 0 }}
-            >
-              <svg className="w-4 h-4 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
 

@@ -1,30 +1,156 @@
 
 
   'use client';
-  // iPad Air fix: inject style for subtitle
-  const ipadAirStyle = `
+
+
+  const devicestyles = `
+    /* Common styles for all device parents/subtitles */
+    .eventshowcase-14pro-parent .eventshowcase-14pro-subtitle,
+    .eventshowcase-12pro-parent .eventshowcase-12pro-subtitle,
+    .eventshowcase-pixel7-parent .eventshowcase-pixel7-subtitle,
+    .eventshowcase-xr-parent .eventshowcase-xr-subtitle,
+    .eventshowcase-surfacepro-parent .eventshowcase-surfacepro-subtitle,
+    .eventshowcase-ipadmini-parent .eventshowcase-ipadmini-subtitle,
+    .eventshowcase-ipadair-parent .eventshowcase-ipadair-subtitle {
+      font-size: 0.85rem !important;
+      line-height: 1.25 !important;
+      padding-left: 18px !important;
+      padding-right: 18px !important;
+      width: 92vw !important;
+      max-width: 92vw !important;
+      min-width: 0 !important;
+      word-break: break-word !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-align: center !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      display: block !important;
+    }
+
+    /* Device-specific overrides */
+    @media (min-width: 411px) and (max-width: 413px) and (min-height: 914px) and (max-height: 916px){
+      .eventshowcase-pixel7-parent h1 {
+        font-size: 2.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-pixel7-parent p.eventshowcase-pixel7-subtitle {
+        font-size: 15px !important;
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-pixel7-parent {
+        max-width: 92vw !important;
+      }
+    }
+    @media (min-width: 429px) and (max-width: 431px) and (min-height: 931px) and (max-height: 933px){
+      .eventshowcase-14pro-parent h1 {
+        font-size: 2.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-14pro-parent p.eventshowcase-14pro-subtitle {
+        font-size: 15px !important;
+        padding-left: 45px !important;
+        padding-right: 45px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-14pro-parent {
+        max-width: 92vw !important;
+      }
+    }
+    @media (min-width: 389px) and (max-width: 391px) and (min-height: 843px) and (max-height: 845px) {
+      .eventshowcase-12pro-parent h1 {
+        font-size: 2.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-12pro-parent p.eventshowcase-12pro-subtitle {
+        font-size: 15px !important;
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-12pro-parent {
+        max-width: 92vw !important;
+      }
+    }
+    @media (min-width: 413px) and (max-width: 415px) and (min-height: 895px) and (max-height: 897px){
+      .eventshowcase-xr-parent h1 {
+        font-size: 2.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-xr-parent p.eventshowcase-xr-subtitle {
+        font-size: 15px !important;
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-xr-parent {
+        max-width: 92vw !important;
+      }
+    }
+    @media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px){
+      .eventshowcase-surfacepro-parent h1 {
+        font-size: 4.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-surfacepro-parent p.eventshowcase-surfacepro-subtitle {
+        font-size: 20px !important;
+        padding-left: 72px !important;
+        padding-right: 72px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-surfacepro-parent {
+        max-width: 92vw !important;
+      }
+    }
+    @media (min-width: 767px) and (max-width: 769px) and (min-height: 1023px) and (max-height: 1025px) {
+      .eventshowcase-ipadmini-parent h1 {
+        font-size: 4.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-ipadmini-parent p.eventshowcase-ipadmini-subtitle {
+        font-size: 20px !important;
+        padding-left: 72px !important;
+        padding-right: 72px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-ipadmini-parent {
+        max-width: 92vw !important;
+      }
+    }
     @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
-      .eventshowcase-ipadair-parent .eventshowcase-ipadair-subtitle {
-        font-size: 1.05rem !important;
-        line-height: 1.3 !important;
-        padding-left: 32px !important;
-        padding-right: 32px !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        min-width: 0 !important;
-        word-break: break-word !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        text-align: center !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        display: block !important;
+      .eventshowcase-ipadair-parent h1 {
+        font-size: 4.1rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
+      }
+      .eventshowcase-ipadair-parent p.eventshowcase-ipadair-subtitle {
+        font-size: 20px !important;
+        padding-left: 72px !important;
+        padding-right: 72px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -1px !important;
       }
       .eventshowcase-ipadair-parent {
-        max-width: none !important;
+        max-width: 92vw !important;
       }
     }
   `;
+  
+
 
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
@@ -291,7 +417,8 @@ const EventShowcase: React.FC = () => {
 
   return (
     <>
-      <style>{ipadAirStyle}</style>
+        <style>{devicestyles}</style>
+        
       <div ref={containerRef} className="relative overflow-hidden bg-gray-900">
       {/* Video Section - Will be pinned by GSAP ScrollTrigger */}
       <div className="h-screen overflow-hidden">
@@ -373,7 +500,7 @@ const EventShowcase: React.FC = () => {
             className="absolute inset-0 flex items-center justify-center text-center text-white z-20 opacity-0 px-4 lg:px-8"
             style={{ opacity: 0 }}
           >
-            <div className="max-w-6xl eventshowcase-ipadair-parent">
+            <div className="max-w-6xl eventshowcase-ipadair-parent eventshowcase-ipadmini-parent eventshowcase-xr-parent eventshowcase-12pro-parent eventshowcase-pixel7-parent eventshowcase-14pro-parent eventshowcase-surfacepro-parent">
               {/* Main Title */}
               <h1 
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-black mb-4 lg:mb-8 leading-none"
@@ -386,7 +513,7 @@ const EventShowcase: React.FC = () => {
               
               {/* Subtitle */}
               <p 
-                className="eventshowcase-ipadair-subtitle text-sm sm:text-base md:text-xl lg:text-3xl xl:text-4xl text-white max-w-5xl mx-auto leading-relaxed font-light px-4 lg:px-0"
+                className="eventshowcase-ipadair-subtitle eventshowcase-surfacepro-subtitle eventshowcase-xr-subtitle eventshowcase-12pro-subtitle eventshowcase-pixel7-subtitle eventshowcase-14pro-subtitle eventshowcase-ipadmini-subtitle text-sm sm:text-base md:text-xl lg:text-3xl xl:text-4xl text-white max-w-5xl mx-auto leading-relaxed font-light px-4 lg:px-0"
                 style={{
                   textShadow: '0 6px 30px rgba(0,0,0,0.9), 0 3px 15px rgba(0,0,0,0.8), 0 1px 8px rgba(0,0,0,0.7)',
                   filter: 'drop-shadow(0 3px 15px rgba(0,0,0,0.5))'

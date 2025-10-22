@@ -1,9 +1,291 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
-
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+
+// iPad Air, iPad Pro, and iPad Mini responsive styles
+const ipadResponsiveStyles = `
+	@media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px) {
+		/* Surface Pro 7 912x1368 - Move quotes container to the right */
+		.hero-content-container {
+			margin-left: 50px !important;
+			margin-right: 50px !important;
+			left: auto !important;
+			right: auto !important;
+			position: absolute !important;
+		}
+	}
+	@media (min-width: 767px) and (max-width: 769px) and (min-height: 1023px) and (max-height: 1025px) {
+		/* iPad Mini 768x1024 - Center, fit quotes, adjust layout */
+		.hero-content-container {
+			left: 50% !important;
+			right: auto !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			position: absolute !important;
+			padding-left: 24px !important;
+			padding-right: 24px !important;
+			max-width: 600px !important;
+			margin-top: 32px !important;
+			width: 95vw !important;
+			transform: translateX(-50%) scale(0.98) !important;
+			top: 0 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-start !important;
+			justify-content: center !important;
+			text-align: left !important;
+		}
+		.hero-title {
+			font-size: 2.1rem !important;
+			line-height: 1.13 !important;
+			margin-bottom: 14px !important;
+			max-width: 100% !important;
+			text-align: left !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			display: block !important;
+		}
+		.hero-title .absolute {
+			left: 0 !important;
+			transform: none !important;
+		}
+		.hero-subtitle {
+			font-size: 1.01rem !important;
+			line-height: 1.5 !important;
+			margin-bottom: 18px !important;
+			max-width: 95vw !important;
+			text-align: left !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			padding-right: 0 !important;
+			display: block !important;
+		}
+		.hero-buttons {
+			flex-direction: row !important;
+			gap: 10px !important;
+			margin-top: 18px !important;
+			align-items: left !important;
+			justify-content: left !important;
+			width: 100% !important;
+		}
+		.hero-button {
+			min-width: 120px !important;
+			justify-content: center !important;
+			padding: 10px 14px !important;
+			font-size: 0.95rem !important;
+			text-align: center !important;
+		}
+		.location-boxes-container {
+			padding: 0 10px !important;
+			margin-bottom: 18px !important;
+		}
+		.location-box {
+			padding: 16px !important;
+			min-width: 260px !important;
+			max-width: 320px !important;
+		}
+		.location-box-title {
+			font-size: 1rem !important;
+			margin-bottom: 10px !important;
+		}
+		.location-box-address {
+			font-size: 0.85rem !important;
+			margin-bottom: 14px !important;
+		}
+		.location-box-phone {
+			font-size: 0.9rem !important;
+			margin-bottom: 14px !important;
+		}
+	}
+		@media (min-width: 818px) and (max-width: 822px) and (min-height: 1178px) and (max-height: 1182px) {
+			/* iPad Air 820x1180 - Left align, zoom out, move right */
+			.hero-content-container {
+				left: 48px !important;
+				right: auto !important;
+				margin-left: 0 !important;
+				margin-right: auto !important;
+				position: absolute !important;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+				max-width: 720px !important;
+				margin-top: 38px !important;
+				text-align: left !important;
+				width: 95vw !important;
+				transform: scale(0.92) !important;
+			}
+			.hero-title {
+				font-size: 2.5rem !important;
+				line-height: 1.08 !important;
+				margin-bottom: 16px !important;
+				max-width: 100% !important;
+				text-align: left !important;
+				margin-left: 0 !important;
+				margin-right: auto !important;
+				display: block !important;
+			}
+			.hero-title .absolute {
+				left: 0 !important;
+				transform: none !important;
+			}
+			.hero-subtitle {
+				font-size: 1.02rem !important;
+				line-height: 1.5 !important;
+				margin-bottom: 24px !important;
+				max-width: 680px !important;
+				text-align: left !important;
+				margin-left: 0 !important;
+				margin-right: auto !important;
+				padding-right: 0 !important;
+				display: block !important;
+			}
+			.hero-buttons {
+				flex-direction: row !important;
+				gap: 14px !important;
+				margin-top: 20px !important;
+				align-items: flex-start !important;
+				justify-content: flex-start !important;
+				width: 100% !important;
+			}
+					.hero-button {
+						min-width: 140px !important;
+						justify-content: center !important;
+						padding: 12px 18px !important;
+						font-size: 0.98rem !important;
+						text-align: center !important;
+					}
+			.location-boxes-container {
+				padding: 0 16px !important;
+				margin-bottom: 24px !important;
+			}
+			.location-box {
+				padding: 20px !important;
+				min-width: 340px !important;
+				max-width: 380px !important;
+			}
+			.location-box-title {
+				font-size: 1.1rem !important;
+				margin-bottom: 12px !important;
+			}
+			.location-box-address {
+				font-size: 0.9rem !important;
+				margin-bottom: 20px !important;
+			}
+			.location-box-phone {
+				font-size: 0.95rem !important;
+				margin-bottom: 20px !important;
+			}
+		}
+  
+		@media (min-width: 1024px) and (max-width: 1034px) and (min-height: 1360px) and (max-height: 1380px) {
+			/* iPad Pro 11" 1024x1366 - Stronger zoom out for hero content */
+			.hero-content-container {
+				left: 60% !important;
+				transform: translateX(-50%) scale(0.82) !important;
+				padding-left: 80px !important;
+				padding-right: 36px !important;
+				max-width: 700px !important;
+				padding-bottom: 200px !important;
+				width: calc(100% - 72px) !important;
+			}
+			.hero-title {
+				font-size: 2.7rem !important;
+				line-height: 1.05 !important;
+				margin-bottom: 18px !important;
+			}
+			.hero-subtitle {
+				font-size: 1.05rem !important;
+				line-height: 1.45 !important;
+				margin-bottom: 30px !important;
+				max-width: 600px !important;
+			}
+			.hero-buttons {
+				flex-direction: row !important;
+				gap: 24px !important;
+				margin-top: 30px !important;
+			}
+			.hero-button {
+				padding: 16px 28px !important;
+				font-size: 1rem !important;
+			}
+			.location-boxes-container {
+				padding: 0 24px !important;
+				margin-bottom: 32px !important;
+			}
+			.location-box {
+				padding: 24px !important;
+				min-width: 280px !important;
+				max-width: 320px !important;
+			}
+			.location-box-title {
+				font-size: 1.2rem !important;
+				margin-bottom: 16px !important;
+			}
+			.location-box-address {
+				font-size: 1rem !important;
+				margin-bottom: 24px !important;
+			}
+			.location-box-phone {
+				font-size: 1.05rem !important;
+				margin-bottom: 24px !important;
+			}
+		}
+  
+	@media (min-width: 1365px) and (max-width: 1375px) and (min-height: 1020px) and (max-height: 1030px) {
+		/* iPad Pro 12.9" 1366x1024 - Zoom out hero content */
+		.hero-content-container {
+			left: 60% !important;
+			transform: translateX(-50%) scale(0.92) !important;
+			padding-left: 60px !important;
+			padding-right: 60px !important;
+			max-width: 1000px !important;
+			margin-top: 30px !important;
+			width: calc(100% - 120px) !important;
+		}
+		.hero-title {
+			font-size: 3.7rem !important;
+			line-height: 1.05 !important;
+			margin-bottom: 22px !important;
+		}
+		.hero-subtitle {
+			font-size: 1.22rem !important;
+			line-height: 1.6 !important;
+			margin-bottom: 50px !important;
+			max-width: 80% !important;
+		}
+		.hero-buttons {
+			flex-direction: row !important;
+			gap: 32px !important;
+			margin-top: 40px !important;
+		}
+		.hero-button {
+			padding: 20px 40px !important;
+			font-size: 1.13rem !important;
+		}
+		.location-boxes-container {
+			padding: 0 32px !important;
+			margin-bottom: 40px !important;
+		}
+		.location-box {
+			padding: 28px !important;
+			min-width: 320px !important;
+			max-width: 380px !important;
+		}
+		.location-box-title {
+			font-size: 1.3rem !important;
+			margin-bottom: 18px !important;
+		}
+		.location-box-address {
+			font-size: 1.1rem !important;
+			margin-bottom: 28px !important;
+		}
+		.location-box-phone {
+			font-size: 1.15rem !important;
+			margin-bottom: 28px !important;
+		}
+	}
+`;
 
 const slides = [
 	{
@@ -111,6 +393,7 @@ const HeroSection = () => {
 
 	return (
 		<>
+			<style>{ipadResponsiveStyles}</style>
 			<motion.section
 				id="hero"
 				className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white group lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px]"
@@ -242,7 +525,7 @@ const HeroSection = () => {
 
 				{/* Enhanced content section with modern styling - Responsive */}
 				<div
-					className="absolute left-2 sm:left-4 md:left-8 lg:left-[250px] top-0 h-full flex flex-col justify-center z-20 px-3 sm:px-4 md:px-6 lg:px-20 scale-90 sm:scale-100 md:scale-110 lg:scale-150"
+					className="hero-content-container absolute left-2 sm:left-4 md:left-8 lg:left-[250px] top-0 h-full flex flex-col justify-center z-20 px-3 sm:px-4 md:px-6 lg:px-20 scale-90 sm:scale-100 md:scale-110 lg:scale-150"
 					style={{
 						pointerEvents: "none",
 						width: "calc(100% - 1rem)",
@@ -275,7 +558,7 @@ const HeroSection = () => {
 							style={{ pointerEvents: "none" }}
 						/>
 						<motion.h1
-							className="text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group"
+							className="hero-title text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group"
 							initial={false}
 							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
 							transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
@@ -289,22 +572,22 @@ const HeroSection = () => {
 							/>
 						</motion.h1>
 						<motion.p
-							className="text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-left mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
+							className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-left mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
 							initial={false}
 							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
 							transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
 						>
 							{translate(slides[current].subheadline)}
 						</motion.p>
-						<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 mt-2">
+						<div className="hero-buttons flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 mt-2">
 							{slides[current].buttons.map((btn, idx) => (
 								<motion.a
 									key={btn.label}
 									href={btn.href}
 									className={
 										idx === 0
-											? `bg-gradient-to-r from-[#2B3990] to-blue-700 hover:from-blue-700 hover:to-[#2B3990] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#2B3990]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
-											: `bg-gradient-to-r from-[#333] to-[#222] hover:from-[#222] hover:to-[#111] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#333]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
+											? `hero-button bg-gradient-to-r from-[#2B3990] to-blue-700 hover:from-blue-700 hover:to-[#2B3990] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#2B3990]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
+											: `hero-button bg-gradient-to-r from-[#333] to-[#222] hover:from-[#222] hover:to-[#111] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#333]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
 									}
 									tabIndex={0}
 									initial={false}
@@ -324,23 +607,23 @@ const HeroSection = () => {
 
 			{/* Enhanced Location Boxes Section - Fully Responsive */}
 			<div
-				className="absolute bottom-0 mb-6 w-full flex justify-center items-center pointer-events-none"
+				className="location-boxes-container absolute bottom-0 mb-6 w-full flex justify-center items-center pointer-events-none"
 				style={{ position: "relative", zIndex: 30, marginTop: "40px" }}
 			>
 				<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto">
 					{/* Enhanced Manila Box - Responsive */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-title text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							MANILA
 						</div>
-						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="location-box-address text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila,
 							Philippines
 						</div>
-						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-phone flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"
@@ -378,18 +661,18 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Cebu Box - Responsive */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-title text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							CEBU
 						</div>
-						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="location-box-address text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu
 							City, Philippines
 						</div>
-						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-phone flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"
@@ -427,17 +710,17 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Davao Box - Responsive */}
-					<div className="flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-						<div className="text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-title text-white text-lg sm:text-xl font-bold mb-2 sm:mb-3 tracking-wide relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							DAVAO
 						</div>
-						<div className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
+						<div className="location-box-address text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-white transition-colors duration-300">
 							555 Manga St., Juna Subd, Matina, 8000 Davao City, Philippines
 						</div>
-						<div className="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
+						<div className="location-box-phone flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base font-semibold mb-4 sm:mb-6 relative z-10 group-hover:text-blue-100 transition-colors duration-300">
 							<div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<svg
 									width="18"

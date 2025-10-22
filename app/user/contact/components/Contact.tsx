@@ -116,9 +116,10 @@ export default function Contact() {
         <div className="mx-auto w-20 h-1 rounded-full bg-gradient-to-r from-[#2B3990] to-blue-500" />
       </div>
 
-      {/* Desktop title and tabs (unchanged for ≥913px) */}
-      <div className="hidden lg:block w-full max-w-6xl mx-auto mb-4 sm:mb-6 md:mb-8 z-10 relative">
-        <div className="text-left mb-4 sm:mb-6 md:mb-8">
+    
+      {/* Desktop title and tabs side-by-side for 1365x945 screens (actual code, no extra media query) */}
+      <div className="hidden lg:flex w-full max-w-6xl mx-auto mb-4 sm:mb-6 md:mb-8 z-10 relative items-end justify-between gap-0">
+        <div className="text-left mb-0">
           <h1 className="text-4xl lg:text-5xl font-bold text-[#2B3990] mb-2">
             <span className="relative inline-block">
               CONTACT US
@@ -132,8 +133,8 @@ export default function Contact() {
             </span>
           </h1>
         </div>
-        {/* Location Tabs */}
-        <div className="flex justify-start">
+        {/* Location Tabs - to the right of CONTACT US */}
+        <div className="flex justify-start mb-0 ml-8">
           <div className="bg-white/80 backdrop-blur-sm p-1 rounded-2xl shadow-lg border border-gray-200/50 inline-flex flex-wrap justify-center gap-0 w-auto max-w-md">
             {locations.map((location) => (
               <motion.button

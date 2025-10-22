@@ -119,7 +119,7 @@ export default function RootLayout({
   const isLoading = mounted ? loading : false;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >

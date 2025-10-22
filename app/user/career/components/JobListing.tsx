@@ -229,9 +229,17 @@ export default function JobListing() {
             margin-top: 3px !important;
           }
         }
+        
+         @media (min-width: 767px) and (max-width: 769px) and (min-height: 1023px) and (max-height: 1025px) {  
+          .joblisting-section-ipadmini {
+            margin-top: 1px !important;
+          }
+        }
+        
       `}</style>
+
       <motion.section
-        className="joblisting-section-ipad w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+        className="joblisting-section-ipad joblisting-section-ipadmini w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}

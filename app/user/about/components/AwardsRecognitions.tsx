@@ -117,6 +117,17 @@ const AwardSection = () => {
                 },
             },
             {
+                // iPad Mini 768x1024 (portrait)
+                breakpoint: 1025,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    dots: true,
+                    centerMode: false,
+                },
+            },
+            {
                 breakpoint: 912,
                 settings: {
                     slidesToShow: 2,
