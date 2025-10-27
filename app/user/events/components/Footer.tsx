@@ -72,17 +72,18 @@ const Footer = () => {
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-200 group-hover:w-20 transition-all duration-300" />
             </h3>
             <div className="text-xs sm:text-sm text-blue-100 w-full space-y-1 sm:space-y-2">
-              <div className="flex justify-between w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
-                <span className="font-medium">Monday - Friday</span>
-                <span className="text-blue-200">8:00 AM to 5:00 PM</span>
+              {/* Mobile/Tablet (≤912px): inline, Desktop (≥913px): stacked */}
+              <div className="flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
+                <span className="font-medium whitespace-nowrap">Monday - Friday</span>
+                <span className="text-blue-200 ml-2 md:ml-0 md:mt-1">8:00 AM to <br /> 5:00 PM</span>
               </div>
-              <div className="flex justify-between w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
-                <span className="font-medium">Saturday</span>
-                <span className="text-blue-200 pl-2"> 8:00 AM to 5:00 PM</span>
+              <div className="flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
+                <span className="font-medium whitespace-nowrap">Saturday</span>
+                <span className="text-blue-200 ml-2 md:ml-0 md:mt-1">8:00 AM to <br /> 5:00 PM</span>
               </div>
-              <div className="flex justify-between w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
-                <span className="font-medium">Sunday </span>
-                <span className="text-red-300">Closed</span>
+              <div className="flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start w-full max-w-xs py-1 rounded group/hour hover:bg-white/10 hover:px-2 transition-all duration-200">
+                <span className="font-medium whitespace-nowrap">Sunday</span>
+                <span className="text-red-300 ml-2 md:ml-0 md:mt-1">Closed</span>
               </div>
             </div>
           </div>

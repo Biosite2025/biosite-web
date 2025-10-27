@@ -1,44 +1,91 @@
+
 "use client";
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function SideNav() {
-	const [sideNavOpen, setSideNavOpen] = useState(false);
-	const [expandedSection, setExpandedSection] = useState<string | null>(null);
-	const pathname = usePathname();
+		const [sideNavOpen, setSideNavOpen] = useState(false);
+		const [expandedSection, setExpandedSection] = useState<string | null>(null);
+		const pathname = usePathname();
+		// Scroll hide/show logic (exact copy from TopNav)
+		const [showNav, setShowNav] = useState(true);
+		const [scrollY, setScrollY] = useState(0);
+		const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
+		
+		React.useEffect(() => {
+			let lastScrollY = window.scrollY;
+			let ticking = false;
+			const handleScroll = () => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						const currentScrollY = window.scrollY;
+						setScrollY(currentScrollY);
+						
+						// Only apply on mobile screens (lg:hidden), apply to ALL pages
+						const isMobile = window.innerWidth < 1024;
+						
+						if (isMobile) {
+							// Mobile scroll logic - same as TopNav but for mobile screens only
+							const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+							
+							if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) {
+								// Scrolling down - hide nav
+								setScrollDirection('down');
+								setShowNav(false);
+							} else if (currentScrollY < lastScrollY && scrollDifference > 5) {
+								// Scrolling up - show nav
+								setScrollDirection('up');
+								setShowNav(true);
+							}
+							
+							// Always show nav when at top
+							if (currentScrollY <= 50) {
+								setShowNav(true);
+							}
+						} else {
+							// Desktop - always show (this component is hidden on desktop anyway)
+							setShowNav(true);
+						}
+						lastScrollY = currentScrollY;
+						ticking = false;
+					});
+					ticking = true;
+				}
+			};
+			window.addEventListener('scroll', handleScroll, { passive: true });
+			return () => window.removeEventListener('scroll', handleScroll);
+		}, []);
 
+		const closeSideNav = () => {
+			setSideNavOpen(false);
+			setExpandedSection(null); // Reset expanded sections when closing
+		};
 
+		// Handle keyboard navigation
+		useEffect(() => {
+			const handleKeyDown = (event: KeyboardEvent) => {
+				if (event.key === 'Escape' && sideNavOpen) {
+					closeSideNav();
+				}
+			};
 
-	const closeSideNav = () => {
-		setSideNavOpen(false);
-		setExpandedSection(null); // Reset expanded sections when closing
-	};
-
-	// Handle keyboard navigation
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape' && sideNavOpen) {
-				closeSideNav();
+			if (sideNavOpen) {
+				document.addEventListener('keydown', handleKeyDown);
+				// Prevent body scroll when menu is open
+				document.body.style.overflow = 'hidden';
+			} else {
+				document.body.style.overflow = 'unset';
 			}
-		};
 
-		if (sideNavOpen) {
-			document.addEventListener('keydown', handleKeyDown);
-			// Prevent body scroll when menu is open
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
-
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-			document.body.style.overflow = 'unset';
-		};
-	}, [sideNavOpen]);
+			return () => {
+				document.removeEventListener('keydown', handleKeyDown);
+				document.body.style.overflow = 'unset';
+			};
+		}, [sideNavOpen]);
 	
 	const toggleSection = (section: string) => {
 		// Prevent event bubbling and handle nested expansions better
@@ -131,41 +178,50 @@ export function SideNav() {
 		}
 	};
 
-	return (
-		<>
-			{/* Mobile/Tablet Top Bar - Show only on screens < 1024px */}
-			<nav className="flex lg:hidden items-center justify-between h-16 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm z-50 relative sticky top-0">
-				{/* Logo Section */}
-				<Link href="/user/about" className="flex items-center h-full touch-manipulation">
-					<Image
-						src="/asset/BMI logo.png"
-						alt="Biosite Medical Instruments Logo"
-						width={140}
-						height={40}
-						className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
-						priority
-					/>
-				</Link>
-				
-				{/* Tagline - Hidden on very small screens */}
-				<div className="hidden sm:flex flex-1 justify-center px-4">
-					<span className="text-gray-700 font-medium text-sm italic tracking-wide text-center opacity-80">
-						Every Life deserves the Best Care
-					</span>
-				</div>
-				
-				{/* Hamburger Menu Button */}
-				<button
-					className="ml-auto flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 transition-all duration-200 touch-manipulation"
-					aria-label="Open menu"
-					onClick={() => setSideNavOpen(true)}
+		return (
+			<>
+				{/* Mobile/Tablet Top Bar - Show only on screens < 1024px, with scroll hide/show transition */}
+				<motion.nav
+					initial={false}
+					animate={showNav ? { y: 0, opacity: 1, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.08)' } : { y: -100, opacity: 0, boxShadow: 'none' }}
+					transition={{
+						y: { type: 'spring', stiffness: 400, damping: 40, duration: 0.6 },
+						opacity: { duration: 0.4, ease: 'easeInOut' },
+						boxShadow: { duration: 0.4, ease: 'easeInOut' }
+					}}
+					whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
+					className="flex lg:hidden items-center justify-between h-16 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm z-50 fixed top-0 w-full"
+					style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
 				>
-					<span className="sr-only">Open menu</span>
-					<svg className="w-7 h-7 text-[#2B3990]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-						<path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-					</svg>
-				</button>
-			</nav>
+					{/* Logo Section */}
+					<Link href="/user/about" className="flex items-center h-full touch-manipulation">
+						<Image
+							src="/asset/BMI logo.png"
+							alt="Biosite Medical Instruments Logo"
+							width={140}
+							height={40}
+							className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
+							priority
+						/>
+					</Link>
+					{/* Tagline - Hidden on very small screens */}
+					<div className="hidden sm:flex flex-1 justify-center px-4">
+						<span className="text-gray-700 font-medium text-sm italic tracking-wide text-center opacity-80">
+							Because Every Life deserves the Best Care
+						</span>
+					</div>
+					{/* Hamburger Menu Button */}
+					<button
+						className="ml-auto flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 transition-all duration-200 touch-manipulation"
+						aria-label="Open menu"
+						onClick={() => setSideNavOpen(true)}
+					>
+						<span className="sr-only">Open menu</span>
+						<svg className="w-7 h-7 text-[#2B3990]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					</button>
+				</motion.nav>
 			
 			{/* Side Navigation Overlay */}
 			<AnimatePresence>
@@ -362,7 +418,7 @@ export function SideNav() {
 								<div className="mt-auto p-4 border-t border-gray-200/50 bg-gray-50/50">
 									<div className="text-center">
 										<p className="text-xs text-gray-500 italic">
-											Every Life deserves the Best Care
+											Because Every Life deserves the Best Care
 										</p>
 									</div>
 								</div>

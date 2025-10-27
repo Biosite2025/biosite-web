@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
 import Tilt from 'react-parallax-tilt';
+import ParticlesBackground from './ParticlesBackground';
 
 // Product categories based on folder structure
 const categories = [
@@ -63,7 +64,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						{/* X Button */}
 						<button
 							onClick={product.onClose}
-							className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 text-gray-400 hover:text-gray-700 text-xl sm:text-2xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-3 max-[912px]:right-3 max-[912px]:text-lg"
+							className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 text-gray-400 hover:text-gray-700 text-xl sm:text-2xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-0.5 max-[912px]:right-3 max-[912px]:text-lg"
 							aria-label="Close modal"
 							type="button"
 						>
@@ -273,33 +274,34 @@ export default function NikonMicroscopes() {
 		setSelectedProduct(null);
 	};
 
-	return (
-		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-			{/* Hero Section */}
-			<motion.section
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 1 }}
-				className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
-			>
-				{/* Animated Background Pattern */}
-				<div className="absolute inset-0 w-full h-full">
-					<div
-						className="absolute inset-0 w-full h-full "
-						style={{
-							backgroundImage: "url('/asset/nikon microscopes/nikonbackground.jpg')",
-							backgroundSize: 'cover',
-							backgroundPosition: 'center',
-							filter: 'blur(1px)',
-							opacity: 0.35,
-							zIndex: 1,
-                            
-						}}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-blue-900 opacity-40 mix-blend-multiply z-2" />
-				</div>
+		return (
+			<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+				{/* Hero Section */}
+				<motion.section
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 1 }}
+					className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
+				>
+					{/* Background Image */}
+					<div className="absolute inset-0 w-full h-full z-0">
+						<Image
+							src="/asset/nikon microscopes/nikonbackground.jpg"
+							alt="Nikon Background"
+							fill
+							className="object-cover w-full h-full"
+							priority={true}
+						/>
+						{/* Yellow overlay with low opacity */}
+						<div className="absolute inset-0 w-full h-full bg-yellow-300" style={{ opacity: 0.4, zIndex: 1 }} />
+					</div>
+					{/* Particles Background Animation */}
+					<div className="absolute inset-0 w-full h-full z-10">
+						<ParticlesBackground containerId="particles-js" />
+						<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+					</div>
 
-				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
+					<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
 					<motion.div
 						initial={{ y: 30, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}

@@ -444,9 +444,9 @@ const MissionVision = () => {
     <style>{ipadMissionVisionStyles}</style>
     <motion.section
       id="mission-vision"
-      className="mission-vision-main-container relative py-8 sm:py-12 md:py-16 lg:py-24 px-3 sm:px-4 md:px-6 lg:px-12 min-h-screen sm:min-h-[100vh] md:min-h-[110vh] flex items-center justify-center bg-blue-500/90 overflow-hidden"
+      className="mission-vision-main-container relative py-8 sm:py-12 md:py-16 lg:py-24 px-3 sm:px-4 md:px-6 lg:px-12 min-h-screen sm:min-h-[100vh] md:min-h-[110vh] flex items-center justify-center bg-blue-500/90 overflow-hidden mt-0"
       style={{
-        backgroundImage: `url('/asset/istockphoto-511061090-612x612.jpg')`,
+        backgroundImage: `url('/asset/slide (3).png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -457,7 +457,7 @@ const MissionVision = () => {
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-blue-500/80 backdrop-blur-sm z-0" />
+  <div className="absolute inset-0 bg-blue-500/80 z-0" />
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
         {/* Responsive flex: stack on mobile/tablet, row on xl+ */}
         <div className="mission-vision-content-wrapper w-full flex flex-col xl:flex-row gap-4 sm:gap-6 xl:gap-12 items-start xl:items-start justify-center scale-90 sm:scale-95 md:scale-100 xl:scale-120 max-[1365px]:overflow-x-hidden max-[912px]:gap-6">

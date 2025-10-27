@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
+import ParticlesBackground from './ParticlesBackground';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
@@ -75,9 +76,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						{/* X Button */}
 						<button
 							onClick={product.onClose}
-							className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 text-gray-400 hover:text-gray-700 text-xl sm:text-2xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-3 max-[912px]:right-3 max-[912px]:text-lg"
+							className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 text-gray-400 hover:text-gray-700 text-xl sm:text-2xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-3 max-[912px]:right-3 max-[912px]:text-lg z-50"
 							aria-label="Close modal"
 							type="button"
+							style={{ zIndex: 100 }}
 						>
 							&times;
 						</button>
@@ -292,21 +294,28 @@ export default function NikonMicroscopes() {
 						transition={{ duration: 1 }}
 						className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 					>
-						{/* Animated Background Pattern */}
-						<div className="absolute inset-0 w-full h-full">
-							<div
-								className="absolute inset-0 w-full h-full "
-								style={{
-									backgroundImage: "url('/asset/Sakura/backgroundforsakura.jpg')",
-									backgroundSize: 'cover',
-									backgroundPosition: 'center',
-									filter: 'blur(1px)',
-									opacity: 0.35,
-									zIndex: 1,
-								}}
-							/>
-							<div className="absolute inset-0 w-full h-full bg-blue-900 opacity-40 mix-blend-multiply z-2" />
-						</div>
+									{/* Animated Background Pattern + Particles + Red Overlay */}
+									<div className="absolute inset-0 w-full h-full">
+										{/* Existing background image */}
+										<div
+											className="absolute inset-0 w-full h-full "
+											style={{
+												backgroundImage: "url('/asset/Sakura/backgroundforsakura.jpg')",
+												backgroundSize: 'cover',
+												backgroundPosition: 'center',
+												filter: 'blur(1px)',
+												opacity: 0.35,
+												zIndex: 1,
+											}}
+										/>
+										{/* Red overlay with low opacity */}
+										<div className="absolute inset-0 w-full h-full bg-red-600" style={{ opacity: 0.18, zIndex: 2 }} />
+									</div>
+									{/* Particle animation above overlays */}
+									<div className="absolute inset-0 w-full h-full z-10">
+										<ParticlesBackground containerId="particles-js-sakura" />
+										<div className="absolute inset-0 w-full h-full bg-blue-900 opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+									</div>
 
 						<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
 							<motion.div

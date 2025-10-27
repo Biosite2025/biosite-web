@@ -38,7 +38,7 @@ const WebsiteDetails = () => {
             <motion.img
               src="/asset/image.png"
               alt="Biosite Team"
-              className="website-details-img-ipad w-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+              className="website-details-img-ipad w-full h-[430px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
               initial={{ scale: 0.98, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.9, ease: 'easeOut' }}

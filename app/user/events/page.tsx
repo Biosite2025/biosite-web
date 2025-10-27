@@ -7,7 +7,7 @@ import EventGallery from './components/EventGallery';
 
 export default function Page() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 lg:pt-0">
       <EventCalendar />
       <EventShowcase />
       <EventGallery />

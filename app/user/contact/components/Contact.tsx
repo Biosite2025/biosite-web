@@ -296,6 +296,23 @@ export default function Contact() {
         </motion.div>
       </div>
       {/* Contact Info Cards */}
+      <style>{`
+        @media (min-width: 768px) and (max-width: 912px) {
+          .contact-cards-ipad {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr !important;
+            gap: 24px !important;
+            margin-top: 36px !important;
+          }
+          .contact-card-ipad {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            padding: 28px 18px !important;
+            font-size: 1.08rem !important;
+          }
+        }
+      `}</style>
       <motion.div
         key={`cards-${activeLocation}`}
         className="contact-cards-ipad w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-12 lg:mt-16 z-10 relative"
@@ -346,7 +363,7 @@ export default function Contact() {
             </svg>
           </motion.span>
           <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-center">{currentLocation.phone}</div>
-          <div className="text-xs sm:text-sm md:text-base opacity-90 text-center px-2">{currentLocation.email}</div>
+          <div className="text-xs sm:text-sm md:text-s opacity-90 text-center px-2">{currentLocation.email}</div>
         </motion.div>
 
         {/* Location Card */}

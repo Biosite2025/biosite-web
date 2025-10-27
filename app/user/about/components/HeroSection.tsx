@@ -6,6 +6,37 @@ import { useState, useEffect, useRef } from "react";
 
 // iPad Air, iPad Pro, and iPad Mini responsive styles
 const ipadResponsiveStyles = `
+	@media (min-width: 768px) and (max-width: 912px) {
+		.location-boxes-container {
+			justify-content: center !important;
+			margin-left: auto !important;
+			margin-right: auto !important;
+			width: 100% !important;
+			display: flex !important;
+			scale: 0.95 !important;
+			margin-left: -30px !important;
+		}
+		.location-boxes-container > div {
+			scale: 0.9 !important;
+			display: grid !important;
+			grid-template-columns: 1fr 1fr 1fr !important;
+			gap: 24px !important;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+			margin-left: auto !important;
+			margin-right: auto !important;
+			justify-items: center !important;
+		}
+		.location-box {
+			width: 100% !important;
+			min-width: 0 !important;
+			max-width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			padding: 28px 18px !important;
+			font-size: 1.08rem !important;
+		}
+	}
 	@media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px) {
 		/* Surface Pro 7 912x1368 - Move quotes container to the right */
 		.hero-content-container {
@@ -158,11 +189,23 @@ const ipadResponsiveStyles = `
 			.location-boxes-container {
 				padding: 0 16px !important;
 				margin-bottom: 24px !important;
+				scale: 1.1 !important;
+				margin-left: 0 !important;
+				margin-right: 0 !important;
+				justify-content: center !important;
+			}
+			.location-boxes-container > div {
+				display: flex !important;
+				flex-direction: row !important;
+				gap: 16px !important;
+				justify-content: center !important;
+				align-items: stretch !important;
 			}
 			.location-box {
 				padding: 20px !important;
-				min-width: 340px !important;
-				max-width: 380px !important;
+				min-width: 200px !important;
+				max-width: 240px !important;
+				flex: 1 !important;
 			}
 			.location-box-title {
 				font-size: 1.1rem !important;

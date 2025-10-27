@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -136,6 +136,18 @@ const EventCalendar: React.FC = () => {
     setIsModalOpen(false);
     setSelectedEvent(null);
   };
+
+  // Close modal on scroll (all devices)
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleScroll = () => {
+      closeModal();
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isModalOpen]);
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
@@ -335,97 +347,106 @@ const EventCalendar: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Event Details Modal */}
-      {isModalOpen && selectedEvent && (
-        <>
-          {/* Invisible overlay to prevent background clicks */}
-          <div 
-            className="fixed inset-0 z-40 bg-black/50 lg:bg-transparent"
-            onClick={closeModal}
-          />
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4 lg:mx-0">
+      {/* Event Details Modal with AnimatePresence for exit animation */}
+      <AnimatePresence>
+        {isModalOpen && selectedEvent && (
+          <>
+            {/* Invisible overlay to prevent background clicks */}
             <motion.div
+              key="modal-overlay"
+              className="fixed inset-0 z-40 bg-black/50 lg:bg-transparent"
+              onClick={closeModal}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.div
+              key="modal-content"
+              className="fixed inset-4 z-50 flex items-center justify-center max-[912px]:inset-2 max-[912px]:items-center max-[912px]:justify-center max-[912px]:pt-0 lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:inset-auto lg:w-full lg:max-w-md lg:mx-4 lg:flex-none"
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[90vh] overflow-y-auto"
             >
-            {/* Modal Header */}
-            <div className="flex justify-between items-start mb-3 lg:mb-4">
-              <div>
-                <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-1">
-                  {selectedEvent.title}
-                </h3>
-                <span 
-                  className="inline-block px-2 lg:px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
-                  style={{ backgroundColor: getCategoryColor(selectedEvent.category) }}
-                >
-                  {selectedEvent.category}
-                </span>
-              </div>
-              {/* X button hidden as requested */}
-              {/* <button
-                onClick={closeModal}
-                className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200"
-              >
-                ×
-              </button> */}
-            </div>
-
-            {/* Modal Content */}
-            <div className="space-y-3 lg:space-y-4">
-              <div className="bg-gray-50 rounded-lg p-3 lg:p-4">
-                <div className="flex items-center text-gray-600 mb-2">
-                  <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span className="font-medium text-sm lg:text-base">
-                    {new Date(selectedEvent.date).toLocaleDateString('en-US', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}
-                  </span>
+              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[85vh] overflow-y-auto max-[912px]:max-h-[80vh] max-[912px]:mx-2">
+                {/* Modal Header */}
+                <div className="flex justify-between items-start mb-3 lg:mb-4">
+                  <div>
+                    <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-1">
+                      {selectedEvent.title}
+                    </h3>
+                    <span 
+                      className="inline-block px-2 lg:px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
+                      style={{ backgroundColor: getCategoryColor(selectedEvent.category) }}
+                    >
+                      {selectedEvent.category}
+                    </span>
+                  </div>
+                  <button
+                    onClick={closeModal}
+                    aria-label="Close"
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 ml-2 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 rounded"
+                    type="button"
+                  >
+                    ×
+                  </button>
                 </div>
 
-                {selectedEvent.time && (
-                  <div className="flex items-center text-gray-600 mb-2">
-                    <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-sm lg:text-base">{selectedEvent.time}</span>
-                  </div>
-                )}
+                {/* Modal Content */}
+                <div className="space-y-3 lg:space-y-4">
+                  <div className="bg-gray-50 rounded-lg p-3 lg:p-4">
+                    <div className="flex items-center text-gray-600 mb-2">
+                      <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="font-medium text-sm lg:text-base">
+                        {new Date(selectedEvent.date).toLocaleDateString('en-US', { 
+                          weekday: 'long', 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </span>
+                    </div>
 
-                {selectedEvent.location && (
-                  <div className="flex items-center text-gray-600">
-                    <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="text-sm lg:text-base">{selectedEvent.location}</span>
-                  </div>
-                )}
-              </div>
+                    {selectedEvent.time && (
+                      <div className="flex items-center text-gray-600 mb-2">
+                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-sm lg:text-base">{selectedEvent.time}</span>
+                      </div>
+                    )}
 
-              {selectedEvent.description && (
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-2 text-sm lg:text-base">Description</h4>
-                  <p className="text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg text-sm lg:text-base">
-                    {selectedEvent.description}
-                  </p>
+                    {selectedEvent.location && (
+                      <div className="flex items-center text-gray-600">
+                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span className="text-sm lg:text-base">{selectedEvent.location}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {selectedEvent.description && (
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2 text-sm lg:text-base">Description</h4>
+                      <p className="text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg text-sm lg:text-base">
+                        {selectedEvent.description}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Modal Footer */}
-            {/* Modal Footer removed as requested */}
-          </motion.div>
-          </div>
-        </>
-      )}
+                {/* Modal Footer */}
+                {/* Modal Footer removed as requested */}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Custom FullCalendar Styles */}
       <style jsx global>{`
