@@ -182,7 +182,7 @@ const AboutUs = () => {
           <div className="relative mb-2 w-full aboutus-modern-title">
             <div className="absolute -left-1 sm:-left-2 top-0 w-0.5 sm:w-1 h-full bg-gradient-to-b from-[#2356a8] to-[#2356a8]/50 rounded-full transform scale-y-0 hover:scale-y-100 transition-transform duration-500 ease-out origin-top" />
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#222] mb-2 sm:mb-3 tracking-tight uppercase relative group">
-              ABOUT US
+              TEST ABOUT US
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#2356a8] group-hover:w-16 sm:group-hover:w-20 transition-all duration-500 ease-out" />
             </h2>
           </div>
