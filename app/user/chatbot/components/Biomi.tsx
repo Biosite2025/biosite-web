@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import PixelBlast from './PixelBlast';
 
 // FAQ data structure
 const FAQ_DATA = [
@@ -224,9 +225,30 @@ export default function BiomiFAQ() {
 	
 	// Main container styles
 				return (
-					<div className="mb-6 sm:mb-[40px] md:mb-[60px] scale-90 sm:scale-95 md:scale-100 lg:scale-115 flex justify-center items-center min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] py-3 sm:py-5 md:py-8 lg:py-12 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 lg:pt-12 pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
+					<div className="relative mb-6 sm:mb-[40px] md:mb-[60px] scale-90 sm:scale-95 md:scale-100 lg:scale-115 flex justify-center items-center min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] py-3 sm:py-5 md:py-8 lg:py-12 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 lg:pt-12 pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
+			{/* PixelBlast Animated Background */}
+			<PixelBlast
+				variant="circle"
+				pixelSize={6}
+				color="#2B3990"
+				className="z-0"
+				patternScale={3}
+				patternDensity={1.2}
+				pixelSizeJitter={0.5}
+				enableRipples
+				rippleSpeed={0.4}
+				rippleThickness={0.12}
+				rippleIntensityScale={1.5}
+				liquid
+				liquidStrength={0.12}
+				liquidRadius={1.2}
+				liquidWobbleSpeed={5}
+				speed={0.6}
+				edgeFade={0.25}
+				transparent
+			/>
 			<motion.div
-				className="w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl md:shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-col sm:flex-row min-h-[350px] sm:min-h-[380px] md:min-h-[420px] max-[912px]:min-h-0 max-[912px]:mt-0 max-[912px]:mb-0"
+				className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl md:shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-col sm:flex-row min-h-[350px] sm:min-h-[380px] md:min-h-[420px] max-[912px]:min-h-0 max-[912px]:mt-0 max-[912px]:mb-0"
 				initial={{ opacity: 0, scale: 0.96 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -317,15 +339,15 @@ export default function BiomiFAQ() {
 										← Back to Questions
 									</button>
 									{/* User question bubble */}
-									<div className="flex items-end gap-1 sm:gap-2 self-end">
-										<div className="rounded-xl sm:rounded-2xl bg-[#0056D2] text-white px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md">
+									<div className="flex items-end gap-1 sm:gap-2 justify-end max-[912px]:justify-end">
+										<div className="rounded-xl sm:rounded-2xl bg-[#0056D2] text-white px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md max-[912px]:max-w-[80%]">
 											{FAQ_DATA[selectedCategory].questions[selectedQuestion].q}
 										</div>
 									</div>
 									{/* Biomi answer bubble */}
-									<div className="flex items-start gap-1 sm:gap-2">
+									<div className="flex items-start gap-1 sm:gap-2 justify-start max-[912px]:justify-start">
 										<BiomiAvatar size={24} />
-										<div className="rounded-xl sm:rounded-2xl bg-white border border-[#e3eaf7] text-[#0056D2] px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md">
+										<div className="rounded-xl sm:rounded-2xl bg-white border border-[#e3eaf7] text-[#0056D2] px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md max-[912px]:max-w-[75%]">
 											{FAQ_DATA[selectedCategory].questions[selectedQuestion].a}
 										</div>
 									</div>
