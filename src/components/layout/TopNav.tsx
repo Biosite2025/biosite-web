@@ -25,11 +25,10 @@ export function TopNav() {
           const currentScrollY = window.scrollY;
           setScrollY(currentScrollY);
           
-          // On mobile screens or events page, always show nav
+          // On mobile screens, always show nav
           const isMobile = window.innerWidth < 1024;
-          const isEventsPage = window.location.pathname.includes('/events');
           
-          if (isMobile || isEventsPage) {
+          if (isMobile) {
             setShowNav(true);
           } else {
             // Improved desktop logic with better threshold

@@ -1,5 +1,6 @@
 'use client'; 
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -96,62 +97,29 @@ const getCardAnimate = (i: number) => ({
 });
 
 const AwardSection = () => {
+    // Hydration-safe: SSR always renders 3 slides, update on client only
+    const [slidesToShow, setSlidesToShow] = React.useState(3);
+    // Remove arrows, enable swipe/drag only
+    const arrows = false;
+
     const sliderSettings = {
         dots: true,
         infinite: true,
         speed: 600,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
+        slidesToShow,
+        slidesToScroll: 1, // Autoplay/arrow moves 1 card
+        arrows: false,
+        swipe: true,
+        draggable: true,
+        swipeToSlide: true, // Allow user to drag/swipe multiple cards
         autoplay: true,
         autoplaySpeed: 4000,
+        adaptiveHeight: true,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 9999,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    arrows: false,
-                    dots: true,
-                    centerMode: false,
-                },
-            },
-            {
-                // iPad Mini 768x1024 (portrait)
-                breakpoint: 1025,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    arrows: false,
-                    dots: true,
-                    centerMode: false,
-                },
-            },
-            {
-                breakpoint: 912,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    arrows: false,
-                    dots: true,
-                    centerMode: false,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: false,
-                    dots: true,
-                    centerMode: true,
-                    centerPadding: '20px',
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
+                    slidesToShow,
                     slidesToScroll: 1,
                     arrows: false,
                     dots: true,
@@ -209,12 +177,21 @@ const AwardSection = () => {
             <motion.section
                 id="awards-recognitions"
                 className="py-6 sm:py-8 md:py-16 lg:py-24 xl:py-36 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-16 relative overflow-hidden min-h-[60vh] sm:min-h-[70vh] lg:min-h-screen flex items-center"
+                style={{
+                    backgroundImage: "url('/asset/bg456.png')",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    position: 'relative',
+                }}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, ease: 'easeOut' }}
             >
-                <div className="max-w-7xl mx-auto text-center relative z-10 w-full">
+                {/* White overlay to reduce background image opacity */}
+                <div style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.85)',pointerEvents:'none',zIndex:1}} />
+                <div className="max-w-7xl mx-auto text-center relative z-10 w-full" style={{position:'relative',zIndex:2}}>
                     <motion.div
                         className="mb-3 sm:mb-6 md:mb-8 lg:mb-10 group"
                         initial={{ opacity: 0, y: 20 }}
@@ -247,8 +224,8 @@ const AwardSection = () => {
                                     whileHover="hover"
                                     viewport={{ once: true }}
                                 >
-                                    <div className="relative h-[220px] sm:h-[240px] md:h-[280px] lg:h-[320px] xl:h-[360px] w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[350px] xl:max-w-[380px] p-3 sm:p-4 md:p-6 lg:p-7 xl:p-8 rounded-lg sm:rounded-xl md:rounded-2xl border-2 sm:border-2 md:border-3 lg:border-4 border-gray-200 hover:border-[#2356a8] flex items-center justify-center transition-all duration-500 ease-out bg-white shadow-lg sm:shadow-xl md:shadow-2xl hover:shadow-2xl sm:hover:shadow-3xl will-change-transform group mx-auto"
-                                        style={{ boxSizing: 'border-box' }}
+                                    <div className="relative h-[220px] sm:h-[240px] md:h-[280px] lg:h-[320px] xl:h-[360px] w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[350px] xl:max-w-[380px] p-3 sm:p-4 md:p-6 lg:p-7 xl:p-8 rounded-lg sm:rounded-xl md:rounded-2xl border-2 sm:border-2 md:border-3 lg:border-4 border-gray-200 hover:border-[#2356a8] flex items-center justify-center transition-all duration-500 ease-out bg-white shadow-lg hover:shadow-lg will-change-transform group mx-auto"
+                                        style={{ boxSizing: 'border-box', marginBottom: '20px' }}
                                     >
                                         <span className="absolute inset-0 rounded-2xl z-0 overflow-hidden">
                                             <span className="block w-0 group-hover:w-full h-full bg-[#2356a8] transition-all duration-500 ease-out left-0 top-0 absolute z-0" style={{ transitionProperty: 'width' }}></span>

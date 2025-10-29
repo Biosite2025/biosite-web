@@ -206,14 +206,25 @@ const EventCalendar: React.FC = () => {
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-[900px] mx-auto p-2 lg:p-2 px-4 lg:px-2 bg-white mb-[150px] lg:mb-[150px] mb-16 pt-8 lg:pt-8 pt-6"
+    <div
+      className="relative w-full min-h-screen flex justify-center items-start py-10 px-2 -mt-15 lg:px-0"
+      style={{
+        backgroundImage: "url('/asset/bg1.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
+      {/* Overlay for opacity */}
+      <div className="absolute inset-0 bg-white/80 pointer-events-none z-0" />
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-[900px] mx-auto p-2 lg:p-2 px-4 lg:px-2 mb-[150px] lg:mb-[150px] mb-16 pt-8 lg:pt-8 pt-6"
+      >
       {/* Header Section */}
-      <div className="text-center mb-6 lg:mb-8 px-2">
+      <div className="text-center mb-6 lg:mb-8 px-2 mt-5">
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -232,7 +243,7 @@ const EventCalendar: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-gray-600 max-w-2xl mx-auto text-sm lg:text-base px-4 lg:px-0"
+          className="text-gray-600 max-w-2xl mx-auto text-sm lg:text-base -mt-3 px-4 lg:px-0"
         >
           Stay updated with our upcoming activities and programs.
         </motion.p>
@@ -243,7 +254,7 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8 px-2"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-5 lg:-mt-3 px-2"
       >
         {getEventStats().map((stat, index) => (
           <motion.div
@@ -656,7 +667,8 @@ const EventCalendar: React.FC = () => {
           }
         }
       `}</style>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

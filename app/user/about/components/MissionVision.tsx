@@ -436,6 +436,27 @@ const ipadMissionVisionStyles = `
       font-size: 1.15rem !important;
     }
   }
+  
+  /* Samsung Galaxy S8+ 360x740 - Fix "M" letter visibility */
+  @media (min-width: 360px) and (max-width: 360px) and (min-height: 740px) and (max-height: 740px) {
+    .team-letters-container {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      margin-bottom: 16px !important;
+      max-width: 100% !important;
+    }
+    .team-letter-container {
+      flex: 0 0 calc(25% - 6px) !important;
+      min-width: 60px !important;
+      max-width: 70px !important;
+      padding: 8px !important;
+      margin: 0 !important;
+    }
+    .team-letter-text {
+      font-size: 1.5rem !important;
+    }
+  }
 `;
 
 const MissionVision = () => {

@@ -7,6 +7,11 @@ const surfaceprostyles = `
     min-height: 700px !important;
     height: 700px !important;
   }
+  #about-us .aboutus-modern-title,
+  #about-us .aboutus-subtitle,
+  #about-us .aboutus-paragraph {
+    transform: scale(1) !important;
+  }
 }
 /* Mobile: 344x882 */
 @media (min-width: 343px) and (max-width: 345px) and (min-height: 881px) and (max-height: 883px) {
@@ -23,6 +28,11 @@ const surfaceprostyles = `
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
+  }
+  #about-us .aboutus-modern-title,
+  #about-us .aboutus-subtitle {
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 853x1280 */
@@ -34,12 +44,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 768x1024 */
@@ -51,12 +63,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 820x1180 */
@@ -68,12 +82,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 1024x1366 */
@@ -85,12 +101,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 1024x600 */
@@ -102,12 +120,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Tablet/iPad: 1280x800 */
@@ -119,12 +139,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 /* Mobile: 912x1368 (repeat for completeness) */
@@ -136,12 +158,14 @@ const surfaceprostyles = `
     align-items: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    transform: scale(1) !important;
   }
   #about-us .aboutus-paragraph {
     text-align: justify !important;
     text-justify: inter-word !important;
     word-break: break-word !important;
     hyphens: auto !important;
+    transform: scale(1) !important;
   }
 }
 `;
@@ -177,18 +201,18 @@ const AboutUs = () => {
         </div>
 
         {/* Right: Enhanced text content with modern typography */}
-        <div className="flex flex-col justify-center items-start w-full lg:w-1/2 px-3 sm:px-4 md:px-6 lg:px-16 py-4 sm:py-6 md:py-8 lg:py-20 scale-95 sm:scale-100 lg:scale-110 relative z-30">
+  <div className="flex flex-col justify-center items-start w-full lg:w-1/2 px-3 sm:px-4 md:px-6 lg:px-16 py-4 sm:py-6 md:py-8 lg:py-20 relative z-30">
           {/* Modern title with accent line */}
-          <div className="relative mb-2 w-full aboutus-modern-title">
+          <div className="relative mb-2 w-full aboutus-modern-title flex flex-col items-center justify-center text-center scale-100 lg:scale-130 ">
             <div className="absolute -left-1 sm:-left-2 top-0 w-0.5 sm:w-1 h-full bg-gradient-to-b from-[#2356a8] to-[#2356a8]/50 rounded-full transform scale-y-0 hover:scale-y-100 transition-transform duration-500 ease-out origin-top" />
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#222] mb-2 sm:mb-3 tracking-tight uppercase relative group">
-              TEST ABOUT US
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#2356a8] group-hover:w-16 sm:group-hover:w-20 transition-all duration-500 ease-out" />
+              ABOUT US
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-[#2356a8] group-hover:w-16 sm:group-hover:w-20 transition-all duration-500 ease-out" />
             </h2>
           </div>
 
           {/* Subtitle with modern styling */}
-          <div className="aboutus-subtitle text-base sm:text-lg md:text-xl lg:text-[23px] font-extrabold text-[#2356a8] mb-4 sm:mb-6 lg:mb-8 w-full max-w-full lg:w-[500px] relative">
+          <div className="lg:pb-[50px] aboutus-subtitle text-base sm:text-lg md:text-xl lg:text-[23px] font-extrabold text-[#2356a8] mb-4 sm:mb-6 lg:mb-8 w-full max-w-full lg:w-[500px] relative flex flex-col items-center justify-center text-center mx-auto scale-100 lg:scale-120 ">
             <span className="relative z-10 bg-gradient-to-r from-[#2356a8] to-[#2356a8]/80 bg-clip-text text-transparent">
               A company that nurtures a safe and healthy working environment.
             </span>
@@ -196,7 +220,7 @@ const AboutUs = () => {
           </div>
 
           {/* Enhanced content with modern spacing and hover effects */}
-          <div className="aboutus-paragraph text-[#444] text-xs sm:text-sm md:text-base lg:text-[13px] leading-relaxed space-y-3 sm:space-y-4 lg:space-y-5 w-full max-w-full lg:w-[500px] lg:max-w-2xl text-left sm:text-justify group">
+          <div className="aboutus-paragraph text-[#444] text-xs sm:text-sm md:text-base lg:text-[13px] leading-relaxed space-y-3 sm:space-y-4 lg:space-y-5 w-full max-w-full lg:w-[500px] lg:max-w-2xl mx-auto justify-center text-justify group scale-100 lg:scale-120 ">
             <p className="transform hover:translate-x-1 sm:hover:translate-x-2 transition-transform duration-300 ease-out hover:text-[#333] cursor-default relative pl-2 sm:pl-4 border-l-2 border-transparent hover:border-[#2356a8]/30">
               <span className="font-semibold text-[#2356a8]">We specialize</span> in Quality Diagnostic Instruments, Laboratory and Medical Supplies, Medical Equipment, and Imaging.
             </p>
@@ -210,7 +234,7 @@ const AboutUs = () => {
             </p>
 
             <p className="transform hover:translate-x-1 sm:hover:translate-x-2 transition-transform duration-300 ease-out hover:text-[#333] cursor-default relative pl-2 sm:pl-4 border-l-2 border-transparent hover:border-[#2356a8]/30">
-              Biosite Medical Instruments is reaffirming its vision of becoming a leader and being admired for offering a diverse portfolio of medical and diagnostic solutions and services for companies, and institutions. <span className="inline-block px-1 sm:px-2 py-1 bg-[#2356a8]/10 rounded text-[#2356a8] font-medium text-xs sm:text-sm">Biosite Medical Instruments got its Quality Management System certification for ISO 9001:2015</span> for the Trading and Distribution of Medical Devices, such as medical instruments, laboratory equipment, reagents, and consumables, in 2022.
+              Biosite Medical Instruments is reaffirming its vision of becoming a leader and being admired for offering a diverse portfolio of medical and diagnostic solutions and services for companies, and institutions. Biosite Medical Instruments got its Quality Management System certification for ISO 9001:2015 for the Trading and Distribution of Medical Devices, such as medical instruments, laboratory equipment, reagents, and consumables, in 2022.
             </p>
 
             <p className="transform hover:translate-x-1 sm:hover:translate-x-2 transition-transform duration-300 ease-out hover:text-[#333] cursor-default relative pl-2 sm:pl-4 border-l-2 border-transparent hover:border-[#2356a8]/30">

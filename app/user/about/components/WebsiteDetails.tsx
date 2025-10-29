@@ -7,11 +7,19 @@ const WebsiteDetails = () => {
     <motion.section
       id="website-details"
       className="py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden min-h-screen"
+      style={{
+        backgroundImage: "url('/asset/bg32.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative',
+      }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
+      <div style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.75)',pointerEvents:'none',zIndex:1}} />
       <style>{`
         @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
           .website-details-img-ipad {
@@ -24,7 +32,7 @@ const WebsiteDetails = () => {
         }
       `}</style>
       {/* Responsive spacing and scaling */}
-      <div className="max-w-6xl mx-auto relative z-10">
+  <div className="max-w-6xl mx-auto relative z-10" style={{position:'relative',zIndex:2}}>
         {/* Enhanced Top Image - Responsive */}
         <motion.div
           className="w-full rounded-md sm:rounded-lg lg:rounded-xl overflow-hidden mb-3 sm:mb-4 lg:mb-6 shadow-lg group border border-gray-200 hover:border-[#2356a8]/30 transition-all duration-500"

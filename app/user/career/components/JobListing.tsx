@@ -127,12 +127,12 @@ export default function JobListing() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file type and size
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      // Only allow PDF files and max 5MB
+      const allowedTypes = ['application/pdf'];
       const maxSize = 5 * 1024 * 1024; // 5MB
       
       if (!allowedTypes.includes(file.type)) {
-        setErrors(prev => ({ ...prev, resume: "Only PDF, DOC, and DOCX files are allowed" }));
+        setErrors(prev => ({ ...prev, resume: "Only PDF files are allowed" }));
         return;
       }
       
@@ -163,11 +163,11 @@ export default function JobListing() {
     
     const file = e.dataTransfer.files?.[0];
     if (file) {
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const allowedTypes = ['application/pdf'];
       const maxSize = 5 * 1024 * 1024; // 5MB
       
       if (!allowedTypes.includes(file.type)) {
-        setErrors(prev => ({ ...prev, resume: "Only PDF, DOC, and DOCX files are allowed" }));
+        setErrors(prev => ({ ...prev, resume: "Only PDF files are allowed" }));
         return;
       }
       
@@ -509,7 +509,7 @@ export default function JobListing() {
                       {formData.resume ? formData.resume.name : 'no file selected'}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-500 italic">Only doc, docx and pdf files are allowed...</p>
+                  <p className="text-sm text-gray-500 italic">Only PDF files are allowed. Max size 5MB.</p>
                 </div>
               </div>
               {errors.resume && (
