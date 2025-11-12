@@ -331,11 +331,11 @@ export default function NikonMicroscopes() {
 						<motion.p
 							initial={{ opacity: 0, y: 30 }}
 							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Explore Nikon's cutting-edge microscopy solutions engineered for precision and performance
-						</motion.p>
+						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+					>
+						Explore Nikon&apos;s cutting-edge microscopy solutions engineered for precision and performance
+					</motion.p>
 					</motion.div>
 
 					{/* Scroll Indicator - moved below paragraph */}

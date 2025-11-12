@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import Image from 'next/image';
 // Removed invalid AutoHeightPlugin import; not needed for auto-resizing
 import type { EventClickArg, EventContentArg } from '@fullcalendar/core';
 
@@ -208,15 +209,21 @@ const EventCalendar: React.FC = () => {
   return (
     <div
       className="relative w-full min-h-screen flex justify-center items-start py-10 px-2 -mt-15 lg:px-0"
-      style={{
-        backgroundImage: "url('/asset/bg1.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
     >
-      {/* Overlay for opacity */}
-      <div className="absolute inset-0 bg-white/80 pointer-events-none z-0" />
+      {/* Background image with Next.js Image for optimization - Fixed positioning */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/asset/bg1.png"
+          alt="Background"
+          fill
+          priority={true}
+          quality={75}
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </div>
+      {/* Overlay for opacity - Fixed positioning */}
+      <div className="fixed inset-0 bg-white/80 pointer-events-none z-0" />
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -349,9 +356,8 @@ const EventCalendar: React.FC = () => {
               month: 'Month'
             }}
             titleFormat={{ year: 'numeric', month: 'long' }}
-            fixedWeekCount={false} // Allow variable number of weeks per month
-            showNonCurrentDates={false}
-            // contentHeight removed; height="auto" and fixedWeekCount={false} handle auto-resizing
+            fixedWeekCount={true} // Force consistent 6-week display
+            showNonCurrentDates={true} // Show dates from adjacent months to fill 6 weeks
             scrollTimeReset={true} // Prevent scroll position retention
             handleWindowResize={true} // Respond to window resize
           />
@@ -471,6 +477,16 @@ const EventCalendar: React.FC = () => {
         .fc-scrollgrid-sync-table {
           width: 100% !important;
           table-layout: fixed !important;
+        }
+        .fc-daygrid-body {
+          width: 100% !important;
+        }
+        .fc-scrollgrid-section-body > td {
+          height: auto !important;
+        }
+        /* Force 6 rows for consistent height */
+        .fc-daygrid-body-balanced .fc-scrollgrid-sync-table {
+          height: 100% !important;
         }
         .fc-daygrid-day,
         .fc-col-header-cell {
@@ -606,6 +622,12 @@ const EventCalendar: React.FC = () => {
             padding: 0.5rem !important;
             font-size: 0.875rem !important;
           }
+        }
+        
+        /* Style for dates outside current month */
+        .fc-day-other .fc-daygrid-day-number {
+          color: #9CA3AF !important;
+          opacity: 0.5 !important;
         }
         
         .fc-day-today .fc-daygrid-day-number {

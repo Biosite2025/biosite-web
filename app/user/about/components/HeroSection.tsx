@@ -1,4 +1,6 @@
+
 'use client';
+import React from 'react';
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -330,7 +332,14 @@ const ipadResponsiveStyles = `
 	}
 `;
 
-const slides = [
+type SlideType = {
+	src: string;
+	headline: string | React.ReactNode;
+	subheadline: string;
+	buttons: { label: string; href: string }[];
+};
+
+const slides: SlideType[] = [
 	{
 		src: "/asset/slide (1).png",
 		headline: "Reliable Medical & Diagnostic Solution",
@@ -352,15 +361,15 @@ const slides = [
 		],
 	},
 	{
-		src: "/asset/slide (3).png",
-		headline: "Your Partner in Advanced Healthcare",
-		subheadline:
-			"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",
-		buttons: [
-			{ label: "Learn More", href: "/user/about" },
-			{ label: "Join Us", href: "/careers" },
-		],
-	},
+	src: "/asset/slide (3).png",
+	headline: "Your Partner in Advance Healthcare",
+	subheadline:
+		"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",
+	buttons: [
+		{ label: "Learn More", href: "/user/about" },
+		{ label: "Join Us", href: "/careers" },
+	],
+},
 ];
 
 // Placeholder translation function (replace with real translation logic or i18n integration)
@@ -568,7 +577,7 @@ const HeroSection = () => {
 
 				{/* Enhanced content section with modern styling - Responsive */}
 				<div
-					className="hero-content-container absolute left-2 sm:left-4 md:left-8 lg:left-[250px] top-0 h-full flex flex-col justify-center z-20 px-3 sm:px-4 md:px-6 lg:px-20 scale-90 sm:scale-100 md:scale-110 lg:scale-150"
+					className="hero-content-container absolute left-2 sm:left-4 md:left-8 lg:left-[250px] top-0 h-full flex flex-col justify-center z-20 px-3 sm:px-4 md:px-6 lg:px-20 scale-90 sm:scale-100 md:scale-110 lg:scale-130 	"
 					style={{
 						pointerEvents: "none",
 						width: "calc(100% - 1rem)",
@@ -594,19 +603,19 @@ const HeroSection = () => {
 					>
 						{/* Subtle background accent */}
 						<motion.div
-							className="absolute -left-6 top-0 w-1.5 h-full bg-gradient-to-b from-[#2B3990] to-transparent origin-top"
+							className="absolute -left-6 top-0 lg:top-4 w-1.5 h-full bg-gradient-to-b from-[#2B3990] to-transparent origin-top"
 							initial={{ opacity: 0, scaleY: 0 }}
 							animate={showText ? { opacity: 0.6, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
 							transition={{ duration: 0.7, ease: "easeOut" }}
 							style={{ pointerEvents: "none" }}
 						/>
-						<motion.h1
-							className="hero-title text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group"
-							initial={false}
-							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-							transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-						>
-							{translate(slides[current].headline)}
+					<motion.h1
+						className="hero-title text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group whitespace-nowrap max-w-full"
+						initial={false}
+						animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+						transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+					>
+							{slides[current].headline}
 							<motion.div
 								className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#2B3990] to-blue-500 rounded-full"
 								initial={{ width: 0 }}
@@ -615,7 +624,7 @@ const HeroSection = () => {
 							/>
 						</motion.h1>
 						<motion.p
-							className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-left mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
+							className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-justify mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
 							initial={false}
 							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
 							transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}

@@ -1,12 +1,8 @@
 
 'use client';
 
-
-
-
-
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useAnimationFrame, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 const EventGallery: React.FC = () => {
@@ -21,6 +17,11 @@ const EventGallery: React.FC = () => {
 
   // Video navigation state (show 2 at a time)
   const [videoPairIndex, setVideoPairIndex] = useState(0);
+  
+  // Modal state for image viewing
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
 
   // Navigation handlers for pairs
   const totalPairs = Math.ceil(videoSources.length / 2);
@@ -66,12 +67,10 @@ const EventGallery: React.FC = () => {
     '/asset/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
     '/asset/image.png',
     '/asset/image1.png',
-    // Duplicate for seamless loop
-    '/asset/istockphoto-1183500324-612x612.jpg',
-    '/asset/istockphoto-498908634-612x612.jpg',
-    '/asset/istockphoto-511061090-612x612.jpg',
-    '/asset/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
   ];
+
+  // Duplicate for seamless loop in carousel
+  const loopedImages = [...eventImages, ...eventImages];
 
 
   // Motion values for both rows
@@ -102,8 +101,223 @@ const EventGallery: React.FC = () => {
   const handlePause = () => setPaused(true);
   const handleResume = () => setPaused(false);
 
+  // Modal handlers
+  const openModal = (image: string) => {
+    // Load image to get its natural dimensions
+    const img = new window.Image();
+    img.onload = () => {
+      setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.src = image;
+    
+    setSelectedImage(image);
+    setIsModalOpen(true);
+    setPaused(true);
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+    setImageDimensions(null);
+    setPaused(false);
+    // Restore body scroll
+    document.body.style.overflow = 'unset';
+  };
+
+  // Navigate to previous image in modal
+  const handlePrevImage = () => {
+    if (!selectedImage) return;
+    const currentIndex = eventImages.indexOf(selectedImage);
+    const prevIndex = currentIndex === 0 ? eventImages.length - 1 : currentIndex - 1;
+    const prevImage = eventImages[prevIndex];
+    
+    // Load new image dimensions
+    const img = new window.Image();
+    img.onload = () => {
+      setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.src = prevImage;
+    
+    setSelectedImage(prevImage);
+  };
+
+  // Navigate to next image in modal
+  const handleNextImage = () => {
+    if (!selectedImage) return;
+    const currentIndex = eventImages.indexOf(selectedImage);
+    const nextIndex = currentIndex === eventImages.length - 1 ? 0 : currentIndex + 1;
+    const nextImage = eventImages[nextIndex];
+    
+    // Load new image dimensions
+    const img = new window.Image();
+    img.onload = () => {
+      setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.src = nextImage;
+    
+    setSelectedImage(nextImage);
+  };
+
+  // Close modal on scroll
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    // Add a small delay before enabling scroll-to-close
+    const timeoutId = setTimeout(() => {
+      const handleScroll = () => {
+        closeModal();
+      };
+      window.addEventListener('scroll', handleScroll, { once: true });
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, 500); // 500ms delay to prevent immediate closing
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [isModalOpen]);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen]);
+
+  // Handle keyboard navigation (arrow keys)
+  useEffect(() => {
+    const handleKeyNav = (e: KeyboardEvent) => {
+      if (!isModalOpen) return;
+      if (e.key === 'ArrowLeft') {
+        handlePrevImage();
+      } else if (e.key === 'ArrowRight') {
+        handleNextImage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyNav);
+    return () => window.removeEventListener('keydown', handleKeyNav);
+  }, [isModalOpen, selectedImage]);
+
+  // Hide TopNav and SideNav when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add('hide-navs');
+    } else {
+      document.body.classList.remove('hide-navs');
+    }
+    return () => {
+      document.body.classList.remove('hide-navs');
+    };
+  }, [isModalOpen]);
+
   return (
     <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-12 lg:py-20 min-h-[400px] lg:min-h-[600px]">
+      {/* Image Modal - Sakura Style */}
+      <AnimatePresence mode="wait">
+        {isModalOpen && selectedImage && (
+          <>
+            {/* Blurry overlay to prevent background clicks, frosted glass effect */}
+            <motion.div
+              className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
+              onClick={closeModal}
+              style={{ cursor: 'pointer' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto overflow-hidden"
+                style={{
+                  maxWidth: imageDimensions ? `min(${imageDimensions.width}px, 90vw)` : '90vw',
+                  maxHeight: '90vh',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* X Button - Overlapping on image */}
+                <button
+                  onClick={closeModal}
+                  className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 text-white hover:text-gray-200 text-2xl sm:text-3xl md:text-4xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-2 max-[912px]:right-2 max-[912px]:text-2xl z-50 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
+                  aria-label="Close modal"
+                  type="button"
+                  style={{ zIndex: 100 }}
+                >
+                  &times;
+                </button>
+                {/* Previous Arrow Button - Overlapping on image, no white border */}
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevImage();
+                  }}
+                  className="absolute left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 sm:p-3 transition-all duration-300 group border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Previous image"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </motion.button>
+                {/* Next Arrow Button - Overlapping on image, no white border */}
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextImage();
+                  }}
+                  className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 sm:p-3 transition-all duration-300 group border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Next image"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+                {/* Image - Fully occupying modal space, no padding, with smooth fade/slide transition */}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={selectedImage}
+                    className="relative w-full"
+                    style={{
+                      aspectRatio: imageDimensions ? `${imageDimensions.width} / ${imageDimensions.height}` : 'auto',
+                    }}
+                    initial={{ opacity: 0, x: 60 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -60 }}
+                    transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    <Image
+                      src={selectedImage}
+                      alt="Event photo fullscreen"
+                      fill
+                      className="object-contain rounded-xl sm:rounded-2xl"
+                      quality={100}
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
+
       <div className="container mx-auto px-4 lg:px-6 mb-10 lg:mb-16 mt-8 lg:mt-14">
         <motion.div 
           className="text-center text-white"
@@ -130,7 +344,7 @@ const EventGallery: React.FC = () => {
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: topRowX }}
           >
-            {[...eventImages, ...eventImages].map((image, index) => (
+            {loopedImages.map((image, index) => (
               <motion.div
                 key={`top-${index}`}
                 className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
@@ -141,6 +355,7 @@ const EventGallery: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 onMouseEnter={handlePause}
                 onMouseLeave={handleResume}
+                onClick={() => openModal(image)}
               >
                 <Image
                   src={image}
@@ -150,6 +365,14 @@ const EventGallery: React.FC = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Click to view indicator */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 lg:p-4">
+                    <svg className="w-6 h-6 lg:w-8 lg:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -161,7 +384,7 @@ const EventGallery: React.FC = () => {
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
           >
-            {[...eventImages, ...eventImages].map((image, index) => (
+            {loopedImages.map((image, index) => (
               <motion.div
                 key={`bottom-${index}`}
                 className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
@@ -172,6 +395,7 @@ const EventGallery: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 onMouseEnter={handlePause}
                 onMouseLeave={handleResume}
+                onClick={() => openModal(image)}
               >
                 <Image
                   src={image}
@@ -181,6 +405,14 @@ const EventGallery: React.FC = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Click to view indicator */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 lg:p-4">
+                    <svg className="w-6 h-6 lg:w-8 lg:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>

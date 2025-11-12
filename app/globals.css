@@ -24,6 +24,27 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Performance optimizations for images */
+img {
+  content-visibility: auto;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide TopNav and SideNav when modal is open */
+.hide-navs [data-topnav="true"],
+.hide-navs .sidenav-component {
+  display: none !important;
+}
+
 @import "tailwindcss";
 
 :root {

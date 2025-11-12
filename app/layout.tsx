@@ -1,5 +1,4 @@
 "use client";
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -32,7 +31,7 @@ export default function RootLayout({
   useEffect(() => {
     setMounted(true);
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 600); // Reduced from 1000ms to 600ms
     return () => clearTimeout(timer);
   }, [pathname]);
 

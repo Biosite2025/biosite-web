@@ -178,51 +178,51 @@ export function SideNav() {
 		}
 	};
 
-		return (
-			<>
-				{/* Mobile/Tablet Top Bar - Show only on screens < 1024px, with scroll hide/show transition */}
-				<motion.nav
-					initial={false}
-					animate={showNav ? { y: 0, opacity: 1, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.08)' } : { y: -100, opacity: 0, boxShadow: 'none' }}
-					transition={{
-						y: { type: 'spring', stiffness: 400, damping: 40, duration: 0.6 },
-						opacity: { duration: 0.4, ease: 'easeInOut' },
-						boxShadow: { duration: 0.4, ease: 'easeInOut' }
-					}}
-					whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
-					className="flex lg:hidden items-center justify-between h-16 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm z-50 fixed top-0 w-full"
-					style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
+	return (
+		<>
+			{/* Mobile/Tablet Top Bar - Show only on screens < 1024px, with scroll hide/show transition */}
+			<motion.nav
+				initial={false}
+				animate={showNav ? { y: 0, opacity: 1, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.08)' } : { y: -100, opacity: 0, boxShadow: 'none' }}
+				transition={{
+					y: { type: 'spring', stiffness: 400, damping: 40, duration: 0.6 },
+					opacity: { duration: 0.4, ease: 'easeInOut' },
+					boxShadow: { duration: 0.4, ease: 'easeInOut' }
+				}}
+				whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
+				className="flex lg:hidden items-center justify-between h-16 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm z-50 fixed top-0 w-full sidenav-component"
+				style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
+			>
+				{/* Logo Section */}
+				<Link href="/user/about" className="flex items-center h-full touch-manipulation">
+					<Image
+						src="/asset/BMI logo.png"
+						alt="Biosite Medical Instruments Logo"
+						width={140}
+						height={40}
+						className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
+						priority
+					/>
+				</Link>
+				{/* Tagline - Hidden on very small screens */}
+				<div className="hidden sm:flex flex-1 justify-center px-4">
+					<span className="text-gray-700 font-medium text-sm italic tracking-wide text-center opacity-80">
+						Because Every Life deserves the Best Care
+					</span>
+				</div>
+				{/* Hamburger Menu Button */}
+				<button
+					className="ml-auto flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 transition-all duration-200 touch-manipulation"
+					aria-label="Open menu"
+					onClick={() => setSideNavOpen(true)}
 				>
-					{/* Logo Section */}
-					<Link href="/user/about" className="flex items-center h-full touch-manipulation">
-						<Image
-							src="/asset/BMI logo.png"
-							alt="Biosite Medical Instruments Logo"
-							width={140}
-							height={40}
-							className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
-							priority
-						/>
-					</Link>
-					{/* Tagline - Hidden on very small screens */}
-					<div className="hidden sm:flex flex-1 justify-center px-4">
-						<span className="text-gray-700 font-medium text-sm italic tracking-wide text-center opacity-80">
-							Because Every Life deserves the Best Care
-						</span>
-					</div>
-					{/* Hamburger Menu Button */}
-					<button
-						className="ml-auto flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 transition-all duration-200 touch-manipulation"
-						aria-label="Open menu"
-						onClick={() => setSideNavOpen(true)}
-					>
-						<span className="sr-only">Open menu</span>
-						<svg className="w-7 h-7 text-[#2B3990]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-						</svg>
-					</button>
-				</motion.nav>
-			
+					<span className="sr-only">Open menu</span>
+					<svg className="w-7 h-7 text-[#2B3990]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+						<path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+			</motion.nav>
+		
 			{/* Side Navigation Overlay */}
 			<AnimatePresence>
 				{sideNavOpen && (

@@ -1,24 +1,30 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const WebsiteDetails = () => {
   return (
     <motion.section
       id="website-details"
       className="py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden min-h-screen"
-      style={{
-        backgroundImage: "url('/asset/bg32.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        position: 'relative',
-      }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
+      {/* Background image with Next.js Image for optimization */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/asset/bg32.png"
+          alt="Background"
+          fill
+          priority={false}
+          quality={75}
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </div>
       <div style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.75)',pointerEvents:'none',zIndex:1}} />
       <style>{`
         @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
@@ -43,13 +49,16 @@ const WebsiteDetails = () => {
           whileHover={{ scale: 1.01, boxShadow: '0 8px 32px 0 rgba(35,86,168,0.10)' }}
         >
           <div className="relative overflow-hidden">
-            <motion.img
+            <Image
               src="/asset/image.png"
               alt="Biosite Team"
+              width={1200}
+              height={430}
+              priority={false}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               className="website-details-img-ipad w-full h-[430px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.9, ease: 'easeOut' }}
+              style={{ objectFit: 'cover' }}
             />
             <motion.div
               className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -67,19 +76,21 @@ const WebsiteDetails = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
         >
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 text-black group-hover:text-[#2356a8] transition-colors duration-500 relative">
-            Biosite Medical Instruments
-            <motion.div
-              className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-full"
-              initial={{ width: 0 }}
-              whileHover={{ width: 96 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              style={{ pointerEvents: 'none' }}
-            />
-          </h2>
-          <p className="text-gray-700 mb-2 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
-            As your trusted partner in advancing healthcare through cutting-edge medical technology, since our establishment, we have been committed to providing <span className="font-semibold text-[#2356a8]">mission-critical, high-quality solutions</span> that empower healthcare professionals and enhance patient outcomes.
-          </p>
+          <div className="bg-white/90 border-2 border-white rounded-xl shadow-lg p-4 sm:p-6 md:p-7 lg:p-8 mb-2">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 text-black group-hover:text-[#2356a8] transition-colors duration-500 relative">
+              Biosite Medical Instruments
+              <motion.div
+                className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-full"
+                initial={{ width: 0 }}
+                whileHover={{ width: 96 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                style={{ pointerEvents: 'none' }}
+              />
+            </h2>
+            <p className="text-gray-700 mb-2 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
+              As your trusted partner in advancing healthcare through cutting-edge medical technology, since our establishment, we have been committed to providing <span className="font-semibold text-[#2356a8]">mission-critical, high-quality solutions</span> that empower healthcare professionals and enhance patient outcomes.
+            </p>
+          </div>
         </motion.div>
         {/* Enhanced Quote Box - Responsive */}
         <motion.div
@@ -122,14 +133,16 @@ const WebsiteDetails = () => {
             transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             whileHover={{ scale: 1.01, boxShadow: '0 8px 32px 0 rgba(35,86,168,0.10)' }}
           >
-            <motion.img
+            <Image
               src="/asset/image1.png"
               alt="Community Engagement"
+              width={600}
+              height={300}
+              priority={false}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
               className="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              style={{ minHeight: 180, maxHeight: 300 }}
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.9, ease: 'easeOut' }}
+              style={{ minHeight: 180, maxHeight: 300, objectFit: 'cover' }}
             />
           </motion.div>
           {/* Enhanced Community Engagement Card - Responsive */}
@@ -161,7 +174,7 @@ const WebsiteDetails = () => {
               />
             </h3>
             <p className="text-gray-700 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-gray-600 transition-colors duration-300 relative z-10">
-              During the <span className="font-semibold text-[#2356a8]">COVID-19 pandemic</span>, BMI played a crucial role in supporting the Philippine Department of Health by supplying essential COVID-19 consumables and installing biosafety refrigerators nationwide, thereby contributing significantly to the country's healthcare response.<br /><br />
+              During the <span className="font-semibold text-[#2356a8]">COVID-19 pandemic</span>, BMI played a crucial role in supporting the Philippine Department of Health by supplying essential COVID-19 consumables and installing biosafety refrigerators nationwide, thereby contributing significantly to the country&apos;s healthcare response.<br /><br />
               Through these initiatives and partnerships, <span className="font-semibold text-[#2356a8]">BMI continues to strengthen its position</span> as a trusted provider of integrated medical and diagnostic solutions, dedicated to improving healthcare outcomes across the Philippines.
             </p>
           </motion.div>

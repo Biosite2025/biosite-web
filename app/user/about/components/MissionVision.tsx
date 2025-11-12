@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 // iPad Air and iPad Pro comprehensive responsive styles
 const ipadMissionVisionStyles = `
@@ -466,17 +467,23 @@ const MissionVision = () => {
     <motion.section
       id="mission-vision"
       className="mission-vision-main-container relative py-8 sm:py-12 md:py-16 lg:py-24 px-3 sm:px-4 md:px-6 lg:px-12 min-h-screen sm:min-h-[100vh] md:min-h-[110vh] flex items-center justify-center bg-blue-500/90 overflow-hidden mt-0"
-      style={{
-        backgroundImage: `url('/asset/slide (3).png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
+      {/* Background image with Next.js Image for optimization */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/asset/slide (3).png"
+          alt="Background"
+          fill
+          priority={false}
+          quality={75}
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </div>
       {/* Overlay */}
   <div className="absolute inset-0 bg-blue-500/80 z-0" />
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">

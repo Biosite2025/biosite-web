@@ -296,18 +296,23 @@ export default function NikonMicroscopes() {
 					>
 									{/* Animated Background Pattern + Particles + Red Overlay */}
 									<div className="absolute inset-0 w-full h-full">
-										{/* Existing background image */}
-										<div
-											className="absolute inset-0 w-full h-full "
-											style={{
-												backgroundImage: "url('/asset/Sakura/backgroundforsakura.jpg')",
-												backgroundSize: 'cover',
-												backgroundPosition: 'center',
-												filter: 'blur(1px)',
-												opacity: 0.35,
-												zIndex: 1,
-											}}
-										/>
+										{/* Background image with Next.js Image */}
+										<div className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+											<Image
+												src="/asset/Sakura/backgroundforsakura.jpg"
+												alt="Background"
+												fill
+												priority={false}
+												quality={75}
+												sizes="100vw"
+												style={{ 
+													objectFit: 'cover', 
+													objectPosition: 'center',
+													filter: 'blur(1px)',
+													opacity: 0.35
+												}}
+											/>
+										</div>
 										{/* Red overlay with low opacity */}
 										<div className="absolute inset-0 w-full h-full bg-red-600" style={{ opacity: 0.18, zIndex: 2 }} />
 									</div>
@@ -347,11 +352,11 @@ export default function NikonMicroscopes() {
 								<motion.p
 									initial={{ opacity: 0, y: 30 }}
 									animate={{ opacity: 1, y: 0 }}
-									transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-									className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-								>
-									Explore Sakura's advanced laboratory solutions for histology, cytology, and tissue processing.
-								</motion.p>
+								transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+								className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+							>
+								Explore Sakura&apos;s advanced laboratory solutions for histology, cytology, and tissue processing.
+							</motion.p>
 							</motion.div>
 
 							{/* Scroll Indicator - moved below paragraph */}

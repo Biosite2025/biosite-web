@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Slider from 'react-slick';
+import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -177,18 +178,23 @@ const AwardSection = () => {
             <motion.section
                 id="awards-recognitions"
                 className="py-6 sm:py-8 md:py-16 lg:py-24 xl:py-36 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-16 relative overflow-hidden min-h-[60vh] sm:min-h-[70vh] lg:min-h-screen flex items-center"
-                style={{
-                    backgroundImage: "url('/asset/bg456.png')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    position: 'relative',
-                }}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, ease: 'easeOut' }}
             >
+                {/* Background image with Next.js Image for optimization */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/asset/bg456.png"
+                        alt="Background"
+                        fill
+                        priority={false}
+                        quality={75}
+                        sizes="100vw"
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
+                </div>
                 {/* White overlay to reduce background image opacity */}
                 <div style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.85)',pointerEvents:'none',zIndex:1}} />
                 <div className="max-w-7xl mx-auto text-center relative z-10 w-full" style={{position:'relative',zIndex:2}}>

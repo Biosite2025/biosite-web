@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 const surfaceprostyles = `
 /* Surface Pro 13" (912x1368) */
 @media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px) {
@@ -189,12 +190,14 @@ const AboutUs = () => {
         {/* Left: Image with modern overlay effects */}
         <div className="relative w-full lg:w-1/2 h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto min-h-[200px] sm:min-h-[250px] md:min-h-[300px] lg:min-h-screen flex items-center justify-center overflow-hidden m-0 p-0 group">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out z-10" />
-          <img
+          <Image
             src="/asset/Screenshot 2025-10-03 102205.png"
             alt="Biosite Building"
-            className="w-full h-full object-cover object-center m-0 p-0 transform group-hover:scale-105 transition-transform duration-700 ease-out"
-            style={{ maxHeight: '100%', maxWidth: '100%' }}
-            loading="eager"
+            fill
+            priority={true}
+            quality={85}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out"
           />
           {/* Modern corner accent */}
           <div className="absolute bottom-0 right-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-tl from-[#2356a8]/20 to-transparent opacity-60" />
@@ -244,12 +247,14 @@ const AboutUs = () => {
         </div>
         {/* Right-side image for large screens */}
       <div className="hidden lg:block absolute top-0 right-0 h-full w-1/2 z-20">
-        <img
+        <Image
           src="/asset/rightside.png"
           alt="Right Side Visual"
-          className="w-full h-full object-cover object-right"
-          style={{ maxHeight: '100vh' }}
-          loading="eager"
+          fill
+          priority={true}
+          quality={85}
+          sizes="50vw"
+          className="object-cover object-right"
         />
       </div>
       </div>

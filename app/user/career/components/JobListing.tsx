@@ -276,7 +276,7 @@ export default function JobListing() {
                   </svg>
                 </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#2B3990] mb-2">Application Submitted!</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Thank you for your interest. We'll review your application and get back to you soon.</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Thank you for your interest. We&apos;ll review your application and get back to you soon.</p>
                 <button
                   onClick={() => setShowSuccess(false)}
                   className="bg-[#2B3990] text-white px-4 sm:px-6 py-2 sm:py-2 text-sm sm:text-base rounded-lg hover:bg-[#1e2a6b] transition-colors"

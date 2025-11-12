@@ -233,18 +233,24 @@ const EventShowcase: React.FC = () => {
     const video1 = videoRef.current;
     const video2 = video2Ref.current;
     
-    if (video1) {
-      video1.style.display = 'block';
-      video1.play().catch(() => {
-        setIsVideoPlaying(false);
-      });
-      setIsVideoPlaying(true);
-    }
+    // Wait for next tick to ensure DOM is ready
+    const initVideos = () => {
+      if (video1) {
+        video1.style.display = 'block';
+        video1.play().catch(() => {
+          setIsVideoPlaying(false);
+        });
+        setIsVideoPlaying(true);
+      }
+      
+      if (video2) {
+        video2.style.display = 'none';
+        video2.pause(); // Pause the second video initially
+      }
+    };
     
-    if (video2) {
-      video2.style.display = 'none';
-      video2.pause(); // Pause the second video initially
-    }
+    // Small delay to prevent glitches on page load/refresh
+    const timer = setTimeout(initVideos, 100);
 
     // GSAP ScrollTrigger animations - only run on client side
     if (typeof window !== 'undefined') {
@@ -369,6 +375,7 @@ const EventShowcase: React.FC = () => {
       });
 
       return () => {
+        clearTimeout(timer);
         ctx.revert();
         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       };
