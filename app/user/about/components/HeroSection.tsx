@@ -603,7 +603,7 @@ const HeroSection = () => {
 					>
 						{/* Subtle background accent */}
 						<motion.div
-							className="absolute -left-6 top-0 lg:top-4 w-1.5 h-full bg-gradient-to-b from-[#2B3990] to-transparent origin-top"
+							className="absolute -left-6 top-0 lg:top-3 w-1.5 h-full bg-gradient-to-b from-[#2B3990] to-transparent origin-top"
 							initial={{ opacity: 0, scaleY: 0 }}
 							animate={showText ? { opacity: 0.6, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
 							transition={{ duration: 0.7, ease: "easeOut" }}

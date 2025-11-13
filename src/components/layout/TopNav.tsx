@@ -225,7 +225,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/dakewe" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Dakewe
                             </Link>
                           </li>
@@ -235,7 +235,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/vitro" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Vitro
                             </Link>
                           </li>
@@ -250,12 +250,12 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/moticsliderscanner" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Motic Slide Scanners
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/hamamatsusliderscanner" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hamamatsu Slide Scanners
                             </Link>
                           </li>

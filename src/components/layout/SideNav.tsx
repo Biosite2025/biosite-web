@@ -128,13 +128,13 @@ export function SideNav() {
 			title: "II. Histopathology",
 			items: [
 				{ name: "Sakura", href: "/user/products/components/sakura" },
-				{ name: "Dakewe", href: "#" },
+				{ name: "Dakewe", href: "/user/products/components/dakewe" },
 				{ name: "Hiplaas", href: "#" },
-				{ name: "Vitro", href: "#" },
+				{ name: "Vitro", href: "/user/products/components/vitro" },
 				{ name: "Biogenex", href: "#" },
 				{ name: "Nikon Microscopes", href: "/user/products/components/nikonmicroscopes" },
-				{ name: "Motic Slide Scanners", href: "#" },
-				{ name: "Hamamatsu Slide Scanners", href: "#" },
+				{ name: "Motic Slide Scanners", href: "/user/products/components/moticsliderscanner" },
+				{ name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
 				{ name: "Fuji Synapse PACS for Digital Pathology", href: "#" }
 			]
 		},
