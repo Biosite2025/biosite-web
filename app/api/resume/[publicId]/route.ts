@@ -7,11 +7,13 @@ const pool = new Pool({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { publicId: string } }
+  { params }: { params: Promise<{ publicId: string }> }
 ) {
   try {
+    // Await params in Next.js 15+
+    const { publicId } = await params;
     // publicId is actually the applicant ID
-    const id = parseInt(params.publicId);
+    const id = parseInt(publicId);
     
     console.log('📥 Fetching resume for applicant ID:', id);
     
