@@ -48,6 +48,8 @@ const locations: LocationData[] = [
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
   const [mounted, setMounted] = useState(false);
@@ -70,12 +72,40 @@ export default function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError(""); // Clear error on input change
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 2000);
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      
+      // Add custom subject with location
+      formData.set("subject", `Contact Form: ${form.subject || 'New Inquiry'} - ${currentLocation.name} Branch`);
+      
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+        setTimeout(() => setSubmitted(false), 3000);
+      } else {
+        setError("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again later.");
+      console.error("Form submission error:", err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -240,7 +270,26 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-gray-600 mb-3 sm:mb-4 md:mb-6 text-sm sm:text-base">If you have any questions please feel free to contact with us.</p>
+          
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+              {error}
+            </div>
+          )}
+          
+          {submitted && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
+              Message sent successfully! We'll get back to you soon.
+            </div>
+          )}
+          
           <form className="space-y-2 sm:space-y-3 md:space-y-4" onSubmit={handleSubmit}>
+            {/* Web3Forms Access Key */}
+            <input type="hidden" name="access_key" value="ef98e53f-33cf-4511-ac85-c37695a96267" />
+            
+            {/* Redirect */}
+            <input type="hidden" name="redirect" value="false" />
+            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
               <input
                 type="text"
@@ -287,10 +336,13 @@ export default function Contact() {
             </div>
             <motion.button
               type="submit"
-              className="w-full rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-white font-semibold py-2 sm:py-3 text-base sm:text-lg shadow-md hover:from-blue-700 hover:to-[#2B3990] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 mt-1 sm:mt-2"
-              whileTap={{ scale: 0.97 }}
+              disabled={submitting}
+              className={`w-full rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-white font-semibold py-2 sm:py-3 text-base sm:text-lg shadow-md hover:from-blue-700 hover:to-[#2B3990] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 mt-1 sm:mt-2 ${
+                submitting ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
+              whileTap={submitting ? {} : { scale: 0.97 }}
             >
-              {submitted ? "Sent!" : "Send"}
+              {submitting ? "Sending..." : submitted ? "Sent!" : "Send Message"}
             </motion.button>
           </form>
         </motion.div>

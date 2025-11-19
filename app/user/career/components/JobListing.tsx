@@ -1,88 +1,9 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import CustomDropdown from "./CustomDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-
-// Available positions data
-const availablePositions = [
-  { id: 1, title: "Cash Disbursement Associate" },
-  { id: 2, title: "Quotation Team Leader" },
-  { id: 3, title: "Order Fulfillment Associate" },
-  { id: 4, title: "Company Driver" },
-  { id: 5, title: "Supply Chain Supervisor" },
-  { id: 6, title: "Shipment Coordinator" },
-  { id: 7, title: "Service Engineer Supervisor" },
-  { id: 8, title: "Service Engineer" },
-  { id: 9, title: "Technical Service Director" },
-  { id: 10, title: "Service Engineer TL" },
-  { id: 11, title: "Bidding Team Leader" },
-  { id: 12, title: "Product Manager" },
-  { id: 13, title: "Product Application Manager" },
-  { id: 14, title: "Regional Sales Manager" },
-  { id: 15, title: "District Sales Manager" },
-  { id: 16, title: "IT Associate" },
-  { id: 17, title: "Product Specialist" },
-  { id: 18, title: "Logistics Staff" },
-  { id: 19, title: "Medical Sales Representative" },
-  { id: 20, title: "Bidding Associate" },
-  { id: 21, title: "Regulatory Pharmacist" },
-  { id: 22, title: "Procurement Team Lead" },
-  { id: 23, title: "Refrigeration Technician" },
-  { id: 24, title: "Operations Director" },
-  { id: 25, title: "Procurement Assistant" },
-  { id: 26, title: "Compliance Liaison" },
-  { id: 27, title: "Equipment Coordinator" },
-  { id: 28, title: "Cash Receipt Associate" },
-  { id: 29, title: "Service Coordinator" },
-  { id: 30, title: "Quotation Associate" },
-  { id: 31, title: "Administrative Associate" },
-  { id: 32, title: "Utility" },
-  { id: 33, title: "Product Specialist" },
-  { id: 34, title: "Picker" },
-  { id: 35, title: "Dispatcher" },
-  { id: 36, title: "Receiving Clerk" },
-  { id: 37, title: "Accounts Payable (Non-Trade)" },
-  { id: 38, title: "Inventory Encoder" },
-  { id: 39, title: "District Sales Manager" },
-  { id: 40, title: "Purchaser Staff" },
-  { id: 41, title: "Bidding Team Leader" },
-  { id: 42, title: "Bookkeeper" },
-  { id: 43, title: "Personal Assistant" },
-  { id: 44, title: "Credit and Collection TL" },
-  { id: 45, title: "Rider" },
-  { id: 46, title: "Credit and Collection Associate" },
-  { id: 47, title: "Order Fulfillment Associate" },
-  { id: 48, title: "Warehouse In Charge" },
-  { id: 49, title: "Business Unit Head" },
-  { id: 50, title: "Quotation Associate" },
-  { id: 51, title: "Respiratory Therapist" },
-  { id: 52, title: "Human Resource Officer" },
-  { id: 53, title: "Executive Assistant" },
-  { id: 54, title: "Customer Engagement Associate" },
-  { id: 55, title: "Accounting Associate" },
-  { id: 56, title: "Invoice Clerk" },
-  { id: 57, title: "Logistics Staff" },
-  { id: 58, title: "Bidding Associate - Reliever" },
-  { id: 59, title: "Inventory Analyst" },
-  { id: 60, title: "Credit & Collection" },
-  { id: 61, title: "Warehouse Personel" },
-  { id: 62, title: "Bidding Associate" },
-  { id: 63, title: "General Manager" },
-  { id: 64, title: "HR Payroll Specialist" },
-  { id: 65, title: "Human Resource Assistant" },
-  { id: 66, title: "Finance&Accounting Manager" },
-  { id: 67, title: "Finance Associate" },
-  { id: 68, title: "IT Officer" },
-  { id: 69, title: "Product Application Specialist" },
-  { id: 70, title: "Human Resource Officer Head" },
-  { id: 71, title: "Logistics Staff" },
-  { id: 72, title: "Marketing Director" },
-  { id: 73, title: "Regional Sales Manager" },
-  { id: 74, title: "HR/ Admin Officer" },
-  { id: 75, title: "Human Resource Generalist" },
-];
 
 export default function JobListing() {
   const [formData, setFormData] = useState({
@@ -99,11 +20,9 @@ export default function JobListing() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [dragActive, setDragActive] = useState(false);
-  const locationOptions = [
-    { id: 1, title: "Manila" },
-    { id: 2, title: "Cebu" },
-    { id: 3, title: "Davao" }
-  ];
+  const [availablePositions, setAvailablePositions] = useState<Array<{ id: number; title: string }>>([]);
+  const [locationOptions, setLocationOptions] = useState<Array<{ id: number; title: string }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // For underline alignment
   const titleRef = useRef<HTMLSpanElement>(null);
@@ -115,11 +34,56 @@ export default function JobListing() {
     }
   }, []);
 
+  // Fetch job positions and locations from the database
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Fetch job positions
+        const positionsResponse = await fetch('/api/job-positions');
+        const positionsData = await positionsResponse.json();
+        
+        // Fetch locations
+        const locationsResponse = await fetch('/api/locations');
+        const locationsData = await locationsResponse.json();
+        
+        if (positionsData.success) {
+          setAvailablePositions(positionsData.data);
+        }
+        
+        if (locationsData.success) {
+          setLocationOptions(locationsData.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
-    if (errors[name]) {
+    // Real-time validation for phone
+    if (name === "phone") {
+      if (!/^\d*$/.test(value)) {
+        setErrors(prev => ({ ...prev, phone: "Only numbers allowed." }));
+      } else if (value.length > 0 && value.length !== 11) {
+        setErrors(prev => ({ ...prev, phone: "Enter 11 digits." }));
+      } else {
+        setErrors(prev => ({ ...prev, phone: "" }));
+      }
+    } else if (name === "email") {
+      if (value.length > 0 && !/^\S+@\S+\.\S+$/.test(value)) {
+        setErrors(prev => ({ ...prev, email: "Invalid email." }));
+      } else {
+        setErrors(prev => ({ ...prev, email: "" }));
+      }
+    } else if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
   };
@@ -186,7 +150,11 @@ export default function JobListing() {
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\d{11}$/.test(formData.phone)) {
+      newErrors.phone = "Phone number must be exactly 11 digits";
+    }
     if (!formData.selectedPosition) newErrors.selectedPosition = "Please select a position";
     if (!formData.location) newErrors.location = "Please select a location";
     if (!formData.resume) newErrors.resume = "Resume is required";
@@ -201,21 +169,82 @@ export default function JobListing() {
     
     setIsSubmitting(true);
     
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setShowSuccess(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        selectedPosition: "",
-        location: "",
-        resume: null,
-        coverLetter: ""
+      let resumeUrl = null;
+      let resumeFileName = null;
+
+      // Upload resume to Cloudinary if present
+      if (formData.resume) {
+        resumeFileName = formData.resume.name;
+        
+        // Read file as base64
+        const reader = new FileReader();
+        const fileBase64 = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(formData.resume!);
+        });
+
+        // Upload to Cloudinary
+        const uploadResponse = await fetch('/api/upload-resume', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            file: fileBase64,
+            fileName: resumeFileName,
+          }),
+        });
+
+        const uploadData = await uploadResponse.json();
+        
+        if (!uploadData.success) {
+          console.error('Upload failed:', uploadData);
+          alert(`Failed to upload resume: ${uploadData.error || 'Unknown error'}`);
+          return;
+        }
+        
+        console.log('✅ Resume uploaded to Cloudinary:', uploadData.url);
+        resumeUrl = uploadData.url;
+      }
+
+      const response = await fetch('/api/applicants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          position: formData.selectedPosition,
+          location: formData.location,
+          resumeUrl: resumeUrl,
+          resumeFileName: resumeFileName,
+          message: formData.coverLetter,
+        }),
       });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setShowSuccess(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          selectedPosition: "",
+          location: "",
+          resume: null,
+          coverLetter: ""
+        });
+      } else {
+        alert(data.error || 'Failed to submit application. Please try again.');
+      }
     } catch (error) {
       console.error("Submission error:", error);
+      alert('An error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -438,6 +467,7 @@ export default function JobListing() {
                     }
                   }}
                   placeholder="-- Select Position --"
+                  enableSearch={true}
                 />
                 {errors.selectedPosition && (
                   <motion.p
