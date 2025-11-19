@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "cleanup:test": "node scripts/test-cleanup.js",
-    "cleanup:auto": "node scripts/auto-cleanup-scheduler.js"
+    "lint": "eslint"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

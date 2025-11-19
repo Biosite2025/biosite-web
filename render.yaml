@@ -1,0 +1,22 @@
+services:
+  # Next.js Frontend
+  - type: web
+    name: biosite-web
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dmvyhrewy
+      - key: CLOUDINARY_API_KEY
+        value: "516493988527468"
+      - key: CLOUDINARY_API_SECRET
+        sync: false
