@@ -213,13 +213,13 @@ export default function Vitro() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'Anatomical pathology': [
-				{ id: 1, name: 'VitroStainer 42©', image: '/asset/vitro/Anatomical pathology/VitroStainer 42©.png' },
+				{ id: 1, name: 'VitroStainer 42©', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530577/biosite-assets/vitro/Anatomical%20pathology/VitroStainer_42.png' },
 			],
 			'microbiology': [
-				{ id: 2, name: 'HybriSpot', image: '/asset/vitro/microbiology/HybriSpot.png' },
-				{ id: 3, name: 'MAIS', image: '/asset/vitro/microbiology/MAIS.png' },
-				{ id: 4, name: 'Victoria V96', image: '/asset/vitro/microbiology/Victoria V96.png' },
-				{ id: 5, name: 'Vitrocycler', image: '/asset/vitro/microbiology/Vitrocycler.png' },
+				{ id: 2, name: 'HybriSpot', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530395/biosite-assets/vitro/microbiology/HybriSpot.png' },
+				{ id: 3, name: 'MAIS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530395/biosite-assets/vitro/microbiology/MAIS.png' },
+				{ id: 4, name: 'Victoria V96', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530579/biosite-assets/vitro/microbiology/Victoria_V96.png' },
+				{ id: 5, name: 'Vitrocycler', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/microbiology/Vitrocycler.png' },
 			],
 		};
 
@@ -249,7 +249,7 @@ export default function Vitro() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="/asset/vitro/vitro-bg.png"
+						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-bg.png"
 						alt="Vitro Background"
 						fill
 						className="object-cover w-full h-full"
@@ -277,7 +277,7 @@ export default function Vitro() {
 							className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
 						>
 							<Image
-								src="/asset/vitro/vitro-logo.png"
+								src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-logo.png"
 								alt="Vitro Logo"
 								width={600}
 								height={350}

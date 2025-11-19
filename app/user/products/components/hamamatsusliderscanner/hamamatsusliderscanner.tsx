@@ -207,10 +207,10 @@ export default function HamamatsuSlideScanner() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'Digital Slide Scanner': [
-				{ id: 1, name: 'NanoZoomer S360 Digital slide scanner', image: '/asset/Hamamatsu/Digital Slide Scanner/NanoZoomer S360 Digital slide scanner.jpg' },
-				{ id: 2, name: 'NanoZoomer S540 Digital slide scanner', image: '/asset/Hamamatsu/Digital Slide Scanner/NanoZoomer S540 Digital slide scanner.jpg' },
-				{ id: 3, name: 'NanoZoomer S60v2 Digital slide scanner', image: '/asset/Hamamatsu/Digital Slide Scanner/NanoZoomer S60v2 Digital slide scanner.jpg' },
-				{ id: 4, name: 'NanoZoomer® S20 Digital slide scanner', image: '/asset/Hamamatsu/Digital Slide Scanner/NanoZoomer® S20 Digital slide scanner.jpg' },
+				{ id: 1, name: 'NanoZoomer S360 Digital slide scanner', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530494/biosite-assets/Hamamatsu/Digital%20Slide%20Scanner/NanoZoomer_S360_Digital_slide_scanner.jpg' },
+				{ id: 2, name: 'NanoZoomer S540 Digital slide scanner', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530497/biosite-assets/Hamamatsu/Digital%20Slide%20Scanner/NanoZoomer_S540_Digital_slide_scanner.jpg' },
+				{ id: 3, name: 'NanoZoomer S60v2 Digital slide scanner', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530496/biosite-assets/Hamamatsu/Digital%20Slide%20Scanner/NanoZoomer_S60v2_Digital_slide_scanner.jpg' },
+				{ id: 4, name: 'NanoZoomer® S20 Digital slide scanner', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530496/biosite-assets/Hamamatsu/Digital%20Slide%20Scanner/NanoZoomer_S20_Digital_slide_scanner.jpg' },
 			],
 		};
 
@@ -240,7 +240,7 @@ export default function HamamatsuSlideScanner() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="/asset/Hamamatsu/hamamatsu-bg.jpg"
+						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-bg.jpg"
 						alt="Hamamatsu Background"
 						fill
 						className="object-cover w-full h-full"
@@ -268,7 +268,7 @@ export default function HamamatsuSlideScanner() {
 							className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
 						>
 							<Image
-								src="/asset/Hamamatsu/hamamatsu-logo.png"
+								src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-logo.png"
 								alt="Hamamatsu Logo"
 								width={600}
 								height={350}

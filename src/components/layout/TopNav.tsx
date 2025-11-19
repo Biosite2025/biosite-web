@@ -81,7 +81,7 @@ export function TopNav() {
               <Link href="/user/about" className="flex items-center h-full transform hover:scale-105 transition-transform duration-300 relative">
                 <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 " />
                 <Image
-                  src="/asset/BMI logo.png"
+                  src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530483/biosite-assets/BMI_logo.png"
                   alt="Biosite Medical Instruments Logo"
                   width={250}
                   height={70}

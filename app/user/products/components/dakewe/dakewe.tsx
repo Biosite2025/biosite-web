@@ -226,21 +226,21 @@ export default function Dakewe() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'Cryostats': [
-				{ id: 1, name: '6250 Cryostat Microtome', image: '/asset/dakewe/Cryostats/6250 Cryostat Microtome.png' },
-				{ id: 2, name: 'CT520 Cryostat Microtome', image: '/asset/dakewe/Cryostats/CT520 Cryostat Microtome.png' },
+				{ id: 1, name: '6250 Cryostat Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530483/biosite-assets/dakewe/Cryostats/6250_Cryostat_Microtome.png' },
+				{ id: 2, name: 'CT520 Cryostat Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530483/biosite-assets/dakewe/Cryostats/CT520_Cryostat_Microtome.png' },
 			],
 			'Microtomes': [
-				{ id: 3, name: 'MT1 Semi-automated Rotary Microtome', image: '/asset/dakewe/Microtomes/MT1 Semi-automated Rotary Microtome-Photoroom.png' },
+				{ id: 3, name: 'MT1 Semi-automated Rotary Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530493/biosite-assets/dakewe/Microtomes/MT1_Semi-automated_Rotary_Microtome-Photoroom.png' },
 			],
 			'Specimen Identification': [
-				{ id: 4, name: 'SurePrint C100 Cassette Printer', image: '/asset/dakewe/Specimen Identification/SurePrint C100 Cassette Printer.png' },
-				{ id: 5, name: 'SurePrint C7 Cassette Printer', image: '/asset/dakewe/Specimen Identification/SurePrint C7 Cassette Printer.png' },
-				{ id: 6, name: 'SurePrint S10 Slide Printer', image: '/asset/dakewe/Specimen Identification/SurePrint S10 Slide Printer.png' },
-				{ id: 7, name: 'SurePrint S200 Slide Printer', image: '/asset/dakewe/Specimen Identification/SurePrint S200 Slide Printer.png' },
+				{ id: 4, name: 'SurePrint C100 Cassette Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530493/biosite-assets/dakewe/Specimen%20Identification/SurePrint_C100_Cassette_Printer.png' },
+				{ id: 5, name: 'SurePrint C7 Cassette Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530493/biosite-assets/dakewe/Specimen%20Identification/SurePrint_C7_Cassette_Printer.png' },
+				{ id: 6, name: 'SurePrint S10 Slide Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530494/biosite-assets/dakewe/Specimen%20Identification/SurePrint_S10_Slide_Printer.png' },
+				{ id: 7, name: 'SurePrint S200 Slide Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530494/biosite-assets/dakewe/Specimen%20Identification/SurePrint_S200_Slide_Printer.png' },
 			],
 			'Tissue Processors': [
-				{ id: 8, name: 'HP300 Plus Tissue Processor', image: '/asset/dakewe/Tissue Processors/HP300 Plus Tissue Processor.png' },
-				{ id: 9, name: 'HP300 Tissue Processor', image: '/asset/dakewe/Tissue Processors/HP300 Tissue Processor.png' },
+				{ id: 8, name: 'HP300 Plus Tissue Processor', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530495/biosite-assets/dakewe/Tissue%20Processors/HP300_Plus_Tissue_Processor.png' },
+				{ id: 9, name: 'HP300 Tissue Processor', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530495/biosite-assets/dakewe/Tissue%20Processors/HP300_Tissue_Processor.png' },
 			],
 		};
 
@@ -270,7 +270,7 @@ export default function Dakewe() {
 					{/* Background Image */}
 					<div className="absolute inset-0 w-full h-full z-0">
 						<Image
-							src="/asset/dakewe/bg-dakewe.jpg"
+							src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
 							alt="Dakewe Background"
 							fill
 							className="object-cover w-full h-full"
@@ -298,7 +298,7 @@ export default function Dakewe() {
 						className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
 						>
 						<Image
-						 src="/asset/dakewe/dakewe-logo.png"
+						 src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530318/biosite-assets/dakewe/dakewe-logo.png"
 						 alt="Dakewe Logo"
 						 width={600}
 						 height={350}

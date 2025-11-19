@@ -186,7 +186,7 @@ const AwardSection = () => {
                 {/* Background image with Next.js Image for optimization */}
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/asset/bg456.png"
+                        src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530490/biosite-assets/bg456.png"
                         alt="Background"
                         fill
                         priority={false}

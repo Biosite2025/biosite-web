@@ -61,12 +61,12 @@ const EventGallery: React.FC = () => {
   };
   // Sample event images - you can replace these with your actual event photos
   const eventImages = [
-    '/asset/istockphoto-1183500324-612x612.jpg',
-    '/asset/istockphoto-498908634-612x612.jpg',
-    '/asset/istockphoto-511061090-612x612.jpg',
-    '/asset/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
-    '/asset/image.png',
-    '/asset/image1.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/image1.png',
   ];
 
   // Duplicate for seamless loop in carousel
@@ -493,7 +493,7 @@ const EventGallery: React.FC = () => {
                     autoPlay
                     muted
                     className="absolute inset-0 w-full h-full object-cover rounded-xl lg:rounded-2xl cursor-pointer"
-                    poster="/asset/image.png"
+                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png"
                     style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
                     onClick={() => handleVideoClick(offset)}
                     onDoubleClick={() => handleVideoDoubleClick(offset)}

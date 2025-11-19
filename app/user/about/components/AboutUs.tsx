@@ -191,7 +191,7 @@ const AboutUs = () => {
         <div className="relative w-full lg:w-1/2 h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto min-h-[200px] sm:min-h-[250px] md:min-h-[300px] lg:min-h-screen flex items-center justify-center overflow-hidden m-0 p-0 group">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out z-10" />
           <Image
-            src="/asset/Screenshot 2025-10-03 102205.png"
+            src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530574/biosite-assets/Screenshot_2025-10-03_102205.png"
             alt="Biosite Building"
             fill
             priority={true}
@@ -248,7 +248,7 @@ const AboutUs = () => {
         {/* Right-side image for large screens */}
       <div className="hidden lg:block absolute top-0 right-0 h-full w-1/2 z-20">
         <Image
-          src="/asset/rightside.png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/rightside.png"
           alt="Right Side Visual"
           fill
           priority={true}

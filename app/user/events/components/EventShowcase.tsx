@@ -407,7 +407,7 @@ const EventShowcase: React.FC = () => {
               loop
               playsInline
               preload="auto"
-              poster="/asset/image.png"
+              poster="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png"
               onLoadedData={() => {
                 setIsVideoPlaying(true);
                 setIsVideoLoaded(true);
@@ -418,7 +418,7 @@ const EventShowcase: React.FC = () => {
               }}
               onCanPlay={() => setIsVideoLoaded(true)}
             >
-              <source src="/asset/My Video10.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
             </video>
 
             {/* Second Video */}
@@ -430,7 +430,7 @@ const EventShowcase: React.FC = () => {
               playsInline
               preload="auto"
             >
-              <source src="/asset/My Video11.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530540/biosite-assets/My_Video11.mp4" type="video/mp4" />
             </video>
           </div>
             
@@ -439,7 +439,7 @@ const EventShowcase: React.FC = () => {
             isVideoLoaded ? 'opacity-0' : 'opacity-100'
           }`}>
               <Image 
-                src="/asset/image.png" 
+                src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png" 
                 alt="Event Showcase" 
                 fill
                 className="object-cover opacity-60"

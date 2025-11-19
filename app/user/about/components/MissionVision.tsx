@@ -475,7 +475,7 @@ const MissionVision = () => {
       {/* Background image with Next.js Image for optimization */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/asset/slide (3).png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530578/biosite-assets/slide_3.png"
           alt="Background"
           fill
           priority={false}

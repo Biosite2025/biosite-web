@@ -16,7 +16,7 @@ const WebsiteDetails = () => {
       {/* Background image with Next.js Image for optimization */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/asset/bg32.png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530481/biosite-assets/bg32.png"
           alt="Background"
           fill
           priority={false}
@@ -50,7 +50,7 @@ const WebsiteDetails = () => {
         >
           <div className="relative overflow-hidden">
             <Image
-              src="/asset/image.png"
+              src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png"
               alt="Biosite Team"
               width={1200}
               height={430}
@@ -134,7 +134,7 @@ const WebsiteDetails = () => {
             whileHover={{ scale: 1.01, boxShadow: '0 8px 32px 0 rgba(35,86,168,0.10)' }}
           >
             <Image
-              src="/asset/image1.png"
+              src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/image1.png"
               alt="Community Engagement"
               width={600}
               height={300}

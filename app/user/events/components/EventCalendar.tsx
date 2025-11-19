@@ -213,7 +213,7 @@ const EventCalendar: React.FC = () => {
       {/* Background image with Next.js Image for optimization - Fixed positioning */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/asset/bg1.png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530480/biosite-assets/bg1.png"
           alt="Background"
           fill
           priority={true}

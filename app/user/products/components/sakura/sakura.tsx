@@ -243,31 +243,31 @@ export default function NikonMicroscopes() {
     // Simulated Sakura product data - in production, this would fetch from your asset folder
     const productData: any = {
       'Coverslipping': [
-        { id: 1, name: 'Tissue-Tek Film', image: '/asset/Sakura/Coverslipping/Tissue-Tek Film.jpg' },
-        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: '/asset/Sakura/Coverslipping/Tissue-Tek® Glas™ g2.jpg' },
+        { id: 1, name: 'Tissue-Tek Film', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Film.jpg' },
+        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Glas_g2.jpg' },
       ],
       'Cryotomy': [
-        { id: 3, name: 'Tissue-Tek Polar', image: '/asset/Sakura/Cryotomy/Tissue-Tek Polar.jpg' },
+        { id: 3, name: 'Tissue-Tek Polar', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530568/biosite-assets/Sakura/Cryotomy/Tissue-Tek_Polar.jpg' },
       ],
       'Embedding': [
-        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: '/asset/Sakura/Embedding/Tissue-Tek AutoTEC a120.jpg' },
-        { id: 5, name: 'Tissue-Tek TEC6', image: '/asset/Sakura/Embedding/Tissue-Tek TEC6.jpg' },
+        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Embedding/Tissue-Tek_AutoTEC_a120.jpg' },
+        { id: 5, name: 'Tissue-Tek TEC6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Embedding/Tissue-Tek_TEC6.jpg' },
 		
       ],
       'Microtomy': [
-        { id: 6, name: 'Tissue-Tek Autosection', image: '/asset/Sakura/Microtomy/Tissue-Tek Autosection.jpg' },
-        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: '/asset/Sakura/Microtomy/Tissue-Tek® Sledge Microtome IVS-410.jpg' } ,
-		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: '/asset/Sakura/Microtomy/Tissue-Tek® Slide Warmer PS-53.jpg' },
+        { id: 6, name: 'Tissue-Tek Autosection', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Autosection.jpg' },
+        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530572/biosite-assets/Sakura/Microtomy/Tissue-Tek_Sledge_Microtome_IVS-410.jpg' } ,
+		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Slide_Warmer_PS-53.jpg' },
 
       ], 
       'Staining': [
-        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: '/asset/Sakura/Staining/Tissue-Tek Prisma® Plus.jpg' },
+        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Staining/Tissue-Tek_Prisma_Plus.jpg' },
         
       ],
       'Tissue Processing': [      
-        { id: 11, name: 'Histo-Tek VP1', image: '/asset/Sakura/Tissue Processing/Histo-Tek VP1.jpg' },
-        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: '/asset/Sakura/Tissue Processing/Tissue-Tek VIP-6-AI.jpg' },
-		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: '/asset/Sakura/Tissue Processing/Tissue-Tek Xpress x120.jpg' },
+        { id: 11, name: 'Histo-Tek VP1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Histo-Tek_VP1.jpg' },
+        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_VIP-6-AI.jpg' },
+		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530574/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_Xpress_x120.jpg' },
       ],
     };
 
@@ -299,7 +299,7 @@ export default function NikonMicroscopes() {
 										{/* Background image with Next.js Image */}
 										<div className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
 											<Image
-												src="/asset/Sakura/backgroundforsakura.jpg"
+												src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg"
 												alt="Background"
 												fill
 												priority={false}
@@ -335,7 +335,7 @@ export default function NikonMicroscopes() {
 									  className="mb-4 sm:mb-6 md:mb-8 flex justify-center pb-4 max-[912px]:mb-3 max-[912px]:pb-2"
 								>
 									<Image
-										src="/asset/Sakura/Asset 67@300x.png"
+										src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/Sakura/Asset_67_300x.png"
 										alt="Sakura Logo"
 										width={300}
 										height={120}

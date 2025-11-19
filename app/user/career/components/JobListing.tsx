@@ -348,7 +348,7 @@ export default function JobListing() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
               <div className="relative z-10 w-full h-full flex items-center justify-center">
                 <Image
-                  src="/asset/Screenshot 2025-10-03 102205.png"
+                  src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530574/biosite-assets/Screenshot_2025-10-03_102205.png"
                   alt="Biosite Job Listing"
                   width={900}
                   height={520}

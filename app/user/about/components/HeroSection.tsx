@@ -341,7 +341,7 @@ type SlideType = {
 
 const slides: SlideType[] = [
 	{
-		src: "/asset/slide (1).png",
+		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530575/biosite-assets/slide_1.png",
 		headline: "Reliable Medical & Diagnostic Solution",
 		subheadline:
 			"Discover a trusted source for medical and diagnostic instruments. We specialize in the importation and distribution of high-quality diagnostic devices, laboratory supplies, and medical consumables to meet your healthcare and laboratory needs.",
@@ -351,7 +351,7 @@ const slides: SlideType[] = [
 		],
 	},
 	{
-		src: "/asset/slide (2).png",
+		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530577/biosite-assets/slide_2.png",
 		headline: "Innovating Diagnostics, Elevating Care",
 		subheadline:
 			"Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical consumables designed to support excellence in medical practice.",
@@ -361,7 +361,7 @@ const slides: SlideType[] = [
 		],
 	},
 	{
-	src: "/asset/slide (3).png",
+	src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530578/biosite-assets/slide_3.png",
 	headline: "Your Partner in Advance Healthcare",
 	subheadline:
 		"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",
