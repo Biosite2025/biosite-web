@@ -4,10 +4,12 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
-    qualities: [75, 85, 90, 100],
+    minimumCacheTTL: 31536000, // Cache for 1 year
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,11 +17,18 @@ const nextConfig: NextConfig = {
         pathname: '/dmvyhrewy/**',
       },
     ],
+    unoptimized: false, // Ensure Next.js optimization is enabled
   },
   // Enable compression
   compress: true,
   // Production optimizations
   reactStrictMode: true,
+  // Output configuration for better performance
+  output: 'standalone',
+  // Reduce memory usage
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'gsap'],
+  },
   // Allow build to succeed with warnings
   typescript: {
     ignoreBuildErrors: false,

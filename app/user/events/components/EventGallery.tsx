@@ -56,15 +56,46 @@ const EventGallery: React.FC = () => {
       }
     }
   };
-  // Event images - optimized with Cloudinary auto-transformations (60-70% smaller!)
+  // Event images - heavily optimized with smaller Cloudinary transformations
   const eventImages = [
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530500/biosite-assets/image.png',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/image1.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530500/biosite-assets/image.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/image1.png',
   ];
+
+  // Debug: Log image loading performance
+  useEffect(() => {
+    console.log('[EventGallery] Component mounted at:', new Date().toISOString());
+    console.log('[EventGallery] Total images to load:', eventImages.length);
+    
+    const startTime = performance.now();
+    let loadedCount = 0;
+    
+    eventImages.forEach((src, index) => {
+      const img = new window.Image();
+      const imgStartTime = performance.now();
+      
+      img.onload = () => {
+        loadedCount++;
+        const imgLoadTime = (performance.now() - imgStartTime).toFixed(2);
+        console.log(`[EventGallery] Image ${index + 1}/${eventImages.length} loaded in ${imgLoadTime}ms - Total: ${loadedCount}`);
+        
+        if (loadedCount === eventImages.length) {
+          const totalTime = (performance.now() - startTime).toFixed(2);
+          console.log(`[EventGallery] ✅ All images loaded in ${totalTime}ms`);
+        }
+      };
+      
+      img.onerror = () => {
+        console.error(`[EventGallery] ❌ Failed to load image ${index + 1}:`, src);
+      };
+      
+      img.src = src;
+    });
+  }, []);
 
   // Total images to render for seamless loop (optimized - no array duplication)
   const totalLoopImages = eventImages.length * 2;
@@ -99,12 +130,20 @@ const EventGallery: React.FC = () => {
 
   // Modal handlers
   const openModal = (image: string) => {
+    console.log('[EventGallery] Opening modal for image:', image);
+    const modalStartTime = performance.now();
+    
+    // Convert to higher quality for modal but still optimized
+    const modalImage = image.replace('w_400,q_auto:low', 'w_1000,q_auto:good');
+    
     // Load image to get its natural dimensions
     const img = new window.Image();
     img.onload = () => {
+      const loadTime = (performance.now() - modalStartTime).toFixed(2);
+      console.log(`[EventGallery] Modal image loaded in ${loadTime}ms`);
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
     };
-    img.src = image;
+    img.src = modalImage;
     
     setSelectedImage(image);
     setIsModalOpen(true);
@@ -299,11 +338,11 @@ const EventGallery: React.FC = () => {
                     transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
                   >
                     <Image
-                      src={selectedImage}
+                      src={selectedImage ? selectedImage.replace('w_400,q_auto:low', 'w_1000,q_auto:good') : ''}
                       alt="Event photo fullscreen"
                       fill
                       className="object-contain rounded-xl sm:rounded-2xl"
-                      quality={85}
+                      quality={80}
                       priority
                     />
                   </motion.div>
@@ -341,6 +380,7 @@ const EventGallery: React.FC = () => {
             style={{ x: topRowX }}
           >            {Array.from({ length: totalLoopImages }).map((_, index) => {
               const image = eventImages[index % eventImages.length];
+              const isPriority = index < 4; // Priority load first 4 images
               return (
               <motion.div
                 key={`top-${index}`}
@@ -359,9 +399,17 @@ const EventGallery: React.FC = () => {
                   alt={`Event photo ${index + 1}`}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  sizes="(max-width: 768px) 192px, (max-width: 1024px) 320px, 320px"
-                  quality={75}
-                  loading="lazy"
+                  sizes="(max-width: 768px) 192px, 320px"
+                  quality={60}
+                  priority={isPriority}
+                  loading={isPriority ? undefined : "lazy"}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  onLoadingComplete={() => {
+                    if (isPriority) {
+                      console.log(`[EventGallery] Priority image ${index + 1} rendered`);
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 {/* Click to view indicator */}
@@ -404,9 +452,11 @@ const EventGallery: React.FC = () => {
                   alt={`Event photo ${index + 1}`}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  sizes="(max-width: 768px) 192px, (max-width: 1024px) 320px, 320px"
-                  quality={75}
+                  sizes="(max-width: 768px) 192px, 320px"
+                  quality={60}
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 {/* Click to view indicator */}
@@ -498,10 +548,13 @@ const EventGallery: React.FC = () => {
                     autoPlay
                     muted
                     className="absolute inset-0 w-full h-full object-cover rounded-xl lg:rounded-2xl cursor-pointer"
-                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto,f_auto/v1763530500/biosite-assets/image.png"
+                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_600,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
                     style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
                     onClick={() => handleVideoClick(offset)}
                     onDoubleClick={() => handleVideoDoubleClick(offset)}
+                    onLoadStart={() => console.log(`[EventGallery] Video ${idx + 1} loading started`)}
+                    onLoadedData={() => console.log(`[EventGallery] Video ${idx + 1} loaded`)}
+                    onError={(e) => console.error(`[EventGallery] Video ${idx + 1} error:`, e)}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 </motion.div>

@@ -224,6 +224,7 @@ const EventShowcase: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log('[EventShowcase] Component mounted at:', new Date().toISOString());
     // Set mounted state to prevent hydration issues
     setIsMounted(true);
     
@@ -235,17 +236,25 @@ const EventShowcase: React.FC = () => {
     
     // Wait for next tick to ensure DOM is ready
     const initVideos = () => {
+      console.log('[EventShowcase] Initializing videos...');
+      const startTime = performance.now();
+      
       if (video1) {
         video1.style.display = 'block';
-        video1.play().catch(() => {
+        video1.play().then(() => {
+          const loadTime = (performance.now() - startTime).toFixed(2);
+          console.log(`[EventShowcase] Video 1 started playing in ${loadTime}ms`);
+          setIsVideoPlaying(true);
+        }).catch((err) => {
+          console.error('[EventShowcase] Video 1 play error:', err);
           setIsVideoPlaying(false);
         });
-        setIsVideoPlaying(true);
       }
       
       if (video2) {
         video2.style.display = 'none';
         video2.pause(); // Pause the second video initially
+        console.log('[EventShowcase] Video 2 preloaded and paused');
       }
     };
     
@@ -407,18 +416,24 @@ const EventShowcase: React.FC = () => {
               loop
               playsInline
               preload="auto"
-              poster="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png"
+              poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_600,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
               onLoadedData={() => {
+                console.log('[EventShowcase] Video 1 loaded and ready');
                 setIsVideoPlaying(true);
                 setIsVideoLoaded(true);
               }}
-              onError={() => {
+              onError={(e) => {
+                console.error('[EventShowcase] Video 1 error:', e);
                 setIsVideoPlaying(false);
                 setIsVideoLoaded(false);
               }}
-              onCanPlay={() => setIsVideoLoaded(true)}
+              onCanPlay={() => {
+                console.log('[EventShowcase] Video 1 can play');
+                setIsVideoLoaded(true);
+              }}
+              onLoadStart={() => console.log('[EventShowcase] Video 1 loading started')}
             >
-              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-1.mp4" type="video/mp4" />
             </video>
 
             {/* Second Video */}
@@ -429,8 +444,11 @@ const EventShowcase: React.FC = () => {
               loop
               playsInline
               preload="auto"
+              onLoadStart={() => console.log('[EventShowcase] Video 2 loading started')}
+              onLoadedData={() => console.log('[EventShowcase] Video 2 loaded')}
+              onError={(e) => console.error('[EventShowcase] Video 2 error:', e)}
             >
-              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530540/biosite-assets/My_Video11.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-2.mp4" type="video/mp4" />
             </video>
           </div>
             
@@ -439,11 +457,12 @@ const EventShowcase: React.FC = () => {
             isVideoLoaded ? 'opacity-0' : 'opacity-100'
           }`}>
               <Image 
-                src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png" 
+                src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530500/biosite-assets/image.png" 
                 alt="Event Showcase" 
                 fill
                 className="object-cover opacity-60"
                 priority
+                onLoadingComplete={() => console.log('[EventShowcase] Fallback image loaded')}
               />
               <div className="absolute inset-0 bg-gradient-to-br from-[#2B3990]/80 to-[#2B7CD3]/60" />
               
