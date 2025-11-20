@@ -238,8 +238,8 @@ export default function NikonMicroscopes() {
 				{ id: 5, name: 'ECLIPSE Ji', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ji.png' },
 				{ id: 6, name: 'ECLIPSE Ti2-I', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2-I.png' },
 				{ id: 7, name: 'Eclipse Ti2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2.png' },
-				{ id: 8, name: 'Eclipse Ts2', image: '/asset/nikon microscopes/Inverted Microscopes/Eclipse Ts2.png' },
-				{ id: 9, name: 'Eclipse Ts2R', image: '/asset/nikon microscopes/Inverted Microscopes/Eclipse Ts2R.png' },
+				{ id: 8, name: 'Eclipse Ts2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530551/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2.png' },
+				{ id: 9, name: 'Eclipse Ts2R', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2R.png' },
 			],
 			'Super-Resolution Microscopes': [
 				{ id: 10, name: 'AX/AX R with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/AX_AX_R_with_NSPARC.png' },
@@ -249,8 +249,8 @@ export default function NikonMicroscopes() {
 				{ id: 14, name: 'N-STORM', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530378/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/N-STORM.png' },
 			],
 			'upright microscopes': [
-				{ id: 12, name: 'ECLIPSE Ci-L plus', image: '/asset/nikon microscopes/upright microscopes/Eclipse Ci-L plus.png' },
-				{ id: 13, name: 'Eclipse Ci', image: '/asset/nikon microscopes/upright microscopes/Eclipse Ci.png' },
+				{ id: 12, name: 'ECLIPSE Ci-L plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci-L_plus.png' },
+				{ id: 13, name: 'Eclipse Ci', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci.png' },
 				{ id: 14, name: 'ECLIPSE E100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_E100.png' },
 				{ id: 15, name: 'ECLIPSE Ei', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ei.png' },
 				{ id: 16, name: 'ECLIPSE FN1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530559/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_FN1.png' },
