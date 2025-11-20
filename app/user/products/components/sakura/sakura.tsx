@@ -144,6 +144,9 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 						fill
 						className="object-contain p-2 sm:p-3 md:p-4 max-[912px]:p-2"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						priority={false}
+						quality={60}
+						loading="lazy"
 					/>
 				</motion.div>
 				
@@ -245,31 +248,31 @@ export default function NikonMicroscopes() {
     // Simulated Sakura product data - in production, this would fetch from your asset folder
     const productData: any = {
       'Coverslipping': [
-        { id: 1, name: 'Tissue-Tek Film', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Film.jpg' },
-        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Glas_g2.jpg' },
+        { id: 1, name: 'Tissue-Tek Film', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Film.jpg' },
+        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Glas_g2.jpg' },
       ],
       'Cryotomy': [
-        { id: 3, name: 'Tissue-Tek Polar', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530568/biosite-assets/Sakura/Cryotomy/Tissue-Tek_Polar.jpg' },
+        { id: 3, name: 'Tissue-Tek Polar', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530568/biosite-assets/Sakura/Cryotomy/Tissue-Tek_Polar.jpg' },
       ],
       'Embedding': [
-        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530567/biosite-assets/Sakura/Embedding/Tissue-Tek_AutoTEC_a120.jpg' },
-        { id: 5, name: 'Tissue-Tek TEC6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Embedding/Tissue-Tek_TEC6.jpg' },
+        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Embedding/Tissue-Tek_AutoTEC_a120.jpg' },
+        { id: 5, name: 'Tissue-Tek TEC6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Embedding/Tissue-Tek_TEC6.jpg' },
 		
       ],
       'Microtomy': [
-        { id: 6, name: 'Tissue-Tek Autosection', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Autosection.jpg' },
-        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530572/biosite-assets/Sakura/Microtomy/Tissue-Tek_Sledge_Microtome_IVS-410.jpg' } ,
-		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Slide_Warmer_PS-53.jpg' },
+        { id: 6, name: 'Tissue-Tek Autosection', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Autosection.jpg' },
+        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530572/biosite-assets/Sakura/Microtomy/Tissue-Tek_Sledge_Microtome_IVS-410.jpg' } ,
+		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Slide_Warmer_PS-53.jpg' },
 
       ], 
       'Staining': [
-        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530569/biosite-assets/Sakura/Staining/Tissue-Tek_Prisma_Plus.jpg' },
+        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Staining/Tissue-Tek_Prisma_Plus.jpg' },
         
       ],
       'Tissue Processing': [      
-        { id: 11, name: 'Histo-Tek VP1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Histo-Tek_VP1.jpg' },
-        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_VIP-6-AI.jpg' },
-		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530574/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_Xpress_x120.jpg' },
+        { id: 11, name: 'Histo-Tek VP1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Histo-Tek_VP1.jpg' },
+        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_VIP-6-AI.jpg' },
+		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530574/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_Xpress_x120.jpg' },
       ],
     };
 
@@ -279,8 +282,8 @@ export default function NikonMicroscopes() {
     // Preload all images including hero background, logo, and product images
     const productImages = Object.values(productData).flat().map((product: any) => product.image);
     const heroImages = [
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg', // Background
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/Sakura/Asset_67_300x.png' // Logo
+      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg', // Background
+      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/Sakura/Asset_67_300x.png' // Logo
     ];
     const allImages = [...heroImages, ...productImages];
     let loadedCount = 0;

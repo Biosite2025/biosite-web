@@ -227,25 +227,25 @@ export default function MoticSlideScanner() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'MoticEasyScan Infinity': [
-				{ id: 1, name: 'MoticEasyScan Infinity 100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530502/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_100.jpg' },
-				{ id: 2, name: 'MoticEasyScan Infinity 150', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_150.png' },
-				{ id: 3, name: 'MoticEasyScan Infinity 300', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_300.png' },
-				{ id: 4, name: 'MoticEasyScan Infinity 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_60.jpg' },
+				{ id: 1, name: 'MoticEasyScan Infinity 100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530502/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_100.jpg' },
+				{ id: 2, name: 'MoticEasyScan Infinity 150', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_150.png' },
+				{ id: 3, name: 'MoticEasyScan Infinity 300', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_300.png' },
+				{ id: 4, name: 'MoticEasyScan Infinity 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_60.jpg' },
 			],
 			'MoticEasyScan OneTwo': [
-				{ id: 5, name: 'MoticEasyScan OneTwo FS Live', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo_FS_Live.png' },
-				{ id: 6, name: 'MoticEasyScan OneTwo', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo.png' },
+				{ id: 5, name: 'MoticEasyScan OneTwo FS Live', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo_FS_Live.png' },
+				{ id: 6, name: 'MoticEasyScan OneTwo', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo.png' },
 			],
 			'MoticEasyScan Pro': [
-				{ id: 7, name: 'MoticEasyScan Pro 24-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530508/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24-FS.png' },
-				{ id: 8, name: 'MoticEasyScan Pro 24', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24.png' },
-				{ id: 9, name: 'MoticEasyScan Pro 6-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6-FS.jpg' },
-				{ id: 10, name: 'MoticEasyScan Pro 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6.jpg' },
+				{ id: 7, name: 'MoticEasyScan Pro 24-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530508/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24-FS.png' },
+				{ id: 8, name: 'MoticEasyScan Pro 24', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24.png' },
+				{ id: 9, name: 'MoticEasyScan Pro 6-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6-FS.jpg' },
+				{ id: 10, name: 'MoticEasyScan Pro 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6.jpg' },
 			],
 			'MoticFlexScan': [
-				{ id: 11, name: 'MoticFlexScan 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530507/biosite-assets/motic/MoticFlexScan/MoticFlexScan_6.png' },
-				{ id: 12, name: 'MoticFlexScan 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_60.png' },
-				{ id: 13, name: 'MoticFlexScan One', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_One.png' },
+				{ id: 11, name: 'MoticFlexScan 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticFlexScan/MoticFlexScan_6.png' },
+				{ id: 12, name: 'MoticFlexScan 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_60.png' },
+				{ id: 13, name: 'MoticFlexScan One', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_One.png' },
 			],
 		};
 
@@ -255,8 +255,8 @@ export default function MoticSlideScanner() {
 		// Preload all images including hero background, logo, and product images
 		const productImages = Object.values(productData).flat().map((product: any) => product.image);
 		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530324/biosite-assets/motic/motic-bg.png', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530324/biosite-assets/motic/motic-logo.png' // Logo
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530324/biosite-assets/motic/motic-bg.png', // Background
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530324/biosite-assets/motic/motic-logo.png' // Logo
 		];
 		const allImages = [...heroImages, ...productImages];
 		let loadedCount = 0;

@@ -231,34 +231,34 @@ export default function NikonMicroscopes() {
 		// Simulated product data - in production, this would fetch from your asset folder
 		const productData: any = {
 			'Confocal and Multiphoton Microscopes': [
-				{ id: 1, name: 'A1 HD25/A1R HD25', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530510/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/A1_HD25_A1R_HD25.png' },
-				{ id: 2, name: 'AX/AX R with NSPARC.png', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530546/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/AX_AX_R_with_NSPARC.png' },
-				{ id: 3, name: 'AX/R MP with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530548/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/AX_R_MP_with_NSPARC.png' },
-				{ id: 4, name: 'CSU series', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530547/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/CSU_series.png' },
+				{ id: 1, name: 'A1 HD25/A1R HD25', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530510/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/A1_HD25_A1R_HD25.png' },
+				{ id: 2, name: 'AX/AX R with NSPARC.png', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530546/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/AX_AX_R_with_NSPARC.png' },
+				{ id: 3, name: 'AX/R MP with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530548/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/AX_R_MP_with_NSPARC.png' },
+				{ id: 4, name: 'CSU series', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530547/biosite-assets/nikon%20microscopes/Confocal%20and%20Multiphoton%20Microscopes/CSU_series.png' },
 			],
 			'Inverted Microscopes': [
-				{ id: 5, name: 'ECLIPSE Ji', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ji.png' },
-				{ id: 6, name: 'ECLIPSE Ti2-I', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2-I.png' },
-				{ id: 7, name: 'Eclipse Ti2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2.png' },
-				{ id: 8, name: 'Eclipse Ts2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530551/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2.png' },
-				{ id: 9, name: 'Eclipse Ts2R', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2R.png' },
+				{ id: 5, name: 'ECLIPSE Ji', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ji.png' },
+				{ id: 6, name: 'ECLIPSE Ti2-I', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2-I.png' },
+				{ id: 7, name: 'Eclipse Ti2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ti2.png' },
+				{ id: 8, name: 'Eclipse Ts2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530551/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2.png' },
+				{ id: 9, name: 'Eclipse Ts2R', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530550/biosite-assets/nikon%20microscopes/Inverted%20Microscopes/ECLIPSE_Ts2R.png' },
 			],
 			'Super-Resolution Microscopes': [
-				{ id: 10, name: 'AX/AX R with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/AX_AX_R_with_NSPARC.png' },
-				{ id: 11, name: 'AX R MP with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/AX_R_MP_with_NSPARC.png' },
-				{ id: 12, name: 'CSU-W1 SoRa', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/CSU-W1_SoRa.png' },
-				{ id: 13, name: 'N-SIM E', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530555/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/N-SIM_E.png' },
-				{ id: 14, name: 'N-STORM', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530378/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/N-STORM.png' },
+				{ id: 10, name: 'AX/AX R with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/AX_AX_R_with_NSPARC.png' },
+				{ id: 11, name: 'AX R MP with NSPARC', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/AX_R_MP_with_NSPARC.png' },
+				{ id: 12, name: 'CSU-W1 SoRa', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530554/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/CSU-W1_SoRa.png' },
+				{ id: 13, name: 'N-SIM E', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530555/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/N-SIM_E.png' },
+				{ id: 14, name: 'N-STORM', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530378/biosite-assets/nikon%20microscopes/Super-Resolution%20Microscopes/N-STORM.png' },
 			],
 			'upright microscopes': [
-				{ id: 12, name: 'ECLIPSE Ci-L plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci-L_plus.png' },
-				{ id: 13, name: 'Eclipse Ci', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci.png' },
-				{ id: 14, name: 'ECLIPSE E100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_E100.png' },
-				{ id: 15, name: 'ECLIPSE Ei', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ei.png' },
-				{ id: 16, name: 'ECLIPSE FN1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530559/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_FN1.png' },
-				{ id: 17, name: 'ECLIPSE Ni', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530566/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ni.png' },
-				{ id: 18, name: 'ECLIPSE Si', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Si.png' },
-				{ id: 19, name: 'ECLIPSE Ui', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ui.png' },
+				{ id: 12, name: 'ECLIPSE Ci-L plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci-L_plus.png' },
+				{ id: 13, name: 'Eclipse Ci', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci.png' },
+				{ id: 14, name: 'ECLIPSE E100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_E100.png' },
+				{ id: 15, name: 'ECLIPSE Ei', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ei.png' },
+				{ id: 16, name: 'ECLIPSE FN1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530559/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_FN1.png' },
+				{ id: 17, name: 'ECLIPSE Ni', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530566/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ni.png' },
+				{ id: 18, name: 'ECLIPSE Si', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Si.png' },
+				{ id: 19, name: 'ECLIPSE Ui', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ui.png' },
 			],
 		};
 
@@ -268,8 +268,8 @@ export default function NikonMicroscopes() {
 		// Preload all images including hero background, logo, and product images
 		const productImages = Object.values(productData).flat().map((product: any) => product.image);
 		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530375/biosite-assets/nikon%20microscopes/nikonbackground.jpg', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png' // Logo
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530375/biosite-assets/nikon%20microscopes/nikonbackground.jpg', // Background
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png' // Logo
 		];
 		const allImages = [...heroImages, ...productImages];
 		let loadedCount = 0;

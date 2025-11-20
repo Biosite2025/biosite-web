@@ -116,6 +116,8 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 						fill
 						className="object-contain p-2 sm:p-3 md:p-4 max-[912px]:p-2"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						quality={60}
+						loading="lazy"
 					/>
 				</motion.div>
 				
@@ -215,13 +217,13 @@ export default function Vitro() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'Anatomical pathology': [
-				{ id: 1, name: 'VitroStainer 42©', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530577/biosite-assets/vitro/Anatomical%20pathology/VitroStainer_42.png' },
+				{ id: 1, name: 'VitroStainer 42©', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530577/biosite-assets/vitro/Anatomical%20pathology/VitroStainer_42.png' },
 			],
 			'microbiology': [
-				{ id: 2, name: 'HybriSpot', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530395/biosite-assets/vitro/microbiology/HybriSpot.png' },
-				{ id: 3, name: 'MAIS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530395/biosite-assets/vitro/microbiology/MAIS.png' },
-				{ id: 4, name: 'Victoria V96', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530579/biosite-assets/vitro/microbiology/Victoria_V96.png' },
-				{ id: 5, name: 'Vitrocycler', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/microbiology/Vitrocycler.png' },
+				{ id: 2, name: 'HybriSpot', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530395/biosite-assets/vitro/microbiology/HybriSpot.png' },
+				{ id: 3, name: 'MAIS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530395/biosite-assets/vitro/microbiology/MAIS.png' },
+				{ id: 4, name: 'Victoria V96', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530579/biosite-assets/vitro/microbiology/Victoria_V96.png' },
+				{ id: 5, name: 'Vitrocycler', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/microbiology/Vitrocycler.png' },
 			],
 		};
 
@@ -231,8 +233,8 @@ export default function Vitro() {
 		// Preload all images including hero background, logo, and product images
 		const productImages = Object.values(productData).flat().map((product: any) => product.image);
 		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-bg.png', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-logo.png' // Logo
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-bg.png', // Background
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-logo.png' // Logo
 		];
 		const allImages = [...heroImages, ...productImages];
 		let loadedCount = 0;
@@ -286,11 +288,12 @@ export default function Vitro() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-bg.png"
+						src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-bg.png"
 						alt="Vitro Background"
 						fill
 						className="object-cover w-full h-full"
 						priority={true}
+						quality={60}
 					/>
 					{/* Dark overlay with low opacity */}
 					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
