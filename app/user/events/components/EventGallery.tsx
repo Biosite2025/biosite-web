@@ -6,10 +6,10 @@ import { motion, useMotionValue, useAnimationFrame, AnimatePresence } from 'fram
 import Image from 'next/image';
 
 const EventGallery: React.FC = () => {
-  // Video sources - now from Cloudinary (saves 172MB from your server!)
+  // Video sources - from Cloudinary (saves 172MB from your server!)
   const videoSources = [
-    'https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-2.mp4',
-    'https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-1.mp4',
+    'https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530540/biosite-assets/My_Video11.mp4',
+    'https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4',
   ];
 
   // Video navigation state (show 2 at a time)

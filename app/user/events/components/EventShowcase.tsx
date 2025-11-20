@@ -433,7 +433,7 @@ const EventShowcase: React.FC = () => {
               }}
               onLoadStart={() => console.log('[EventShowcase] Video 1 loading started')}
             >
-              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-1.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
             </video>
 
             {/* Second Video */}
@@ -448,7 +448,7 @@ const EventShowcase: React.FC = () => {
               onLoadedData={() => console.log('[EventShowcase] Video 2 loaded')}
               onError={(e) => console.error('[EventShowcase] Video 2 error:', e)}
             >
-              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-2.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530540/biosite-assets/My_Video11.mp4" type="video/mp4" />
             </video>
           </div>
             
