@@ -6,13 +6,10 @@ import { motion, useMotionValue, useAnimationFrame, AnimatePresence } from 'fram
 import Image from 'next/image';
 
 const EventGallery: React.FC = () => {
-  // Video sources (use encoded URLs for safety)
+  // Video sources - now from Cloudinary (saves 172MB from your server!)
   const videoSources = [
-    '/asset/My%20Video11.mp4',
-    '/asset/My%20Video10.mp4',
-    '/asset/My%20Video10.mp4',
-    '/asset/My%20Video11.mp4',
-    
+    'https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-2.mp4',
+    'https://res.cloudinary.com/dmvyhrewy/video/upload/q_auto:good/biosite-assets/videos/event-video-1.mp4',
   ];
 
   // Video navigation state (show 2 at a time)
@@ -59,19 +56,18 @@ const EventGallery: React.FC = () => {
       }
     }
   };
-  // Sample event images - you can replace these with your actual event photos
+  // Event images - optimized with Cloudinary auto-transformations (60-70% smaller!)
   const eventImages = [
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/image1.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530500/biosite-assets/image.png',
+    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto,f_auto/v1763530499/biosite-assets/image1.png',
   ];
 
-  // Duplicate for seamless loop in carousel
-  const loopedImages = [...eventImages, ...eventImages];
-
+  // Total images to render for seamless loop (optimized - no array duplication)
+  const totalLoopImages = eventImages.length * 2;
 
   // Motion values for both rows
   const topRowX = useMotionValue(0);
@@ -307,7 +303,7 @@ const EventGallery: React.FC = () => {
                       alt="Event photo fullscreen"
                       fill
                       className="object-contain rounded-xl sm:rounded-2xl"
-                      quality={100}
+                      quality={85}
                       priority
                     />
                   </motion.div>
@@ -343,8 +339,9 @@ const EventGallery: React.FC = () => {
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: topRowX }}
-          >
-            {loopedImages.map((image, index) => (
+          >            {Array.from({ length: totalLoopImages }).map((_, index) => {
+              const image = eventImages[index % eventImages.length];
+              return (
               <motion.div
                 key={`top-${index}`}
                 className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
@@ -362,7 +359,9 @@ const EventGallery: React.FC = () => {
                   alt={`Event photo ${index + 1}`}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 192px, (max-width: 1024px) 320px, 320px"
+                  quality={75}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 {/* Click to view indicator */}
@@ -374,7 +373,8 @@ const EventGallery: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
 
@@ -384,7 +384,9 @@ const EventGallery: React.FC = () => {
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
           >
-            {loopedImages.map((image, index) => (
+            {Array.from({ length: totalLoopImages }).map((_, index) => {
+              const image = eventImages[index % eventImages.length];
+              return (
               <motion.div
                 key={`bottom-${index}`}
                 className="relative flex-shrink-0 w-48 h-32 lg:w-80 lg:h-60 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
@@ -402,7 +404,9 @@ const EventGallery: React.FC = () => {
                   alt={`Event photo ${index + 1}`}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 192px, (max-width: 1024px) 320px, 320px"
+                  quality={75}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 {/* Click to view indicator */}
@@ -414,7 +418,8 @@ const EventGallery: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
       </div>
@@ -493,7 +498,7 @@ const EventGallery: React.FC = () => {
                     autoPlay
                     muted
                     className="absolute inset-0 w-full h-full object-cover rounded-xl lg:rounded-2xl cursor-pointer"
-                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530500/biosite-assets/image.png"
+                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto,f_auto/v1763530500/biosite-assets/image.png"
                     style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
                     onClick={() => handleVideoClick(offset)}
                     onDoubleClick={() => handleVideoDoubleClick(offset)}
