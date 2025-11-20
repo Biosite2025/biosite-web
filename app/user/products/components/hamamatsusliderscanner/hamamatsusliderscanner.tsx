@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
 import ParticlesBackground from './ParticlesBackground';
+import Preloader from '@/src/components/layout/Preloader';
 
 // Product categories based on folder structure
 const categories = [
@@ -200,6 +201,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 export default function HamamatsuSlideScanner() {
 	const [products, setProducts] = useState<any>({});
 	const [loading, setLoading] = useState(true);
+	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -216,6 +218,36 @@ export default function HamamatsuSlideScanner() {
 
 		setProducts(productData);
 		setLoading(false);
+
+		// Preload all images including hero background, logo, and product images
+		const productImages = Object.values(productData).flat().map((product: any) => product.image);
+		const heroImages = [
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-bg.jpg', // Background
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-logo.png' // Logo
+		];
+		const allImages = [...heroImages, ...productImages];
+		let loadedCount = 0;
+
+		const preloadImages = () => {
+			allImages.forEach((src: string) => {
+				const img = new window.Image();
+				img.src = src;
+				img.onload = () => {
+					loadedCount++;
+					if (loadedCount === allImages.length) {
+						setImagesLoaded(true);
+					}
+				};
+				img.onerror = () => {
+					loadedCount++;
+					if (loadedCount === allImages.length) {
+						setImagesLoaded(true);
+					}
+				};
+			});
+		};
+
+		preloadImages();
 	}, []);
 
 	const handleViewDetails = (product: any) => {
@@ -227,6 +259,11 @@ export default function HamamatsuSlideScanner() {
 		setIsModalOpen(false);
 		setSelectedProduct(null);
 	};
+
+	// Show loading screen until all images are preloaded
+	if (!imagesLoaded) {
+		return <Preloader />;
+	}
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
