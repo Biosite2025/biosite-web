@@ -701,7 +701,7 @@ const MissionVision = () => {
             {/* TEAM Letters Layout - Responsive */}
             <div className="flex flex-col lg:flex-row mt-3 sm:mt-4 md:mt-6 xl:mt-[40px] ml-0 sm:ml-2 md:ml-4 items-start justify-center gap-3 sm:gap-4 md:gap-6 lg:gap-12 max-[1365px]:ml-0 max-[1365px]:w-full max-[1024px]:flex-col max-[912px]:mt-0 max-[912px]:gap-4">
               {/* Vertical TEAM Letters - Left Side with Stair Layout - Responsive */}
-              <div className="team-letters-container flex lg:flex-col flex-row justify-center lg:justify-start items-center lg:items-start gap-1 sm:gap-2 md:gap-3 lg:gap-6 max-[1365px]:flex-row max-[1365px]:justify-center max-[1365px]:items-center max-[1365px]:gap-4 max-[1024px]:gap-6 max-[640px]:gap-8 max-[1365px]:w-full max-[1024px]:flex-row max-[912px]:gap-4 max-[912px]:justify-center max-[912px]:mb-4">
+              <div className="team-letters-container flex lg:flex-col flex-row justify-center lg:justify-start items-center lg:items-start gap-2 sm:gap-2 md:gap-3 lg:gap-6 max-[1365px]:flex-row max-[1365px]:justify-center max-[1365px]:items-center max-[1365px]:gap-4 max-[1024px]:gap-6 max-[640px]:gap-3 max-[1365px]:w-full max-[1024px]:flex-row max-[912px]:gap-4 max-[912px]:justify-center max-[912px]:mb-4">
                 {['T', 'E', 'A', 'M'].map((letter, index) => (
                   <motion.div
                     key={letter}
