@@ -330,6 +330,74 @@ const ipadResponsiveStyles = `
 			margin-bottom: 28px !important;
 		}
 	}
+
+	@media (min-width: 1900px) and (max-width: 1940px) and (min-height: 1180px) and (max-height: 1220px) {
+		/* 1920x1200 Display - Optimized layout */
+		.hero-content-container {
+			left: 50% !important;
+			transform: translateX(-50%) scale(1.0) !important;
+			padding-left: 80px !important;
+			padding-right: 80px !important;
+			max-width: 1200px !important;
+			margin-top: 60px !important;
+			width: calc(100% - 160px) !important;
+		}
+		.hero-title {
+			font-size: 4.2rem !important;
+			line-height: 1.1 !important;
+			margin-bottom: 24px !important;
+			max-width: 100% !important;
+		}
+		.hero-subtitle {
+			font-size: 1.35rem !important;
+			line-height: 1.65 !important;
+			margin-bottom: 28px !important;
+			max-width: 90% !important;
+		}
+		.hero-buttons {
+			flex-direction: row !important;
+			gap: 36px !important;
+			margin-top: 20px !important;
+		}
+		.hero-button {
+			padding: 22px 48px !important;
+			font-size: 1.2rem !important;
+			min-width: 180px !important;
+		}
+		.location-boxes-container {
+			padding: 0 40px !important;
+			margin-bottom: 50px !important;
+			margin-top: 50px !important;
+		}
+		.location-boxes-container > div {
+			display: flex !important;
+			flex-direction: row !important;
+			gap: 28px !important;
+			justify-content: center !important;
+			align-items: stretch !important;
+			max-width: 1400px !important;
+			margin: 0 auto !important;
+		}
+		.location-box {
+			padding: 32px !important;
+			min-width: 360px !important;
+			max-width: 420px !important;
+			flex: 1 !important;
+		}
+		.location-box-title {
+			font-size: 1.4rem !important;
+			margin-bottom: 20px !important;
+		}
+		.location-box-address {
+			font-size: 1.15rem !important;
+			margin-bottom: 30px !important;
+			line-height: 1.6 !important;
+		}
+		.location-box-phone {
+			font-size: 1.2rem !important;
+			margin-bottom: 30px !important;
+		}
+	}
 `;
 
 type SlideType = {
@@ -341,7 +409,7 @@ type SlideType = {
 
 const slides: SlideType[] = [
 	{
-		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530575/biosite-assets/slide_1.png",
+		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530575/biosite-assets/slide_1.png",
 		headline: "Reliable Medical & Diagnostic Solution",
 		subheadline:
 			"Discover a trusted source for medical and diagnostic instruments. We specialize in the importation and distribution of high-quality diagnostic devices, laboratory supplies, and medical consumables to meet your healthcare and laboratory needs.",
@@ -351,7 +419,7 @@ const slides: SlideType[] = [
 		],
 	},
 	{
-		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530577/biosite-assets/slide_2.png",
+		src: "https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530577/biosite-assets/slide_2.png",
 		headline: "Innovating Diagnostics, Elevating Care",
 		subheadline:
 			"Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical consumables designed to support excellence in medical practice.",
@@ -361,7 +429,7 @@ const slides: SlideType[] = [
 		],
 	},
 	{
-	src: "https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530578/biosite-assets/slide_3.png",
+	src: "https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530578/biosite-assets/slide_3.png",
 	headline: "Your Partner in Advance Healthcare",
 	subheadline:
 		"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",

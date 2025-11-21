@@ -16,11 +16,11 @@ const WebsiteDetails = () => {
       {/* Background image with Next.js Image for optimization */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530481/biosite-assets/bg32.png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530481/biosite-assets/bg32.png"
           alt="Background"
           fill
-          priority={false}
-          quality={75}
+          loading="lazy"
+          quality={60}
           sizes="100vw"
           style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
@@ -34,6 +34,27 @@ const WebsiteDetails = () => {
             object-fit: cover !important;
             width: 100% !important;
             border-radius: 24px !important;
+          }
+        }
+        @media (min-width: 1900px) and (max-width: 1940px) and (min-height: 1180px) and (max-height: 1220px) {
+          #website-details {
+            padding-top: 80px !important;
+            padding-bottom: 80px !important;
+          }
+          #website-details h2 {
+            font-size: 2.5rem !important;
+            margin-bottom: 28px !important;
+          }
+          #website-details h3 {
+            font-size: 1.8rem !important;
+            margin-bottom: 24px !important;
+          }
+          #website-details p {
+            font-size: 1.2rem !important;
+            line-height: 1.9 !important;
+          }
+          #website-details .max-w-6xl {
+            max-width: 1400px !important;
           }
         }
       `}</style>

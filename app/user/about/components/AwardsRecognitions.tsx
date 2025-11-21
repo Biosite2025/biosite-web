@@ -174,6 +174,25 @@ const AwardSection = () => {
                     .slick-dots { bottom: -28px; }
                     .slick-dots li button:before { font-size: 8px; }
                 }
+                @media (min-width: 1900px) and (max-width: 1940px) and (min-height: 1180px) and (max-height: 1220px) {
+                    #awards-recognitions {
+                        padding-top: 100px !important;
+                        padding-bottom: 100px !important;
+                    }
+                    #awards-recognitions h2 {
+                        font-size: 4.5rem !important;
+                        margin-bottom: 32px !important;
+                    }
+                    #awards-recognitions .text-gray-600 {
+                        font-size: 1.5rem !important;
+                        line-height: 2 !important;
+                    }
+                    .slick-slide > div > div > div {
+                        height: 420px !important;
+                        max-width: 440px !important;
+                        padding: 40px !important;
+                    }
+                }
             `}</style>
             <motion.section
                 id="awards-recognitions"
@@ -186,11 +205,11 @@ const AwardSection = () => {
                 {/* Background image with Next.js Image for optimization */}
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530490/biosite-assets/bg456.png"
+                        src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530490/biosite-assets/bg456.png"
                         alt="Background"
                         fill
-                        priority={false}
-                        quality={75}
+                        loading="lazy"
+                        quality={60}
                         sizes="100vw"
                         style={{ objectFit: 'cover', objectPosition: 'center' }}
                     />

@@ -61,6 +61,27 @@ export function TopNav() {
 
   return (
     <>
+      <style>{`
+        @media (min-width: 1900px) and (max-width: 1940px) and (min-height: 1180px) and (max-height: 1220px) {
+          nav[data-topnav="true"] {
+            height: 120px !important;
+          }
+          nav[data-topnav="true"] .flex.h-24 {
+            height: 120px !important;
+          }
+          nav[data-topnav="true"] img {
+            width: 300px !important;
+            height: 90px !important;
+          }
+          nav[data-topnav="true"] a,
+          nav[data-topnav="true"] button {
+            font-size: 1.3rem !important;
+          }
+          nav[data-topnav="true"] .italic {
+            font-size: 1.4rem !important;
+          }
+        }
+      `}</style>
       <motion.nav
         data-topnav="true"
         initial={false}

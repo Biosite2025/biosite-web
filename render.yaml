@@ -6,7 +6,8 @@ services:
     region: singapore
     plan: free
     buildCommand: npm install && npm run build
-    startCommand: npm run start
+    startCommand: node scripts/start-with-monitoring.js
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production

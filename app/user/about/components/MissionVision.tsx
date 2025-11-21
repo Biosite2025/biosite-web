@@ -458,6 +458,145 @@ const ipadMissionVisionStyles = `
       font-size: 1.5rem !important;
     }
   }
+
+  /* 1920x1200 Display */
+  @media (min-width: 1900px) and (max-width: 1940px) and (min-height: 1180px) and (max-height: 1220px) {
+    .mission-vision-main-container {
+      padding: 100px 80px !important;
+      min-height: 100vh !important;
+    }
+    .mission-vision-content-wrapper {
+      max-width: 1500px !important;
+      gap: 60px !important;
+      align-items: flex-start !important;
+      flex-direction: row !important;
+    }
+    .mission-vision-card {
+      padding: 40px !important;
+      border-radius: 28px !important;
+      margin-top: 40px !important;
+    }
+    .mission-vision-card-title {
+      font-size: 2.2rem !important;
+      margin-bottom: 24px !important;
+    }
+    .mission-vision-card-text {
+      font-size: 1.2rem !important;
+      line-height: 1.8 !important;
+      margin-bottom: 28px !important;
+    }
+    .mission-vision-card-button {
+      padding: 16px 36px !important;
+      font-size: 1.15rem !important;
+    }
+    .team-section-container {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+      gap: 40px !important;
+      width: auto !important;
+      max-width: none !important;
+    }
+    .team-letters-container {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+      margin-bottom: 0 !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      margin-top: 104px !important;
+    }
+    .team-letter-container {
+      padding: 28px !important;
+      min-width: 130px !important;
+      min-height: 130px !important;
+      max-width: 130px !important;
+      max-height: 130px !important;
+      margin-bottom: 32px !important;
+      
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .team-letter-container:last-child {
+      margin-bottom: 0 !important;
+      
+    }
+    .team-letter-text {
+      font-size: 5rem !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+    .team-cards-container {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+      max-width: 750px !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+      flex: 1 !important;
+      margin-top: 104px !important;
+    }
+    .team-card {
+      padding: 22px !important;
+      border-radius: 20px !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-bottom: 22px !important;
+      margin-top: 0 !important;
+      min-height: 82px !important;
+      display: flex !important;
+      align-items: center !important;
+      transform: none !important;
+    }
+    .team-card-teamwork {
+      margin-left: -120px !important;
+    }
+    .team-card:last-child {
+      margin-bottom: 0 !important;
+    }
+    .team-card:nth-child(1) {
+      margin-left: 0 !important;
+      margin-top: 0 !important;
+      margin-left: -95px !important;
+      transform: translateX(0) !important;
+    }
+    .team-card:nth-child(2) {
+      margin-left: 0 !important;
+      margin-top: 10px !important;
+      margin-left: -75px !important;
+      transform: translateX(0) !important;
+    }
+    .team-card:nth-child(3) {
+      margin-left: 0 !important;
+      margin-top: 10px !important;
+      margin-left: -55px !important;
+      transform: translateX(0) !important;
+    }
+    .team-card:nth-child(4) {
+      margin-left: 0 !important;
+      margin-top: 10px !important;
+      margin-left: -32px !important;
+      transform: translateX(0) !important;
+    }
+    .team-card-icon {
+      padding: 16px !important;
+      min-width: 38px !important;
+      min-height: 38px !important;
+    }
+    .team-card-icon svg {
+      width: 18px !important;
+      height: 18px !important;
+    }
+    .team-card-title {
+      font-size: 1.1rem !important;
+      margin-bottom: 14px !important;
+    }
+    .team-card-text {
+      font-size: 0.85rem !important;
+      line-height: 1.7 !important;
+    }
+  }
 `;
 
 const MissionVision = () => {
@@ -475,14 +614,14 @@ const MissionVision = () => {
       {/* Background image with Next.js Image for optimization */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530578/biosite-assets/slide_3.png"
+          src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530578/biosite-assets/slide_3.png"
           alt="Background"
           fill
-          priority={false}
-          quality={75}
+          loading="lazy"
+          quality={60}
           sizes="100vw"
           style={{ objectFit: 'cover', objectPosition: 'center' }}
-        />
+        />  
       </div>
       {/* Overlay */}
   <div className="absolute inset-0 bg-blue-500/80 z-0" />
@@ -634,7 +773,7 @@ const MissionVision = () => {
             <div className="team-cards-container flex-1 space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-8 w-full max-w-full md:max-w-[600px] max-[1365px]:w-full max-[1024px]:mt-3 max-[912px]:space-y-3 max-[912px]:mt-0">
               {/* T - Teamwork - Responsive */}
               <motion.div
-                className="team-card bg-white/95 backdrop-blur-sm rounded-lg sm:rounded-xl lg:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-[30px] mt-0 sm:mt-[2px] shadow-2xl border border-white/30 group hover:shadow-3xl hover:bg-white transition-all duration-500 relative overflow-hidden ml-0 sm:-ml-4 md:-ml-8 lg:-ml-[120px] xl:-ml-[190px] max-[1365px]:ml-0 max-[640px]:mb-[15px] max-[912px]:ml-0 max-[912px]:p-3"
+                className="team-card team-card-teamwork bg-white/95 backdrop-blur-sm rounded-lg sm:rounded-xl lg:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-[30px] mt-0 sm:mt-[2px] shadow-2xl border border-white/30 group hover:shadow-3xl hover:bg-white transition-all duration-500 relative overflow-hidden ml-0 sm:-ml-4 md:-ml-8 lg:-ml-[120px] xl:-ml-[190px] max-[1365px]:ml-0 max-[640px]:mb-[15px] max-[912px]:ml-0 max-[912px]:p-3"
                 initial={{ 
                   opacity: 0, 
                   x: 60, 

@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:monitor": "node scripts/start-with-monitoring.js",
+    "monitor": "node scripts/monitor-memory.js",
     "lint": "eslint"
   },
   "dependencies": {
