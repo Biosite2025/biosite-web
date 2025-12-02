@@ -55,6 +55,22 @@ const EventCalendar: React.FC = () => {
     fetchEvents();
   }, []);
 
+  // Get category display color (for badges and UI)
+  const getCategoryDisplayColor = (category: string) => {
+    switch (category) {
+      case 'corporate':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'outreach':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'training':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'conference':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
   // Color scheme based on your website colors
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -138,19 +154,14 @@ const EventCalendar: React.FC = () => {
     setTimeout(() => setIsLoading(false), 300);
   };
 
-  // Get event stats for the current month
+  // Get event stats for all events (dynamically from database)
   const getEventStats = () => {
-    const currentDate = new Date();
-    const currentMonthEvents = events.filter(event => {
-      const eventDate = new Date(event.date);
-      return eventDate.getMonth() === currentDate.getMonth() && 
-             eventDate.getFullYear() === currentDate.getFullYear();
-    });
-
-    const categories = ['corporate', 'training', 'outreach', 'conference'];
-    return categories.map(category => ({
+    // Get unique categories from the events data
+    const uniqueCategories = Array.from(new Set(events.map(e => e.category)));
+    
+    return uniqueCategories.map(category => ({
       category,
-      count: currentMonthEvents.filter(e => e.category === category).length,
+      count: events.filter(e => e.category === category).length,
       color: getCategoryColor(category)
     }));
   };
@@ -356,8 +367,7 @@ const EventCalendar: React.FC = () => {
                       {selectedEvent.title}
                     </h3>
                     <span 
-                      className="inline-block px-2 lg:px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
-                      style={{ backgroundColor: getCategoryColor(selectedEvent.category) }}
+                      className={`inline-block px-2 lg:px-3 py-1 rounded-full text-xs font-medium capitalize border ${getCategoryDisplayColor(selectedEvent.category)}`}
                     >
                       {selectedEvent.category}
                     </span>
