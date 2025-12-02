@@ -25,73 +25,35 @@ const EventCalendar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [events, setEvents] = useState<Event[]>([]);
 
-  // Sample events with categories and colors matching your website theme
-  const events: Event[] = [
-    {
-      id: '1',
-      title: 'Corporate Strategy Meeting',
-      date: '2025-01-12',
-      category: 'corporate',
-      description: 'Annual strategic planning session for the upcoming year',
-      location: 'Conference Room A',
-      time: '9:00 AM'
-    },
-    {
-      id: '2',
-      title: 'Training Workshop',
-      date: '2025-02-25',
-      category: 'training',
-      description: 'Professional development workshop for laboratory staff',
-      location: 'Training Center',
-      time: '2:00 PM'
-    },
-    {
-      id: '3',
-      title: 'Annual Outreach Program',
-      date: '2025-05-10',
-      category: 'outreach',
-      description: 'Community health screening and awareness program',
-      location: 'Community Center',
-      time: '8:00 AM'
-    },
-    {
-      id: '4',
-      title: 'Company Anniversary',
-      date: '2025-08-17',
-      category: 'corporate',
-      description: 'Celebrating years of excellence in healthcare innovation',
-      location: 'Main Auditorium',
-      time: '6:00 PM'
-    },
-    {
-      id: '5',
-      title: 'TLS - CCHIS Conference',
-      date: '2025-10-15',
-      category: 'conference',
-      description: 'Technical Laboratory Services Conference on Clinical Chemistry',
-      location: 'San Juan Convention Center',
-      time: '9:00 AM'
-    },
-    {
-      id: '6',
-      title: 'Laboratory Equipment Training',
-      date: '2025-11-08',
-      category: 'training',
-      description: 'Advanced training on new laboratory equipment',
-      location: 'Lab Facility',
-      time: '10:00 AM'
-    },
-    {
-      id: '7',
-      title: 'Healthcare Innovation Summit',
-      date: '2025-12-03',
-      category: 'conference',
-      description: 'Industry summit on latest healthcare technologies',
-      location: 'Metro Manila',
-      time: '8:30 AM'
-    }
-  ];
+  // Fetch events from API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('/api/events');
+        const data = await response.json();
+        
+        if (data.success) {
+          // Transform the data to match the Event interface
+          const transformedEvents = data.data.map((event: any) => ({
+            id: event.id.toString(),
+            title: event.title,
+            date: event.date,
+            category: event.category,
+            description: event.description,
+            location: event.location,
+            time: event.time
+          }));
+          setEvents(transformedEvents);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   // Color scheme based on your website colors
   const getCategoryColor = (category: string) => {
