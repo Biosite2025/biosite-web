@@ -171,13 +171,9 @@ const EventCalendar: React.FC = () => {
       if (popover) {
         popover.classList.add('fc-popover-closing');
         setTimeout(() => {
-          const calendarApi = calendarRef.current?.getApi();
-          if (calendarApi) {
-            // Force close any open popovers
-            const closeButton = popover.querySelector('.fc-popover-close') as HTMLElement;
-            if (closeButton) {
-              closeButton.click();
-            }
+          const closeButton = popover.querySelector('.fc-popover-close') as HTMLElement;
+          if (closeButton) {
+            closeButton.click();
           }
         }, 200);
       }
@@ -201,18 +197,7 @@ const EventCalendar: React.FC = () => {
     }));
   };
 
-  // Custom event content renderer
-  const renderEventContent = (eventInfo: EventContentArg) => {
-    return (
-      <div className="fc-event-main-frame overflow-hidden">
-        <div className="fc-event-title-container">
-          <div className="fc-event-title fc-sticky text-xs font-medium truncate">
-            {eventInfo.event.title}
-          </div>
-        </div>
-      </div>
-    );
-  };
+
 
   return (
     <div
@@ -348,7 +333,6 @@ const EventCalendar: React.FC = () => {
             initialView="dayGridMonth"
             events={calendarEvents}
             eventClick={handleEventClick}
-            eventContent={renderEventContent}
             datesSet={handleDatesSet}
             headerToolbar={false} // We're using custom header
             height="auto" // Let calendar auto-resize
