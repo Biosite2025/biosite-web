@@ -126,6 +126,17 @@ const EventCalendar: React.FC = () => {
     setShowEventsListModal(true);
   };
 
+  const handleMoreLinkClick = (arg: any) => {
+    const dateStr = arg.date.toISOString().split('T')[0];
+    const eventsOnDate = eventsByDate[dateStr] || [];
+    
+    setSelectedDateEvents(eventsOnDate);
+    setSelectedDate(dateStr);
+    setShowEventsListModal(true);
+    
+    return 'popover'; // Return something to prevent default behavior
+  };
+
   const handleEventTileClick = (event: Event) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
@@ -140,17 +151,23 @@ const EventCalendar: React.FC = () => {
     setShowEventsListModal(false);
   };
 
-  // Close modal on scroll (all devices)
+  // Close modals on scroll (all devices)
   useEffect(() => {
-    if (!isModalOpen) return;
+    if (!isModalOpen && !showEventsListModal) return;
+    
     const handleScroll = () => {
-      closeModal();
+      if (isModalOpen) {
+        closeModal();
+      } else if (showEventsListModal) {
+        setShowEventsListModal(false);
+      }
     };
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, showEventsListModal]);
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
@@ -363,12 +380,12 @@ const EventCalendar: React.FC = () => {
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             datesSet={handleDatesSet}
+            moreLinkClick={handleMoreLinkClick}
             headerToolbar={false} // We're using custom header
             height="auto" // Let calendar auto-resize
             dayMaxEventRows={1}
             eventDisplay="block"
             displayEventTime={false}
-            moreLinkClick="none" // Disable the built-in popover completely
             dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
