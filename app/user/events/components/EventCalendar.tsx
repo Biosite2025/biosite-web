@@ -130,11 +130,14 @@ const EventCalendar: React.FC = () => {
     const dateStr = arg.date.toISOString().split('T')[0];
     const eventsOnDate = eventsByDate[dateStr] || [];
     
-    setSelectedDateEvents(eventsOnDate);
-    setSelectedDate(dateStr);
-    setShowEventsListModal(true);
+    // Set state and open modal with a small delay to ensure it happens after any FullCalendar events
+    setTimeout(() => {
+      setSelectedDateEvents(eventsOnDate);
+      setSelectedDate(dateStr);
+      setShowEventsListModal(true);
+    }, 0);
     
-    return 'popover'; // Return something to prevent default behavior
+    return false; // Prevent FullCalendar's default popover
   };
 
   const handleEventTileClick = (event: Event) => {
@@ -404,7 +407,7 @@ const EventCalendar: React.FC = () => {
 
       {/* Events List Modal */}
       <AnimatePresence>
-        {showEventsListModal && !isModalOpen && (
+        {showEventsListModal && (
           <>
             <motion.div
               key="events-list-overlay"
@@ -819,10 +822,15 @@ const EventCalendar: React.FC = () => {
           border: none !important;
         }
         @media (min-width: 1024px) {
-          .fc-h-event {
-            font-size: 0.75rem !important;
-            padding: 0.25rem 0.5rem !important;
+        .fc-h-event {
+          font-size: 0.75rem !important;
+          padding: 0.25rem 0.5rem !important;
           }
+        }
+        
+        /* Completely hide FullCalendar's popover */
+        .fc-popover {
+          display: none !important;
         }
       `}</style>
       </motion.div>
