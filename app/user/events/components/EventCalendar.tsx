@@ -120,18 +120,10 @@ const EventCalendar: React.FC = () => {
     const dateStr = clickInfo.event.startStr.split('T')[0];
     const eventsOnDate = eventsByDate[dateStr] || [];
     
-    if (eventsOnDate.length > 1) {
-      // Multiple events - directly show details of the first event
-      setSelectedEvent(eventsOnDate[0]);
-      setIsModalOpen(true);
-    } else {
-      // Single event - show details directly
-      const event = events.find(e => e.id === clickInfo.event.id);
-      if (event) {
-        setSelectedEvent(event);
-        setIsModalOpen(true);
-      }
-    }
+    // Always show list modal for any events
+    setSelectedDateEvents(eventsOnDate);
+    setSelectedDate(dateStr);
+    setShowEventsListModal(true);
   };
 
   const handleEventTileClick = (event: Event) => {
