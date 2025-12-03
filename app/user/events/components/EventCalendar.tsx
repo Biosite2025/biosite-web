@@ -368,6 +368,7 @@ const EventCalendar: React.FC = () => {
             dayMaxEventRows={1}
             eventDisplay="block"
             displayEventTime={false}
+            moreLinkClick="none" // Disable the built-in popover completely
             dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
