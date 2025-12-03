@@ -137,7 +137,7 @@ const EventCalendar: React.FC = () => {
       setShowEventsListModal(true);
     }, 0);
     
-    return false; // Prevent FullCalendar's default popover
+    return ''; // Return empty string to prevent FullCalendar's default popover
   };
 
   const handleEventTileClick = (event: Event) => {
