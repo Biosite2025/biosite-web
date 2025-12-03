@@ -26,6 +26,9 @@ const EventCalendar: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
+  const [showEventsListModal, setShowEventsListModal] = useState(false);
+  const [selectedDateEvents, setSelectedDateEvents] = useState<Event[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   // Fetch events from API
   useEffect(() => {
@@ -114,6 +117,7 @@ const EventCalendar: React.FC = () => {
   });
 
   const handleEventClick = (clickInfo: EventClickArg) => {
+    // When clicking an event on the calendar, always show details directly
     const event = events.find(e => e.id === clickInfo.event.id);
     if (event) {
       setSelectedEvent(event);
@@ -121,9 +125,30 @@ const EventCalendar: React.FC = () => {
     }
   };
 
+  const handleEventTileClick = (event: Event) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+    // Close the events list modal when showing event details
+    setShowEventsListModal(false);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedEvent(null);
+  };
+
+  // Handle "+X more" link clicks to show events list directly
+  const handleMoreLinkClick = (arg: any) => {
+    const dateStr = arg.date.toISOString().split('T')[0];
+    const eventsOnDate = eventsByDate[dateStr] || [];
+    
+    if (eventsOnDate.length > 0) {
+      setSelectedDateEvents(eventsOnDate);
+      setSelectedDate(dateStr);
+      setShowEventsListModal(true);
+    }
+    
+    return 'popover'; // Prevent default FullCalendar popover
   };
 
   // Close modal on scroll (all devices)
@@ -164,27 +189,6 @@ const EventCalendar: React.FC = () => {
     setTimeout(() => setIsLoading(false), 300);
   };
 
-  // Close FullCalendar popover on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const popover = document.querySelector('.fc-popover');
-      if (popover) {
-        popover.classList.add('fc-popover-closing');
-        setTimeout(() => {
-          const closeButton = popover.querySelector('.fc-popover-close') as HTMLElement;
-          if (closeButton) {
-            closeButton.click();
-          }
-        }, 200);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   // Get event stats for all events (dynamically from database)
   const getEventStats = () => {
     // Get unique categories from the events data
@@ -197,7 +201,42 @@ const EventCalendar: React.FC = () => {
     }));
   };
 
-
+  // Custom event content renderer
+  const renderEventContent = (eventInfo: EventContentArg) => {
+    const dateStr = eventInfo.event.startStr.split('T')[0];
+    const eventsOnDate = eventsByDate[dateStr] || [];
+    
+    // If multiple events on this date, only show "Events (X)" for the first event
+    if (eventsOnDate.length > 1) {
+      const isFirstEvent = eventsOnDate[0].id === eventInfo.event.id;
+      
+      if (isFirstEvent) {
+        return (
+          <div className="fc-event-main-frame overflow-hidden">
+            <div className="fc-event-title-container flex items-center justify-center">
+              <div className="fc-event-title fc-sticky text-xs font-semibold">
+                📅 Events ({eventsOnDate.length})
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        // Hide other events on the same date
+        return <div style={{ display: 'none' }}></div>;
+      }
+    }
+    
+    // Single event - show normally
+    return (
+      <div className="fc-event-main-frame overflow-hidden">
+        <div className="fc-event-title-container">
+          <div className="fc-event-title fc-sticky text-xs font-medium truncate">
+            {eventInfo.event.title}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -333,12 +372,13 @@ const EventCalendar: React.FC = () => {
             initialView="dayGridMonth"
             events={calendarEvents}
             eventClick={handleEventClick}
+            eventContent={renderEventContent}
             datesSet={handleDatesSet}
+            moreLinkClick={handleMoreLinkClick}
             headerToolbar={false} // We're using custom header
             height="auto" // Let calendar auto-resize
-            dayMaxEventRows={2}
+            dayMaxEventRows={1}
             eventDisplay="block"
-            moreLinkClick="popover"
             displayEventTime={false}
             dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
@@ -355,6 +395,103 @@ const EventCalendar: React.FC = () => {
           />
         </div>
       </motion.div>
+
+      {/* Events List Modal */}
+      <AnimatePresence>
+        {showEventsListModal && !isModalOpen && (
+          <>
+            <motion.div
+              key="events-list-overlay"
+              className="fixed inset-0 z-40 bg-black/50"
+              onClick={() => setShowEventsListModal(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.div
+              key="events-list-modal"
+              className="fixed inset-4 z-50 flex items-center justify-center lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:inset-auto lg:w-full lg:max-w-lg lg:mx-4"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[85vh] overflow-hidden flex flex-col">
+                <div className="flex justify-between items-start mb-4 flex-shrink-0">
+                  <div>
+                    <h3 className="text-lg lg:text-xl font-bold text-gray-800">
+                      Events on {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { 
+                        month: 'long', 
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">{selectedDateEvents.length} events</p>
+                  </div>
+                  <button
+                    onClick={() => setShowEventsListModal(false)}
+                    aria-label="Close"
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 rounded"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="grid gap-3 overflow-y-auto flex-1 pr-2 -mr-2">
+                  {selectedDateEvents.map((event) => (
+                    <motion.div
+                      key={event.id}
+                      onClick={() => handleEventTileClick(event)}
+                      className="p-4 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md border-l-4"
+                      style={{
+                        backgroundColor: `${getCategoryColor(event.category)}10`,
+                        borderLeftColor: getCategoryColor(event.category)
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-gray-800 mb-1 text-sm lg:text-base">
+                            {event.title}
+                          </h4>
+                          <div className="flex flex-wrap gap-2 items-center">
+                            <span 
+                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium capitalize ${getCategoryDisplayColor(event.category)}`}
+                            >
+                              {event.category}
+                            </span>
+                            {event.time && (
+                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {event.time}
+                              </span>
+                            )}
+                            {event.location && (
+                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                </svg>
+                                {event.location}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Event Details Modal with AnimatePresence for exit animation */}
       <AnimatePresence>
@@ -680,47 +817,6 @@ const EventCalendar: React.FC = () => {
             font-size: 0.75rem !important;
             padding: 0.25rem 0.5rem !important;
           }
-        }
-        
-        /* Style FullCalendar popover */
-        .fc-popover {
-          z-index: 1000 !important;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
-          border: 1px solid #e5e7eb !important;
-          border-radius: 0.75rem !important;
-          transition: opacity 0.2s ease-out, transform 0.2s ease-out !important;
-        }
-        
-        .fc-popover-closing {
-          opacity: 0 !important;
-          transform: scale(0.95) translateY(-10px) !important;
-        }
-        
-        .fc-popover-header {
-          background-color: #2B3990 !important;
-          color: white !important;
-          padding: 0.75rem 1rem !important;
-          font-weight: 600 !important;
-          border-radius: 0.75rem 0.75rem 0 0 !important;
-        }
-        
-        .fc-popover-body {
-          padding: 0.5rem !important;
-          max-height: 400px !important;
-          overflow-y: auto !important;
-        }
-        
-        .fc-popover .fc-event {
-          margin: 0.25rem !important;
-          padding: 0.5rem !important;
-          cursor: pointer !important;
-          border-radius: 0.5rem !important;
-          transition: all 0.2s !important;
-        }
-        
-        .fc-popover .fc-event:hover {
-          transform: scale(1.02) !important;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
         }
       `}</style>
       </motion.div>
