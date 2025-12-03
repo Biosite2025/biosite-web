@@ -121,10 +121,9 @@ const EventCalendar: React.FC = () => {
     const eventsOnDate = eventsByDate[dateStr] || [];
     
     if (eventsOnDate.length > 1) {
-      // Multiple events - show list modal
-      setSelectedDateEvents(eventsOnDate);
-      setSelectedDate(dateStr);
-      setShowEventsListModal(true);
+      // Multiple events - directly show details of the first event
+      setSelectedEvent(eventsOnDate[0]);
+      setIsModalOpen(true);
     } else {
       // Single event - show details directly
       const event = events.find(e => e.id === clickInfo.event.id);
