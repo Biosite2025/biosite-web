@@ -142,6 +142,10 @@ const EventCalendar: React.FC = () => {
 
   // Handle "+X more" link clicks to show events list directly
   const handleMoreLinkClick = (arg: any) => {
+    // Prevent default FullCalendar behavior
+    arg.jsEvent.preventDefault();
+    arg.jsEvent.stopPropagation();
+    
     const dateStr = arg.date.toISOString().split('T')[0];
     const eventsOnDate = eventsByDate[dateStr] || [];
     
@@ -389,7 +393,7 @@ const EventCalendar: React.FC = () => {
           <>
             <motion.div
               key="events-list-overlay"
-              className="fixed inset-0 z-40 bg-transparent"
+              className="fixed inset-0 z-40 bg-black/50"
               onClick={() => setShowEventsListModal(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
