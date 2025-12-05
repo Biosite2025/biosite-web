@@ -29,7 +29,6 @@ const EventCalendar: React.FC = () => {
   const [showEventsListModal, setShowEventsListModal] = useState(false);
   const [selectedDateEvents, setSelectedDateEvents] = useState<Event[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const [modalPosition, setModalPosition] = useState<{ top: number; left: number } | null>(null);
 
   // Fetch events from API
   useEffect(() => {
@@ -149,27 +148,11 @@ const EventCalendar: React.FC = () => {
     if (eventsOnDate.length > 0) {
       setSelectedDateEvents(eventsOnDate);
       setSelectedDate(dateStr);
-      
-      // Get the position of the clicked element for positioning the modal
-      const clickedElement = arg.jsEvent?.target as HTMLElement;
-      if (clickedElement) {
-        const rect = clickedElement.getBoundingClientRect();
-        
-        // Calculate position for the modal (centered near the click)
-        // Add safeguards for window object
-        const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
-        const scrollX = typeof window !== 'undefined' ? window.scrollX : 0;
-        
-        setModalPosition({
-          top: rect.bottom + scrollY + 10,
-          left: rect.left + scrollX
-        });
-      }
-      
       setShowEventsListModal(true);
     }
     
-    return 'popover'; // Return valid MoreLinkAction
+    // Return empty string to prevent default FullCalendar popover
+    return '';
   };
 
   // Close modal on scroll (all devices)
@@ -229,32 +212,8 @@ const EventCalendar: React.FC = () => {
     }));
   };
 
-  // Custom event content renderer
+  // Custom event content renderer - simplified to show event titles
   const renderEventContent = (eventInfo: EventContentArg) => {
-    const dateStr = eventInfo.event.startStr.split('T')[0];
-    const eventsOnDate = eventsByDate[dateStr] || [];
-    
-    // If multiple events on this date, only show "Events (X)" for the first event
-    if (eventsOnDate.length > 1) {
-      const isFirstEvent = eventsOnDate[0].id === eventInfo.event.id;
-      
-      if (isFirstEvent) {
-        return (
-          <div className="fc-event-main-frame overflow-hidden">
-            <div className="fc-event-title-container flex items-center justify-center">
-              <div className="fc-event-title fc-sticky text-xs font-semibold">
-                📅 Events ({eventsOnDate.length})
-              </div>
-            </div>
-          </div>
-        );
-      } else {
-        // Hide other events on the same date
-        return <div style={{ display: 'none' }}></div>;
-      }
-    }
-    
-    // Single event - show normally
     return (
       <div className="fc-event-main-frame overflow-hidden">
         <div className="fc-event-title-container">
