@@ -155,8 +155,15 @@ const EventCalendar: React.FC = () => {
       setShowEventsListModal(true);
     }
     
-    // Return empty string to prevent default FullCalendar popover
-    return '';
+    // Forcibly remove any popovers that may have been created
+    setTimeout(() => {
+      const popovers = document.querySelectorAll('.fc-popover');
+      popovers.forEach(popover => {
+        if (popover.parentNode) {
+          popover.parentNode.removeChild(popover);
+        }
+      });
+    }, 0);
   };
 
   // Close modal on scroll (all devices)
@@ -177,6 +184,25 @@ const EventCalendar: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isModalOpen, showEventsListModal]);
+
+  // Aggressive popover removal - runs continuously to ensure popovers never show
+  useEffect(() => {
+    const removePopovers = () => {
+      const popovers = document.querySelectorAll('.fc-popover, .fc-more-popover');
+      popovers.forEach(popover => {
+        popover.remove();
+      });
+    };
+
+    // Remove immediately
+    removePopovers();
+
+    // Set up observer to remove popovers as soon as they're added to DOM
+    const observer = new MutationObserver(removePopovers);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
@@ -586,6 +612,25 @@ const EventCalendar: React.FC = () => {
 
       {/* Custom FullCalendar Styles */}
       <style jsx global>{`
+        /* Aggressively hide ALL FullCalendar popovers with maximum specificity */
+        .fc-popover,
+        .fc-more-popover,
+        .fc-popover-header,
+        .fc-popover-body,
+        .fc-popover-close,
+        div.fc-popover,
+        div[class*="fc-popover"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          position: absolute !important;
+          left: -9999px !important;
+          width: 0 !important;
+          height: 0 !important;
+          z-index: -1 !important;
+        }
+        
         .fc {
           font-family: inherit;
           width: 100% !important;
