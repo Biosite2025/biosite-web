@@ -29,6 +29,7 @@ const EventCalendar: React.FC = () => {
   const [showEventsListModal, setShowEventsListModal] = useState(false);
   const [selectedDateEvents, setSelectedDateEvents] = useState<Event[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [modalPosition, setModalPosition] = useState<{ top: number; left: number } | null>(null);
 
   // Fetch events from API
   useEffect(() => {
@@ -126,10 +127,13 @@ const EventCalendar: React.FC = () => {
   };
 
   const handleEventTileClick = (event: Event) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
-    // Close the events list modal when showing event details
+    // Close events list modal first
     setShowEventsListModal(false);
+    // Small delay before opening details modal for smooth transition
+    setTimeout(() => {
+      setSelectedEvent(event);
+      setIsModalOpen(true);
+    }, 100);
   };
 
   const closeModal = () => {
@@ -145,23 +149,47 @@ const EventCalendar: React.FC = () => {
     if (eventsOnDate.length > 0) {
       setSelectedDateEvents(eventsOnDate);
       setSelectedDate(dateStr);
+      
+      // Get the position of the clicked element for positioning the modal
+      const clickedElement = arg.jsEvent?.target as HTMLElement;
+      if (clickedElement) {
+        const rect = clickedElement.getBoundingClientRect();
+        
+        // Calculate position for the modal (centered near the click)
+        // Add safeguards for window object
+        const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+        const scrollX = typeof window !== 'undefined' ? window.scrollX : 0;
+        
+        setModalPosition({
+          top: rect.bottom + scrollY + 10,
+          left: rect.left + scrollX
+        });
+      }
+      
       setShowEventsListModal(true);
     }
     
-    return 'popover'; // Prevent default FullCalendar popover
+    return 'popover'; // Return valid MoreLinkAction
   };
 
   // Close modal on scroll (all devices)
   useEffect(() => {
-    if (!isModalOpen) return;
+    if (!isModalOpen && !showEventsListModal) return;
+    
     const handleScroll = () => {
-      closeModal();
+      if (isModalOpen) {
+        closeModal();
+      }
+      if (showEventsListModal) {
+        setShowEventsListModal(false);
+      }
     };
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, showEventsListModal]);
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
@@ -402,7 +430,7 @@ const EventCalendar: React.FC = () => {
           <>
             <motion.div
               key="events-list-overlay"
-              className="fixed inset-0 z-40 bg-black/50"
+              className="fixed inset-0 z-40 bg-transparent"
               onClick={() => setShowEventsListModal(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -411,76 +439,76 @@ const EventCalendar: React.FC = () => {
             />
             <motion.div
               key="events-list-modal"
-              className="fixed inset-4 z-50 flex items-center justify-center lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:inset-auto lg:w-full lg:max-w-lg lg:mx-4"
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="fixed z-50"
+              style={{
+                top: modalPosition?.top || '50%',
+                left: modalPosition?.left || '50%',
+                transform: modalPosition ? 'translateX(-50%)' : 'translate(-50%, -50%)',
+                maxWidth: '90vw',
+                width: '400px'
+              }}
+              initial={{ opacity: 0, scale: 0.9, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, scale: 0.9, y: -10 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[85vh] overflow-hidden flex flex-col">
-                <div className="flex justify-between items-start mb-4 flex-shrink-0">
+              <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 max-h-[400px] overflow-hidden flex flex-col">
+                <div className="flex justify-between items-center p-3 bg-gradient-to-r from-[#2B3990] to-[#1e2875] text-white">
                   <div>
-                    <h3 className="text-lg lg:text-xl font-bold text-gray-800">
-                      Events on {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric',
-                        year: 'numeric'
+                    <h3 className="text-sm font-bold">
+                      {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric'
                       })}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">{selectedDateEvents.length} events</p>
+                    <p className="text-xs opacity-90">{selectedDateEvents.length} events</p>
                   </div>
                   <button
                     onClick={() => setShowEventsListModal(false)}
                     aria-label="Close"
-                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 rounded"
+                    className="text-white hover:bg-white/20 rounded p-1 transition-colors duration-200"
                   >
-                    ×
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
                 </div>
 
-                <div className="grid gap-3 overflow-y-auto flex-1 pr-2 -mr-2">
+                <div className="overflow-y-auto flex-1 p-2">
                   {selectedDateEvents.map((event) => (
                     <motion.div
                       key={event.id}
                       onClick={() => handleEventTileClick(event)}
-                      className="p-4 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md border-l-4"
+                      className="p-2 mb-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md border-l-4"
                       style={{
                         backgroundColor: `${getCategoryColor(event.category)}10`,
                         borderLeftColor: getCategoryColor(event.category)
                       }}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, x: 4 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-800 mb-1 text-sm lg:text-base">
+                          <h4 className="font-semibold text-gray-800 mb-1 text-sm truncate">
                             {event.title}
                           </h4>
-                          <div className="flex flex-wrap gap-2 items-center">
+                          <div className="flex flex-wrap gap-1 items-center">
                             <span 
-                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium capitalize ${getCategoryDisplayColor(event.category)}`}
+                              className={`inline-block px-1.5 py-0.5 rounded-full text-xs font-medium capitalize ${getCategoryDisplayColor(event.category)}`}
                             >
                               {event.category}
                             </span>
                             {event.time && (
-                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                              <span className="text-xs text-gray-600 flex items-center gap-0.5">
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 {event.time}
                               </span>
                             )}
-                            {event.location && (
-                              <span className="text-xs text-gray-600 flex items-center gap-1">
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                </svg>
-                                {event.location}
-                              </span>
-                            )}
                           </div>
                         </div>
-                        <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
