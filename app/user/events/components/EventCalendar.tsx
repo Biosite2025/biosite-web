@@ -203,14 +203,22 @@ const EventCalendar: React.FC = () => {
         if (!dateStr) return;
         
         const eventsOnDate = eventsByDate[dateStr] || [];
-        const visibleEvents = cell.querySelectorAll('.fc-event').length;
-        const hiddenCount = eventsOnDate.length - visibleEvents;
         
-        if (hiddenCount > 0) {
+        // Only show badge if there are 2 or more events
+        if (eventsOnDate.length >= 2) {
+          // Hide all events in this cell (we'll show them in modal)
+          const eventElements = cell.querySelectorAll('.fc-event');
+          eventElements.forEach((event, index) => {
+            const eventEl = event as HTMLElement;
+            if (index > 0) {
+              eventEl.style.display = 'none'; // Hide all but first event
+            }
+          });
+          
           // Create custom badge
           const badge = document.createElement('div');
           badge.className = 'custom-event-badge';
-          badge.textContent = `+${hiddenCount} more`;
+          badge.textContent = `+${eventsOnDate.length - 1} more`;
           badge.style.cssText = `
             position: absolute;
             bottom: 2px;
@@ -463,9 +471,10 @@ const EventCalendar: React.FC = () => {
             datesSet={handleDatesSet}
             headerToolbar={false} // We're using custom header
             height="auto" // Let calendar auto-resize
-            dayMaxEventRows={1}
+            dayMaxEventRows={false} // Disable FullCalendar's more link completely
             eventDisplay="block"
             displayEventTime={false}
+            moreLinkClick="none" // Completely disable FullCalendar's popover
             dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
