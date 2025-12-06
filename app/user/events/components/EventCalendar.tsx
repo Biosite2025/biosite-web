@@ -219,43 +219,64 @@ const EventCalendar: React.FC = () => {
           badge.textContent = `+${eventsOnDate.length} more`;
           badge.style.cssText = `
             position: absolute;
-            bottom: 2px;
+            bottom: 4px;
             left: 50%;
             transform: translateX(-50%);
             background: #2B3990;
             color: white;
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            z-index: 10;
+            z-index: 100;
             white-space: nowrap;
             transition: all 0.2s;
+            pointer-events: auto;
+            user-select: none;
           `;
           
           // Add hover effect
           badge.addEventListener('mouseenter', () => {
             badge.style.background = '#1e2875';
-            badge.style.transform = 'translateX(-50%) scale(1.05)';
+            badge.style.transform = 'translateX(-50%) scale(1.08)';
+            badge.style.boxShadow = '0 2px 8px rgba(43, 57, 144, 0.4)';
           });
           badge.addEventListener('mouseleave', () => {
             badge.style.background = '#2B3990';
             badge.style.transform = 'translateX(-50%) scale(1)';
+            badge.style.boxShadow = 'none';
           });
           
-          // Click handler
-          badge.addEventListener('click', (e) => {
+          // Click handler with multiple event types for better compatibility
+          const handleClick = (e: MouseEvent | PointerEvent) => {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             handleDateClick(dateStr);
-          });
+          };
+          
+          badge.addEventListener('click', handleClick as any, { capture: true });
+          badge.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+          }, { capture: true });
+          badge.addEventListener('mouseup', handleClick as any, { capture: true });
           
           // Add to cell
           const dayFrame = cell.querySelector('.fc-daygrid-day-frame') as HTMLElement;
           if (dayFrame) {
             dayFrame.style.position = 'relative';
+            dayFrame.style.pointerEvents = 'auto';
             dayFrame.appendChild(badge);
           }
+        } else if (eventsOnDate.length === 1) {
+          // For single events, make sure they're visible and clickable
+          const eventElements = cell.querySelectorAll('.fc-event');
+          eventElements.forEach((event) => {
+            const eventEl = event as HTMLElement;
+            eventEl.style.display = 'block';
+            eventEl.style.pointerEvents = 'auto';
+          });
         }
       });
     };
