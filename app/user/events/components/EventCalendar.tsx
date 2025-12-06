@@ -140,13 +140,8 @@ const EventCalendar: React.FC = () => {
     setSelectedEvent(null);
   };
 
-  // Handle "+X more" link clicks to show events list directly
-  const handleMoreLinkClick = (arg: any) => {
-    // Prevent default FullCalendar behavior
-    arg.jsEvent.preventDefault();
-    arg.jsEvent.stopPropagation();
-    
-    const dateStr = arg.date.toISOString().split('T')[0];
+  // Simple handler to show all events for a specific date
+  const handleDateClick = (dateStr: string) => {
     const eventsOnDate = eventsByDate[dateStr] || [];
     
     if (eventsOnDate.length > 0) {
@@ -154,16 +149,6 @@ const EventCalendar: React.FC = () => {
       setSelectedDate(dateStr);
       setShowEventsListModal(true);
     }
-    
-    // Forcibly remove any popovers that may have been created
-    setTimeout(() => {
-      const popovers = document.querySelectorAll('.fc-popover');
-      popovers.forEach(popover => {
-        if (popover.parentNode) {
-          popover.parentNode.removeChild(popover);
-        }
-      });
-    }, 0);
   };
 
   // Close modal on scroll (all devices)
@@ -203,6 +188,91 @@ const EventCalendar: React.FC = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Add custom event count badges to dates with multiple events
+  useEffect(() => {
+    const addCustomBadges = () => {
+      // Remove any existing custom badges first
+      document.querySelectorAll('.custom-event-badge').forEach(badge => badge.remove());
+      
+      // Get all date cells
+      const dateCells = document.querySelectorAll('.fc-daygrid-day');
+      
+      dateCells.forEach(cell => {
+        const dateStr = cell.getAttribute('data-date');
+        if (!dateStr) return;
+        
+        const eventsOnDate = eventsByDate[dateStr] || [];
+        const visibleEvents = cell.querySelectorAll('.fc-event').length;
+        const hiddenCount = eventsOnDate.length - visibleEvents;
+        
+        if (hiddenCount > 0) {
+          // Create custom badge
+          const badge = document.createElement('div');
+          badge.className = 'custom-event-badge';
+          badge.textContent = `+${hiddenCount} more`;
+          badge.style.cssText = `
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2B3990;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 10;
+            white-space: nowrap;
+            transition: all 0.2s;
+          `;
+          
+          // Add hover effect
+          badge.addEventListener('mouseenter', () => {
+            badge.style.background = '#1e2875';
+            badge.style.transform = 'translateX(-50%) scale(1.05)';
+          });
+          badge.addEventListener('mouseleave', () => {
+            badge.style.background = '#2B3990';
+            badge.style.transform = 'translateX(-50%) scale(1)';
+          });
+          
+          // Click handler
+          badge.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleDateClick(dateStr);
+          });
+          
+          // Add to cell
+          const dayFrame = cell.querySelector('.fc-daygrid-day-frame') as HTMLElement;
+          if (dayFrame) {
+            dayFrame.style.position = 'relative';
+            dayFrame.appendChild(badge);
+          }
+        }
+      });
+    };
+
+    // Run after calendar renders
+    const timer = setTimeout(addCustomBadges, 300);
+    
+    // Re-run when events change or calendar updates
+    const observer = new MutationObserver(() => {
+      clearTimeout(timer);
+      setTimeout(addCustomBadges, 100);
+    });
+    
+    const calendarEl = document.querySelector('.fc-daygrid-body');
+    if (calendarEl) {
+      observer.observe(calendarEl, { childList: true, subtree: true });
+    }
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [events, eventsByDate]);
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
@@ -391,7 +461,6 @@ const EventCalendar: React.FC = () => {
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             datesSet={handleDatesSet}
-            moreLinkClick={handleMoreLinkClick}
             headerToolbar={false} // We're using custom header
             height="auto" // Let calendar auto-resize
             dayMaxEventRows={1}
