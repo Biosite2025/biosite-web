@@ -206,19 +206,17 @@ const EventCalendar: React.FC = () => {
         
         // Only show badge if there are 2 or more events
         if (eventsOnDate.length >= 2) {
-          // Hide all events in this cell (we'll show them in modal)
+          // Hide ALL events in this cell (we'll show them in modal)
           const eventElements = cell.querySelectorAll('.fc-event');
-          eventElements.forEach((event, index) => {
+          eventElements.forEach((event) => {
             const eventEl = event as HTMLElement;
-            if (index > 0) {
-              eventEl.style.display = 'none'; // Hide all but first event
-            }
+            eventEl.style.display = 'none'; // Hide ALL events
           });
           
-          // Create custom badge
+          // Create custom badge showing total count
           const badge = document.createElement('div');
           badge.className = 'custom-event-badge';
-          badge.textContent = `+${eventsOnDate.length - 1} more`;
+          badge.textContent = `+${eventsOnDate.length} more`;
           badge.style.cssText = `
             position: absolute;
             bottom: 2px;
