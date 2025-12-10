@@ -115,7 +115,7 @@ export function TopNav() {
             </div>
             <div className="flex -ml-[50px] items-center space-x-4 h-full relative overflow-visible z-50 flex-1 justify-center">
                 <span className="text-gray-700 -ml-6 font-medium text-lg italic tracking-wide relative opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out whitespace-nowrap">
-                  Because Every Life deserves the Best Care
+                  Because Every Life Deserves the Best Care
                   <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#2B3990] transition-all duration-500 group-hover:w-full"></span>
                 </span>
             </div>

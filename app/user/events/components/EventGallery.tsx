@@ -19,6 +19,8 @@ const EventGallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
+  const [imageRendered, setImageRendered] = useState(false);
 
   // Navigation handlers for pairs
   const totalPairs = Math.ceil(videoSources.length / 2);
@@ -56,14 +58,30 @@ const EventGallery: React.FC = () => {
       }
     }
   };
-  // Event images - heavily optimized with smaller Cloudinary transformations
+  // Event images - high quality from Cloudinary
   const eventImages = [
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/istockphoto-1183500324-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/istockphoto-498908634-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530502/biosite-assets/istockphoto-511061090-612x612.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530481/biosite-assets/4c3c5489-639f-4cff-9eed-2e1e2d2172fe.jpg',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530500/biosite-assets/image.png',
-    'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530499/biosite-assets/image1.png',
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/553524415_2063101971095533_1022699523949673469_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/580787992_1399117405219310_6581944115025836454_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/581965798_1533298997709326_4564642075106128466_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582047587_873690831768036_8221554468867121610_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582336549_852291710588341_8559505469722307278_n%20(1)?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582714435_3799246460379471_349393673555837628_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/589814966_10229250512036075_2537740228372925690_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/591522302_10229250513796119_2859382229327237142_n?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(1)?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(2)?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(3)?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01197?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01354?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01479?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01527?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01550?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01559?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01577?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01593?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01722?_a=BAMAMifm0",
+    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01879?_a=BAMAMifm0"
   ];
 
   // Debug: Log image loading performance
@@ -98,7 +116,7 @@ const EventGallery: React.FC = () => {
   }, []);
 
   // Total images to render for seamless loop (optimized - no array duplication)
-  const totalLoopImages = eventImages.length * 2;
+  const totalLoopImages = eventImages.length * 3;
 
   // Motion values for both rows
   const topRowX = useMotionValue(0);
@@ -133,8 +151,10 @@ const EventGallery: React.FC = () => {
     console.log('[EventGallery] Opening modal for image:', image);
     const modalStartTime = performance.now();
     
-    // Convert to higher quality for modal but still optimized
-    const modalImage = image.replace('w_400,q_auto:low', 'w_1000,q_auto:good');
+    setImageLoading(true);
+    setImageRendered(false);
+    // Images are already high quality, no need to transform
+    const modalImage = image;
     
     // Load image to get its natural dimensions
     const img = new window.Image();
@@ -142,6 +162,7 @@ const EventGallery: React.FC = () => {
       const loadTime = (performance.now() - modalStartTime).toFixed(2);
       console.log(`[EventGallery] Modal image loaded in ${loadTime}ms`);
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+      setImageLoading(false);
     };
     img.src = modalImage;
     
@@ -156,6 +177,8 @@ const EventGallery: React.FC = () => {
     setIsModalOpen(false);
     setSelectedImage(null);
     setImageDimensions(null);
+    setImageLoading(false);
+    setImageRendered(false);
     setPaused(false);
     // Restore body scroll
     document.body.style.overflow = 'unset';
@@ -168,10 +191,13 @@ const EventGallery: React.FC = () => {
     const prevIndex = currentIndex === 0 ? eventImages.length - 1 : currentIndex - 1;
     const prevImage = eventImages[prevIndex];
     
+    setImageLoading(true);
+    setImageRendered(false);
     // Load new image dimensions
     const img = new window.Image();
     img.onload = () => {
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+      setImageLoading(false);
     };
     img.src = prevImage;
     
@@ -185,10 +211,13 @@ const EventGallery: React.FC = () => {
     const nextIndex = currentIndex === eventImages.length - 1 ? 0 : currentIndex + 1;
     const nextImage = eventImages[nextIndex];
     
+    setImageLoading(true);
+    setImageRendered(false);
     // Load new image dimensions
     const img = new window.Image();
     img.onload = () => {
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+      setImageLoading(false);
     };
     img.src = nextImage;
     
@@ -261,9 +290,9 @@ const EventGallery: React.FC = () => {
       <AnimatePresence mode="wait">
         {isModalOpen && selectedImage && (
           <>
-            {/* Blurry overlay to prevent background clicks, frosted glass effect */}
+            {/* Dark overlay to prevent background clicks */}
             <motion.div
-              className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
+              className="fixed inset-0 z-40 bg-black/80"
               onClick={closeModal}
               style={{ cursor: 'pointer' }}
               initial={{ opacity: 0 }}
@@ -271,82 +300,99 @@ const EventGallery: React.FC = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             />
-            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full h-full flex items-center justify-center pointer-events-none">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto overflow-hidden"
-                style={{
-                  maxWidth: imageDimensions ? `min(${imageDimensions.width}px, 90vw)` : '90vw',
-                  maxHeight: '90vh',
-                }}
+                className="relative pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* X Button - Overlapping on image */}
-                <button
-                  onClick={closeModal}
-                  className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 text-white hover:text-gray-200 text-2xl sm:text-3xl md:text-4xl font-bold focus:outline-none transition-colors duration-200 max-[912px]:top-2 max-[912px]:right-2 max-[912px]:text-2xl z-50 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
-                  aria-label="Close modal"
-                  type="button"
-                  style={{ zIndex: 100 }}
-                >
-                  &times;
-                </button>
-                {/* Previous Arrow Button - Overlapping on image, no white border */}
-                <motion.button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrevImage();
-                  }}
-                  className="absolute left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 sm:p-3 transition-all duration-300 group border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="Previous image"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </motion.button>
-                {/* Next Arrow Button - Overlapping on image, no white border */}
-                <motion.button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNextImage();
-                  }}
-                  className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 sm:p-3 transition-all duration-300 group border-none outline-none shadow-none bg-transparent hover:bg-transparent backdrop-blur-0"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="Next image"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                </motion.button>
-                {/* Image - Fully occupying modal space, no padding, with smooth fade/slide transition */}
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={selectedImage}
-                    className="relative w-full"
-                    style={{
-                      aspectRatio: imageDimensions ? `${imageDimensions.width} / ${imageDimensions.height}` : 'auto',
-                    }}
-                    initial={{ opacity: 0, x: 60 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -60 }}
-                    transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    <Image
-                      src={selectedImage ? selectedImage.replace('w_400,q_auto:low', 'w_1000,q_auto:good') : ''}
-                      alt="Event photo fullscreen"
-                      fill
-                      className="object-contain rounded-xl sm:rounded-2xl"
-                      quality={80}
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                  {/* X Button - Inside image at top-right */}
+                  {!imageLoading && imageRendered && (
+                    <button
+                      onClick={closeModal}
+                      className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white hover:text-gray-300 text-4xl sm:text-5xl font-bold focus:outline-none transition-all duration-200 z-[60] p-2"
+                      aria-label="Close modal"
+                      type="button"
+                    >
+                      &times;
+                    </button>
+                  )}
+
+                  {/* Previous Arrow Button - Inside image, no circle */}
+                  {!imageLoading && imageRendered && (
+                    <motion.button
+                      onClick={handlePrevImage}
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 transition-all duration-300"
+                      whileHover={{ scale: 1.2, x: -4 }}
+                      whileTap={{ scale: 0.9 }}
+                      aria-label="Previous image"
+                    >
+                      <svg className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </motion.button>
+                  )}
+
+                  {/* Next Arrow Button - Inside image, no circle */}
+                  {!imageLoading && imageRendered && (
+                    <motion.button
+                      onClick={handleNextImage}
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 text-white p-2 transition-all duration-300"
+                      whileHover={{ scale: 1.2, x: 4 }}
+                      whileTap={{ scale: 0.9 }}
+                      aria-label="Next image"
+                    >
+                      <svg className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </motion.button>
+                  )}
+
+                  {/* Loading Spinner */}
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center z-[55]">
+                      <div className="bg-black/70 rounded-full p-6 backdrop-blur-sm">
+                        <motion.div
+                          className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Image */}
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={selectedImage}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: imageLoading ? 0 : 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ visibility: imageLoading ? 'hidden' : 'visible' }}
+                    >
+                      <Image
+                        src={selectedImage || ''}
+                        alt="Event photo fullscreen"
+                        width={imageDimensions?.width || 1200}
+                        height={imageDimensions?.height || 800}
+                        className="rounded-lg shadow-2xl max-w-[92vw] max-h-[88vh] w-auto h-auto"
+                        style={{ objectFit: 'contain' }}
+                        quality={95}
+                        priority
+                        onLoadingComplete={() => {
+                          setImageLoading(false);
+                          // Delay showing buttons until image is visible
+                          setTimeout(() => {
+                            setImageRendered(true);
+                          }, 300);
+                        }}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
               </motion.div>
             </div>
           </>
@@ -426,14 +472,15 @@ const EventGallery: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Bottom Row - Left to Right */}
+        {/* Bottom Row - Left to Right (Reversed Order) */}
         <div className="flex">
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
           >
             {Array.from({ length: totalLoopImages }).map((_, index) => {
-              const image = eventImages[index % eventImages.length];
+              const reversedImages = [...eventImages].reverse();
+              const image = reversedImages[index % reversedImages.length];
               return (
               <motion.div
                 key={`bottom-${index}`}
