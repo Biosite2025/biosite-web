@@ -162,7 +162,7 @@ const EventGallery: React.FC = () => {
       const loadTime = (performance.now() - modalStartTime).toFixed(2);
       console.log(`[EventGallery] Modal image loaded in ${loadTime}ms`);
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
-      setImageLoading(false);
+      // Don't set loading to false here - let onLoadingComplete handle it
     };
     img.src = modalImage;
     
@@ -197,7 +197,7 @@ const EventGallery: React.FC = () => {
     const img = new window.Image();
     img.onload = () => {
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
-      setImageLoading(false);
+      // Don't set loading to false here - let onLoadingComplete handle it
     };
     img.src = prevImage;
     
@@ -217,7 +217,7 @@ const EventGallery: React.FC = () => {
     const img = new window.Image();
     img.onload = () => {
       setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
-      setImageLoading(false);
+      // Don't set loading to false here - let onLoadingComplete handle it
     };
     img.src = nextImage;
     
@@ -384,11 +384,15 @@ const EventGallery: React.FC = () => {
                         quality={95}
                         priority
                         onLoadingComplete={() => {
-                          setImageLoading(false);
-                          // Delay showing buttons until image is visible
+                          console.log('[EventGallery] Image rendering complete');
+                          // Small delay to ensure smooth transition
                           setTimeout(() => {
-                            setImageRendered(true);
-                          }, 300);
+                            setImageLoading(false);
+                            // Additional delay for buttons
+                            setTimeout(() => {
+                              setImageRendered(true);
+                            }, 200);
+                          }, 100);
                         }}
                       />
                     </motion.div>
