@@ -5,13 +5,13 @@ import React, { useState, useEffect } from 'react';
 
 // Core Values Data - BIOSITE
 const coreValues = [
-  { letter: 'B', title: 'BELIEF', description: 'We believe in the power of healthcare to transform lives', letterIndex: 0 },
-  { letter: 'I', title: 'INTEGRITY', description: 'We uphold the highest standards of honesty and ethics', letterIndex: 1 },
-  { letter: 'O', title: 'OUTSTANDING SERVICE', description: 'We deliver exceptional care and service excellence', letterIndex: 2 },
-  { letter: 'S', title: 'STEWARDSHIP (MALASAKIT)', description: 'We care deeply for our communities and environment', letterIndex: 3 },
-  { letter: 'I', title: 'INNOVATION', description: 'We embrace creativity and continuous improvement', letterIndex: 4 },
-  { letter: 'T', title: 'TEAMWORK', description: 'We collaborate to achieve shared goals', letterIndex: 5 },
-  { letter: 'E', title: 'EXCELLENCE', description: 'We strive for the highest quality in everything we do', letterIndex: 6 }
+  { letter: 'B', title: 'BELIEF', description: 'We believe in our mission to save and improve lives through reliable medical solutions.', letterIndex: 0 },
+  { letter: 'I', title: 'INTEGRITY', description: 'We conduct our business with integrity.', letterIndex: 1 },
+  { letter: 'O', title: 'OUTSTANDING SERVICE', description: 'We are committed to provide service that exceeds expectations.', letterIndex: 2 },
+  { letter: 'S', title: 'STEWARDSHIP', description: 'We take responsibility in managing our resources wisely.', letterIndex: 3 },
+  { letter: 'I', title: 'INNOVATION', description: 'We continuously introduce innovative healthcare solutions.', letterIndex: 4 },
+  { letter: 'T', title: 'TEAMWORK', description: 'We unite our strengths, support one another to succeed as ONE BIOSITE.', letterIndex: 5 },
+  { letter: 'E', title: 'EXCELLENCE', description: 'We strive for excellence in everything we do.', letterIndex: 6 }
 ];
 
 // Core Values Slideshow Component
@@ -33,7 +33,7 @@ const CoreValuesSlideshow = ({ currentLetter, startSlideshow }: { currentLetter:
         }
         return next;
       });
-    }, 3000); // Change slide every 3 seconds
+    }, 4500); // Change slide every 4.5 seconds for better readability
 
     return () => clearInterval(timer);
   }, [totalSlides, startSlideshow]);
@@ -44,39 +44,52 @@ const CoreValuesSlideshow = ({ currentLetter, startSlideshow }: { currentLetter:
   }, [currentIndex]);
 
   return (
-    <div className="relative h-48 md:h-56 flex items-center justify-center overflow-hidden">
+    <div className="relative h-72 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden px-4">
       <AnimatePresence mode="wait">
         {!showCoreValuesText ? (
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute text-center"
+            initial={{ opacity: 0, y: 60, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -60, scale: 0.9 }}
+            transition={{ 
+              duration: 0.9, 
+              ease: [0.43, 0.13, 0.23, 0.96],
+              opacity: { duration: 0.6 },
+              scale: { duration: 0.7, ease: "easeOut" }
+            }}
+            className="absolute text-center max-w-5xl"
           >
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 md:mb-8">
               {coreValues[currentIndex]?.title}
             </h3>
+            <motion.p 
+              className="text-xl md:text-2xl lg:text-3xl text-white/95 font-medium leading-relaxed px-4 max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              {coreValues[currentIndex]?.description}
+            </motion.p>
           </motion.div>
         ) : (
           <motion.div
             key="core-values-finale"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            exit={{ opacity: 0, scale: 0.5, rotateY: 180 }}
             transition={{ 
-              duration: 1.2, 
-              ease: "easeOut",
+              duration: 1.3, 
+              ease: [0.34, 1.56, 0.64, 1],
               scale: {
                 type: "spring",
-                stiffness: 100,
-                damping: 15
+                stiffness: 120,
+                damping: 12
               }
             }}
             className="absolute text-center"
           >
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white drop-shadow-2xl">
               CORE VALUES
             </h2>
           </motion.div>
@@ -105,7 +118,7 @@ const MissionVision = () => {
         }
         return next;
       });
-    }, 3000);
+    }, 4500);
 
     return () => clearInterval(timer);
   }, [startSlideshow]);
@@ -215,10 +228,10 @@ const MissionVision = () => {
           </div>
 
           {/* Core Values Section - BIOSITE */}
-          <div className="mt-16">
+          <div className="mt-12 md:mt-16">
             {/* BIOSITE Letters */}
             <motion.div
-              className="text-center mb-10"
+              className="text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -249,10 +262,14 @@ const MissionVision = () => {
                       }}
                       animate={{
                         color: isActive ? '#2356a8' : 'rgba(255, 255, 255, 0.9)',
-                        scale: isActive ? 1.1 : 1,
+                        scale: isActive ? 1.15 : 1,
+                        textShadow: isActive 
+                          ? '0 0 20px rgba(35, 86, 168, 0.5), 0 0 40px rgba(35, 86, 168, 0.3)' 
+                          : '0 0 0px rgba(255, 255, 255, 0)',
                         transition: {
-                          color: { duration: 0.1 },
-                          scale: { duration: 0.2 }
+                          color: { duration: 0.3, ease: "easeInOut" },
+                          scale: { duration: 0.4, ease: "easeOut" },
+                          textShadow: { duration: 0.3 }
                         }
                       }}
                     >
