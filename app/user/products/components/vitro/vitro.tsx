@@ -4,37 +4,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
-import ParticlesBackground from './ParticlesBackground';
+import ParticlesBackground from '../dakewe/ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product categories based on folder structure
-const categories = [
-	{
-		id: 'anatomical-pathology',
-		title: 'Anatomical Pathology',
-		description: 'Advanced staining solutions for superior histological results',
-		folder: 'Anatomical pathology',
-	},
-	{
-		id: 'microbiology',
-		title: 'Microbiology',
-		description: 'Innovative molecular diagnostics and laboratory automation systems',
-		folder: 'microbiology',
-	},
-];
+// Product category
+const category = {
+	id: 'vitro',
+	title: 'Vitro',
+	description: 'Advanced histopathology staining and ISH systems for molecular diagnostics',
+	folder: 'vitro',
+};
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
 
-	// Prevent modal close when clicking inside modal content
 	const handleModalContentClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 	};
 
 	return (
 		<>
-			{/* Blurry overlay to prevent background clicks, frosted glass effect */}
 			<div
 				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
 				onClick={product.onClose}
@@ -49,7 +39,6 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
 					onClick={handleModalContentClick}
 				>
-					{/* Close button */}
 					<button
 						onClick={product.onClose}
 						className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
@@ -60,7 +49,6 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					{/* Product image */}
 					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
 						<Image
 							src={product.image}
@@ -71,11 +59,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						/>
 					</div>
 
-					{/* Product details */}
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional laboratory equipment designed for precision, reliability, and superior performance in pathology and microbiology applications.
+							{product.description || 'Professional-grade histopathology equipment designed for precision, reliability, and superior performance in laboratory applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,8 +103,6 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 						fill
 						className="object-contain p-2 sm:p-3 md:p-4 max-[912px]:p-2"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-						quality={60}
-						loading="lazy"
 					/>
 				</motion.div>
 				
@@ -127,11 +112,11 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base truncate">
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional laboratory equipment engineered for precision and reliability.
+					{product.description || 'Professional histopathology equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -207,38 +192,30 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 }
 
 export default function Vitro() {
-	const [products, setProducts] = useState<any>({});
+	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on actual folder structure
-		const productData: any = {
-			'Anatomical pathology': [
-				{ id: 1, name: 'VitroStainer 42©', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530577/biosite-assets/vitro/Anatomical%20pathology/VitroStainer_42.png' },
-			],
-			'microbiology': [
-				{ id: 2, name: 'HybriSpot', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530395/biosite-assets/vitro/microbiology/HybriSpot.png' },
-				{ id: 3, name: 'MAIS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530395/biosite-assets/vitro/microbiology/MAIS.png' },
-				{ id: 4, name: 'Victoria V96', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530579/biosite-assets/vitro/microbiology/Victoria_V96.png' },
-				{ id: 5, name: 'Vitrocycler', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/microbiology/Vitrocycler.png' },
-			],
-		};
+		// Vitro product data with accurate descriptions from official PDF catalog
+		const productData = [
+			{ id: 1, name: 'MD-Stainer', image: '/asset/vitro/vitro-new/vitro-md-stainer.png', description: 'The Vitro MD-Stainer is an advanced automated slide staining system designed for high-throughput histology and cytology laboratories, featuring programmable staining protocols with up to 40 reagent positions, precise temperature control, automated slide handling with barcode tracking, and intuitive touchscreen interface that delivers consistent, reproducible staining results while minimizing manual intervention and reducing turnaround time, making it ideal for routine H&E staining, special stains, and immunohistochemistry applications with superior reliability and cost-effectiveness in busy diagnostic laboratories.' },
+			{ id: 2, name: 'HybriSpot 12', image: '/asset/vitro/vitro-new/vitro-hybrispot-12.png', description: 'The Vitro HybriSpot 12 is a compact 12-slide in situ hybridization (ISH) staining platform featuring precise temperature control with heated lid technology, programmable protocols for FISH and chromogenic ISH procedures, independent slide processing capability, and user-friendly software interface that enables researchers and diagnostic laboratories to perform high-quality molecular diagnostics with consistent results, supporting various detection systems including fluorescent and enzymatic methods for gene amplification studies, viral detection, and chromosome analysis with exceptional reproducibility and ease of use.' },
+			{ id: 3, name: 'HybriSpot 12 PCS Auto', image: '/asset/vitro/vitro-new/vitro-hybrispot-12-auto.png', description: 'The Vitro HybriSpot 12 PCS Auto is an advanced automated 12-position in situ hybridization system featuring fully automated slide processing with intelligent liquid handling, programmable temperature control with precision heating and cooling zones, automated reagent dispensing and aspiration, barcode slide tracking, and comprehensive protocol management software that streamlines FISH and chromogenic ISH workflows while ensuring optimal hybridization conditions, signal intensity, and reproducibility for molecular pathology applications including HER2 testing, ALK gene rearrangement detection, and viral diagnostics with minimal hands-on time and maximum laboratory efficiency.' }
+		];
 
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background, logo, and product images
-		const productImages = Object.values(productData).flat().map((product: any) => product.image);
-		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-bg.png', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-logo.png' // Logo
+		// Preload all images
+		const allImages = [
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
+			...productData.map((p: any) => p.image)
 		];
-		const allImages = [...heroImages, ...productImages];
+		
 		let loadedCount = 0;
-
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
 				const img = new window.Image();
@@ -288,16 +265,15 @@ export default function Vitro() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530398/biosite-assets/vitro/vitro-bg.png"
+						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
 						alt="Vitro Background"
 						fill
 						className="object-cover w-full h-full"
 						priority={true}
-						quality={60}
 					/>
-					{/* Dark overlay with low opacity */}
 					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
 				</div>
+
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
 					<ParticlesBackground containerId="vitro-particles" />
@@ -310,22 +286,14 @@ export default function Vitro() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<motion.div
+						<motion.h1
 							initial={{ scale: 0.9, opacity: 0, y: 40 }}
-							animate={{ scale: 1.15, opacity: 1, y: 0 }}
+							animate={{ scale: 1, opacity: 1, y: 0 }}
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-							className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
+							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							<Image
-								src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530398/biosite-assets/vitro/vitro-logo.png"
-								alt="Vitro Logo"
-								width={600}
-								height={350}
-								className="object-contain  max-[912px]:w-64 max-[912px]:h-auto"
-								priority
-								
-							/>
-						</motion.div>
+							Vitro
+						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
 							animate={{ scaleX: 1 }}
@@ -338,11 +306,11 @@ export default function Vitro() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							Innovative laboratory solutions combining advanced staining technology and molecular diagnostics for exceptional performance in pathology and microbiology
+							Advanced histopathology staining and ISH systems for molecular diagnostics
 						</motion.p>
 					</motion.div>
 
-					{/* Scroll Indicator - moved below paragraph */}
+					{/* Scroll Indicator */}
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -373,14 +341,11 @@ export default function Vitro() {
 						/>
 					</div>
 				) : (
-					categories.map((category) => (
-						<CategorySection
-							key={category.id}
-							category={category}
-							products={products[category.folder] || []}
-							onViewDetails={handleViewDetails}
-						/>
-					))
+					<CategorySection
+						category={category}
+						products={products}
+						onViewDetails={handleViewDetails}
+					/>
 				)}
 			</div>
 
@@ -394,10 +359,10 @@ export default function Vitro() {
 			>
 				<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-						Ready to Enhance Your Laboratory Capabilities?
+						Ready to Upgrade Your Laboratory?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect pathology and microbiology solution for your laboratory needs.
+						Our team of specialists is ready to help you find the perfect Vitro staining and ISH solution for your laboratory needs.
 					</p>
 					<motion.a
 						href="/user/contact"

@@ -110,17 +110,17 @@ export function SideNav() {
 		clinical: {
 			title: "I. Clinical",
 			items: [
-				{ name: "Clinical Chemistry", href: "#" },
-				{ name: "HBA1C - HPLC", href: "#" },
-				{ name: "Immunology", href: "#" },
-				{ name: "Coagulation", href: "#" },
-				{ name: "Blood Bank", href: "#" },
-				{ name: "Arterial Blood Gas, Electrolytes & Co-Oximetry", href: "#" },
-				{ name: "POCT (Point of Care)", href: "#" },
-				{ name: "Microbiology", href: "#" },
-				{ name: "Clinical Microscopy", href: "#" },
-				{ name: "Hematology", href: "#" },
-				{ name: "Molecular Diagnostics", href: "#" },
+				{ name: "Clinical Chemistry", href: "/user/products/components/clinical-chemistry" },
+				{ name: "HBA1C - HPLC", href: "/user/products/components/hba1c-hplc" },
+				{ name: "Immunology", href: "/user/products/components/immunology" },
+				{ name: "Coagulation", href: "/user/products/components/coagulation" },
+				{ name: "Blood Bank", href: "/user/products/components/blood-bank" },
+				{ name: "Arterial Blood Gas, Electrolytes & Co-Oximetry", href: "/user/products/components/arterial-blood-gas-electrolytes-co-oximetry" },
+				{ name: "POCT (Point of Care)", href: "/user/products/components/poct" },
+				{ name: "Microbiology", href: "/user/products/components/microbiology" },
+				{ name: "Clinical Microscopy", href: "/user/products/components/clinical-microscopy" },
+				{ name: "Hematology", href: "/user/products/components/hematology" },
+				{ name: "Molecular Diagnostics", href: "/user/products/components/molecular-diagnostics" },
 				{ name: "Rapid Test Kits", href: "#" }
 			]
 		},
@@ -131,7 +131,7 @@ export function SideNav() {
 				{ name: "Dakewe", href: "/user/products/components/dakewe" },
 				{ name: "Hiplaas", href: "#" },
 				{ name: "Vitro", href: "/user/products/components/vitro" },
-				{ name: "Biogenex", href: "#" },
+				{ name: "Biogenex", href: "/user/products/components/biogenex" },
 				{ name: "Nikon Microscopes", href: "/user/products/components/nikonmicroscopes" },
 				{ name: "Motic Slide Scanners", href: "/user/products/components/moticsliderscanner" },
 				{ name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
@@ -142,20 +142,20 @@ export function SideNav() {
 			title: "III. General Lab Equipments",
 			items: [
 				{ name: "Microscopes", href: "#" },
-				{ name: "Centrifuges", href: "#" },
-				{ name: "Pipettors", href: "#" },
-				{ name: "Biorefrigerators", href: "#" },
-				{ name: "Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage", href: "#" },
-				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "#" },
-				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "#" },
+				{ name: "Centrifuges", href: "/user/products/components/centrifuges" },
+				{ name: "Pipettors", href: "/user/products/components/pipettors" },
+				{ name: "Biorefrigerators", href: "/user/products/components/biorefrigerators" },
+				{ name: "Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage", href: "/user/products/components/biomedical-freezers" },
+				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "/user/products/components/biosafety-cabinets" },
+				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "/user/products/components/lab-oven-incubator" },
 				{ name: "Sterilizer & Autoclave", href: "#" },
-				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "#" }
+				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/user/products/components/lab-equipment" }
 			]
 		},
 		medical: {
 			title: "IV. Medical & Hospital Equipments",
 			items: [
-				{ name: "Medical Diagnostic Imaging", href: "#" },
+				{ name: "Medical Diagnostic Imaging", href: "/user/products/components/medical-diagnostic-imaging" },
 				{ name: "ICU Equipments", href: "#" },
 				{ name: "OR Equipments", href: "#" },
 				{ name: "ER Equipments", href: "#" },
@@ -170,7 +170,7 @@ export function SideNav() {
 		disposables: {
 			title: "V. Disposables / Consumables",
 			items: [
-				{ name: "Laboratory Disposables", href: "#" },
+				{ name: "Laboratory Disposables", href: "/user/products/components/laboratory-disposables" },
 				{ name: "Hospital Disposables", href: "#" },
 				{ name: "Histopathology Chemicals & Consumables", href: "#" },
 				{ name: "Surgical Disposables", href: "#" }
