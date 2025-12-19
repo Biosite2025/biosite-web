@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
   // Production optimizations
   reactStrictMode: true,
   // Output configuration for better performance
-  output: 'standalone',
+  // output: 'standalone',
   // Reduce memory usage
   experimental: {
     optimizePackageImports: ['framer-motion', 'gsap'],
