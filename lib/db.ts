@@ -1,10 +1,14 @@
 import { Pool } from 'pg';
 
+import fs from 'fs';
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { 
-    rejectUnauthorized: false
-  } : false,
+  ssl: process.env.NODE_ENV === 'production'
+    ? {
+        ca: fs.readFileSync(__dirname + '/../ca-certificate.crt').toString(),
+        rejectUnauthorized: true
+      }
+    : false,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
