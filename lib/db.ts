@@ -5,7 +5,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production'
     ? {
-        ca: fs.readFileSync(__dirname + '/../ca-certificate.crt').toString(),
+        ca: fs.readFileSync(require('path').join(process.cwd(), 'ca-certificate.crt')).toString(),
         rejectUnauthorized: true
       }
     : false,
