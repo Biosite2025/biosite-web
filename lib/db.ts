@@ -5,7 +5,7 @@ import path from 'path';
 let caCert = '';
 if (process.env.NODE_ENV === 'production') {
   try {
-    const certPath = path.join(process.cwd(), 'public', 'ca-certificate.crt');
+    const certPath = path.join(process.cwd(), 'cert', 'ca-certificate.crt');
     caCert = fs.readFileSync(certPath).toString();
     console.log('[DEBUG] CA certificate loaded from:', certPath);
     console.log('[DEBUG] CA certificate length:', caCert.length);
