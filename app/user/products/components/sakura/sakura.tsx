@@ -339,7 +339,7 @@ export default function NikonMicroscopes() {
 										{/* Background image with Next.js Image */}
 										<div className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
 											<Image
-												src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg"
+												src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/backgroundforsakura.jpg"
 												alt="Background"
 												fill
 												priority={false}
