@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         hostname: 'res.cloudinary.com',
         pathname: '/dmvyhrewy/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'biositeassets.sgp1.cdn.digitaloceanspaces.com',
+        pathname: '/**',
+      },
     ],
     unoptimized: false, // Ensure Next.js optimization is enabled
   },
