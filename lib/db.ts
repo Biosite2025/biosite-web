@@ -1,13 +1,24 @@
 import { Pool } from 'pg';
 
 import fs from 'fs';
+import path from 'path';
+let caCert = '';
+if (process.env.NODE_ENV === 'production') {
+  try {
+    const certPath = path.join(process.cwd(), 'public', 'ca-certificate.crt');
+    caCert = fs.readFileSync(certPath).toString();
+    console.log('[DEBUG] CA certificate loaded from:', certPath);
+    console.log('[DEBUG] CA certificate length:', caCert.length);
+  } catch (err) {
+    console.error('[ERROR] Failed to load CA certificate:', err);
+  }
+}
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production'
-    ? {
-        ca: fs.readFileSync(require('path').join(process.cwd(), 'public', 'ca-certificate.crt')).toString(),
-        rejectUnauthorized: true
-      }
+    ? caCert
+      ? { ca: caCert, rejectUnauthorized: true }
+      : { rejectUnauthorized: false }
     : false,
   max: 20,
   idleTimeoutMillis: 30000,
