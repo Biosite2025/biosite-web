@@ -413,6 +413,11 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
+                            <Link href="/user/products/components/laboratory-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Laboratory Disposables
+                            </Link>
+                          </li>
+                          <li>
                             <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hospital Disposables
                             </Link>
