@@ -8,10 +8,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-  id: 'laboratory-disposables',
-  title: 'Laboratory Disposables',
-  description: 'Essential laboratory disposables and consumables for safe, efficient, and reliable laboratory operations.',
-  folder: 'laboratory-disposables',
+  id: 'laboratory-equipements',
+  title: 'Laboratory Equipements',
+  description: 'Essential laboratory equipements and consumables for safe, efficient, and reliable laboratory operations.',
+  folder: 'laboratory-equipements',
 };
 
 // Modal component
@@ -20,7 +20,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
   const handleModalContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-  };
+  }; 
 
   return (
     <>
@@ -61,7 +61,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
           <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-              Essential laboratory disposable designed for safety, reliability, and efficiency in laboratory workflows.
+              Essential laboratory equipements designed for safety, reliability, and efficiency in laboratory workflows.
             </p>
             <div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
               <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -112,7 +112,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
           {product.name}
         </h3>
         <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-          Essential laboratory disposable engineered for safety and reliability.
+          Essential laboratory equipements engineered for safety and reliability.
         </p>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -182,7 +182,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
   );
 }
 
-export default function LaboratoryDisposables() {
+export default function LaboratoryEquipements() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -192,14 +192,14 @@ export default function LaboratoryDisposables() {
   useEffect(() => {
     // Product data based on asset folder
     const productData = [
-      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: '/asset/products/laboratory-disposables/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
-      { id: 2, name: 'Blood Banking Centrifuge', image: '/asset/products/laboratory-disposables/Blood-Banking-Centrifuge.png' },
-      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: '/asset/products/laboratory-disposables/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
-      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: '/asset/products/laboratory-disposables/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
-      { id: 5, name: 'Laboratory Microscopes', image: '/asset/products/laboratory-disposables/Laboratory-Microscopes.png' },
-      { id: 6, name: 'MicroPette', image: '/asset/products/laboratory-disposables/MicroPette.png' },
-      { id: 7, name: 'T-LAB Eco V85', image: '/asset/products/laboratory-disposables/T-LAB-Eco-V85.png' },
-      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: '/asset/products/laboratory-disposables/Vertical-Automatic-High-pressure-Steam-Sterilizer.png' }
+      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: '/asset/products/laboratory-equipements/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
+      { id: 2, name: 'Blood Banking Centrifuge', image: '/asset/products/laboratory-equipements/Blood-Banking-Centrifuge.png' },
+      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: '/asset/products/laboratory-equipements/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
+      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: '/asset/products/laboratory-equipements/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
+      { id: 5, name: 'Laboratory Microscopes', image: '/asset/products/laboratory-equipements/Laboratory-Microscopes.png' },
+      { id: 6, name: 'MicroPette', image: '/asset/products/laboratory-equipements/MicroPette.png' },
+      { id: 7, name: 'T-LAB Eco V85', image: '/asset/products/laboratory-equipements/T-LAB-Eco-V85.png' },
+      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: '/asset/products/laboratory-equipements/Vertical-Automatic-High-pressure-Steam-Sterilizer.png' }
     ];
 
     setProducts(productData);
@@ -262,7 +262,7 @@ export default function LaboratoryDisposables() {
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
             src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-            alt="Laboratory Disposables Background"
+            alt="Laboratory Equipements Background"
             fill
             className="object-cover w-full h-full"
             priority={true}
@@ -272,7 +272,7 @@ export default function LaboratoryDisposables() {
 
         {/* Particles Background Animation */}
         <div className="absolute inset-0 w-full h-full z-10">
-          <ParticlesBackground containerId="laboratory-disposables-particles" />
+          <ParticlesBackground containerId="laboratory-equipements-particles" />
           <div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
         </div>
 
@@ -288,7 +288,7 @@ export default function LaboratoryDisposables() {
               transition={{ duration: 1, type: 'spring', stiffness: 80 }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
             >
-              Laboratory Disposables
+              Laboratory Equipements
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -302,7 +302,7 @@ export default function LaboratoryDisposables() {
               transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
               className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
             >
-              Essential laboratory disposables and consumables for safe, efficient, and reliable laboratory operations
+              Essential Laboratory Equipements and consumables for safe, efficient, and reliable laboratory operations
             </motion.p>
           </motion.div>
 
@@ -358,7 +358,7 @@ export default function LaboratoryDisposables() {
             Ready to Upgrade Your Laboratory?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-            Our team of specialists is ready to help you find the perfect laboratory disposables and consumables for your laboratory needs.
+            Our team of specialists is ready to help you find the perfect Laboratory Equipements and consumables for your laboratory needs.
           </p>
           <motion.a
             href="/user/contact"

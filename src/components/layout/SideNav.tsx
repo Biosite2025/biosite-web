@@ -170,7 +170,7 @@ export function SideNav() {
 		disposables: {
 			title: "V. Disposables / Consumables",
 			items: [
-				{ name: "Laboratory Disposables", href: "/user/products/components/laboratory-disposables" },
+				{ name: "Laboratory Equipements", href: "/user/products/components/laboratory-equipements" },
 				{ name: "Hospital Disposables", href: "#" },
 				{ name: "Histopathology Chemicals & Consumables", href: "#" },
 				{ name: "Surgical Disposables", href: "#" }
