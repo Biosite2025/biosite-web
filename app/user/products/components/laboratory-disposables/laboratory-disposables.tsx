@@ -194,7 +194,7 @@ export default function LaboratoryDisposables() {
     const productData = [
       { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: '/asset/products/laboratory-disposables/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
       { id: 2, name: 'Blood Banking Centrifuge', image: '/asset/products/laboratory-disposables/Blood-Banking-Centrifuge.png' },
-      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: '/asset/products/laboratory-disposables/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers & Blood Bank Refrigerators.png' },
+      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: '/asset/products/laboratory-disposables/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
       { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: '/asset/products/laboratory-disposables/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
       { id: 5, name: 'Laboratory Microscopes', image: '/asset/products/laboratory-disposables/Laboratory-Microscopes.png' },
       { id: 6, name: 'MicroPette', image: '/asset/products/laboratory-disposables/MicroPette.png' },
