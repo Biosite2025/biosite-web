@@ -23,6 +23,12 @@ const categories = [
 		folder: 'Cryotomy',
 	},
 	{
+		id: 'cytology',
+		title: 'Cytology',
+		description: 'Advanced cytology preparation systems for accurate diagnostic results.',
+		folder: 'Cytology',
+	},
+	{
 		id: 'embedding',
 		title: 'Embedding',
 		description: 'Embedding centers and consumables for efficient tissue processing workflows.',
@@ -33,12 +39,6 @@ const categories = [
 		title: 'Microtomy',
 		description: 'Microtomes and blades for high-quality sectioning of paraffin-embedded tissues.',
 		folder: 'Microtomy',
-	},
-	{
-		id: 'staining',
-		title: 'Staining',
-		description: 'Automated stainers and reagents for consistent and reliable staining results.',
-		folder: 'Staining',
 	},
 	{
 		id: 'tissue-processing',
@@ -109,7 +109,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</div>
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-gray-700 text-sm sm:text-base max-[912px]:text-sm">
-							High-performance imaging solution engineered for precision and advanced laboratory research applications.
+							{product.description || 'High-performance histopathology equipment engineered for precision and advanced laboratory applications.'}
 						</p>
 					</motion.div>
 				</div>
@@ -156,11 +156,11 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base truncate">
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					High-performance imaging solution engineered for precision and advanced laboratory research applications.
+					{product.description || 'Professional histopathology equipment for laboratory diagnostics.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -245,34 +245,33 @@ export default function NikonMicroscopes() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Simulated Sakura product data - in production, this would fetch from your asset folder
+    // Sakura product data with accurate descriptions from official PDF catalog
     const productData: any = {
       'Coverslipping': [
-        { id: 1, name: 'Tissue-Tek Film', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Film.jpg' },
-        { id: 2, name: 'Tissue-Tek® Glas™ g2', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Coverslipping/Tissue-Tek_Glas_g2.jpg' },
+        { id: 1, name: 'Tissue-Tek Film', image: '/asset/Sakura/Coverslipping/Tissue-Tek Film.jpg', description: 'The Tissue-Tek Film is a specialized coverslipping solution designed for automated and manual applications in histology and cytology laboratories, providing optimal specimen protection and clarity for microscopic examination with superior adhesion properties and consistent film thickness for reliable diagnostic results.' },
       ],
       'Cryotomy': [
-        { id: 3, name: 'Tissue-Tek Polar', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530568/biosite-assets/Sakura/Cryotomy/Tissue-Tek_Polar.jpg' },
+        { id: 2, name: 'Tissue-Tek Polar', image: '/asset/Sakura/Cryotomy/Tissue-Tek Polar.jpg', description: 'The Tissue-Tek Polar is a state-of-the-art cryo-embedding center featuring advanced Peltier cooling technology with precise temperature control ranging from -20°C to -60°C, specifically engineered for rapid freezing and optimal preservation of tissue morphology during frozen section preparation in surgical pathology and research applications.' },
+      ],
+      'Cytology': [
+        { id: 3, name: 'Cyto-Tek 2500', image: '/asset/Sakura/Cytology/sakura-cyto-tek-2500.png', description: 'The Cyto-Tek 2500 is a high-performance cytocentrifuge system that delivers exceptional cell concentration and preservation through controlled centrifugal force, creating uniform monolayers of cells on slides with minimal cell distortion, making it ideal for gynecological, respiratory, and body fluid cytology specimens in diagnostic laboratories.' },
       ],
       'Embedding': [
-        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530567/biosite-assets/Sakura/Embedding/Tissue-Tek_AutoTEC_a120.jpg' },
-        { id: 5, name: 'Tissue-Tek TEC6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Embedding/Tissue-Tek_TEC6.jpg' },
-		
+        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: '/asset/Sakura/Embedding/Tissue-Tek AutoTEC a120.jpg', description: 'The Tissue-Tek AutoTEC a120 is a fully automated embedding center featuring advanced robotics with 120-cassette capacity, intelligent barcode tracking, and programmable embedding protocols that streamline high-volume histology workflows while ensuring consistent specimen orientation and optimal tissue infiltration for superior sectioning quality and laboratory efficiency.' },
+        { id: 5, name: 'Tissue-Tek TEC 6', image: '/asset/Sakura/Embedding/Tissue-Tek TEC6.jpg', description: 'The Tissue-Tek TEC 6 is an advanced tissue embedding console designed with an ergonomic cold spot workstation, six-position paraffin reservoir with independent temperature control, integrated heated forceps, and illuminated work surface that enables precision embedding with reduced turnaround time while maintaining optimal tissue quality and operator comfort during extended workflows.' },
+        { id: 12, name: 'Floating Bath', image: '/asset/Sakura/new/floating-bath.png', description: 'The Floating Bath is an essential histology workstation accessory featuring precise temperature control and uniform heat distribution for optimal tissue section flattening and mounting, with adjustable water level and ergonomic design that facilitates smooth slide preparation workflow and ensures consistent high-quality results in routine histopathology applications.' },
       ],
       'Microtomy': [
-        { id: 6, name: 'Tissue-Tek Autosection', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Autosection.jpg' },
-        { id: 7, name: 'Tissue-Tek® Sledge Microtome IVS-410', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530572/biosite-assets/Sakura/Microtomy/Tissue-Tek_Sledge_Microtome_IVS-410.jpg' } ,
-		{ id: 8, name: 'Tissue-Tek® Slide Warmer PS-53', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Microtomy/Tissue-Tek_Slide_Warmer_PS-53.jpg' },
-
+        { id: 6, name: 'Accu-Cut SRM 200', image: '/asset/Sakura/Microtomy/sakura-accu-cut-srm-200.png', description: 'The Accu-Cut SRM 200 is a precision rotary microtome featuring advanced blade holder technology, universal cassette clamp, and micrometer feed with section thickness range from 0.5 to 60 micrometers in 0.5-micron increments, delivering exceptional sectioning consistency and reliability for routine and specialized histopathology applications with minimal specimen waste and superior section quality.' },
+        { id: 7, name: 'Tissue-Tek Autosection', image: '/asset/Sakura/Microtomy/Tissue-Tek Autosection.jpg', description: 'The Tissue-Tek Autosection is an advanced automated rotary microtome with motorized sectioning, programmable cutting speeds, and automatic retraction system that enhances laboratory productivity by delivering consistent high-quality sections while reducing operator fatigue and repetitive strain injuries, ideal for high-throughput laboratories requiring standardized sectioning protocols.' },
+        { id: 8, name: 'Tissue-Tek Sledge IVS 410', image: '/asset/Sakura/Microtomy/Tissue-Tek® Sledge Microtome IVS-410.jpg', description: 'The Tissue-Tek Sledge Microtome IVS 410 is a heavy-duty precision instrument designed for sectioning large, hard, or undecalcified specimens including whole organs, bone, teeth, and implants with section thickness ranging from 1 to 60 micrometers, featuring a robust mechanical design, large specimen capacity, and stable cutting action essential for specialized applications in pathology, research, and forensic laboratories.' },
+        { id: 9, name: 'Tissue-Tek Slide Warmer', image: '/asset/Sakura/Microtomy/Tissue-Tek® Slide Warmer PS-53.jpg', description: 'The Tissue-Tek Slide Warmer PS-53 is a digital slide warming platform with precise microprocessor-controlled temperature regulation from 35°C to 70°C, featuring uniform heat distribution across the entire work surface, ensuring optimal tissue section adhesion and flattening while preventing tissue damage or antigen degradation, essential for immunohistochemistry and special staining procedures.' },
       ], 
-      'Staining': [
-        { id: 9, name: 'Tissue-Tek Prisma® Plus', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530569/biosite-assets/Sakura/Staining/Tissue-Tek_Prisma_Plus.jpg' },
-        
-      ],
       'Tissue Processing': [      
-        { id: 11, name: 'Histo-Tek VP1', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Histo-Tek_VP1.jpg' },
-        { id: 12, name: 'Tissue-Tek VIP-6-AI', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530573/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_VIP-6-AI.jpg' },
-		{ id: 13, name: 'Tissue-Tek Xpress® x120', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530574/biosite-assets/Sakura/Tissue%20Processing/Tissue-Tek_Xpress_x120.jpg' },
+        { id: 10, name: 'Tissue-Tek VIP 6 AI', image: '/asset/Sakura/Tissue Processing/Tissue-Tek VIP-6-AI.jpg', description: 'The Tissue-Tek VIP 6 AI is an advanced vacuum infiltration processor featuring artificial intelligence-powered protocol optimization, dual retort technology with independent vacuum and pressure control, and RFID reagent tracking that delivers superior tissue infiltration with reduced processing time from 12 hours to as little as 90 minutes, while maintaining exceptional tissue quality and minimizing reagent consumption for cost-effective high-volume laboratory operations.' },
+        { id: 11, name: 'Tissue-Tek Xpress x120', image: '/asset/Sakura/Tissue Processing/Tissue-Tek Xpress x120.jpg', description: 'The Tissue-Tek Xpress x120 is a rapid tissue processor with 120-cassette capacity utilizing innovative microwave-assisted vacuum infiltration technology that accelerates tissue processing to complete cycles in as little as 90 minutes without compromising morphology or staining quality, featuring touchscreen control, automated reagent management, and programmable protocols ideal for urgent biopsies, small specimens, and high-priority cases requiring same-day diagnosis.' },
+        { id: 13, name: 'Histo-Tek VP1', image: '/asset/Sakura/new/histo-tek-vp1.png', description: 'The Histo-Tek VP1 is a compact vacuum infiltration tissue processor designed for small to medium-volume laboratories, featuring advanced vacuum and pressure cycles that ensure thorough tissue infiltration while maintaining excellent morphological preservation, with user-friendly programming interface and reliable performance for consistent diagnostic quality results.' },
+        { id: 14, name: 'Tissue-Tek Prisma Plus', image: '/asset/Sakura/new/Tissue-Tek Prisma Plus.png', description: 'The Tissue-Tek Prisma Plus is an advanced automated stainer featuring intelligent reagent management, precise temperature control, and programmable protocols that deliver consistent, reproducible staining results for H&E and special stains, with touchscreen interface and comprehensive quality control features that enhance laboratory efficiency and diagnostic accuracy in high-throughput histopathology workflows.' },
       ],
     };
 
@@ -282,8 +281,8 @@ export default function NikonMicroscopes() {
     // Preload all images including hero background, logo, and product images
     const productImages = Object.values(productData).flat().map((product: any) => product.image);
     const heroImages = [
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg', // Background
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/Sakura/Asset_67_300x.png' // Logo
+      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg', // Background (using Cloudinary for hero)
+      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/Sakura/Asset_67_300x.png' // Logo (using Cloudinary for hero)
     ];
     const allImages = [...heroImages, ...productImages];
     let loadedCount = 0;
@@ -430,15 +429,35 @@ export default function NikonMicroscopes() {
 						/>
 					</div>
 				) : (
-					categories.map((category) => (
-						<CategorySection
-							key={category.id}
-							category={category}
-							products={products[category.folder] || []}
-							onViewDetails={handleViewDetails}
-                            
-						/>
-					))
+					<>
+						{/* Page Title */}
+						<motion.div
+							initial={{ opacity: 0, y: -30 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.6 }}
+							className="mb-8 sm:mb-12 md:mb-16 text-center max-[912px]:mb-6"
+						>
+							<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
+								Sakura
+							</h2>
+							<motion.div
+								initial={{ width: 0 }}
+								animate={{ width: '100px' }}
+								transition={{ duration: 0.8, delay: 0.2 }}
+								className="h-1 bg-gradient-to-r from-[#2B3990] to-[#4a5ab8] rounded-full mx-auto"
+							/>
+							<p className="text-gray-600 mt-4 text-base sm:text-lg max-w-3xl mx-auto">
+							Advanced histopathology systems and equipment for comprehensive laboratory diagnostics
+							</p>
+						</motion.div>
+
+						{/* All Products in Single Grid */}
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-[912px]:grid-cols-1 max-[912px]:gap-3">
+							{Object.values(products).flat().map((product: any, index: number) => (
+								<ProductCard key={product.id} product={product} index={index} onViewDetails={handleViewDetails} />
+							))}
+						</div>
+					</>
 				)}
 			</div>
 

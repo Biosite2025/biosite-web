@@ -4,101 +4,76 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
-import ParticlesBackground from './ParticlesBackground';
+import ParticlesBackground from '../dakewe/ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product categories based on folder structure
-const categories = [
-	{
-		id: 'cryostats',
-		title: 'Cryostats',
-		description: 'Advanced cryostat microtomes for precise frozen sectioning',
-		folder: 'Cryostats',
-	},
-	{
-		id: 'microtomes',
-		title: 'Microtomes',
-		description: 'High-precision rotary microtomes for superior sectioning quality',
-		folder: 'Microtomes',
-	},
-	{
-		id: 'specimen-identification',
-		title: 'Specimen Identification',
-		description: 'Professional cassette and slide printing solutions',
-		folder: 'Specimen Identification',
-	},
-	{
-		id: 'tissue-processors',
-		title: 'Tissue Processors',
-		description: 'Automated tissue processing systems for consistent results',
-		folder: 'Tissue Processors',
-	},
-];
+// Product category
+const category = {
+	id: 'dakewe',
+	title: 'Dakewe',
+	description: 'Advanced histopathology systems and equipment for comprehensive laboratory diagnostics',
+	folder: 'dakewe',
+};
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
 
-		// Prevent modal close when clicking inside modal content
-		const handleModalContentClick = (e: React.MouseEvent) => {
-			e.stopPropagation();
-		};
+	const handleModalContentClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+	};
 
-		return (
-			<>
-				{/* Blurry overlay to prevent background clicks, frosted glass effect */}
-				<div
-					className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-					onClick={product.onClose}
-					style={{ cursor: 'pointer' }}
-				></div>
-				<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
-					<motion.div
-						initial={{ opacity: 0, scale: 0.9, y: 20 }}
-						animate={{ opacity: 1, scale: 1, y: 0 }}
-						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						transition={{ duration: 0.3 }}
-						className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
-						onClick={handleModalContentClick}
+	return (
+		<>
+			<div
+				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
+				onClick={product.onClose}
+				style={{ cursor: 'pointer' }}
+			></div>
+			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+				<motion.div
+					initial={{ opacity: 0, scale: 0.9, y: 20 }}
+					animate={{ opacity: 1, scale: 1, y: 0 }}
+					exit={{ opacity: 0, scale: 0.9, y: 20 }}
+					transition={{ duration: 0.3 }}
+					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+					onClick={handleModalContentClick}
+				>
+					<button
+						onClick={product.onClose}
+						className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
+						aria-label="Close modal"
 					>
-						{/* Close button */}
-						<button
-							onClick={product.onClose}
-							className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
-							aria-label="Close modal"
-						>
-							<svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						</button>
+						<svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					</button>
 
-						{/* Product image */}
-						<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-							<Image
-								src={product.image}
-								alt={product.name}
-								fill
-								className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
-								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-							/>
-						</div>
+					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
+						<Image
+							src={product.image}
+							alt={product.name}
+							fill
+							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+						/>
+					</div>
 
-						{/* Product details */}
-						<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-							<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-							<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-								Professional-grade laboratory equipment designed for precision, reliability, and superior performance in histopathology applications.
+					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
+						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
+						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+							{product.description || 'Professional-grade histopathology equipment designed for precision, reliability, and superior performance in laboratory applications.'}
+						</p>
+						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
+							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
+								For detailed specifications and pricing information, please contact our sales team.
 							</p>
-							<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-								<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
-									For detailed specifications and pricing information, please contact our sales team.
-								</p>
-							</div>
 						</div>
-					</motion.div>
-				</div>
-			</>
-		);
+					</div>
+				</motion.div>
+			</div>
+		</>
+	);
 }
 
 // Product card component with animations
@@ -137,11 +112,11 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base truncate">
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional histopathology equipment engineered for precision and reliability.
+					{product.description || 'Professional histopathology equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -217,47 +192,35 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 }
 
 export default function Dakewe() {
-
-	const [products, setProducts] = useState<any>({});
+	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on actual folder structure
-		const productData: any = {
-			'Cryostats': [
-				{ id: 1, name: '6250 Cryostat Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530483/biosite-assets/dakewe/Cryostats/6250_Cryostat_Microtome.png' },
-				{ id: 2, name: 'CT520 Cryostat Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530483/biosite-assets/dakewe/Cryostats/CT520_Cryostat_Microtome.png' },
-			],
-			'Microtomes': [
-				{ id: 3, name: 'MT1 Semi-automated Rotary Microtome', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530493/biosite-assets/dakewe/Microtomes/MT1_Semi-automated_Rotary_Microtome-Photoroom.png' },
-			],
-			'Specimen Identification': [
-				{ id: 4, name: 'SurePrint C100 Cassette Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530493/biosite-assets/dakewe/Specimen%20Identification/SurePrint_C100_Cassette_Printer.png' },
-				{ id: 5, name: 'SurePrint C7 Cassette Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530493/biosite-assets/dakewe/Specimen%20Identification/SurePrint_C7_Cassette_Printer.png' },
-				{ id: 6, name: 'SurePrint S10 Slide Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530494/biosite-assets/dakewe/Specimen%20Identification/SurePrint_S10_Slide_Printer.png' },
-				{ id: 7, name: 'SurePrint S200 Slide Printer', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530494/biosite-assets/dakewe/Specimen%20Identification/SurePrint_S200_Slide_Printer.png' },
-			],
-			'Tissue Processors': [
-				{ id: 8, name: 'HP300 Plus Tissue Processor', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530495/biosite-assets/dakewe/Tissue%20Processors/HP300_Plus_Tissue_Processor.png' },
-				{ id: 9, name: 'HP300 Tissue Processor', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530495/biosite-assets/dakewe/Tissue%20Processors/HP300_Tissue_Processor.png' },
-			],
-		};
+		// Dakewe product data with accurate descriptions from official PDF catalog
+		const productData = [
+			{ id: 1, name: 'SurePrint C100', image: '/asset/dakewe/dakewe-new/DAKEWE SurePrint C100.png', description: 'The Dakewe SurePrint C100 is a high-performance laser cassette printer featuring advanced UV laser marking technology with exceptional print speed of 2.5 seconds per cassette, capable of printing clear, permanent, and solvent-resistant markings on tissue cassettes with barcode compatibility, making it ideal for high-volume histopathology laboratories requiring rapid specimen identification and tracking throughout the workflow with superior reliability and minimal maintenance requirements.' },
+			{ id: 2, name: 'SurePrint S200', image: '/asset/dakewe/dakewe-new/DAKEWE SurePrint S200.png', description: 'The Dakewe SurePrint S200 is an advanced UV laser slide printer engineered for high-throughput laboratories, delivering exceptional printing speeds of up to 720 slides per hour with precise, permanent, and fade-resistant markings directly on glass slides, featuring automated slide feeding, barcode printing capabilities, and intelligent slide detection system that ensures accurate specimen identification and traceability while eliminating the need for paper labels and reducing pre-analytical errors in busy diagnostic laboratories.' },
+			{ id: 3, name: 'HP300', image: '/asset/dakewe/dakewe-new/DAKEWE HP300.png', description: 'The Dakewe HP300 is a state-of-the-art automatic tissue processor with 300-cassette capacity featuring advanced vacuum infiltration technology, programmable protocols with up to 24 reagent stations, intelligent fluid management system, and touchscreen control interface that delivers superior tissue infiltration quality while reducing processing time from traditional 12-hour cycles to as little as 4 hours, making it the ideal solution for high-volume histopathology laboratories requiring consistent, reproducible results with enhanced workflow efficiency and reagent economy.' },
+			{ id: 4, name: '6520 Cryostat', image: '/asset/dakewe/dakewe-new/DAKEWE 6520.png', description: 'The Dakewe 6520 Cryostat is a precision rotary microtome cryostat featuring advanced Peltier cooling technology with temperature range from -35°C to +40°C, motorized coarse feed with manual fine sectioning capability, LED illumination system, ergonomic specimen orientation, and anti-roll plate for optimal section quality, designed for frozen section preparation in surgical pathology and research applications with section thickness range from 1 to 60 micrometers, delivering exceptional cutting performance for routine and specialized cryosectioning procedures with reliable temperature control and user-friendly operation.' },
+			{ id: 5, name: 'MT1 Microtome', image: '/asset/dakewe/dakewe-new/DAKEWE MT1.png', description: 'The Dakewe MT1 is a semi-automated rotary microtome combining precision manual control with automated features, including motorized specimen advance, electronic section thickness selection from 0.5 to 60 micrometers in 0.5-micron increments, universal cassette holder with quick-release mechanism, and ergonomic design that reduces operator fatigue while maintaining exceptional sectioning quality, making it ideal for routine histopathology applications requiring consistent, high-quality paraffin sections with improved productivity and operator comfort in medium to high-volume laboratories.' },
+			{ id: 6, name: 'DP360 CS500 Combo', image: '/asset/dakewe/dakewe-new/DAKEWE DP360 + CS500.png', description: 'The Dakewe DP360 CS500 Combo is an integrated tissue processing and embedding workstation combining the DP360 tissue processor with 360-cassette capacity and the CS500 embedding center, featuring synchronized workflow automation, RFID cassette tracking, programmable processing protocols with vacuum infiltration technology, multi-position heated paraffin dispensers, and cold plate embedding stations that create a seamless end-to-end solution for tissue processing and embedding, delivering superior efficiency, consistency, and specimen quality for high-throughput histopathology laboratories with space-saving integrated design and intelligent workflow management.' },
+			{ id: 7, name: 'SurePrint C7', image: '/asset/dakewe/dakewe-new/SurePrint C7.webp', description: 'The Dakewe SurePrint C7 is a compact and efficient cassette printer designed for small to medium laboratories, offering high-resolution UV laser printing, fast operation, and compatibility with a wide range of cassette types for reliable specimen identification.' },
+			{ id: 8, name: 'SurePrint S10 & S10 PRO', image: '/asset/dakewe/dakewe-new/SurePrint S10&S10 PRO.png', description: 'The Dakewe SurePrint S10 & S10 PRO are advanced slide printers featuring dual-mode operation, high-speed UV laser marking, and robust barcode printing capabilities, ensuring durable and legible slide identification for high-throughput laboratory environments.' }
+		];
 
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background, logo, and product images
-		const productImages = Object.values(productData).flat().map((product: any) => product.image);
-		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530318/biosite-assets/dakewe/dakewe-logo.png' // Logo
+		// Preload all images
+		const allImages = [
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
+			...productData.map((p: any) => p.image)
 		];
-		const allImages = [...heroImages, ...productImages];
+		
 		let loadedCount = 0;
-
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
 				const img = new window.Image();
@@ -295,55 +258,47 @@ export default function Dakewe() {
 		return <Preloader />;
 	}
 
-		return (
-			<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-				{/* Hero Section */}
-				<motion.section
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 1 }}
-					className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
-				>
-					{/* Background Image */}
-					<div className="absolute inset-0 w-full h-full z-0">
-						<Image
-							src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-							alt="Dakewe Background"
-							fill
-							className="object-cover w-full h-full"
-							priority={true}
-						/>
-						{/* Dark overlay with low opacity */}
-						<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-					</div>
-					{/* Particles Background Animation */}
-					<div className="absolute inset-0 w-full h-full z-10">
-						<ParticlesBackground containerId="dakewe-particles" />
-						<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
-					</div>
+	return (
+		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+			{/* Hero Section */}
+			<motion.section
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 1 }}
+				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
+			>
+				{/* Background Image */}
+				<div className="absolute inset-0 w-full h-full z-0">
+					<Image
+						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
+						alt="Dakewe Background"
+						fill
+						className="object-cover w-full h-full"
+						priority={true}
+					/>
+					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
+				</div>
 
-					<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
+				{/* Particles Background Animation */}
+				<div className="absolute inset-0 w-full h-full z-10">
+					<ParticlesBackground containerId="dakewe-particles" />
+					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+				</div>
+
+				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
 					<motion.div
 						initial={{ y: 30, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<motion.div
-						initial={{ scale: 0.9, opacity: 0, y: 40 }}
-						animate={{ scale: 1.15, opacity: 1, y: 0 }}
-						transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-						className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
+						<motion.h1
+							initial={{ scale: 0.9, opacity: 0, y: 40 }}
+							animate={{ scale: 1, opacity: 1, y: 0 }}
+							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-						<Image
-						 src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530318/biosite-assets/dakewe/dakewe-logo.png"
-						 alt="Dakewe Logo"
-						 width={600}
-						 height={350}
-						 className="object-contain drop-shadow-xl max-[912px]:w-64 max-[912px]:h-auto"
-						 priority
-						 style={{ filter: 'drop-shadow(0 0 8px white) drop-shadow(0 0 2px white)' }}
-						/>
-						</motion.div>
+							Dakewe
+						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
 							animate={{ scaleX: 1 }}
@@ -353,14 +308,14 @@ export default function Dakewe() {
 						<motion.p
 							initial={{ opacity: 0, y: 30 }}
 							animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-					>
-						Advanced tissue processing and sectioning systems engineered for exceptional precision and reliability in modern pathology laboratories
-					</motion.p>
+							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+						>
+							Advanced histopathology systems and equipment for comprehensive laboratory diagnostics
+						</motion.p>
 					</motion.div>
 
-					{/* Scroll Indicator - moved below paragraph */}
+					{/* Scroll Indicator */}
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -391,15 +346,11 @@ export default function Dakewe() {
 						/>
 					</div>
 				) : (
-					categories.map((category) => (
-						<CategorySection
-							key={category.id}
-							category={category}
-							products={products[category.folder] || []}
-							onViewDetails={handleViewDetails}
-                            
-						/>
-					))
+					<CategorySection
+						category={category}
+						products={products}
+						onViewDetails={handleViewDetails}
+					/>
 				)}
 			</div>
 
@@ -416,7 +367,7 @@ export default function Dakewe() {
 						Ready to Upgrade Your Laboratory?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect histopathology solution for your laboratory needs.
+						Our team of specialists is ready to help you find the perfect Dakewe histopathology solution for your laboratory needs.
 					</p>
 					<motion.a
 						href="/user/contact"
@@ -430,10 +381,10 @@ export default function Dakewe() {
 				</div>
 			</motion.section>
 
-					{/* Modal */}
-					{isModalOpen && selectedProduct && (
-						<Modal product={{ ...selectedProduct, onClose: handleCloseModal }} isOpen={isModalOpen} />
-					)}
+			{/* Modal */}
+			{isModalOpen && selectedProduct && (
+				<Modal product={{ ...selectedProduct, onClose: handleCloseModal }} isOpen={isModalOpen} />
+			)}
 		</div>
 	);
 }
