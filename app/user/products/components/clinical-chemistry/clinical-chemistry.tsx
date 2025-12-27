@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
-import ParticlesBackground from '../dakewe/ParticlesBackground';
+import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
 // Custom scrollbar styles

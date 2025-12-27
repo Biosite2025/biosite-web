@@ -10,10 +10,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-  id: 'medical-equipments',
-  title: 'Medical Diagnostic Imaging',
-  description: 'Advanced medical diagnostic imaging systems and equipment for comprehensive laboratory diagnostics',
-  folder: 'medical-equipments',
+  id: 'icu-er-equipments',
+  title: 'ICU / ER Equipments',
+  description: 'Essential ICU and emergency room equipment for critical care and rapid response environments.',
+  folder: 'icu-er-equipments',
 };
 
 // Modal component
@@ -200,12 +200,9 @@ export default function MedicalDiagnosticImaging() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Product data for medical-equipments
+    // Product data for ICU/ER Equipments (placeholder, update with real products as needed)
     const productData = [
-      { id: 1, name: 'Acclarix LX9', image: '/asset/products/medical-equipments/Acclarix LX9.png', description: 'Premium ultrasound system for advanced diagnostic imaging.' },
-      { id: 2, name: 'Acclarix AX8', image: '/asset/products/medical-equipments/Acclarix-AX8.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-	  { id: 3, name: 'Acclarix AX9', image: '/asset/products/medical-equipments/Acclarix-AX9.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-      { id: 4, name: 'Nano C5 & L15', image: '/asset/products/medical-equipments/Nano C5 & L15.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
+      { id: 1, name: 'X12 Patient Monitor', image: '/asset/products/medical-equipments/X12.png', description: 'Advanced X12 patient monitor for continuous and accurate vital sign monitoring in critical care environments.' },
        ];
 
     setProducts(productData);
@@ -294,7 +291,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, type: 'spring', stiffness: 80 }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
             >
-              Medical Diagnostic Imaging
+              ICU / ER Equipments
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -308,7 +305,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
               className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
             >
-              Advanced medical diagnostic imaging systems and equipment for comprehensive laboratory diagnostics
+              Essential ICU and emergency room equipment for critical care and rapid response environments.
             </motion.p>
           </motion.div>
 
@@ -361,10 +358,10 @@ export default function MedicalDiagnosticImaging() {
       >
         <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-            Ready to Upgrade Your Laboratory?
+            Ready to Upgrade Your ICU or ER?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-            Our team of specialists is ready to help you find the perfect medical diagnostic imaging solution for your laboratory needs.
+            Our team of specialists is ready to help you find the perfect ICU and emergency room equipment for your critical care needs.
           </p>
           <motion.a
             href="/user/contact"

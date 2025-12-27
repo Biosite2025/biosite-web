@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import ParticlesBackground from './ParticlesBackground';
+import ParticlesBackground from '../ParticlesBackground';
 import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';

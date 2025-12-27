@@ -203,7 +203,7 @@ export function TopNav() {
                           </li>
                           <li>
                             <Link href="/user/products/components/poct" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
-                              POCT (Point of Care)
+                              POCT (Point of Care Testing)
                             </Link>
                           </li>
                           <li>
@@ -251,7 +251,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/hiplaas" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hiplaas
                             </Link>
                           </li>
@@ -354,18 +354,13 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
-                              ICU Equipments
+                            <Link href="/user/products/components/icu-er-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              ICU / ER Equipments
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/or-equipment" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               OR Equipments
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
-                              ER Equipments
                             </Link>
                           </li>
                           <li>
@@ -374,7 +369,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/gastro-endo" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Gastro & Endo
                             </Link>
                           </li>

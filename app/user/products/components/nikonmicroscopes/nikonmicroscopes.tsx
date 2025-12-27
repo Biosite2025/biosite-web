@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import Link from 'next/link';
 import Tilt from 'react-parallax-tilt';
-import ParticlesBackground from './ParticlesBackground';
+import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
 // Product categories based on folder structure

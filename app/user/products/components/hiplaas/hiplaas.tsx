@@ -10,10 +10,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-  id: 'medical-equipments',
-  title: 'Medical Diagnostic Imaging',
-  description: 'Advanced medical diagnostic imaging systems and equipment for comprehensive laboratory diagnostics',
-  folder: 'medical-equipments',
+  id: 'hiplaas',
+  title: 'Hiplaas Grossing & Autopsy Solutions',
+  description: 'Premium grossing stations, autopsy tables, and morgue refrigeration for pathology and mortuary applications.',
+  folder: 'hiplaas',
 };
 
 // Modal component
@@ -192,7 +192,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function MedicalDiagnosticImaging() {
+export default function Hiplaas() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,13 +200,39 @@ export default function MedicalDiagnosticImaging() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Product data for medical-equipments
+    // Product data for Hiplaas (from provided image)
     const productData = [
-      { id: 1, name: 'Acclarix LX9', image: '/asset/products/medical-equipments/Acclarix LX9.png', description: 'Premium ultrasound system for advanced diagnostic imaging.' },
-      { id: 2, name: 'Acclarix AX8', image: '/asset/products/medical-equipments/Acclarix-AX8.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-	  { id: 3, name: 'Acclarix AX9', image: '/asset/products/medical-equipments/Acclarix-AX9.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-      { id: 4, name: 'Nano C5 & L15', image: '/asset/products/medical-equipments/Nano C5 & L15.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
-       ];
+      {
+        id: 1,
+        name: 'EVO120 SFBT',
+        image: '/asset/products/hiplaas/EVO120 SFBT.png',
+        description: 'The EVO120SFBT is an ideal Grossing Station Countertop with Sink for small laboratories. Its small size allows operators to save valuable space by resting on an existing worktop, but also useful in larger structures as an additional work surface.'
+      },
+      {
+        id: 2,
+        name: 'EVO150 FD',
+        image: '/asset/products/hiplaas/EVO150 FD.png',
+        description: 'The EVO150FD is a Grossing Station Non Elevating 150cm Dualdraft provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
+      },
+      {
+        id: 3,
+        name: 'EVO150 ED',
+        image: '/asset/products/hiplaas/EVO150 ED.png',
+        description: 'The EVO150ED grossing stations elevating 150cm dual draft imaging system provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
+      },
+      {
+        id: 4,
+        name: 'KC21',
+        image: '/asset/products/hiplaas/KC21.png',
+        description: 'The KC21 (morgue refrigeration small door two-body), ideal for the storage of bodies in funeral homes and morgues, has panels, floor and ceiling of are 10 cm in thickness, and manufactured in fire-retardant high density. HCFC free, polyurethane foam (min content 40/45 kg/m2), sandwiched on both sides by corrosion resistant white coated steel or stainless steel. Heavy-duty strengthened floor with internal anti-slip surface. Pre-formed internal corners as an integral part of the panels to provide an interior finish that is the most hygienic available.'
+      },
+      {
+        id: 5,
+        name: 'ATPTABLE-E300',
+        image: '/asset/products/hiplaas/ATPTABLE-E300.png',
+        description: 'The ATPTABLE-E300 is a ventilated and elevating autopsy table designed by Mopec Europe. It features an AISI 304 stainless steel top and a central pedestal that houses a ventilation system to extract toxic fumes using a DOWN-DRAFT system.'
+      },
+    ];
 
     setProducts(productData);
     setLoading(false);
@@ -294,7 +320,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, type: 'spring', stiffness: 80 }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
             >
-              Medical Diagnostic Imaging
+              Hiplaas
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -308,7 +334,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
               className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
             >
-              Advanced medical diagnostic imaging systems and equipment for comprehensive laboratory diagnostics
+              Premium grossing stations, autopsy tables, and morgue refrigeration for pathology and mortuary applications.
             </motion.p>
           </motion.div>
 
@@ -361,10 +387,10 @@ export default function MedicalDiagnosticImaging() {
       >
         <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-            Ready to Upgrade Your Laboratory?
+            Ready to Upgrade Your Pathology Lab or Mortuary?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-            Our team of specialists is ready to help you find the perfect medical diagnostic imaging solution for your laboratory needs.
+            Our team of specialists is ready to help you find the perfect Hiplaas grossing, autopsy, and refrigeration solutions for your facility.
           </p>
           <motion.a
             href="/user/contact"
