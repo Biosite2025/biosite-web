@@ -202,7 +202,7 @@ export default function OREquipments() {
   useEffect(() => {
     // Product data for OR Equipments (placeholder, update with real products as needed)
     const productData = [
-      { id: 1, name: 'iSE Series – Electrocardiograph (ECG)', image: '/asset/products/medical-equipments/iSE Series.png', description: 'Precision surgical table designed for optimal patient positioning and surgical access.' },
+      { id: 1, name: 'iSE Series – Electrocardiograph (ECG)', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/iSE Series.png', description: 'Precision surgical table designed for optimal patient positioning and surgical access.' },
      ];
 
     setProducts(productData);

@@ -201,8 +201,17 @@ export default function Centrifuges() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Hermle LC-8', image: '/asset/products/centrifuges/hermle-lc-8.png' },
-			{ id: 2, name: 'Hermle Z206-A', image: '/asset/products/centrifuges/hermle-z206-a.png' }
+			{ id: 1, name: 'Hermle LC-8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-lc-8.png' },
+			{ id: 2, name: 'Hermle Z206-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z206-a.jpg' },
+		    { id: 3, name: 'Hermle Z207-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-a.jpg' },
+		    { id: 4, name: 'Hermle Z207-H', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-h.jpg' },
+		    { id: 5, name: 'Hermle Z216-M', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z216-m.png' },
+		    { id: 6, name: 'Hermle Z306', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z306.png' },
+			{ id: 7, name: 'Hermle Z446-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z446-k.png' },
+			{ id: 8, name: 'Hermle Z496-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z496-k.png' },
+		    { id: 9, name: 'DLAB VORTEX MIXER MX-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-s.png' },
+		    { id: 10, name: 'DLAB VORTEX MIXER MX-F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-f.png' },
+		    { id: 11, name: 'DLAB VORTEX MIXER MX-E', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-e.png' }
 		];
 
 		setProducts(productData);

@@ -192,14 +192,14 @@ export default function LaboratoryEquipements() {
   useEffect(() => {
     // Product data based on asset folder
     const productData = [
-      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: '/asset/products/laboratory-equipements/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
-      { id: 2, name: 'Blood Banking Centrifuge', image: '/asset/products/laboratory-equipements/Blood-Banking-Centrifuge.png' },
-      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: '/asset/products/laboratory-equipements/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
-      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: '/asset/products/laboratory-equipements/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
-      { id: 5, name: 'Laboratory Microscopes', image: '/asset/products/laboratory-equipements/Laboratory-Microscopes.png' },
-      { id: 6, name: 'MicroPette', image: '/asset/products/laboratory-equipements/MicroPette.png' },
-      { id: 7, name: 'T-LAB Eco V85', image: '/asset/products/laboratory-equipements/T-LAB-Eco-V85.png' },
-      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: '/asset/products/laboratory-equipements/Vertical-Automatic-High-pressure-Steam-Sterilizer.png' }
+      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
+      { id: 2, name: 'Blood Banking Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Blood-Banking-Centrifuge.png' },
+      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
+      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
+      { id: 5, name: 'Laboratory Microscopes', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Laboratory-Microscopes.png' },
+      { id: 6, name: 'MicroPette', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/MicroPette.png' },
+      { id: 7, name: 'T-LAB Eco V85', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/T-LAB-Eco-V85.png' },
+      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Vertical-Automatic-High-pressure-Steam-Sterilizer.png' }
     ];
 
     setProducts(productData);

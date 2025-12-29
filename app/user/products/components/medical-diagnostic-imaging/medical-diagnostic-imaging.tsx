@@ -202,10 +202,10 @@ export default function MedicalDiagnosticImaging() {
   useEffect(() => {
     // Product data for medical-equipments
     const productData = [
-      { id: 1, name: 'Acclarix LX9', image: '/asset/products/medical-equipments/Acclarix LX9.png', description: 'Premium ultrasound system for advanced diagnostic imaging.' },
-      { id: 2, name: 'Acclarix AX8', image: '/asset/products/medical-equipments/Acclarix-AX8.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-      { id: 3, name: 'Acclarix AX9', image: '/asset/products/medical-equipments/Acclarix-AX9.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
-      { id: 4, name: 'Nano C5 & L15', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/Nano%20C5%20&%20L15.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
+      { id: 1, name: 'Acclarix LX9', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix LX9.png', description: 'Premium ultrasound system for advanced diagnostic imaging.' },
+      { id: 2, name: 'Acclarix AX8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX8.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
+      { id: 3, name: 'Acclarix AX9', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX9.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
+      { id: 4, name: 'Nano C5 & L15', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Nano%20C5%20&%20L15.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
     ];
 
     setProducts(productData);

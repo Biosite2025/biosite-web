@@ -228,43 +228,43 @@ export default function ClinicalChemistry() {
 			{ 
 				id: 1, 
 				name: 'ILab Aries', 
-				image: '/asset/clinical-chemistry/ILAB ARIES.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/ILAB ARIES.png',
 				description: 'The ILab Aries is a versatile clinical chemistry analyzer designed for small to medium-sized laboratories requiring reliable and accurate diagnostic testing. With its advanced optical system and comprehensive test menu, the Aries delivers precise results for routine chemistry parameters including glucose, lipid profiles, liver and kidney function tests, and electrolytes. The system features a compact footprint that maximizes bench space efficiency while maintaining high throughput capabilities. Its intuitive touchscreen interface simplifies operation and reduces training time, while the automated calibration and quality control functions ensure consistent performance. The ILab Aries supports both serum and plasma samples with minimal sample volumes, making it ideal for pediatric and geriatric testing. With its proven reliability, low maintenance requirements, and cost-effective operation, the ILab Aries provides laboratories with a dependable solution for daily clinical chemistry testing needs.'
 			},
 			{ 
 				id: 2, 
 				name: 'ILab 650', 
-				image: '/asset/clinical-chemistry/ILAB 650.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/ILAB 650.png',
 				description: 'The ILab 650 is a high-performance clinical chemistry analyzer engineered for medium to large-scale laboratories demanding exceptional throughput and accuracy. Capable of processing up to 600 tests per hour with ISE, this advanced system features a comprehensive test menu covering routine and specialized chemistry assays including cardiac markers, therapeutic drug monitoring, and special proteins. The ILab 650 incorporates state-of-the-art photometric technology with multiple wavelengths for enhanced analytical precision and specificity. Its intelligent sample management system handles up to 180 samples with barcode reading capabilities, automatic rerun functions, and STAT priority processing for urgent specimens. The analyzer includes integrated quality control monitoring with automatic flagging of out-of-range results and comprehensive data management capabilities. With its robust design, minimal maintenance requirements, and proven reliability, the ILab 650 delivers consistent performance even in high-volume testing environments. The system supports bi-directional LIS connectivity for seamless laboratory workflow integration and features an intuitive user interface that streamlines operation and reduces training time.'
 			},
 			{ 
 				id: 3, 
 				name: 'ILab Taurus', 
-				image: '/asset/clinical-chemistry/ILAB Taurus.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/ILAB Taurus.png',
 				description: 'The ILab Taurus represents the pinnacle of clinical chemistry automation, designed for high-volume reference laboratories and large hospital systems requiring maximum throughput and operational efficiency. This flagship analyzer delivers exceptional performance with processing speeds up to 800 tests per hour, supporting both routine and specialized chemistry assays with outstanding accuracy and precision. The Taurus features an advanced optical system with multiple wavelength capabilities, enabling comprehensive test menu coverage including general chemistry, lipid profiles, cardiac markers, therapeutic drugs, and specialized proteins. Its sophisticated sample handling system accommodates up to 300 samples with intelligent priority processing, automatic dilution and rerun capabilities, and integrated barcode reading for enhanced specimen tracking. The analyzer incorporates real-time quality control monitoring with automatic calibration verification and comprehensive data management tools. With its modular design, the ILab Taurus can be easily expanded to meet growing laboratory demands while maintaining consistent performance. The system features minimal maintenance requirements, reduced reagent consumption, and low cost per test, making it an ideal solution for laboratories seeking to optimize operational efficiency without compromising analytical quality.'
 			},
 			{ 
 				id: 4, 
 				name: 'ILab Twin Taurus', 
-				image: '/asset/clinical-chemistry/Taurus Twin.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Taurus Twin.png',
 				description: 'The ILab Twin Taurus is an integrated dual-analyzer system that combines two Taurus platforms to deliver unprecedented throughput and operational flexibility for large-scale reference laboratories and healthcare networks. This advanced configuration provides processing capacity exceeding 1,600 tests per hour, making it ideal for high-volume testing environments requiring continuous operation and maximum productivity. The Twin Taurus features synchronized workflow management that intelligently distributes samples between analyzers for optimal efficiency while maintaining load balancing and minimizing turnaround times. Each analyzer operates independently with full redundancy, ensuring uninterrupted laboratory operations even during routine maintenance or unexpected technical issues. The system incorporates centralized data management with unified quality control monitoring, automatic calibration verification across both platforms, and comprehensive reporting capabilities. Its sophisticated sample handling system accommodates up to 600 samples with intelligent routing, STAT priority processing, and automatic rerun functions. The Twin Taurus supports extensive test menu coverage including routine chemistry, specialized assays, cardiac markers, and therapeutic drug monitoring, all with exceptional analytical precision. With its modular architecture, the system can be easily configured to meet specific laboratory requirements and scaled to accommodate future growth.'
 			},
 			{ 
 				id: 5, 
 				name: 'SmartLyte Plus', 
-				image: '/asset/clinical-chemistry/Smartlyte Plus.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Smartlyte Plus.png',
 				description: 'The SmartLyte Plus is a dedicated electrolyte analyzer specifically designed for rapid and accurate measurement of sodium, potassium, chloride, ionized calcium, pH, and lithium in various sample types including serum, plasma, whole blood, and urine. Utilizing advanced ion-selective electrode (ISE) technology, this compact system delivers precise electrolyte results in approximately 60 seconds per sample, making it ideal for emergency departments, critical care units, and routine laboratory operations. The SmartLyte Plus features automatic calibration and quality control functions that ensure consistent analytical performance throughout extended operation periods. Its low sample volume requirements minimize waste and make it particularly suitable for pediatric and neonatal testing applications. The analyzer incorporates intelligent sample detection with automatic aspiration and comprehensive error detection systems that alert operators to potential sample or system issues. With its intuitive touchscreen interface, minimal training requirements, and straightforward maintenance procedures, the SmartLyte Plus offers laboratories a reliable and cost-effective solution for electrolyte testing. The system supports bi-directional LIS connectivity for seamless integration into existing laboratory information systems and includes comprehensive data management capabilities with full traceability of all test results.'
 			},
 			{ 
 				id: 6, 
 				name: 'Genrui GE500', 
-				image: '/asset/clinical-chemistry/Genrui GE500.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Genrui GE500.png',
 				description: 'The Genrui GE500 is an advanced semi-automated clinical chemistry analyzer that combines affordability with reliable performance, making it an excellent choice for small to medium-sized laboratories, clinics, and point-of-care testing facilities. This versatile system supports a comprehensive test menu covering routine chemistry parameters including glucose, cholesterol, triglycerides, liver enzymes, kidney function markers, and electrolytes. The GE500 features a user-friendly interface with simplified operation that minimizes training requirements while maintaining analytical accuracy and precision. Its semi-automated design allows for flexible testing workflows, accommodating both individual tests and small batch processing. The analyzer utilizes high-quality optical components for reliable photometric measurements across multiple wavelengths, ensuring consistent results even with challenging samples. With its compact footprint and minimal space requirements, the GE500 fits easily into laboratories with limited bench space. The system includes built-in quality control functions and comprehensive data management capabilities for result tracking and reporting. Its low reagent consumption, reduced maintenance needs, and cost-effective operation make the GE500 an economical solution for laboratories requiring dependable clinical chemistry testing without the high costs associated with larger automated systems.'
 			},
 			{
 				id: 7,
 				name: 'Genrui GE300',
-				image: '/asset/clinical-chemistry/Genrui GE300.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Genrui GE300.png',
 				description: 'The Genrui GE300 is a compact and efficient clinical chemistry analyzer designed for small laboratories and clinics. It offers reliable performance for routine chemistry assays, user-friendly operation, and low maintenance requirements, making it an ideal solution for cost-effective and accurate diagnostic testing.'
 			}
 		];

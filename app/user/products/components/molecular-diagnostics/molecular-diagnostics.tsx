@@ -201,22 +201,22 @@ export default function MolecularDiagnostics() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Genolution Nextractor NX-48s', image: '/asset/products/molecular-diagnostics/genolution-nx48s.png' },
-			{ id: 2, name: 'Sansure Natch CS', image: '/asset/products/molecular-diagnostics/sansure-natch-cs.png' },
-			{ id: 3, name: 'Zybio EXM 3000', image: '/asset/products/molecular-diagnostics/zybio-exm-3000.png' },
-			{ id: 4, name: 'Zybio EXM 6000', image: '/asset/products/molecular-diagnostics/zybio-exm-6000.png' },
-			{ id: 5, name: 'Sansure Slan 96P', image: '/asset/products/molecular-diagnostics/sansure-slan-96p.png' },
-			{ id: 6, name: 'Sansure MA-6000', image: '/asset/products/molecular-diagnostics/sansure-ma-6000.png' },
-			{ id: 7, name: 'Sansure MA-1630Q', image: '/asset/products/molecular-diagnostics/sansure-ma-1630q.png' },
-			{ id: 8, name: 'Zybio ZIP-96V', image: '/asset/products/molecular-diagnostics/zybio-zip-96v.png' },
-			{ id: 9, name: 'Sansure iPonatic SQ31B', image: '/asset/products/molecular-diagnostics/sansure-iponatic-sq31b.png' },
-			{ id: 10, name: 'Sansure iPonatic SQ36A', image: '/asset/products/molecular-diagnostics/sansure-iponatic-sq36a.png' },
+			{ id: 1, name: 'Genolution Nextractor NX-48s', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/genolution-nx48s.png' },
+			{ id: 2, name: 'Sansure Natch CS', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-natch-cs.png' },
+			{ id: 3, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-3000.png' },
+			{ id: 4, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-6000.png' },
+			{ id: 5, name: 'Sansure Slan 96P', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-slan-96p.png' },
+			{ id: 6, name: 'Sansure MA-6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-6000.png' },
+			{ id: 7, name: 'Sansure MA-1630Q', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-1630q.png' },
+			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-zip-96v.png' },
+			{ id: 9, name: 'Sansure iPonatic SQ31B', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq31b.png' },
+			{ id: 10, name: 'Sansure iPonatic SQ36A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq36a.png' },
 			// New products from asset folder
-			{ id: 11, name: 'Human Papillomavirus (HPV) Diagnostic Kit', image: '/asset/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png' },
-			{ id: 12, name: 'Mycobacterium Tuberculosis Nucleic Acid and Rifampicin Resistance Fluorescence Diagnostic Kit', image: '/asset/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png' },
-			{ id: 13, name: 'Natch CS3 Plus', image: '/asset/products/molecular-diagnostics/Natch CS3 Plus.png' },
-			{ id: 14, name: 'Novel Coronavirus (2019-nCoV) Nucleic Acid Diagnostic Kit', image: '/asset/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png' },
-			{ id: 15, name: 'Nucleic Acid Test Kit for HBV HCV & HIV', image: '/asset/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png' }
+			{ id: 11, name: 'Human Papillomavirus (HPV) Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png' },
+			{ id: 12, name: 'Mycobacterium Tuberculosis Nucleic Acid and Rifampicin Resistance Fluorescence Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png' },
+			{ id: 13, name: 'Natch CS3 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Natch CS3 Plus.png' },
+			{ id: 14, name: 'Novel Coronavirus (2019-nCoV) Nucleic Acid Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png' },
+			{ id: 15, name: 'Nucleic Acid Test Kit for HBV HCV & HIV', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png' }
 		];
 
 		setProducts(productData);

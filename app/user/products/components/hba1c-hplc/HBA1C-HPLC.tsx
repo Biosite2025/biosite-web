@@ -211,8 +211,8 @@ export default function HBA1CHPLC() {
 		// Product data based on image files
 		const productData: any = {
 			'HBA1C - HPLC Analyzers': [
-				{ id: 1, name: 'TOSOH HLC-723 G11', image: '/asset/HBA1C - HPLC/TOSOH HLC-723 G11.png' },
-				{ id: 2, name: 'TOSOH HLC-723 GX', image: '/asset/HBA1C - HPLC/TOSOH HLC-723 GX.png' },
+				{ id: 1, name: 'TOSOH HLC-723 G11', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20G11.png' },
+				{ id: 2, name: 'TOSOH HLC-723 GX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20GX.png' },
 			],
 		};
 

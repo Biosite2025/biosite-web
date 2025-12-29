@@ -7,46 +7,24 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product categories based on folder structure
-const categories = [
-	{
-		id: 'motic-easyscan-infinity',
-		title: 'MoticEasyScan Infinity',
-		description: 'High-performance slide scanners with exceptional imaging quality',
-		folder: 'MoticEasyScan Infinity',
-	},
-	{
-		id: 'motic-easyscan-onetwo',
-		title: 'MoticEasyScan OneTwo',
-		description: 'Versatile slide scanning solutions for modern laboratories',
-		folder: 'MoticEasyScan OneTwo',
-	},
-	{
-		id: 'motic-easyscan-pro',
-		title: 'MoticEasyScan Pro',
-		description: 'Professional-grade slide scanners for advanced applications',
-		folder: 'MoticEasyScan Pro',
-	},
-	{
-		id: 'motic-flexscan',
-		title: 'MoticFlexScan',
-		description: 'Flexible scanning systems for diverse laboratory needs',
-		folder: 'MoticFlexScan',
-	},
-];
+// Product category for Motic Slide Scanners
+const category = {
+  id: 'motic-slide-scanners',
+  title: 'Motic Slide Scanners',
+  description: 'High-performance digital slide scanners for pathology, research, and education. Experience precision imaging and efficient workflow with Motic’s advanced scanning solutions.',
+  folder: 'motic-slide-scanners',
+};
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
 
-	// Prevent modal close when clicking inside modal content
 	const handleModalContentClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 	};
 
 	return (
 		<>
-			{/* Blurry overlay to prevent background clicks, frosted glass effect */}
 			<div
 				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
 				onClick={product.onClose}
@@ -61,7 +39,6 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
 					onClick={handleModalContentClick}
 				>
-					{/* Close button */}
 					<button
 						onClick={product.onClose}
 						className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
@@ -72,7 +49,6 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					{/* Product image */}
 					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
 						<Image
 							src={product.image}
@@ -83,11 +59,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						/>
 					</div>
 
-					{/* Product details */}
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Advanced digital slide scanning technology designed for precision, efficiency, and superior imaging performance in pathology and research applications.
+							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in centrifuges applications.
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -141,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Advanced digital slide scanning technology for precision imaging and analysis.
+					Professional centrifuges equipment engineered for precision and reliability.
 				</p>
 				
 				{/* View Details Button */}
@@ -216,51 +191,32 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 	);
 }
 
-export default function MoticSlideScanner() {
-	const [products, setProducts] = useState<any>({});
+export default function Centrifuges() {
+	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on actual folder structure
-		const productData: any = {
-			'MoticEasyScan Infinity': [
-				{ id: 1, name: 'MoticEasyScan Infinity 100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530502/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_100.jpg' },
-				{ id: 2, name: 'MoticEasyScan Infinity 150', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_150.png' },
-				{ id: 3, name: 'MoticEasyScan Infinity 300', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_300.png' },
-				{ id: 4, name: 'MoticEasyScan Infinity 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20Infinity/MoticEasyScan_Infinity_60.jpg' },
-			],
-			'MoticEasyScan OneTwo': [
-				{ id: 5, name: 'MoticEasyScan OneTwo FS Live', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo_FS_Live.png' },
-				{ id: 6, name: 'MoticEasyScan OneTwo', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530505/biosite-assets/motic/MoticEasyScan%20OneTwo/MoticEasyScan_OneTwo.png' },
-			],
-			'MoticEasyScan Pro': [
-				{ id: 7, name: 'MoticEasyScan Pro 24-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530508/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24-FS.png' },
-				{ id: 8, name: 'MoticEasyScan Pro 24', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_24.png' },
-				{ id: 9, name: 'MoticEasyScan Pro 6-FS', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6-FS.jpg' },
-				{ id: 10, name: 'MoticEasyScan Pro 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticEasyScan%20Pro/MoticEasyScan_Pro_6.jpg' },
-			],
-			'MoticFlexScan': [
-				{ id: 11, name: 'MoticFlexScan 6', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530507/biosite-assets/motic/MoticFlexScan/MoticFlexScan_6.png' },
-				{ id: 12, name: 'MoticFlexScan 60', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_60.png' },
-				{ id: 13, name: 'MoticFlexScan One', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530509/biosite-assets/motic/MoticFlexScan/MoticFlexScan_One.png' },
-			],
-		};
+		// Product data for Motic Slide Scanners
+		const productData: any[] = [
+			{ id: 1, name: 'MoticEasyScan Infinity 60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Infinity%2060.jpg' },
+			{ id: 2, name: 'MoticEasyScan OneTwo', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20OneTwo.png' },
+			{ id: 3, name: 'MoticEasyScan Pro 6', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Pro%206.jpg' },
+			{ id: 4, name: 'MoticFlexScan 60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticFlexScan%2060.png' },
+		];
 
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background, logo, and product images
-		const productImages = Object.values(productData).flat().map((product: any) => product.image);
-		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530324/biosite-assets/motic/motic-bg.png', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530324/biosite-assets/motic/motic-logo.png' // Logo
+		// Preload all images
+		const allImages = [
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/motic/bg-motic.jpg',
+			...productData.map((p: any) => p.image)
 		];
-		const allImages = [...heroImages, ...productImages];
-		let loadedCount = 0;
 
+		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
 				const img = new window.Image();
@@ -294,6 +250,7 @@ export default function MoticSlideScanner() {
 	};
 
 	// Show loading screen until all images are preloaded
+
 	if (!imagesLoaded) {
 		return <Preloader />;
 	}
@@ -310,18 +267,18 @@ export default function MoticSlideScanner() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530324/biosite-assets/motic/motic-bg.png"
-						alt="Motic Background"
+						src="/asset/motic/motic-bg.png"
+						alt="Motic Slide Scanners Background"
 						fill
 						className="object-cover w-full h-full"
 						priority={true}
 					/>
-					{/* Dark overlay with low opacity */}
-					<div className="absolute inset-0 w-full h-full bg-red-600" style={{ opacity: 0.1, zIndex: 1 }} />
+					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
 				</div>
+
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="motic-particles" />
+					<ParticlesBackground containerId="motic-slide-scanners-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -331,22 +288,14 @@ export default function MoticSlideScanner() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<motion.div
+						<motion.h1
 							initial={{ scale: 0.9, opacity: 0, y: 40 }}
-							animate={{ scale: 1.15, opacity: 1, y: 0 }}
+							animate={{ scale: 1, opacity: 1, y: 0 }}
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-							className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
+							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							<Image
-								src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530324/biosite-assets/motic/motic-logo.png"
-								alt="Motic Logo"
-								width={600}
-								height={350}
-								className="object-contain  max-[912px]:w-64 max-[912px]:h-auto"
-								priority
-								
-							/>
-						</motion.div>
+							Motic Slide Scanners
+						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
 							animate={{ scaleX: 1 }}
@@ -359,11 +308,11 @@ export default function MoticSlideScanner() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							Advanced digital slide scanning solutions delivering exceptional imaging quality and efficiency for modern pathology and research laboratories
+							High-performance digital slide scanners for pathology, research, and education. Experience precision imaging and efficient workflow with Motic’s advanced scanning solutions.
 						</motion.p>
 					</motion.div>
 
-					{/* Scroll Indicator - moved below paragraph */}
+					{/* Scroll Indicator */}
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -394,14 +343,11 @@ export default function MoticSlideScanner() {
 						/>
 					</div>
 				) : (
-					categories.map((category) => (
-						<CategorySection
-							key={category.id}
-							category={category}
-							products={products[category.folder] || []}
-							onViewDetails={handleViewDetails}
-						/>
-					))
+					<CategorySection
+						category={category}
+						products={products}
+						onViewDetails={handleViewDetails}
+					/>
 				)}
 			</div>
 
@@ -415,17 +361,17 @@ export default function MoticSlideScanner() {
 			>
 				<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-						Ready to Transform Your Digital Pathology?
+						Ready to Upgrade Your Digital Pathology Workflow?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect slide scanning solution for your laboratory needs.
+						Our team of specialists is ready to help you find the perfect Motic Slide Scanner solution for your laboratory or research needs.
 					</p>
 					<motion.a
 						href="/user/contact"
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
 						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
-									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+											hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
 					>
 						Contact Our Experts
 					</motion.a>

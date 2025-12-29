@@ -202,11 +202,11 @@ export default function MedicalDiagnosticImaging() {
   useEffect(() => {
     // Product data for ICU/ER Equipments (placeholder, update with real products as needed)
     const productData = [
-      { id: 1, name: 'X12 Patient Monitor', image: '/asset/products/medical-equipments/X12.png', description: 'Advanced X12 patient monitor for continuous and accurate vital sign monitoring in critical care environments.' },
+      { id: 1, name: 'X12 Patient Monitor', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/X12.png', description: 'Advanced X12 patient monitor for continuous and accurate vital sign monitoring in critical care environments.' },
        ];
 
     setProducts(productData);
-    setLoading(false);
+    setLoading(false);  
 
     // Preload all images
     const allImages = [

@@ -201,14 +201,14 @@ export default function ClinicalMicroscopy() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Acon U500', image: '/asset/products/clinical-microscopy/acon-u500.png' },
-			{ id: 2, name: 'Zybio U1600', image: '/asset/products/clinical-microscopy/zybio-u1600.png' },
-			{ id: 3, name: 'Zybio U2600', image: '/asset/products/clinical-microscopy/zybio-u2600.png' },
-			{ id: 4, name: 'Zybio U3600', image: '/asset/products/clinical-microscopy/zybio-u3600.png' },
-			{ id: 5, name: 'Zybio Q8 Pro', image: '/asset/products/clinical-microscopy/zybio-q8-pro.png' },
-			{ id: 6, name: 'Zybio EXM 3000', image: '/asset/products/clinical-microscopy/zybio-exm-3000.png' },
-			{ id: 7, name: 'Zybio EXM 6000', image: '/asset/products/clinical-microscopy/zybio-exm-6000.png' },
-			{ id: 8, name: 'Zybio ZIP-96V', image: '/asset/products/clinical-microscopy/zybio-zip-96v.png' }
+			{ id: 1, name: 'Acon U500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/acon-u500.png' },
+			{ id: 2, name: 'Zybio U1600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u1600.png' },
+			{ id: 3, name: 'Zybio U2600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u2600.png' },
+			{ id: 4, name: 'Zybio U3600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u3600.png' },
+			{ id: 5, name: 'Zybio Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-q8-pro.png' },
+			{ id: 6, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-3000.png' },
+			{ id: 7, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-6000.png' },
+			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-zip-96v.png' }
 		];
 
 		setProducts(productData);

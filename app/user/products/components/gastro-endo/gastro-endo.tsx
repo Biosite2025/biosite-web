@@ -202,7 +202,7 @@ export default function GastroEndo() {
   useEffect(() => {
     // Product data for Gastro & Endo (placeholder, update with real products as needed)
     const productData = [
-      { id: 1, name: 'C6 HD / C6A HD', image: '/asset/products/medical-equipments/C6 HD&C6A HD.png', description: 'High-definition video gastroscope for precise visualization and diagnosis of upper GI tract.' },
+      { id: 1, name: 'C6 HD / C6A HD', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/C6 HD&C6A HD.png', description: 'High-definition video gastroscope for precise visualization and diagnosis of upper GI tract.' },
       ];
 
     setProducts(productData);

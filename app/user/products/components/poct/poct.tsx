@@ -201,16 +201,16 @@ export default function Poct() {
 	useEffect(() => {
 		// Product data based on asset folder
 		const productData = [
-			{ id: 1, name: 'A1CNow Plus', image: '/asset/products/poct/a1cnow-plus.png' },
-			{ id: 2, name: 'CardioChek Plus', image: '/asset/products/poct/cardio-chek-plus.png' },
-			{ id: 3, name: 'Ebmonitor Pro', image: '/asset/products/poct/Ebmonitor-Pro.png' },
-			{ id: 4, name: 'EHBT-50 Minilab', image: '/asset/products/poct/EHBT-50-Minilab.png' },
-			{ id: 5, name: 'iPonatic S Q31B', image: '/asset/products/poct/iPonatic-S-Q31B.png' },
-			{ id: 6, name: 'Mission HemoPro Hemoglobin', image: '/asset/products/poct/Mission-HemoPro-Hemoglobin.png' },
-			{ id: 7, name: 'On Call Extra', image: '/asset/products/poct/On-Call-Extra.png' },
-			{ id: 8, name: 'Q8 Pro', image: '/asset/products/poct/Q8 Pro.png' },
-			{ id: 9, name: 'Sinocare iCare 2100', image: '/asset/products/poct/sinocare-icare-2100.png' },
-			{ id: 10, name: 'Smart Pro', image: '/asset/products/poct/Smart-Pro.png' }
+			{ id: 1, name: 'A1CNow Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/a1cnow-plus.png' },
+			{ id: 2, name: 'CardioChek Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/cardio-chek-plus.png' },
+			{ id: 3, name: 'Ebmonitor Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Ebmonitor-Pro.png' },
+			{ id: 4, name: 'EHBT-50 Minilab', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/EHBT-50-Minilab.png' },
+			{ id: 5, name: 'iPonatic S Q31B', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/iPonatic-S-Q31B.png' },
+			{ id: 6, name: 'Mission HemoPro Hemoglobin', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Mission-HemoPro-Hemoglobin.png' },
+			{ id: 7, name: 'On Call Extra', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/On-Call-Extra.png' },
+			{ id: 8, name: 'Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Q8 Pro.png' },
+			{ id: 9, name: 'Sinocare iCare 2100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/sinocare-icare-2100.png' },
+			{ id: 10, name: 'Smart Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Smart-Pro.png' }
 		];
 
 		setProducts(productData);

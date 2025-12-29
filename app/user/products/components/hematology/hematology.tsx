@@ -201,8 +201,8 @@ export default function Hematology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Dymind DF-55', image: '/asset/products/hematology/dymind-df-55.png' },
-			{ id: 2, name: 'Genrui KT-60', image: '/asset/products/hematology/genrui-kt-60.png' }
+			{ id: 1, name: 'Dymind DF-55', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/dymind-df-55.png' },
+			{ id: 2, name: 'Genrui KT-60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png' }
 		];
 
 		setProducts(productData);

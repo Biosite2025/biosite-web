@@ -201,9 +201,9 @@ export default function BloodBank() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Centron SE260', image: '/asset/products/blood-bank/centron-se260.png' },
-			{ id: 2, name: 'Matrix Automax 80', image: '/asset/products/blood-bank/matrix-automax-80.png' },
-			{ id: 3, name: 'Tulip HbChek', image: '/asset/products/blood-bank/tulip-hbchek.png' }
+			{ id: 1, name: 'Centron SE260', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se260.png' },
+			{ id: 2, name: 'Matrix Automax 80', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png' },
+			{ id: 3, name: 'Tulip HbChek', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png' }
 		];
 
 		setProducts(productData);

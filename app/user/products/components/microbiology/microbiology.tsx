@@ -201,12 +201,12 @@ export default function Microbiology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Autobio AutoMic i600', image: '/asset/products/microbiology/autobio-automic-i600.png' },
-			{ id: 2, name: 'Autobio BC120', image: '/asset/products/microbiology/autobio-bc120.png' },
-			{ id: 3, name: 'Autobio BC60', image: '/asset/products/microbiology/autobio-bc601.png' },
-			{ id: 4, name: 'Autobes BCX', image: '/asset/products/microbiology/autobes bcx.png' },
-			{ id: 5, name: 'Autof MS1000', image: '/asset/products/microbiology/Autof-ms1000.jpg' },
-			{ id: 6, name: 'BC120 Plus', image: '/asset/products/microbiology/BC120 Plus.jpg' }
+			{ id: 1, name: 'Autobio AutoMic i600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-automic-i600.png' },
+			{ id: 2, name: 'Autobio BC120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc120.png' },
+			{ id: 3, name: 'Autobio BC60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc601.png' },
+			{ id: 4, name: 'Autobes BCX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobes bcx.png' },
+			{ id: 5, name: 'Autof MS1000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/Autof-ms1000.jpg' },
+			{ id: 6, name: 'BC120 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/BC120 Plus.jpg' }
 		];
 
 		setProducts(productData);

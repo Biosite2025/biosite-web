@@ -213,11 +213,11 @@ export default function NikonMicroscopes() {
 		// Simulated product data - in production, this would fetch from your asset folder
 		const productData: any = {
 			'upright microscopes': [
-				{ id: 1, name: 'Eclipse Ci', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ci.png' },
-				{ id: 2, name: 'ECLIPSE E100', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_E100.png' },
-				{ id: 3, name: 'ECLIPSE Ei', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530557/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ei.png' },
-				{ id: 4, name: 'ECLIPSE Ni', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530566/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Ni.png' },
-				{ id: 5, name: 'ECLIPSE Si', image: 'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/nikon%20microscopes/upright%20microscopes/ECLIPSE_Si.png' },
+				{ id: 1, name: 'Eclipse Ci', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nikon/ECLIPSE%20Ci.png' },
+				{ id: 2, name: 'ECLIPSE E100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nikon/ECLIPSE%20E100.png' },
+				{ id: 3, name: 'ECLIPSE Ei', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nikon/ECLIPSE%20Ei.png' },
+				{ id: 4, name: 'ECLIPSE Ni', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nikon/ECLIPSE%20Ni.png' },
+				{ id: 5, name: 'ECLIPSE Si', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nikon/ECLIPSE%20Si.png' },
 			],
 		};
 

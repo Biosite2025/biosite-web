@@ -201,13 +201,13 @@ export default function Immunology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Snibe Maglumi 800', image: '/asset/products/immunology/snibe-maglumi-800.jpg' },
-			{ id: 2, name: 'Snibe Maglumi X3', image: '/asset/products/immunology/snibe-maglumi-x3.png' },
-			{ id: 3, name: 'Snibe Maglumi X8', image: '/asset/products/immunology/snibe-maglumi-x8.png' },
-			{ id: 4, name: 'Tosoh AIA-360', image: '/asset/products/immunology/tosoh-aia-360.png' },
-			{ id: 5, name: 'Tosoh AIA-900', image: '/asset/products/immunology/tosoh-aia-900.png' },
-			{ id: 6, name: 'Tosoh AIA-2000', image: '/asset/products/immunology/AIA-2000.png' },
-			{ id: 7, name: 'Tosoh AIA-CL300', image: '/asset/products/immunology/AIA-CL300.png' }
+			{ id: 1, name: 'Snibe Maglumi 800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-800.jpg' },
+			{ id: 2, name: 'Snibe Maglumi X3', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x3.png' },
+			{ id: 3, name: 'Snibe Maglumi X8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x8.png' },
+			{ id: 4, name: 'Tosoh AIA-360', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-360.png' },
+			{ id: 5, name: 'Tosoh AIA-900', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-900.png' },
+			{ id: 6, name: 'Tosoh AIA-2000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-2000.png' },
+			{ id: 7, name: 'Tosoh AIA-CL300', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-CL300.png' }
 		];
 
 		setProducts(productData);

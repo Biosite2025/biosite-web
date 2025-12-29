@@ -201,7 +201,7 @@ export default function LabOvenIncubator() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'CL4 Semi Auto', image: '/asset/products/lab-oven-incubator/cl4-semi-auto.png' }
+			{ id: 1, name: 'CL4 Semi Auto', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png' }
 		];
 
 		setProducts(productData);

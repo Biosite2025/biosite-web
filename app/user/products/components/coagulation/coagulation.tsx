@@ -201,10 +201,10 @@ export default function Coagulation() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'ACL Elite Pro', image: '/asset/products/coagulation/acl-elite-pro.png' },
-			{ id: 2, name: 'ACL Top 350', image: '/asset/products/coagulation/acl-top-350.png' },
-			{ id: 3, name: 'ACL TOP 550', image: '/asset/products/coagulation/ACL TOP 550.png' },
-			{ id: 4, name: 'ACL TOP 750', image: '/asset/products/coagulation/ACL TOP 750.png' }
+			{ id: 1, name: 'ACL Elite Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-elite-pro.png' },
+			{ id: 2, name: 'ACL Top 350', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-top-350.png' },
+			{ id: 3, name: 'ACL TOP 550', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 550.png' },
+			{ id: 4, name: 'ACL TOP 750', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 750.png' }
 		];
 
 		setProducts(productData);

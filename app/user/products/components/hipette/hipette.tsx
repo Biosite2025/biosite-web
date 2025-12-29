@@ -201,9 +201,9 @@ export default function Hipette() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'MicroPette Plus', image: '/asset/products/hipette/micropette-plus.png' },
-			{ id: 2, name: 'MicroPette Plus', image: '/asset/products/hipette/micropette-plus1.png' },
-			{ id: 3, name: 'MicroPette Plus', image: '/asset/products/hipette/micropette-plus2.png' }
+			{ id: 1, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus.png' },
+			{ id: 2, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus1.png' },
+			{ id: 3, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus2.png' }
 		];
 
 		setProducts(productData);

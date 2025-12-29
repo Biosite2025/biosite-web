@@ -192,18 +192,18 @@ export default function LaboratoryEquipements() {
   useEffect(() => {
     // Product data based on asset folder
     const productData = [
-      { id: 1, name: 'ABG Syringe', image: '/asset/products/laboratory-disposables/ABG-Syringe.png' },
-      { id: 2, name: 'Capillary ABG Sampler', image: '/asset/products/laboratory-disposables/Capillary-ABG-Sampler.png' },
-      { id: 3, name: 'Filtered Tips', image: '/asset/products/laboratory-disposables/Filtered-Tips.png' },
-      { id: 4, name: 'Microscope-Slides-&-Coverslip', image: '/asset/products/laboratory-disposables/Microscope-Slides-&-Coverslip.png' },
-      { id: 5, name: 'PCR 8 Strips & Film', image: '/asset/products/laboratory-disposables/PCR-8-Strips-&-Film.png' },
-      { id: 6, name: 'PCR-Plates', image: '/asset/products/laboratory-disposables/PCR-Plates.png' },
-      { id: 7, name: 'Pipette-Tips', image: '/asset/products/laboratory-disposables/Pipette-Tips.png' },
-      { id: 8, name: 'Sharps Container', image: '/asset/products/laboratory-disposables/Sharps-Container.png' },
-      { id: 9, name: 'Specimen-Containers', image: '/asset/products/laboratory-disposables/Specimen-Containers.png' },
-      { id: 10, name: 'Tournistrip', image: '/asset/products/laboratory-disposables/Tournistrip.png' },
-      { id: 11, name: 'URS-4SG-&-URS-10A', image: '/asset/products/laboratory-disposables/URS-4SG-&-URS-10A.png' },
-      { id: 12, name: 'Vacuum-Blood-Tubes', image: '/asset/products/laboratory-disposables/Vacuum-Blood-Tubes.png' }
+      { id: 1, name: 'ABG Syringe', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/ABG-Syringe.png' },
+      { id: 2, name: 'Capillary ABG Sampler', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Capillary-ABG-Sampler.png' },
+      { id: 3, name: 'Filtered Tips', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Filtered-Tips.png' },
+      { id: 4, name: 'Microscope-Slides-&-Coverslip', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Microscope-Slides-&-Coverslip.png' },
+      { id: 5, name: 'PCR 8 Strips & Film', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/PCR-8-Strips-&-Film.png' },
+      { id: 6, name: 'PCR-Plates', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/PCR-Plates.png' },
+      { id: 7, name: 'Pipette-Tips', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Pipette-Tips.png' },
+      { id: 8, name: 'Sharps Container', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Sharps-Container.png' },
+      { id: 9, name: 'Specimen-Containers', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Specimen-Containers.png' },
+      { id: 10, name: 'Tournistrip', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Tournistrip.png' },
+      { id: 11, name: 'URS-4SG-&-URS-10A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/URS-4SG-&-URS-10A.png' },
+      { id: 12, name: 'Vacuum-Blood-Tubes', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Vacuum-Blood-Tubes.png' }
     ];
 
     setProducts(productData);
