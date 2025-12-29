@@ -201,17 +201,17 @@ export default function BiomedicalFreezers() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40L92.png' },
-			{ id: 2, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40L262.png' },
-			{ id: 3, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40L278.png' },
-			{ id: 4, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40L348.png' },
-			{ id: 5, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40L508.png' },
-			{ id: 6, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40W100.png' },
-			{ id: 7, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40W255.png' },
-			{ id: 8, name: '-40C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-40W380.png' },
-			{ id: 9, name: '-25C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-25L92.png' },
-			{ id: 10, name: '-25C Biomedical Freezer', image: '/asset/products/biomedical-freezers/DW-25L262.png' },
-			{ id: 11, name: '-86C ULT Freezer DW Series', image: '/asset/products/biomedical-freezers/DW-SERIES.png' }
+			{ id: 1, name: 'DW-25L92', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L92.png' },
+			{ id: 2, name: 'DW-40L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L262.png' },
+			{ id: 3, name: 'DW-40L278', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L278.png' },
+			{ id: 4, name: 'DW-40L348', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L348.png' },
+			{ id: 5, name: 'DW-40L508', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L508.png' },
+			{ id: 6, name: 'DW-40W100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W100.png' },
+			{ id: 7, name: 'DW-40W255', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W255.png' },
+			{ id: 8, name: 'DW-40W380', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W380.png' },
+			{ id: 9, name: 'DW-25L92', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L92.png' },
+			{ id: 10, name: 'DW-25L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L262.png' },
+			{ id: 11, name: 'DW-SERIES', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-SERIES.png' }
 		];
 
 		setProducts(productData);

@@ -201,21 +201,20 @@ export default function Biorefrigerators() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-68&68A.png' },
-			{ id: 2, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-118&118A.png' },
-			{ id: 3, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-290.png' },
-			{ id: 4, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-390&390F.png' },
-			{ id: 5, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-610.png' },
-			{ id: 6, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-940&940F.png' },
-			{ id: 7, name: 'HYC Pharmacy Refrigerator', image: '/asset/products/biorefrigerators/HYC-1378.png' },
-			{ id: 8, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-149.png' },
-			{ id: 9, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-149/149T.png' },
-			{ id: 10, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-429.png' },
-			{ id: 11, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-429T.png' },
-			{ id: 12, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-629.png' },
-			{ id: 13, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-629T.png' },
-			{ id: 14, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-1369.png' },
-			{ id: 15, name: 'HXC Blood Bank Refrigerator', image: '/asset/products/biorefrigerators/HXC-1369T.png' }
+			{ id: 1, name: 'HYC-68&68A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-68&68A.png' },
+			{ id: 2, name: 'HYC-118&118A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-118&118A.png' },
+			{ id: 3, name: 'HYC-290', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-290.png' },
+			{ id: 4, name: 'HYC-390&390F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-390&390F.png' },
+			{ id: 5, name: 'HYC-610', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-610.png' },
+			{ id: 6, name: 'HYC-940&940F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-940&940F.png' },
+			{ id: 7, name: 'HYC-1378', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-1378.png' },
+			{ id: 8, name: 'HXC-149', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-149.png' },
+			{ id: 10, name: 'HXC-429', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429.png' },
+			{ id: 11, name: 'HXC-429T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429T.png' },
+			{ id: 12, name: 'HXC-629', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629.png' },
+			{ id: 13, name: 'HXC-629T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629T.png' },
+			{ id: 14, name: 'HXC-1369', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369.png' },
+			{ id: 15, name: 'HXC-1369T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369T.png' }
 		];
 
 		setProducts(productData);

@@ -201,8 +201,8 @@ export default function Biogenex() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'NanoVIP', image: '/asset/products/biogenex/biogenex-nanovip.png' },
-			{ id: 2, name: 'Xmatrx Elite', image: '/asset/products/biogenex/biogenex-xmatrx-elite.png' }
+			{ id: 1, name: 'NanoVIP', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-nanovip.png' },
+			{ id: 2, name: 'Xmatrx Elite', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-xmatrx-elite.png' }
 		];
 
 		setProducts(productData);

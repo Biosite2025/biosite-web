@@ -201,10 +201,10 @@ export default function BiosafetyCabinets() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Class Series', image: '/asset/products/biosafety-cabinets/class-series.png' },
-			{ id: 2, name: 'HR1200-IIA2-D', image: '/asset/products/biosafety-cabinets/HR1200-IIA2-D.png' },
-			{ id: 3, name: 'HR1200-IIA2-S', image: '/asset/products/biosafety-cabinets/HR1200-IIA2-S.png' },
-			{ id: 4, name: 'HR1200-IIA2-X', image: '/asset/products/biosafety-cabinets/HR1200-IIA2-X.png' }
+			{ id: 1, name: 'Class Series', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/class-series.png' },
+			{ id: 2, name: 'HR1200-IIA2-D', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-D.png' },
+			{ id: 3, name: 'HR1200-IIA2-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-S.png' },
+			{ id: 4, name: 'HR1200-IIA2-X', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-X.png' }
 		];
 
 		setProducts(productData);

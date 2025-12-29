@@ -201,11 +201,11 @@ export default function ArterialBloodGasElectrolytesCoOximetry() {
 	useEffect(() => {
 		// Product data based on asset folder
 		const productData = [
-			{ id: 1, name: 'Biolight D800', image: '/asset/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png' },
-			{ id: 2, name: 'GEM 3500', image: '/asset/products/arterial-blood-gas-electrolytes-co-oximetry/gem-3500.png' },
-			{ id: 3, name: 'GEM 5000', image: '/asset/products/arterial-blood-gas-electrolytes-co-oximetry/gem-5000.png' },
-			{ id: 4, name: 'GEM ChemSTAT', image: '/asset/products/arterial-blood-gas-electrolytes-co-oximetry/gem-chemstat.png' },
-			{ id: 5, name: 'GEM Premier 7000 with iQM3', image: '/asset/products/arterial-blood-gas-electrolytes-co-oximetry/GEM-Premier-7000-with-iQM3.png' }
+			{ id: 1, name: 'Biolight D800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png' },
+			{ id: 2, name: 'GEM 3500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-3500.png' },
+			{ id: 3, name: 'GEM 5000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-5000.png' },
+			{ id: 4, name: 'GEM ChemSTAT', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-chemstat.png' },
+			{ id: 5, name: 'GEM Premier 7000 with iQM3', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/GEM-Premier-7000-with-iQM3.png' }
 		];
 
 		setProducts(productData);
