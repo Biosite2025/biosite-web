@@ -9,10 +9,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-	id: 'poct',
-	title: 'POCT',
-	description: 'Advanced poct systems and equipment for comprehensive laboratory diagnostics',
-	folder: 'poct',
+  id: 'rapid-test-kits',
+  title: 'Rapid Test Kits',
+  description: 'Comprehensive range of rapid test kits for quick and reliable diagnostics in various settings.',
+  folder: 'rapid-test-kits',
 };
 
 // Modal component
@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in poct applications.
+							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in molecular diagnostics applications.
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional poct equipment engineered for precision and reliability.
+					Professional molecular diagnostics equipment engineered for precision and reliability.
 				</p>
 				
 				{/* View Details Button */}
@@ -191,37 +191,49 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 	);
 }
 
-export default function Poct() {
+export default function MolecularDiagnostics() {
 	const [products, setProducts] = useState<any[]>([]);
+	const [tulipProducts, setTulipProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on asset folder
+		// Rapid Test Kits product data
 		const productData = [
-			{ id: 1, name: 'A1CNow Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/a1cnow-plus.png' },
-			{ id: 2, name: 'CardioChek Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/cardio-chek-plus.png' },
-			{ id: 3, name: 'Ebmonitor Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Ebmonitor-Pro.png' },
-			{ id: 4, name: 'EHBT-50 Minilab', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/EHBT-50-Minilab.png' },
-			{ id: 5, name: 'iPonatic S Q31B', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/iPonatic-S-Q31B.png' },
-			{ id: 6, name: 'Mission HemoPro Hemoglobin', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Mission-HemoPro-Hemoglobin.png' },
-			{ id: 7, name: 'On Call Extra', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/On-Call-Extra.png' },
-			{ id: 8, name: 'Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Q8 Pro.png' },
-			{ id: 9, name: 'Sinocare iCare 2100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/sinocare-icare-2100.png' },
-			{ id: 10, name: 'Smart Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/poct/Smart-Pro.png' }
+			{ id: 1, name: 'Troponin I Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Troponin%20I%20Rapid%20Test.png' },
+			{ id: 2, name: 'HIV Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HIV%20Rapid%20Test.png ' },
+			{ id: 3, name: 'HCV Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HCV%20Rapid%20Test.png' },
+			{ id: 4, name: 'Malaria Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Malaria%20Rapid%20Test.png' },
+			{ id: 5, name: 'hCG Pregnancy', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/hCG%20Pregnancy.png' },
+			{ id: 6, name: 'HBsAg Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HBsAg%20Rapid%20Test.png' },
+			{ id: 7, name: 'SARS CoV-2 Antigen Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SARS-CoV-2-Antigen-Rapid-Test.png' },
+			{ id: 8, name: 'Syphilis Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Syphilis%20Rapid%20Test.png' },
+			{ id: 9, name: 'FOB Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/FOB%20Rapid%20Test.png' },
+			{ id: 10, name: 'H. pylori Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/H.%20pylori%20Rapid%20Test.png' }
+		];
+
+		// Tulip Diagnostic (P) LTD. products (unique ids)
+		const tulipData = [
+			{ id: 1, name: 'DENGUCHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png' },
+			{ id: 2, name: 'SYPHICHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SYPHICHECK.png' },
+			{ id: 3, name: 'DENGUCHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png' },
+			{ id: 4, name: 'Rhelax-ASO', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-ASO.png' },
+			{ id: 5, name: 'Rhelax-CRP', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-CRP.png' },
+			{ id: 6, name: 'Rhelax-RF', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-RF.png' }
 		];
 
 		setProducts(productData);
+		setTulipProducts(tulipData);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
+			...productData.map((p: any) => p.image),
+			...tulipData.map((p: any) => p.image)
 		];
-		
+    
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -273,9 +285,9 @@ export default function Poct() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
-				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="poct-particles" />
-					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+				<div className="absolute inset-0 w-full h-full z-0">
+					<ParticlesBackground containerId="rapid-testkits-particles" />
+					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" />
 				</div>
 
 				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
@@ -290,7 +302,7 @@ export default function Poct() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							POCT
+							Rapid Test Kits
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
@@ -304,7 +316,7 @@ export default function Poct() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							Advanced poct systems and equipment for comprehensive laboratory diagnostics
+							Comprehensive range of rapid test kits for quick and reliable diagnostics in various settings.
 						</motion.p>
 					</motion.div>
 
@@ -339,11 +351,22 @@ export default function Poct() {
 						/>
 					</div>
 				) : (
-					<CategorySection
-						category={category}
-						products={products}
-						onViewDetails={handleViewDetails}
-					/>
+					<>
+						<CategorySection
+							category={category}
+							products={products}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'tulip-diagnostic',
+								title: 'Tulip Diagnostic (P) LTD.',
+								description: 'Rapid test kits from Tulip Diagnostic (P) LTD. for specialized diagnostics.'
+							}}
+							products={tulipProducts}
+							onViewDetails={handleViewDetails}
+						/>
+					</>
 				)}
 			</div>
 
@@ -360,7 +383,7 @@ export default function Poct() {
 						Ready to Upgrade Your Laboratory?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect poct solution for your laboratory needs.
+						Our team of specialists is ready to help you find the perfect molecular diagnostics solution for your laboratory needs.
 					</p>
 					<motion.a
 						href="/user/contact"

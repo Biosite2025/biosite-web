@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.
+							{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional immunology equipment engineered for precision and reliability.
+					{product.description ? product.description : 'Professional immunology equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,14 +201,62 @@ export default function Immunology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Snibe Maglumi 800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-800.jpg' },
-			{ id: 2, name: 'Snibe Maglumi X3', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x3.png' },
-			{ id: 3, name: 'Snibe Maglumi X8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x8.png' },
-			{ id: 4, name: 'Tosoh AIA-360', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-360.png' },
-			{ id: 5, name: 'Tosoh AIA-900', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-900.png' },
-			{ id: 6, name: 'Tosoh AIA-2000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-2000.png' },
-			{ id: 7, name: 'Tosoh AIA-CL300', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-CL300.png' }
+			{
+				id: 1,
+				name: 'Snibe Maglumi 800',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-800.jpg',
+				description: "As one of the world's smallest fully automated chemiluminescence immunoassay analyzers, the MAGLUMI 800 integrates a large capacity and high speed analysis into a compact design, achieving the perfect balance between size and performance in immunological testing."
+			},
+			{
+				id: 2,
+				name: 'Snibe Maglumi X3',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x3.png',
+				description: "Small but powerful, the throughput is up to 200 tests/hour, and throughput per unit area is 294 T/h/m². Compatible with all MAGLUMI® reagents, one of the broadest automated CLIA test menus in the world (166 parameters). The latest intelligent washing technology and bidirectional temperature control measurement guarantee accurate and reliable results. The comprehensive advanced design of MAGLUMI® X3 ensures excellent performance. Single reaction cup can avoid light pollution and increase cuvette utilization, its integrated packaging can avoid the stuck of the cuvette and destroying the cuvette wall. No-pause loading/unloading of reagents/samples without waiting or interrupting tests."
+			},
+			{
+				id: 3,
+				name: 'Snibe Maglumi X8',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x8.png',
+				description: "ABEI Labelling Technology: MAGLUMI® system applies ABEI labels. ABEI is a non-enzyme small molecule with special molecular formula to enhance stability in acid and alkaline solutions. The chemical reaction process of ABEI with sodium hydroxide (NaOH) and hyperoxide (H2O2) finishes in 3 seconds. Magnetic Microbeads Separation Technology: MAGLUMI® uses Magnetic Microbeads. As a separation technology, it has been widely used in the field of CLIA. Compared with traditional separation technologies, it has the following advantages: Shortening the reaction time by enlarging the reaction area of antigens and antibodies; Enhancing the sensitivity by better and faster capturing of antigens and antibodies; Reducing inter or intra-assay discrepancies significantly by mixing the reagents thoroughly in a liquid separation platform."
+			},
+			{
+				id: 4,
+				name: 'Tosoh AIA-360',	
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-360.png',
+				description: "The Tosoh AIA-360's size and affordability make it an excellent fit for POLs and small hospitals, as well as for specialty testing or for use as a back-up analyzer."
+			},
+			{
+				id: 5,
+				name: 'Tosoh AIA-900',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-900.png',
+				description: "Tosoh Bioscience's AIA-900 is the new generation stand alone, flexible and fully scalable high throughput immunoassay analyzer."
+			},
+			{
+				id: 6,
+				name: 'Tosoh AIA-2000',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-2000.png',
+				description: "AIA-2000 is a fully automated immunoassay analyzer has become the new global standard for speed and reliability amongst fully featured immunoassay analyzers. Equipped with a complete line of test menu, the user can load up to 960 tests (48 trays x 20 tests) in a new, easy-to-load hybrid sort; increasing walkaway time to approximately 4 hours."
+			},
+			{
+				id: 7,
+				name: 'Tosoh AIA-CL300',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-CL300.png',
+				description: "AIA-CL300 utilises the unique CL-AIA Pack twin cup format. With a throughput of up to 30 results per hour, first result within 15 minutes for most assays, this innovative desktop automated analyzer meets the needs from small to large laboratories, to perform routine analysis, esoteric assays, and up to 30 results per hour. Users who experience the unique technology of the AIA-CL series which have already made their proof in terms of ease of use, reliability, and analytical performance."
+			},
+			{
+				id: 8,
+				name: 'LIAISON® XS',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XS.png',
+				description: "A fully automated, easy-to-use benchtop analyzer. Maximize productivity with optimal cost management, no daily maintenance, straightforward integration, and the same capabilities as Diasorin’s high-throughput analyzers."
+			},
+			{
+				id: 9,
+				name: 'LIAISON® XL',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XL.png',
+				description: "Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation."
+			}
 		];
+		
 
 		setProducts(productData);
 		setLoading(false);
@@ -266,17 +314,8 @@ export default function Immunology() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Immunology Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">

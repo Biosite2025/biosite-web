@@ -12,7 +12,7 @@ import Preloader from '@/src/components/layout/Preloader';
 const categories = [
   {
     id: 'upright',
-    title: 'Upright Microscopes',
+    title: 'Microscopes',
     description: 'Precision optical systems for research, clinical, and industrial applications',
     folder: 'upright microscopes',
   },
@@ -294,15 +294,8 @@ export default function NikonMicroscopes() {
 				>
 					{/* Background Image */}
 					<div className="absolute inset-0 w-full h-full z-0">
-						<Image
-							src="/asset/nikon microscopes/nikonbackground.jpg"
-							alt="Nikon Background"
-							fill
-							className="object-cover w-full h-full"
-							priority={true}
-						/>
-						{/* Yellow overlay with low opacity */}
-						<div className="absolute inset-0 w-full h-full bg-yellow-300" style={{ opacity: 0.4, zIndex: 1 }} />
+						{/* Background Gradient */}
+						<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 					</div>
 					{/* Particles Background Animation */}
 					<div className="absolute inset-0 w-full h-full z-10">
@@ -316,35 +309,23 @@ export default function NikonMicroscopes() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<motion.div
-						initial={{ scale: 0.9, opacity: 0, y: 40 }}
-						animate={{ scale: 1.15, opacity: 1, y: 0 }}
-						transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-						className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
-						>
-						<Image
-							src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png"
-							alt="Nikon Logo"
-							width={500}
-							height={320}
-							className="object-contain drop-shadow-xl max-[912px]:w-64 max-[912px]:h-auto"
-							priority
-							/>
-						</motion.div>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
+						{/* Decorative line above title removed as requested */}
+						<motion.h1
 							initial={{ opacity: 0, y: 30 }}
 							animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-					>
-						Explore Nikon&apos;s cutting-edge microscopy solutions engineered for precision and performance
-					</motion.p>
+							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+							className="text-4xl sm:text-5xl md:text-6xl font-bold text-white max-w-4xl mx-auto mb-4 sm:mb-6 md:mb-8 drop-shadow-lg max-[912px]:text-2xl max-[912px]:mb-4 max-[912px]:px-2"
+						>
+						Microscopes
+						</motion.h1>
+						<motion.p	
+							initial={{ opacity: 0, y: 30 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 1, delay: 1.2, type: 'spring', stiffness: 60 }}
+							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+						>
+						Discover our range of advanced microscopes designed for research, clinical, and industrial applications. Experience precision optics, innovative features, and reliable performance for all your microscopy needs.
+						</motion.p>
 					</motion.div>
 
 					{/* Scroll Indicator - moved below paragraph */}

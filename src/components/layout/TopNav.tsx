@@ -227,7 +227,7 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/rapid-testkit" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Rapid Test Kits
                             </Link>
                           </li>
@@ -281,9 +281,9 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Fuji Synapse PACS for Digital Pathology
-                            </Link>
+                            </span>
                           </li>
                         </ul>
                       </div>
@@ -295,7 +295,7 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/microscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Microscopes
                             </Link>
                           </li>
@@ -330,9 +330,9 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Sterilizer & Autoclave
-                            </Link>
+                            </span>
                           </li>
                           <li>
                             <Link href="/user/products/components/lab-equipment" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
@@ -364,9 +364,9 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               OB Gyn Equipments
-                            </Link>
+                            </span>
                           </li>
                           <li>
                             <Link href="/user/products/components/gastro-endo" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
@@ -374,24 +374,24 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Anesthesia Equipments
-                            </Link>
+                            </span>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Autoclave, Plasma Sterilizers, Washers
-                            </Link>
+                            </span>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Neonatal Intensive Care Products (NICU)
-                            </Link>
+                            </span>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Hospital Medical Furnitures
-                            </Link>
+                            </span>
                           </li>
                         </ul>
                       </div>
@@ -413,19 +413,19 @@ export function TopNav() {
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/hospital-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hospital Disposables
                             </Link>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Histopathology Chemicals & Consumables
-                            </Link>
+                            </span>
                           </li>
                           <li>
-                            <Link href="#" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Surgical Disposables
-                            </Link>
+                            </span>
                           </li>
                         </ul>
                       </div>

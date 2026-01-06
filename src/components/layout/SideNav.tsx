@@ -121,7 +121,7 @@ export function SideNav() {
 				{ name: "Clinical Microscopy", href: "/user/products/components/clinical-microscopy" },
 				{ name: "Hematology", href: "/user/products/components/hematology" },
 				{ name: "Molecular Diagnostics", href: "/user/products/components/molecular-diagnostics" },
-				{ name: "Rapid Test Kits", href: "#" }
+				{ name: "Rapid Test Kits", href: "/user/products/components/rapid-testkit" }
 			]
 		},
 		histopathology: {
@@ -141,7 +141,7 @@ export function SideNav() {
 		generalLab: {
 			title: "III. General Lab Equipments",
 			items: [
-				{ name: "Microscopes", href: "#" },
+				{ name: "Microscopes", href: "/user/products/components/microscopes" },
 				{ name: "Centrifuges", href: "/user/products/components/centrifuges" },
 				{ name: "Pipettors", href: "/user/products/components/pipettors" },
 				{ name: "Biorefrigerators", href: "/user/products/components/biorefrigerators" },
@@ -171,7 +171,7 @@ export function SideNav() {
 			items: [
 				{ name: "Laboratory Equipements", href: "/user/products/components/laboratory-equipements" },
 				{ name: "Laboratory Disposables", href: "/user/products/components/laboratory-disposables" },
-				{ name: "Hospital Disposables", href: "#" },
+				{ name: "Hospital Disposables", href: "/user/products/components/hospital-disposables" },
 				{ name: "Histopathology Chemicals & Consumables", href: "#" },
 				{ name: "Surgical Disposables", href: "#" }
 			]
@@ -342,16 +342,25 @@ export function SideNav() {
 																			className="overflow-hidden"
 																		>
 																			<div className="ml-4 space-y-1 py-1">
-																				{category.items.map((item, index) => (
-																					<Link
-																						key={index}
-																						href={item.href}
-																						className="block py-2 px-3 text-xs text-gray-600 hover:text-[#2B3990] hover:bg-[#2B3990]/5 rounded-md transition-all duration-200 leading-relaxed"
-																						onClick={closeSideNav}
-																					>
-																						{item.name}
-																					</Link>
-																				))}
+																				 {category.items.map((item, index) => (
+																					 item.href === "#" ? (
+																						 <span
+																							 key={index}
+																							 className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60 py-2 px-3 rounded-md leading-relaxed"
+																						 >
+																							 {item.name}
+																						 </span>
+																					 ) : (
+																						 <Link
+																							 key={index}
+																							 href={item.href}
+																							 className="block py-2 px-3 text-xs text-gray-600 hover:text-[#2B3990] hover:bg-[#2B3990]/5 rounded-md transition-all duration-200 leading-relaxed"
+																							 onClick={closeSideNav}
+																						 >
+																							 {item.name}
+																						 </Link>
+																					 )
+																				 ))}
 																			</div>
 																		</motion.div>
 																	)}

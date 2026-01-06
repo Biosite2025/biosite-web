@@ -203,7 +203,11 @@ export default function BloodBank() {
 		const productData = [
 			{ id: 1, name: 'Centron SE260', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se260.png' },
 			{ id: 2, name: 'Matrix Automax 80', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png' },
-			{ id: 3, name: 'Tulip HbChek', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png' }
+			{ id: 3, name: 'Tulip HbChek', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png' },
+			{ id: 4, name: 'CENTRON SE730', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se730.png' },
+			{ id: 5, name: 'AutoMini 40', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/AutoMini-40.png' },
+			{ id: 6, name: 'CC 2400', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CC-2400.png' }
+	
 		];
 
 		setProducts(productData);
@@ -262,17 +266,8 @@ export default function BloodBank() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Blood Bank Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">

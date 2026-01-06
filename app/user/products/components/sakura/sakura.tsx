@@ -85,27 +85,15 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 							&times;
 						</button>
 						<div className="relative w-full h-48 sm:h-60 md:h-80 mb-3 sm:mb-4 md:mb-6 flex items-center justify-center max-[912px]:h-40">
-							<Tilt
-								glareEnable={true}
-								glareMaxOpacity={0.35}
-								glareColor="#ffffff"
-								glarePosition="all"
-								scale={1.08}
-								tiltMaxAngleX={20}
-								tiltMaxAngleY={20}
-								style={{ width: '100%', height: '100%', background: 'none', perspective: 1200 }}
-								className="flex items-center justify-center"
-							>
-								<div className="relative w-full h-full">
-									<Image
-										src={product.image}
-										alt={product.name}
-										fill
-										className="object-contain drop-shadow-2xl"
-										style={{ background: 'none' }}
-									/>
-								</div>
-							</Tilt>
+							<div className="relative w-full h-full">
+								<Image
+									src={product.image}
+									alt={product.name}
+									fill
+									className="object-contain drop-shadow-2xl"
+									style={{ background: 'none' }}
+								/>
+							</div>
 						</div>
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-gray-700 text-sm sm:text-base max-[912px]:text-sm">
@@ -247,32 +235,32 @@ export default function NikonMicroscopes() {
   useEffect(() => {
     // Sakura product data with accurate descriptions from official PDF catalog
     const productData: any = {
-      'Coverslipping': [
-        { id: 1, name: 'Tissue-Tek Film', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Film.jpg', description: 'The Tissue-Tek Film is a specialized coverslipping solution designed for automated and manual applications in histology and cytology laboratories, providing optimal specimen protection and clarity for microscopic examination with superior adhesion properties and consistent film thickness for reliable diagnostic results.' },
-      ],
-      'Cryotomy': [
-        { id: 2, name: 'Tissue-Tek Polar', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Polar.jpg', description: 'The Tissue-Tek Polar is a state-of-the-art cryo-embedding center featuring advanced Peltier cooling technology with precise temperature control ranging from -20°C to -60°C, specifically engineered for rapid freezing and optimal preservation of tissue morphology during frozen section preparation in surgical pathology and research applications.' },
-      ],
-      'Cytology': [
-        { id: 3, name: 'Cyto-Tek 2500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/sakura-cyto-tek-2500.png', description: 'The Cyto-Tek 2500 is a high-performance cytocentrifuge system that delivers exceptional cell concentration and preservation through controlled centrifugal force, creating uniform monolayers of cells on slides with minimal cell distortion, making it ideal for gynecological, respiratory, and body fluid cytology specimens in diagnostic laboratories.' },
-      ],
-      'Embedding': [
-        { id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20AutoTEC%20a120.jpg', description: 'The Tissue-Tek AutoTEC a120 is a fully automated embedding center featuring advanced robotics with 120-cassette capacity, intelligent barcode tracking, and programmable embedding protocols that streamline high-volume histology workflows while ensuring consistent specimen orientation and optimal tissue infiltration for superior sectioning quality and laboratory efficiency.' },
-        { id: 5, name: 'Tissue-Tek TEC 6', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20TEC6.jpg', description: 'The Tissue-Tek TEC 6 is an advanced tissue embedding console designed with an ergonomic cold spot workstation, six-position paraffin reservoir with independent temperature control, integrated heated forceps, and illuminated work surface that enables precision embedding with reduced turnaround time while maintaining optimal tissue quality and operator comfort during extended workflows.' },
-        { id: 12, name: 'Floating Bath', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/floating-bath.png', description: 'The Floating Bath is an essential histology workstation accessory featuring precise temperature control and uniform heat distribution for optimal tissue section flattening and mounting, with adjustable water level and ergonomic design that facilitates smooth slide preparation workflow and ensures consistent high-quality results in routine histopathology applications.' },
-      ],
-      'Microtomy': [
-        { id: 6, name: 'Accu-Cut SRM 200', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/sakura-accu-cut-srm-200.png', description: 'The Accu-Cut SRM 200 is a precision rotary microtome featuring advanced blade holder technology, universal cassette clamp, and micrometer feed with section thickness range from 0.5 to 60 micrometers in 0.5-micron increments, delivering exceptional sectioning consistency and reliability for routine and specialized histopathology applications with minimal specimen waste and superior section quality.' },
-        { id: 7, name: 'Tissue-Tek Autosection', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Autosection.jpg', description: 'The Tissue-Tek Autosection is an advanced automated rotary microtome with motorized sectioning, programmable cutting speeds, and automatic retraction system that enhances laboratory productivity by delivering consistent high-quality sections while reducing operator fatigue and repetitive strain injuries, ideal for high-throughput laboratories requiring standardized sectioning protocols.' },
-        { id: 8, name: 'Tissue-Tek Sledge IVS 410', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek®%20Sledge%20Microtome%20IVS-410.jpg', description: 'The Tissue-Tek Sledge Microtome IVS 410 is a heavy-duty precision instrument designed for sectioning large, hard, or undecalcified specimens including whole organs, bone, teeth, and implants with section thickness ranging from 1 to 60 micrometers, featuring a robust mechanical design, large specimen capacity, and stable cutting action essential for specialized applications in pathology, research, and forensic laboratories.' },
-        { id: 9, name: 'Tissue-Tek Slide Warmer', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek®%20Slide%20Warmer%20PS-53.jpg', description: 'The Tissue-Tek Slide Warmer PS-53 is a digital slide warming platform with precise microprocessor-controlled temperature regulation from 35°C to 70°C, featuring uniform heat distribution across the entire work surface, ensuring optimal tissue section adhesion and flattening while preventing tissue damage or antigen degradation, essential for immunohistochemistry and special staining procedures.' },
-      ], 
-      'Tissue Processing': [      
-        { id: 10, name: 'Tissue-Tek VIP 6 AI', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20VIP-6-AI.jpg', description: 'The Tissue-Tek VIP 6 AI is an advanced vacuum infiltration processor featuring artificial intelligence-powered protocol optimization, dual retort technology with independent vacuum and pressure control, and RFID reagent tracking that delivers superior tissue infiltration with reduced processing time from 12 hours to as little as 90 minutes, while maintaining exceptional tissue quality and minimizing reagent consumption for cost-effective high-volume laboratory operations.' },
-        { id: 11, name: 'Tissue-Tek Xpress x120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Xpress%20x120.jpg', description: 'The Tissue-Tek Xpress x120 is a rapid tissue processor with 120-cassette capacity utilizing innovative microwave-assisted vacuum infiltration technology that accelerates tissue processing to complete cycles in as little as 90 minutes without compromising morphology or staining quality, featuring touchscreen control, automated reagent management, and programmable protocols ideal for urgent biopsies, small specimens, and high-priority cases requiring same-day diagnosis.' },
-        { id: 13, name: 'Histo-Tek VP1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/histo-tek-vp1.png', description: 'The Histo-Tek VP1 is a compact vacuum infiltration tissue processor designed for small to medium-volume laboratories, featuring advanced vacuum and pressure cycles that ensure thorough tissue infiltration while maintaining excellent morphological preservation, with user-friendly programming interface and reliable performance for consistent diagnostic quality results.' },
-        { id: 14, name: 'Tissue-Tek Prisma Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Prisma%20Plus.png', description: 'The Tissue-Tek Prisma Plus is an advanced automated stainer featuring intelligent reagent management, precise temperature control, and programmable protocols that deliver consistent, reproducible staining results for H&E and special stains, with touchscreen interface and comprehensive quality control features that enhance laboratory efficiency and diagnostic accuracy in high-throughput histopathology workflows.' },
-      ],
+			'Coverslipping': [
+				{ id: 1, name: 'Tissue-Tek Film', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Film.jpg', description: 'The Tissue-Tek Film® Automated Coverslipper is the fastest and only film coverslipper in the world capable of connecting to the Tissue-Tek Prisma® Plus Automated Slide Stainer to increase pathology laboratory productivity.' },
+			],
+			'Cryotomy': [
+				{ id: 2, name: 'Tissue-Tek Polar', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Polar.jpg', description: 'The Tissue-Tek® Polar® is an instrument to freeze and section tissues and prepare sections. The Polar provides a unique draft generator to minimize release of contaminated air to the outside of the chamber, in addition to the ozone disinfection cycle and vacuum debris removal system – Complete infection control features protect laboratory staff.' },
+			],
+			'Cytology': [
+				{ id: 3, name: 'Cyto-Tek 2500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/sakura-cyto-tek-2500.png', description: 'The Cyto-Tek® 2500 Cytocentrifuge provides optimal cell recovery and advanced preservation of cellular structure in non-gynecological monolayer slide preparations. This cytocentrifuge offers excellent preservation of cellular structure and consistently delivers a high rate of cellular recovery. With its patented pad acceleration feature, the cytocentrifuge automatically increases and decreases the rotational velocity based on the selected speed, which protects fragile cells and results in higher cellular yield.' },
+			],
+			'Embedding': [
+				{ id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20AutoTEC%20a120.jpg', description: 'Advanced automated tissue embedding center featuring 120-cassette capacity with RFID tracking, intelligent workflow management, automated paraffin dispensing with precision volume control, multiple temperature-controlled embedding zones, integrated cold plate stations, and touchscreen interface that streamlines high-volume tissue embedding operations while ensuring optimal specimen orientation and consistent embedding quality for busy histopathology laboratories with enhanced productivity and reduced turnaround time.' },
+				{ id: 5, name: 'Tissue-Tek TEC 6', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20TEC6.jpg', description: 'Compact 6-position tissue embedding console featuring heated paraffin dispenser with adjustable temperature control, cold plate work surface for rapid specimen cooling and solidification, ergonomic design with intuitive controls, multiple paraffin reservoir positions, and efficient thermal management system that provides reliable, high-quality tissue embedding for routine histopathology workflows in medium-throughput laboratories with consistent results and operator comfort.' },
+				{ id: 12, name: 'Floating Bath', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/floating-bath.png', description: 'Has variable temperature control up to 80°C. Inner surface and dry edges are aluminum lacquered matt black of the temperature with an overheat protection at 90°C. The temperature and settings are displayed on the LCD screen.' },
+			],
+			'Microtomy': [
+				{ id: 6, name: 'Accu-Cut SRM 200', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/sakura-accu-cut-srm-200.png', description: 'Precision rotary microtome featuring robust mechanical design with section thickness range from 0.5 to 60 micrometers in precise increments, universal specimen holder with quick-change capability, smooth handwheel operation with low-resistance sectioning, retraction mechanism to prevent specimen damage, and ergonomic design that delivers consistent, high-quality sections of paraffin-embedded tissues for routine histopathology applications with exceptional reliability and cutting performance in diagnostic laboratories.' },
+				{ id: 7, name: 'Tissue-Tek Autosection', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Autosection.jpg', description: 'Provides one-touch trimming and programmable sectioning with a host of built-in safety features. AutoSection automatically orients the block to the blade edge, using patented sensing and automated 3D specimen holder technology for precise XYZ orientation.' },
+				{ id: 8, name: 'Tissue-Tek Sledge IVS 410', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek®%20Sledge%20Microtome%20IVS-410.jpg', description: 'Heavy-duty sledge microtome designed for large specimen sectioning featuring motorized specimen advance with precise thickness control, robust construction for cutting hard tissues, bone, and undecalcified specimens, wide sectioning capacity up to 410mm, adjustable cutting angle, and reliable mechanical drive system that enables high-quality sectioning of challenging specimens including large tissue blocks, whole organs, and research samples with superior cutting performance and durability for specialized histopathology and research applications.' },
+				{ id: 9, name: 'Tissue-Tek Slide Warmer', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek®%20Slide%20Warmer%20PS-53.jpg', description: 'Digital slide warming plate featuring precise temperature control from ambient to 80°C with digital display, uniform heat distribution across the warming surface, large capacity for multiple slides, adjustable temperature settings for optimal section adhesion, and safety features including overheat protection that ensures reliable slide drying and section adhesion for routine H&E staining and special staining procedures in histopathology laboratories with consistent results and energy efficiency.' },
+			], 
+			'Tissue Processing': [      
+				{ id: 10, name: 'Tissue-Tek VIP 6 AI', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20VIP-6-AI.jpg', description: 'Tissue-Tek VIP® 6 AI Vacuum Infiltration Processor continues with Sakura Finetek reliability and innovation to provide the first and only tissue processor with automated onboard preparation of mixed solutions, automatic in-process reagent exchange, and Tissue-Tek® iSupport™ remote monitoring, which allows for safe, high-quality processing while saving time.' },
+				{ id: 11, name: 'Tissue-Tek Xpress x120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Xpress%20x120.jpg', description: 'The Tissue-Tek Xpress® x120 is a standardized, turnkey solution combining hardware and processing reagents for true rapid, continuous tissue processing beyond the scope of just small biopsies. This innovative technology is the first to deliver rapid, standardized processing over a full range of tissue types, allowing slides to make their way to the pathologist faster than ever. The Standard Program provides high-quality tissue processing in approximately 1 hour for biopsies and tissues 2 mm or less in thickness. The Extended program rapidly processes thicker tissues of 3 mm or greater in an amazing 2 hours, saving up to 5.5 hours versus conventional processing.' },
+				{ id: 13, name: 'Histo-Tek VP1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/histo-tek-vp1.png', description: 'Histo-Tek® VPI is an instrument that performs automatic processing in an enclosed single processing chamber to run the cycle of fixation, dehydration, defatting and paraffin infiltration of tissue specimens. The Histo-Tek VPI makes use of Sakura’s know-how to give users high quality tissue processing simply and safely.' },
+				{ id: 14, name: 'Tissue-Tek Prisma Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20Prisma%20Plus.png', description: 'The Tissue-Tek Prisma® Plus Automated Slide Stainer remains the highest throughput tissue stainer with up to 530 slides per hour while still producing consistent high quality slides, thanks to the new intelligent scheduler.' },
+			],
     };
 
     setProducts(productData);

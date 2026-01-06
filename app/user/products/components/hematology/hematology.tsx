@@ -202,7 +202,10 @@ export default function Hematology() {
 		// Product data based on CSV
 		const productData = [
 			{ id: 1, name: 'Dymind DF-55', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/dymind-df-55.png' },
-			{ id: 2, name: 'Genrui KT-60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png' }
+			{ id: 2, name: 'Genrui KT-60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png' },
+			{ id: 3, name: 'Z52', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/Z52.png' },
+			{ id: 4, name: 'KT-8000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/KT-8000.png' },
+			{ id: 5, name: 'EXC 8010', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/EXC%208010.png' },
 		];
 
 		setProducts(productData);
@@ -261,17 +264,8 @@ export default function Hematology() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Hematology Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">

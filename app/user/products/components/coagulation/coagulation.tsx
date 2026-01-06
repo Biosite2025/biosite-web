@@ -10,7 +10,7 @@ import Preloader from '@/src/components/layout/Preloader';
 // Product category
 const category = {
 	id: 'coagulation',
-	title: 'Coagulation',
+	title: 'Coagulation & Hemostasis',
 	description: 'Advanced coagulation systems and equipment for comprehensive laboratory diagnostics',
 	folder: 'coagulation',
 };
@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in coagulation applications.
+							{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in coagulation applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional coagulation equipment engineered for precision and reliability.
+					{product.description ? product.description : 'Professional coagulation equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,10 +201,30 @@ export default function Coagulation() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'ACL Elite Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-elite-pro.png' },
-			{ id: 2, name: 'ACL Top 350', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-top-350.png' },
-			{ id: 3, name: 'ACL TOP 550', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 550.png' },
-			{ id: 4, name: 'ACL TOP 750', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 750.png' }
+			{
+				id: 1,
+				name: 'ACL Elite Pro',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-elite-pro.png',
+				description: 'Compact, easy-to-use haemostasis systems designed to help small to mid-volume haemostasis labs maximize productivity and improve patient care.'
+			},
+			{
+				id: 2,
+				name: 'ACL Top 350',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/acl-top-350.png',
+				description: 'Offers operational efficiency and quality; continuous operation; simple maintenance; fast turnaround time for results (PT results in 3 minutes or less) for routine or special testing.'
+			},
+			{
+				id: 3,
+				name: 'ACL TOP 550',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 550.png',
+				description: 'Superior functionality at the right size. Highly automated testing in routine mid- to high-volume and specialty labs.'
+			},
+			{
+				id: 4,
+				name: 'ACL TOP 750',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 750.png',
+				description: 'Runs more tests in less time; user-friendly and high throughput for routine analysis in the labs with the heaviest work loads.'
+			}
 		];
 
 		setProducts(productData);
@@ -263,17 +283,8 @@ export default function Coagulation() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Coagulation Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
@@ -293,7 +304,7 @@ export default function Coagulation() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Coagulation
+							Coagulation & Hemostasis
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}

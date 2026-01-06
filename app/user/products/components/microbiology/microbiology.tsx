@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in microbiology applications.
+							{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in microbiology applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional microbiology equipment engineered for precision and reliability.
+					{product.description || 'Professional microbiology equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,12 +201,13 @@ export default function Microbiology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Autobio AutoMic i600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-automic-i600.png' },
-			{ id: 2, name: 'Autobio BC120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc120.png' },
-			{ id: 3, name: 'Autobio BC60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc601.png' },
-			{ id: 4, name: 'Autobes BCX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobes bcx.png' },
-			{ id: 5, name: 'Autof MS1000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/Autof-ms1000.jpg' },
-			{ id: 6, name: 'BC120 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/BC120 Plus.jpg' }
+			{ id: 1, name: 'Autobio AutoMic i600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-automic-i600.png', description: 'Automated microorganism identification and antimicrobial susceptibility testing analyzer AutoMic-i600 can quickly and accurately identify microorganisms by biochemical and detect antibiotic sensitivity in vitro. The identification results of the bacteria were determined by comparing with the database about biochemical reaction, such as the carbon source utilization, enzyme activity and antibiotic resistance of the bacteria.' },
+			{ id: 2, name: 'Autobio BC120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc120.png', description: 'An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design.' },
+			{ id: 3, name: 'Autobio BC60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc601.png', description: 'The Automated BC60 Blood Culture system adopts automatic advanced non-invasive and visualization technology with a unique optical detection system which realizes full automation of blood culture testing for up to 60 samples per pod. Its stable temperature control system and reliable vibrating model greatly shortens the detection time of positive results and reduces the false positive rate.' },
+			{ id: 4, name: 'Autobes BCX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobes bcx.png', description: 'An automated blood culture system designed for continuous incubation and rapid detection of microbial growth in blood samples, supporting faster diagnosis of bloodstream infections.' },
+			{ id: 5, name: 'Autof MS1000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/Autof-ms1000.jpg', description: 'The Autof MS1000 is a Matrix Assisted Laser Desorption Ionisation–Time of Flight mass spectrometry microbial identification system. MALDI’s purpose is to fire a laser on to the co-crystallisation film formed by the target plate samples and matrix. The TOF principle is to accelerate the ions under a uniform electric field, meaning the differences in acceleration are based on the different masses of the ions (they all carry the same charge), and then to plot them on a graph with mass to charge ratio (m/z) on the x-axis and relative abundance or intensity on the y axis.' },
+			{ id: 6, name: 'BC120 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/BC120 Plus.jpg', description: 'An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design.' },
+			{ id: 7, name: 'AutoStreak S1800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/AutoStreak%20S1800.png', description: 'An automated microbial sample pretreatment and streaking system that standardizes inoculation, improves bacterial isolation, and increases laboratory efficiency while enhancing biosafety.' }
 		];
 
 		setProducts(productData);
@@ -265,17 +266,8 @@ export default function Microbiology() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Microbiology Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">

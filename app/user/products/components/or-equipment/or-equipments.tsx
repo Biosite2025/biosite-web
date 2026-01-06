@@ -203,7 +203,10 @@ export default function OREquipments() {
     // Product data for OR Equipments (placeholder, update with real products as needed)
     const productData = [
       { id: 1, name: 'iSE Series – Electrocardiograph (ECG)', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/iSE Series.png', description: 'Precision surgical table designed for optimal patient positioning and surgical access.' },
-     ];
+      { id: 2, name: 'ELUXEO 700 System', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/ELUXEO%20700%20System.png', description: 'Precision surgical table designed for optimal patient positioning and surgical access.' },
+      { id: 3, name: '4K Laparoscopy System', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/4K%20Laparoscopy%20System.png', description: 'High-intensity, shadow-free surgical lights for clear visibility during procedures.' },
+    
+    ];
 
     setProducts(productData);
     setLoading(false);
@@ -261,17 +264,8 @@ export default function OREquipments() {
         transition={{ duration: 1 }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
       >
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <Image
-            src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-            alt="Medical Diagnostic Imaging Background"
-            fill
-            className="object-cover w-full h-full"
-            priority={true}
-          />
-          <div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-        </div>
+        {/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
         {/* Particles Background Animation */}
         <div className="absolute inset-0 w-full h-full z-10">

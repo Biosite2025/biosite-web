@@ -9,10 +9,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-	id: 'hipette',
-	title: 'HIPETTE',
-	description: 'Advanced hipette systems and equipment for comprehensive laboratory diagnostics',
-	folder: 'hipette',
+	id: 'hospital-disposables',
+	title: 'Hospital Disposables',
+	description: 'Essential disposable products for hospital and healthcare environments, ensuring safety, hygiene, and infection control.',
+	folder: 'hospital-disposables',
 };
 
 // Modal component
@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in hipette applications.
+							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in molecular diagnostics applications.
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -112,11 +112,11 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base truncate">
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional hipette equipment engineered for precision and reliability.
+					Professional molecular diagnostics equipment engineered for precision and reliability.
 				</p>
 				
 				{/* View Details Button */}
@@ -191,7 +191,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 	);
 }
 
-export default function Hipette() {
+export default function HospitalDisposables() {
 	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -199,22 +199,24 @@ export default function Hipette() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on CSV
+		// Hospital Disposables product data
 		const productData = [
-			{ id: 1, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus.png' },
-			{ id: 2, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus1.png' },
-			{ id: 3, name: 'MicroPette Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/hipette/micropette-plus2.png' }
+			{ id: 1, name: 'Disposable Gloves', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Gloves.png', description: 'Latex, Vinyl, Nitrile, and Surgical Examination Gloves. Designed to prevent contamination and ensure safety for both patients and healthcare workers.' },
+			{ id: 2, name: 'PPE Coverall', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/PPE%20Coverall.png', description: 'Protects against light spray, liquid aerosol, and airborne particles. Used for infection control and hazardous environments.' },
+			{ id: 3, name: 'Clip Cap', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Clip%20Cap.png', description: 'Disposable cap for protection from foreign bodies and fluid, maintaining a cleanroom or sterile environment.' },
+			{ id: 4, name: 'Shoe Cover', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Shoe%20Cover.png', description: 'Disposable slip-on covers to prevent hazardous material from contacting the bottom of shoes.' },
+			{ id: 5, name: 'FFP2 NR Particulate Respirator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/FFP2%20NR%20Particulate%20Respirator.png', description: 'Filters particulates in the air, blocking droplets, blood, body fluids, and other contaminants.' },
+			{ id: 6, name: 'N95 Particulate Respirator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/N95%20Particulate%20Respirator.png', description: 'Prevents the spread of infectious materials. Durable and comfortable for long wear.' },
+			{ id: 7, name: 'Medical Face Mask', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Medical%20Face%20Mask.png', description: 'Medical-grade disposable mask for comfort and breathability. High filtration efficiency.' },
+			{ id: 8, name: 'Disposable Syringe', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Syringe.png', description: 'Disposable syringes have a body made of plastic and are of various sizes. A cover stays attached to the needle so that there are no chances of injury and it stays sterilized at the same time.' },
+			{ id: 9, name: 'Disposable Surgical Gown', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Surgical%20Gown.png', description: 'Sterile, single-use gown designed to protect healthcare professionals and patients from cross-contamination during surgical procedures.' }
 		];
 
 		setProducts(productData);
 		setLoading(false);
 
 		// Preload all images
-		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
-		];
-		
+		const allImages = productData.map((p: any) => p.image);
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -234,7 +236,6 @@ export default function Hipette() {
 				};
 			});
 		};
-
 		preloadImages();
 	}, []);
 
@@ -262,22 +263,13 @@ export default function Hipette() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="HIPETTE Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
-
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
+				
 				{/* Particles Background Animation */}
-				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="hipette-particles" />
-					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+				<div className="absolute inset-0 w-full h-full z-0">
+					<ParticlesBackground containerId="hospital-disposables-particles" />
+					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" />
 				</div>
 
 				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
@@ -292,7 +284,7 @@ export default function Hipette() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							HIPETTE
+							Hospital Disposables
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
@@ -306,7 +298,7 @@ export default function Hipette() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							Advanced hipette systems and equipment for comprehensive laboratory diagnostics
+							Essential disposable products for hospital and healthcare environments, ensuring safety, hygiene, and infection control.
 						</motion.p>
 					</motion.div>
 
@@ -359,10 +351,10 @@ export default function Hipette() {
 			>
 				<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-						Ready to Upgrade Your Laboratory?
+						Ready to Upgrade Your Hospital?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect hipette solution for your laboratory needs.
+						Our team of specialists is ready to help you find the perfect disposable solutions for your hospital or clinic.
 					</p>
 					<motion.a
 						href="/user/contact"

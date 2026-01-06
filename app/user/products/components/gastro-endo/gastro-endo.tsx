@@ -261,17 +261,8 @@ export default function GastroEndo() {
         transition={{ duration: 1 }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
       >
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <Image
-            src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-            alt="Medical Diagnostic Imaging Background"
-            fill
-            className="object-cover w-full h-full"
-            priority={true}
-          />
-          <div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-        </div>
+        {/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
         {/* Particles Background Animation */}
         <div className="absolute inset-0 w-full h-full z-10">

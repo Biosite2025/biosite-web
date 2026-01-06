@@ -206,6 +206,13 @@ export default function MedicalDiagnosticImaging() {
       { id: 2, name: 'Acclarix AX8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX8.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
       { id: 3, name: 'Acclarix AX9', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX9.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
       { id: 4, name: 'Nano C5 & L15', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Nano%20C5%20&%20L15.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
+      { id: 5, name: 'FCT iStream 128', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FCT%20iStream%20128.png', description: 'Premium ultrasound system for advanced diagnostic imaging.' },
+      { id: 6, name: 'Amulet Innovality', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Amulet%20Innovality.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
+      { id: 7, name: 'FDR Nano', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Nano.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
+      { id: 8, name: 'FDR Go Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Go%20Plus.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
+      { id: 9, name: 'FDR Smart X', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Smart%20X.png', description: 'High-performance portable ultrasound systems for versatile clinical applications.' },
+      { id: 10, name: 'Arietta 850', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Arietta%20850.png', description: 'Compact and lightweight ultrasound probes for point-of-care imaging.' },
+    
     ];
 
     setProducts(productData);
@@ -264,17 +271,8 @@ export default function MedicalDiagnosticImaging() {
         transition={{ duration: 1 }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
       >
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <Image
-            src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-            alt="Medical Diagnostic Imaging Background"
-            fill
-            className="object-cover w-full h-full"
-            priority={true}
-          />
-          <div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-        </div>
+        {/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
         {/* Particles Background Animation */}
         <div className="absolute inset-0 w-full h-full z-10">

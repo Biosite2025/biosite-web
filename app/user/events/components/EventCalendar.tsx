@@ -329,10 +329,15 @@ const EventCalendar: React.FC = () => {
 
   // Get event stats for all events (dynamically from database)
   const getEventStats = () => {
-    // Get unique categories from the events data
-    const uniqueCategories = Array.from(new Set(events.map(e => e.category)));
+    // Define all categories to always show
+    const allCategories: ('corporate' | 'outreach' | 'training' | 'conference')[] = [
+      'corporate',
+      'outreach',
+      'training',
+      'conference'
+    ];
     
-    return uniqueCategories.map(category => ({
+    return allCategories.map(category => ({
       category,
       count: events.filter(e => e.category === category).length,
       color: getCategoryColor(category)

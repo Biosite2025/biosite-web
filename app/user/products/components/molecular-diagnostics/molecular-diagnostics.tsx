@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in molecular diagnostics applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -105,7 +105,6 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					/>
 				</motion.div>
-				
 				{/* Hover overlay */}
 				<div className="absolute inset-0 bg-gradient-to-t from-[#2B3990]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 			</div>
@@ -116,9 +115,8 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional molecular diagnostics equipment engineered for precision and reliability.
+					{product.description}
 				</p>
-				
 				{/* View Details Button */}
 				<motion.button
 					whileHover={{ scale: 1.05 }}
@@ -137,7 +135,6 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					/>
 				</motion.button>
 			</div>
-
 			{/* Decorative corner accent */}
 			<div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-bl from-[#2B3990]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 max-[912px]:w-12 max-[912px]:h-12" />
 		</motion.div>
@@ -199,24 +196,105 @@ export default function MolecularDiagnostics() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on CSV
+		// Product data with image-based descriptions
 		const productData = [
-			{ id: 1, name: 'Genolution Nextractor NX-48s', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/genolution-nx48s.png' },
-			{ id: 2, name: 'Sansure Natch CS', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-natch-cs.png' },
-			{ id: 3, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-3000.png' },
-			{ id: 4, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-6000.png' },
-			{ id: 5, name: 'Sansure Slan 96P', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-slan-96p.png' },
-			{ id: 6, name: 'Sansure MA-6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-6000.png' },
-			{ id: 7, name: 'Sansure MA-1630Q', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-1630q.png' },
-			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-zip-96v.png' },
-			{ id: 9, name: 'Sansure iPonatic SQ31B', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq31b.png' },
-			{ id: 10, name: 'Sansure iPonatic SQ36A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq36a.png' },
-			// New products from asset folder
-			{ id: 11, name: 'Human Papillomavirus (HPV) Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png' },
-			{ id: 12, name: 'Mycobacterium Tuberculosis Nucleic Acid and Rifampicin Resistance Fluorescence Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png' },
-			{ id: 13, name: 'Natch CS3 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Natch CS3 Plus.png' },
-			{ id: 14, name: 'Novel Coronavirus (2019-nCoV) Nucleic Acid Diagnostic Kit', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png' },
-			{ id: 15, name: 'Nucleic Acid Test Kit for HBV HCV & HIV', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png' }
+			{
+				id: 1,
+				name: 'Genolution Nextractor NX-48s',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/genolution-nx48s.png',
+				description: 'Genolution Nextractor® NX-48S is automated system for rapid isolation of DNA and RNA from a variety of samples. Genolution Nextractor® NX-48S can extract nucleic acid from up to 48 samples at once, saving your valuable time and labor.'
+			},
+			{
+				id: 2,
+				name: 'Sansure Natch CS',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-natch-cs.png',
+				description: '' // No description in image, leave blank or add if available
+			},
+			{
+				id: 3,
+				name: 'Zybio EXM 3000',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-3000.png',
+				description: ''
+			},
+			{
+				id: 4,
+				name: 'Zybio EXM 6000',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-6000.png',
+				description: ''
+			},
+			{
+				id: 5,
+				name: 'Sansure Slan 96P',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-slan-96p.png',
+				description: ''
+			},
+			{
+				id: 6,
+				name: 'Sansure MA-6000',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-6000.png',
+				description: ''
+			},
+			{
+				id: 7,
+				name: 'Sansure MA-1630Q',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-1630q.png',
+				description: ''
+			},
+			{
+				id: 8,
+				name: 'Zybio ZIP-96V',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-zip-96v.png',
+				description: ''
+			},
+			{
+				id: 9,
+				name: 'Sansure iPonatic SQ31B',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq31b.png',
+				description: ''
+			},
+			{
+				id: 10,
+				name: 'Sansure iPonatic SQ36A',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq36a.png',
+				description: ''
+			},
+			{
+				id: 11,
+				name: 'Human Papillomavirus (HPV) Diagnostic Kit',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png',
+				description: 'Related products: • HPV 13+2 – Human Papillomavirus DNA Diagnostic Kit • HPV G16 – High-risk Human Papillomavirus DNA (Genotype) Diagnostic Kit • HPV 15HR – 15 High-risk Human Papillomavirus Nucleic Acid Diagnostic Kit • HPV 16, 18 – Human papillomavirus (Type 16 and 18) DNA Fluorescence Diagnostic Kit • HPV 6+11 – Human Papillomavirus (Type 6 and 11) DNA Fluorescence Diagnostic Kit • HPV G23 – Human Papillomavirus DNA (23 genotypes) Diagnostic Kit'
+			},
+			{
+				id: 12,
+				name: 'Mycobacterium Tuberculosis Nucleic Acid and Rifampicin Resistance Fluorescence Diagnostic Kit',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png',
+				description: 'Sansure Mycobacterium Tuberculosis and Rifampicin Resistance Nucleic Acid Diagnostic Kit (PCR-Fluorescence Probing) is a real-time polymerase chain reaction test kit intended for the qualitative detection of the nucleic acid of mycobacterium tuberculosis and rifampicin resistance mutations in human sputum samples. The test results can be used as an aid in the diagnosis of TB patients and patients with an increased risk of RFP drug-resistant TB, providing an accurate diagnosis basis for infected patients.'
+			},
+			{
+				id: 13,
+				name: 'Natch CS3 Plus',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Natch CS3 Plus.png',
+				description: 'Natch CS3 Plus is a fully automated nucleic acid extraction and amplification system developed by Sansure Biotech, featuring high-throughput, high-precision, high-efficiency and anti-contamination. The system can directly use normal sampling tubes and complete uncapping and recapping, liquid transfer, nucleic acid extraction and PCR set-up with one click. Its advantages of convenient operation and standardized workflow greatly reduce manual errors and improve the accuracy of test results. It is a ideal solution for creating a simplified, high-precision, automated and systematic laboratory.'
+			},
+			{
+				id: 14,
+				name: 'Novel Coronavirus (2019-nCoV) Nucleic Acid Diagnostic Kit',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png',
+				description: 'Sansure COVID-19 diagnostic solutions are used to directly detect the presence of viral RNA, which will be detectable in patients before antibodies form or symptoms of the disease are present, which means the test results can tell whether or not that someone gets virus very early on in their illness.'
+			},
+			{
+				id: 15,
+				name: 'Nucleic Acid Test Kit for HBV HCV & HIV',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png',
+				description: 'This kit is intended for use as a blood donor screening test to detect HBV DNA, HCV RNA, HIV-1 RNA and HIV-2 RNA in pooled or individual sample from healthy blood donors, blood donors of various components (red blood cells, platelets and plasma) and other types of blood donors. *Available soon. Inquire availability.'
+			},
+			{
+				id: 16,
+				name: 'Oncoscreen Screening Diagnostic Kits and Detection Kit',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Oncoscreen-Screening-Diagnostic-Kits-and-Detection%20Kit.png',
+				description: ''
+			},
+			
 		];
 
 		setProducts(productData);
@@ -225,9 +303,9 @@ export default function MolecularDiagnostics() {
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
+			...productData.map((p: any) => p.image).filter(Boolean)
 		];
-		
+        
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -275,17 +353,8 @@ export default function MolecularDiagnostics() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
-						alt="Molecular Diagnostics Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
