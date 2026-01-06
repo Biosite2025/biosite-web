@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in clinical microscopy applications.
+							{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in clinical microscopy applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -112,12 +112,12 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
-					{product.name}
-				</h3>
-				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional clinical microscopy equipment engineered for precision and reliability.
-				</p>
+				   <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+					   {product.name}
+				   </h3>
+				   <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
+					   {product.description || 'Professional clinical microscopy equipment engineered for precision and reliability.'}
+				   </p>
 				
 				{/* View Details Button */}
 				<motion.button
@@ -193,33 +193,46 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 export default function ClinicalMicroscopy() {
 	const [products, setProducts] = useState<any[]>([]);
+	const [fecalysis, setFecalysis] = useState<any[]>([]);
+	const [urinalysis, setUrinalysis] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on CSV
-		const productData = [
-			{ id: 1, name: 'Acon U500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/acon-u500.png' },
-			{ id: 2, name: 'Zybio U1600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u1600.png' },
-			{ id: 3, name: 'Zybio U2600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u2600.png' },
-			{ id: 4, name: 'Zybio U3600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u3600.png' },
-			{ id: 5, name: 'Zybio Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-q8-pro.png' },
-			{ id: 6, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-3000.png' },
-			{ id: 7, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-6000.png' },
-			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-zip-96v.png' }
+		// Product data split into categories
+		const urinalysis = [
+			{ id: 1, name: 'Acon U500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/acon-u500.png', description: 'The analyzer features up to 500 tests/hour which is suitable for medium volume labs or small hospitals. It offers a large color touchscreen display for intuitive menu navigation. It has the ability to input urine color and clarity for better record keeping. Abnormal results are also automatically flagged by the analyzer.' },
+			{ id: 2, name: 'Zybio U1600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u1600.png', description: 'The Zybio U1600 is a high-throughput urine chemistry analyzer that measures over 14 chemical parameters plus physical indicators like color, specific gravity, and turbidity. It features an 8-inch touchscreen, automated strip loading, and delivers up to 240 tests per hour, making it ideal for efficient lab workflows.' },
+			{ id: 3, name: 'Zybio U2600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u2600.png', description: 'The Zybio U2600 is a high-throughput urine sediment analyzer that uses laminar flow, high-speed imaging, and medical image recognition to deliver accurate classification of urine particles. It processes up to 120 tests per hour, supports 46 particle parameters, and offers 60 sample positions with STAT prioritization.' },
+			{ id: 4, name: 'Zybio U3600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u3600.png', description: 'ZYBIO U3600 is a fully automated biochemical analyzer used in clinical laboratories for the analysis of various biochemical parameters in blood and other body fluids. This instrument is designed to perform a wide range of tests, including those for liver function, kidney function, lipid profiles, and more.' },
 		];
 
-		setProducts(productData);
-		setLoading(false);
+		const productsOther = [
+			{ id: 5, name: 'Zybio Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-q8-pro.png', description: 'A point-of-care testing analyzer designed for rapid clinical diagnostics in various healthcare settings. Provides quick and reliable results for efficient patient management and clinical decision-making.' },
+			{ id: 6, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-3000.png', description: 'A compact automated nucleic acid extractor suitable for small to medium laboratories. It supports multiple sample types and standardized extraction protocols, delivering reliable nucleic acid purity for downstream molecular testing.' },
+			{ id: 7, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-6000.png', description: 'A high-throughput automated nucleic acid extraction system for medium to large laboratories. It enables simultaneous processing of multiple samples with high efficiency, reducing turnaround time while maintaining excellent extraction performance and reproducibility.' },
+			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-zip-96v.png', description: 'A 96-well automated nucleic acid extraction system designed for high-throughput laboratories. It supports batch processing, improves workflow efficiency, and delivers consistent DNA/RNA quality for PCR and sequencing applications.' },
+		];
 
+		const fecalysis = [
+			{ id: 9, name: 'KU-F40', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/KU-F40.png', description: 'The sealing design prevents liquid waste and exhaust odor. Easy to operate with 50 samples available in the waiting tray and it is equipped with Iodine Staining. Fully automatic and avoids biological risks. Automatic input information with both-way LIS transmission. Perform test different elements simultaneously with Iodine Staining. Fully automatic and avoids biological risks. Perform test different elements simultaneously with multi-channel. Automatic input information with both-way LIS transmission.' },
+			{ id: 10, name: 'KU-F600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/KU-F600.png', description: 'Testing speed: 10-30 specimens per hour. Combination of high-powered and low-powered microscope examination. Globally innovative methods for detecting special worm eggs and parasites. Deep learning AI recognition function with recognition capability. Fully sealed sampling cup; Single sample loading method. High-precision reusable quartz counting plate. Tomographic scanning with high image clarity.' },
+			{ id: 11, name: 'KU-F20', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/KU-F20.png', description: 'Disposable dedicated sampling cup. Tube rack with track-style sample loading method. Deep learning function with initial AI recognition capability. High-precision reusable quartz counting plate. Combination of high-powered and low-powered microscope examination, with a high detection rate for worm eggs and protozoa.' }
+		];
+		
+		setUrinalysis(urinalysis);
+		setProducts(productsOther);
+		setFecalysis(fecalysis);
+		setLoading(false);
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
+			...urinalysis.map((p: any) => p.image),
+			...productsOther.map((p: any) => p.image),
+			...fecalysis.map((f: any) => f.image)
 		];
-		
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -239,7 +252,6 @@ export default function ClinicalMicroscopy() {
 				};
 			});
 		};
-
 		preloadImages();
 	}, []);
 
@@ -337,11 +349,42 @@ export default function ClinicalMicroscopy() {
 						/>
 					</div>
 				) : (
-					<CategorySection
-						category={category}
-						products={products}
-						onViewDetails={handleViewDetails}
-					/>
+					<>
+						   {/* Other Clinical Microscopy Products (Main) - now first */}
+						   {products.length > 0 && (
+							   <CategorySection
+								   category={category}
+								   products={products}
+								   onViewDetails={handleViewDetails}
+							   />
+						   )}
+						   {/* Urinalysis Category Section */}
+						   {urinalysis.length > 0 && (
+							   <CategorySection
+								   category={{
+									   id: 'urinalysis',
+									   title: 'Urinalysis',
+									   description: 'Automated urinalysis analyzers for comprehensive urine chemistry and sediment analysis.',
+									   folder: 'clinical-microscopy',
+								   }}
+								   products={urinalysis}
+								   onViewDetails={handleViewDetails}
+							   />
+						   )}
+						   {/* Fecalysis Category Section */}
+						   {fecalysis.length > 0 && (
+							   <CategorySection
+								   category={{
+									   id: 'fecalysis',
+									   title: 'Fecalysis',
+									   description: 'Automated fecalysis analyzers for efficient and safe stool examination in clinical laboratories.',
+									   folder: 'clinical-microscopy',
+								   }}
+								   products={fecalysis}
+								   onViewDetails={handleViewDetails}
+							   />
+						   )}
+					</>
 				)}
 			</div>
 

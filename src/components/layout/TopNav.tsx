@@ -335,7 +335,7 @@ export function TopNav() {
                             </span>
                           </li>
                           <li>
-                            <Link href="/user/products/components/lab-equipment" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/user/products/components/dry-bath" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station
                             </Link>
                           </li>
@@ -392,6 +392,11 @@ export function TopNav() {
                             <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               Hospital Medical Furnitures
                             </span>
+                          </li>
+                          <li>
+                            <Link href="/user/products/components/dialysis-renal-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                              Dialysis / Renal Care Equipments
+                            </Link>
                           </li>
                         </ul>
                       </div>

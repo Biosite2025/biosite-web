@@ -10,7 +10,7 @@ import Preloader from '@/src/components/layout/Preloader';
 // Product category
 const category = {
 	id: 'lab-oven-incubator',
-	title: 'Lab Oven Incubator',
+	title: 'Lab Oven, Lab Incubator, Co2 Incubator',
 	description: 'Advanced lab oven incubator systems and equipment for comprehensive laboratory diagnostics',
 	folder: 'lab-oven-incubator',
 };
@@ -201,7 +201,12 @@ export default function LabOvenIncubator() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'CL4 Semi Auto', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png' }
+			{ id: 1, name: 'CL4 Semi Auto', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png' },
+		    { id: 2, name: 'DLAB HB 120-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-120-s.png' },
+		    { id: 3, name: 'DLAB HB 105-S2', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s2.png' },
+		    { id: 4, name: 'DLAB HB 105-S1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s1.png' },
+		    { id: 5, name: 'DLAB HB 150-S1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s1.png' },
+		    { id: 6, name: 'DLAB HB 150-S2', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s2.png' }
 		];
 
 		setProducts(productData);
@@ -281,7 +286,7 @@ export default function LabOvenIncubator() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Lab Oven Incubator
+							Lab Oven, Lab Incubator, Co2 Incubator
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}

@@ -149,7 +149,7 @@ export function SideNav() {
 				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "/user/products/components/biosafety-cabinets" },
 				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "/user/products/components/lab-oven-incubator" },
 				{ name: "Sterilizer & Autoclave", href: "#" },
-				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/user/products/components/lab-equipment" }
+				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/user/products/components/dry-bath" }
 			]
 		},
 		medical: {
@@ -163,7 +163,8 @@ export function SideNav() {
 				{ name: "Anesthesia Equipments", href: "#" },
 				{ name: "Autoclave, Plasma Sterilizers, Washers", href: "#" },
 				{ name: "Neonatal Intensive Care Products (NICU)", href: "#" },
-				{ name: "Hospital Medical Furnitures", href: "#" }
+				{ name: "Hospital Medical Furnitures", href: "#" },
+				{ name: "Dialysis / Renal Care Equipments", href: "/user/products/components/dialysis-renal-equipments" }
 			]
 		},
 		disposables: {

@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in molecular diagnostics applications.
+						{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional molecular diagnostics equipment engineered for precision and reliability.
+				{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,15 +201,60 @@ export default function HospitalDisposables() {
 	useEffect(() => {
 		// Hospital Disposables product data
 		const productData = [
-			{ id: 1, name: 'Disposable Gloves', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Gloves.png', description: 'Latex, Vinyl, Nitrile, and Surgical Examination Gloves. Designed to prevent contamination and ensure safety for both patients and healthcare workers.' },
-			{ id: 2, name: 'PPE Coverall', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/PPE%20Coverall.png', description: 'Protects against light spray, liquid aerosol, and airborne particles. Used for infection control and hazardous environments.' },
-			{ id: 3, name: 'Clip Cap', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Clip%20Cap.png', description: 'Disposable cap for protection from foreign bodies and fluid, maintaining a cleanroom or sterile environment.' },
-			{ id: 4, name: 'Shoe Cover', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Shoe%20Cover.png', description: 'Disposable slip-on covers to prevent hazardous material from contacting the bottom of shoes.' },
-			{ id: 5, name: 'FFP2 NR Particulate Respirator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/FFP2%20NR%20Particulate%20Respirator.png', description: 'Filters particulates in the air, blocking droplets, blood, body fluids, and other contaminants.' },
-			{ id: 6, name: 'N95 Particulate Respirator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/N95%20Particulate%20Respirator.png', description: 'Prevents the spread of infectious materials. Durable and comfortable for long wear.' },
-			{ id: 7, name: 'Medical Face Mask', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Medical%20Face%20Mask.png', description: 'Medical-grade disposable mask for comfort and breathability. High filtration efficiency.' },
-			{ id: 8, name: 'Disposable Syringe', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Syringe.png', description: 'Disposable syringes have a body made of plastic and are of various sizes. A cover stays attached to the needle so that there are no chances of injury and it stays sterilized at the same time.' },
-			{ id: 9, name: 'Disposable Surgical Gown', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Surgical%20Gown.png', description: 'Sterile, single-use gown designed to protect healthcare professionals and patients from cross-contamination during surgical procedures.' }
+			{
+				id: 1,
+				name: 'Disposable Gloves',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Gloves.png',
+				description: '• Latex Examination Gloves (Powder Free): Made from natural latex compound and powder free.\n• Vinyl Examination Gloves (Powder Free): Economical solution for individuals allergic to natural rubber latex.\n• Nitrile Examination Gloves (Powder Free): Intended for medical purposes to prevent contamination.\n• Surgical Examination Gloves (Powder Free): Help prevent contamination between caregivers and patients.'
+			},
+			{
+				id: 2,
+				name: 'PPE Coverall',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/PPE%20Coverall.png',
+				description: 'Dunhame PPE intended to be worn to protect against light spray, liquid aerosol or low pressure, low volume splashes and airborne solid particulates, infective agents, radioactive particulates, clothing with dissipative properties.'
+			},
+			{
+				id: 3,
+				name: 'Clip Cap',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Clip%20Cap.png',
+				description: 'Dunhame disposable clip cap provide protection from foreign bodies and some fluid protection to maintain a cleanroom or sterile environments.'
+			},
+			{
+				id: 4,
+				name: 'Shoe Cover',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Shoe%20Cover.png',
+				description: 'Dunhame shoe covers are disposable slip-on garments that fit snugly over a variety of shoe style and sizes. They prevent potentially hazardous material (including organic and chemical particles) from coming in contact with the bottom of a person’s shoes.'
+			},
+			{
+				id: 5,
+				name: 'FFP2 NR Particulate Respirator',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/FFP2%20NR%20Particulate%20Respirator.png',
+				description: 'Intended for medical work environment, filtering particulates in the air, blocking droplets, blood, body fluids, secretions, etc. Low breathing resistance and no peculiar smell.'
+			},
+			{
+				id: 6,
+				name: 'N95 Particulate Respirator',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/N95%20Particulate%20Respirator.png',
+				description: 'Intended to be used in preventing the spread of infectious materials to protect individuals and healthcare personnel in a medical setting. Uses ultrasonic welding technology for more durability and with soft nose foam for comfortable wear.'
+			},
+			{
+				id: 7,
+				name: 'Medical Face Mask',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Medical%20Face%20Mask.png',
+				description: 'Dunhame medical-grade disposable mask for maximum comfort and breathability. It is helpful in preventing the spread of infectious materials to protect individuals and healthcare personnel. Low breathing resistance and high filtration efficiency.'
+			},
+			{
+				id: 8,
+				name: 'Disposable Syringe',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Syringe.png',
+				description: 'Disposable syringes have a body made of plastic and are of various sizes. In some cases, they come with attached needles. A cover stays attached to the needle so that there are no chances of injury and it stays sterilized at the same time.'
+			},
+			{
+				id: 9,
+				name: 'Disposable Surgical Gown',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hospital-disposables/Disposable%20Surgical%20Gown.png',
+				description: 'Dunhame Disposable Surgical Gown is intended to be worn by health care personnel during surgical operations for protection to prevent transfer of microorganisms, body fluids, and particulate matter.'
+			}
 		];
 
 		setProducts(productData);

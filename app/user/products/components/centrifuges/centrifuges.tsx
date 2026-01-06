@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in centrifuges applications.
+						{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional centrifuges equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,17 +201,20 @@ export default function Centrifuges() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Hermle LC-8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-lc-8.png' },
-			{ id: 2, name: 'Hermle Z206-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z206-a.jpg' },
-		    { id: 3, name: 'Hermle Z207-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-a.jpg' },
-		    { id: 4, name: 'Hermle Z207-H', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-h.jpg' },
-		    { id: 5, name: 'Hermle Z216-M', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z216-m.png' },
-		    { id: 6, name: 'Hermle Z306', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z306.png' },
-			{ id: 7, name: 'Hermle Z446-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z446-k.png' },
-			{ id: 8, name: 'Hermle Z496-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z496-k.png' },
-		    { id: 9, name: 'DLAB VORTEX MIXER MX-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-s.png' },
-		    { id: 10, name: 'DLAB VORTEX MIXER MX-F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-f.png' },
-		    { id: 11, name: 'DLAB VORTEX MIXER MX-E', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-e.png' }
+			{ id: 1, name: 'Hermle LC-8', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-lc-8.png', description: 'Compact low-speed laboratory centrifuge designed for routine clinical and laboratory applications with simple operation.' },
+			{ id: 2, name: 'Hermle Z206-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z206-a.jpg', description: 'Small bench-top centrifuge suitable for clinical labs, offering reliable performance for daily sample separation.' },
+		    { id: 3, name: 'Hermle Z207-A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-a.jpg', description: 'Versatile bench centrifuge for routine laboratory use with flexible rotor options and stable operation.' },
+		    { id: 4, name: 'Hermle Z207-H', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z207-h.jpg', description: 'High-speed version of the Z207 series, designed for more demanding laboratory applications requiring higher centrifugal force.' },
+		    { id: 5, name: 'Hermle Z216-M', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z216-m.png', description: 'Advanced microcentrifuge optimized for molecular biology and research applications with high-speed capability.' },
+		    { id: 6, name: 'Hermle Z306', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z306.png', description: 'Medium-capacity bench-top centrifuge for laboratories needing higher sample throughput and flexible configurations.' },
+			{ id: 7, name: 'Hermle Z446-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z446-k.png', description: 'High-performance refrigerated centrifuge suitable for clinical, research, and industrial laboratories requiring temperature control.' },
+			{ id: 8, name: 'Hermle Z496-K', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/hermle-z496-k.png', description: 'Large-capacity refrigerated laboratory centrifuge designed for high-volume and high-speed applications in advanced labs.' },
+		    { id: 9, name: 'DLAB VORTEX MIXER MX-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-s.png', description: 'Fixed-speed vortex mixer for quick and efficient mixing of small tubes in routine laboratory workflows.' },
+		    { id: 10, name: 'DLAB VORTEX MIXER MX-F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-f.png', description: 'Variable-speed vortex mixer offering flexible mixing control for different sample types.' },
+		    { id: 11, name: 'DLAB VORTEX MIXER MX-E', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-vortex-mx-e.png', description: 'Digital vortex mixer with precise speed control and timer function for reproducible laboratory mixing.' },
+		    { id: 12, name: 'DLAB DSC-100MH-2', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-dsc-100mh-2.png', description: 'Micro Hematocrit Centrifuge DSC-100MH-2 is an indispensable instrument in laboratories for spinning down small samples rapidly. The motor of Micro Hematocrit Centrifuge can reach to 12,000 rpm and make operation smooth, quiet and stable.' },
+		    { id: 13, name: 'DLAB DSC-100MH-3', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/centrifuges/dlab-dsc-100mh-3.png', description: 'Micro Hematocrit Centrifuge (DSC-100MH-3) is an indispensable instrument in laboratories for spinning down small samples rapidly. Micro Hematocrit Centrifuge with metal casing is sturdy and durable. The motor of DSC-100MH-3 can make operation smooth, quiet and stable.' }
+		
 		];
 
 		setProducts(productData);

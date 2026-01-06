@@ -61,7 +61,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
           <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-              Essential laboratory equipements designed for safety, reliability, and efficiency in laboratory workflows.
+              {product.description ? product.description : 'Essential laboratory equipements designed for safety, reliability, and efficiency in laboratory workflows.'}
             </p>
             <div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
               <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -112,7 +112,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
           {product.name}
         </h3>
         <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-          Essential laboratory equipements engineered for safety and reliability.
+          {product.description ? product.description : 'Essential laboratory equipements engineered for safety and reliability.'}
         </p>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -192,14 +192,14 @@ export default function LaboratoryEquipements() {
   useEffect(() => {
     // Product data based on asset folder
     const productData = [
-      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png' },
-      { id: 2, name: 'Blood Banking Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Blood-Banking-Centrifuge.png' },
-      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png' },
-      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png' },
-      { id: 5, name: 'Laboratory Microscopes', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Laboratory-Microscopes.png' },
-      { id: 6, name: 'MicroPette', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/MicroPette.png' },
-      { id: 7, name: 'T-LAB Eco V85', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/T-LAB-Eco-V85.png' },
-      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Vertical-Automatic-High-pressure-Steam-Sterilizer.png' }
+      { id: 1, name: 'Biosafety Cabinets, Laminar Flow and Clean Benches', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Biosafety-Cabinets-Laminar-Flow-and-Clean-Benches.png', description: 'Biosafety cabinets, laminar flow hoods, and clean benches provide safe, sterile environments for laboratory work, protecting samples and users from contamination and ensuring reliable results in research and clinical applications.' },
+      { id: 2, name: 'Blood Banking Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Blood-Banking-Centrifuge.png', description: 'Blood banking centrifuges are designed for the safe and efficient separation of blood components, supporting critical processes in blood banks and clinical laboratories.' },
+      { id: 3, name: 'Cold Chain Storage, Biomedical Refrigerators, Freezers & Blood Bank Refrigerators', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Cold-Chain-Storage-Biomedical-Refrigerators-Freezers.png', description: 'Cold chain storage solutions, including biomedical refrigerators, freezers, and blood bank refrigerators, ensure the safe preservation of sensitive samples, reagents, and blood products at controlled temperatures for laboratory and clinical use.' },
+      { id: 4, name: 'Compact Universal Micro High Speed Filtration & Large Volume Centrifuge', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Compact-Universal-Micro-High-Speed-Filtration&Large-Volume-Centrifuge.png', description: 'Hermle centrifuges offer versatility in biological, chemical or medical laboratory and is the variable in the research area. It is also the ideal solution for clinics or medical practices. More than ten different rotors can be used and thus the most common applications are perfectly covered.' },
+      { id: 5, name: 'Laboratory Microscopes', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Laboratory-Microscopes.png', description: 'Nikon laboratory microscopes offer precision optics and durable engineering, delivering high-resolution images for applications such as clinical diagnostics, research, and education. Including models with brightfield, phase contrast, darkfield, fluorescence, and LED illumination, they are built for ease-of-use, reliability, and consistent performance in demanding lab environments.' },
+      { id: 6, name: 'MicroPette', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/MicroPette.png', description: 'MicroPette single and multi-channel pipettors cover a volume range from 0.1μL to 10mL. 8 and 12 channel pipettes are appropriate for 96 well plates. Ergonomic design provides excellent operating experience. Large display window allows for easy volume identification. Easy calibration and maintenance.' },
+      { id: 7, name: 'T-LAB Eco V85', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/T-LAB-Eco-V85.png', description: 'This vertical floor-standing autoclave covers the fundamental needs for general lab sterilization with the aim of increasing the productivity of your laboratory. Offering the best universal capacity, together with the optimization of resources such as water, power and operating time results.' },
+      { id: 8, name: 'Vertical Automatic High-pressure Steam Sterilizer', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-equipements/Vertical-Automatic-High-pressure-Steam-Sterilizer.png', description: 'Vertical automatic high-pressure steam sterilizers provide reliable and efficient sterilization for laboratory instruments and materials, ensuring safety and compliance in laboratory operations.' }
     ];
 
     setProducts(productData);

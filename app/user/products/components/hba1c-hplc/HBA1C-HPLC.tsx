@@ -71,7 +71,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							High-performance HPLC system for accurate HbA1c measurement, providing reliable results for diabetes monitoring and management with advanced technology and precision.
+							{product.description || 'High-performance HPLC system for accurate HbA1c measurement, providing reliable results for diabetes monitoring and management with advanced technology and precision.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -125,7 +125,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Advanced HPLC system for precise HbA1c measurement and diabetes management.
+					{product.description || 'Advanced HPLC system for precise HbA1c measurement and diabetes management.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -211,8 +211,18 @@ export default function HBA1CHPLC() {
 		// Product data based on image files
 		const productData: any = {
 			'HBA1C - HPLC Analyzers': [
-				{ id: 1, name: 'TOSOH HLC-723 G11', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20G11.png' },
-				{ id: 2, name: 'TOSOH HLC-723 GX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20GX.png' },
+				{
+					id: 1,
+					name: 'TOSOH HLC-723 G11',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20G11.png',
+					description: 'The Tosoh HLC-723G11 features fast start-up and daily checks, with analyzing routines completed in seconds. It delivers high-resolution chromatograms and results in as little as 30 seconds in standard mode or 60 seconds in variant mode. Simple operation with one-button analysis makes it ideal for efficient HbA1c testing.'
+				},
+				{
+					id: 2,
+					name: 'TOSOH HLC-723 GX',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20GX.png',
+					description: 'The Tosoh HLC-723GX offers stable HbA1c results with variant detection in just 2.2 minutes and first results in 6.6 minutes. It is designed for low-volume HbA1c testing and incorporates all the qualities of Tosoh’s best-in-class analyzers. Reliable and efficient, it is ideal for routine glycohemoglobin analysis.'
+				},
 			],
 		};
 

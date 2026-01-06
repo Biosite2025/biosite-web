@@ -10,10 +10,10 @@ import Preloader from '@/src/components/layout/Preloader';
 
 // Product category
 const category = {
-  id: 'icu-er-equipments',
-  title: 'ICU / ER Equipments',
-  description: 'Essential ICU and emergency room equipment for critical care and rapid response environments.',
-  folder: 'icu-er-equipments',
+  id: 'dialysis-renal-equipments',
+  title: 'Dialysis / Renal Care Equipments',
+  description: 'Advanced dialysis and renal care equipment for comprehensive patient treatment and monitoring',
+  folder: 'dialysis-renal-equipments',
 };
 
 // Modal component
@@ -63,7 +63,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
           <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-              {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+              {product.description || 'Professional-grade dialysis and renal care equipment designed for precision, reliability, and superior patient care.'}
             </p>
             <div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
               <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
           {product.name}
         </h3>
         <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-          {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+          {product.description || 'Professional dialysis and renal care equipment engineered for precision and reliability.'}
         </p>
         {/* View Details Button */}
         <motion.button
@@ -192,7 +192,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function MedicalDiagnosticImaging() {
+export default function DialysisRenalEquipments() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,18 +200,19 @@ export default function MedicalDiagnosticImaging() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Product data for ICU/ER Equipments (placeholder, update with real products as needed)
+    // Product data for dialysis-renal-equipments
     const productData = [
       {
         id: 1,
-        name: 'X12 Patient Monitor',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/X12.png',
-        description: 'With its expandability of monitoring parameters the X12 series fulfills primary clinical requirements in various scenarios, including emergency rooms, general wards, rehabilitation departments, and cardiac units.'
+        name: 'Biolight D800',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png',
+        description:
+          'The Biolight D800 Series is a hemodialysis system designed for HD, HF, and HDF treatments, featuring a modern multifunctional design with a 15-inch touchscreen and reliable extracorporeal circuit. It supports multiple therapy options, automatic heparin pump, high-capacity battery, and ultrapurified dialysis for enhanced patient safety. Its cost-efficient design helps reduce dialysate waste and ensures continuous operation during power outages.'
       },
     ];
 
     setProducts(productData);
-    setLoading(false);  
+    setLoading(false);
 
     // Preload all images
     const allImages = [
@@ -271,7 +272,7 @@ export default function MedicalDiagnosticImaging() {
 
         {/* Particles Background Animation */}
         <div className="absolute inset-0 w-full h-full z-10">
-          <ParticlesBackground containerId="medical-diagnostic-imaging-particles" />
+          <ParticlesBackground containerId="dialysis-renal-equipments-particles" />
           <div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
         </div>
 
@@ -287,7 +288,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, type: 'spring', stiffness: 80 }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
             >
-              ICU / ER Equipments
+              Dialysis / Renal Care Equipments
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -301,7 +302,7 @@ export default function MedicalDiagnosticImaging() {
               transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
               className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
             >
-              Essential ICU and emergency room equipment for critical care and rapid response environments.
+              Advanced dialysis and renal care equipment for comprehensive patient treatment and monitoring
             </motion.p>
           </motion.div>
 
@@ -354,10 +355,10 @@ export default function MedicalDiagnosticImaging() {
       >
         <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-            Ready to Upgrade Your ICU or ER?
+            Ready to Upgrade Your Laboratory?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-            Our team of specialists is ready to help you find the perfect ICU and emergency room equipment for your critical care needs.
+            Our team of specialists is ready to help you find the perfect dialysis and renal care solution for your healthcare facility needs.
           </p>
           <motion.a
             href="/user/contact"

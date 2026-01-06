@@ -245,8 +245,8 @@ export default function NikonMicroscopes() {
 				{ id: 3, name: 'Cyto-Tek 2500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/sakura-cyto-tek-2500.png', description: 'The Cyto-Tek® 2500 Cytocentrifuge provides optimal cell recovery and advanced preservation of cellular structure in non-gynecological monolayer slide preparations. This cytocentrifuge offers excellent preservation of cellular structure and consistently delivers a high rate of cellular recovery. With its patented pad acceleration feature, the cytocentrifuge automatically increases and decreases the rotational velocity based on the selected speed, which protects fragile cells and results in higher cellular yield.' },
 			],
 			'Embedding': [
-				{ id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20AutoTEC%20a120.jpg', description: 'Advanced automated tissue embedding center featuring 120-cassette capacity with RFID tracking, intelligent workflow management, automated paraffin dispensing with precision volume control, multiple temperature-controlled embedding zones, integrated cold plate stations, and touchscreen interface that streamlines high-volume tissue embedding operations while ensuring optimal specimen orientation and consistent embedding quality for busy histopathology laboratories with enhanced productivity and reduced turnaround time.' },
-				{ id: 5, name: 'Tissue-Tek TEC 6', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20TEC6.jpg', description: 'Compact 6-position tissue embedding console featuring heated paraffin dispenser with adjustable temperature control, cold plate work surface for rapid specimen cooling and solidification, ergonomic design with intuitive controls, multiple paraffin reservoir positions, and efficient thermal management system that provides reliable, high-quality tissue embedding for routine histopathology workflows in medium-throughput laboratories with consistent results and operator comfort.' },
+				{ id: 4, name: 'Tissue-Tek AutoTEC a120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20AutoTEC%20a120.jpg', description: 'The second-generation Tissue-Tek AutoTEC® a120 remains the industry’s first and only fully automatic tissue embedding system that eliminates the tedious and labor-intensive need to manually orient and embed tissue specimens. Utilizing the Tissue-Tek® Paraform® Sectionable Cassette System ensures that the orientation of specimens is locked from grossing to microtomy, thereby eliminating the risk of orientation mistakes and tissue loss for increased patient safety.' },
+				{ id: 5, name: 'Tissue-Tek TEC 6', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/Tissue-Tek%20TEC6.jpg', description: 'The Tissue-Tek TEC™ Series has been the Histology laboratory’s preferred choice in embedding for decades. The Tissue-Tek TEC™ 6 Embedding Console System continues that tradition while further enhancing the reliability, comfort, and ease-of-use that users have come to know and expect for a tissue embedder. Designed to be the ideal tissue embedder for laboratories of any size, the robust and ergonomic modular system offers a streamlined, adjustable workflow that is both comfortable and simple-to-use for any user.' },
 				{ id: 12, name: 'Floating Bath', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sakura-product/floating-bath.png', description: 'Has variable temperature control up to 80°C. Inner surface and dry edges are aluminum lacquered matt black of the temperature with an overheat protection at 90°C. The temperature and settings are displayed on the LCD screen.' },
 			],
 			'Microtomy': [
@@ -423,7 +423,7 @@ export default function NikonMicroscopes() {
 							initial={{ opacity: 0, y: -30 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6 }}
-							className="mb-8 sm:mb-12 md:mb-16 text-center max-[912px]:mb-6"
+							className="mb-8 sm:mb-12 md:mb-16 text-left max-[912px]:mb-6"
 						>
 							<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
 								Sakura
@@ -432,9 +432,9 @@ export default function NikonMicroscopes() {
 								initial={{ width: 0 }}
 								animate={{ width: '100px' }}
 								transition={{ duration: 0.8, delay: 0.2 }}
-								className="h-1 bg-gradient-to-r from-[#2B3990] to-[#4a5ab8] rounded-full mx-auto"
+								className="h-1 bg-gradient-to-r from-[#2B3990] to-[#4a5ab8] rounded-full"
 							/>
-							<p className="text-gray-600 mt-4 text-base sm:text-lg max-w-3xl mx-auto">
+							<p className="text-gray-600 mt-4 text-base sm:text-lg max-w-3xl">
 							Advanced histopathology systems and equipment for comprehensive laboratory diagnostics
 							</p>
 						</motion.div>

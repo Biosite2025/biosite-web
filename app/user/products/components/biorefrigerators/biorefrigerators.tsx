@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in biorefrigerators applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional biorefrigerators equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,20 +201,20 @@ export default function Biorefrigerators() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'HYC-68&68A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-68&68A.png' },
-			{ id: 2, name: 'HYC-118&118A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-118&118A.png' },
-			{ id: 3, name: 'HYC-290', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-290.png' },
-			{ id: 4, name: 'HYC-390&390F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-390&390F.png' },
-			{ id: 5, name: 'HYC-610', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-610.png' },
-			{ id: 6, name: 'HYC-940&940F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-940&940F.png' },
-			{ id: 7, name: 'HYC-1378', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-1378.png' },
-			{ id: 8, name: 'HXC-149', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-149.png' },
-			{ id: 10, name: 'HXC-429', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429.png' },
-			{ id: 11, name: 'HXC-429T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429T.png' },
-			{ id: 12, name: 'HXC-629', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629.png' },
-			{ id: 13, name: 'HXC-629T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629T.png' },
-			{ id: 14, name: 'HXC-1369', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369.png' },
-			{ id: 15, name: 'HXC-1369T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369T.png' }
+			{ id: 1, name: 'HYC-68&68A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-68&68A.png', description: 'Compact 2–8 °C medical refrigerator for vaccines, reagents, and pharmaceuticals. Ideal for clinics and small labs.' },
+			{ id: 2, name: 'HYC-118&118A', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-118&118A.png', description: 'Small-capacity 2–8 °C biomedical refrigerator with precise temperature control for routine medical storage.' },
+			{ id: 3, name: 'HYC-290', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-290.png', description: 'Medium-capacity pharmacy refrigerator designed for stable storage of medicines, vaccines, and laboratory reagents.' },
+			{ id: 4, name: 'HYC-390&390F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-390&390F.png', description: 'Large 2–8 °C medical refrigerator suitable for hospitals and laboratories; "F" version includes advanced airflow or frost-free features.' },
+			{ id: 5, name: 'HYC-610', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-610.png', description: 'High-capacity biomedical refrigerator for centralized medical storage with uniform cooling and safety alarms.' },
+			{ id: 6, name: 'HYC-940&940F', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-940&940F.png', description: 'Extra-large medical refrigerator for hospitals and blood banks; "F" model offers enhanced cooling performance.' },
+			{ id: 7, name: 'HYC-1378', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HYC-1378.png', description: 'Ultra-large pharmacy / biomedical refrigerator designed for bulk storage in major hospitals and research facilities.' },
+			{ id: 8, name: 'HXC-149', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-149.png', description: 'Compact blood bank refrigerator for safe storage of whole blood and blood components at controlled temperatures.' },
+			{ id: 10, name: 'HXC-429', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429.png', description: 'Medium-capacity blood bank refrigerator with precise temperature stability and monitoring.' },
+			{ id: 11, name: 'HXC-429T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-429T.png', description: 'Blood bank refrigerator with dual temperature display/recording for enhanced traceability and compliance.' },
+			{ id: 12, name: 'HXC-629', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629.png', description: 'Large-capacity blood bank refrigerator suitable for hospitals and transfusion centers.' },
+			{ id: 13, name: 'HXC-629T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-629T.png', description: 'Advanced blood bank refrigerator with temperature recording and alarm systems for regulatory compliance.' },
+			{ id: 14, name: 'HXC-1369', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369.png', description: 'Extra-large blood bank refrigerator for high-volume blood storage in central blood banks.' },
+			{ id: 15, name: 'HXC-1369T', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biorefrigerators/HXC-1369T.png', description: 'High-capacity blood bank refrigerator with temperature recording, designed for critical blood storage and audit-ready environments.' }
 		];
 
 		setProducts(productData);

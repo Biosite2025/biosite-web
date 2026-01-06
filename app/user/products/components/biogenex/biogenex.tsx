@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in biogenex applications.
+							{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in biogenex applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional biogenex equipment engineered for precision and reliability.
+					{product.description || 'Professional biogenex equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,8 +201,18 @@ export default function Biogenex() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'NanoVIP', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-nanovip.png' },
-			{ id: 2, name: 'Xmatrx Elite', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-xmatrx-elite.png' }
+			{ 
+				id: 1, 
+				name: 'NanoVIP', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-nanovip.png',
+				description: 'NanoVIP® diverse, fully automated barcoded systems for fluorescence in situ hybridization (FISH), in situ hybridization (ISH), miRNA ISH, and IHC. Its reliable automation combined with ex ACT® temperature modules, predefined protocols, and liquid level sensors for accurate liquid handling ensures robust and reproducible results.'
+			},
+			{ 
+				id: 2, 
+				name: 'Xmatrx Elite', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-xmatrx-elite.png',
+				description: 'The Xmatrx® ELITE is an All-in-One and All-at-Once fully automated system that provides an adaptable workflow solution for efficiency, productivity, and profitability. Features include: High throughput up to 100 slides per day, 60 slides in eight hour shift and 40 slides in a delayed overnight run. Multi slide processing options: Random access, STAT, and Continuous mode for interrupted runs. More than 600+ optimized, pre-loaded factory protocols and ability to include user-defined protocols. Simultaneous operation of 40 different protocols in a single run. LIMS-enabled data tracking and management. Accurate reagent tracking for inventory management.'
+			}
 		];
 
 		setProducts(productData);

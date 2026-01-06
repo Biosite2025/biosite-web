@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in biosafety cabinets applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional biosafety cabinets equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,10 +201,10 @@ export default function BiosafetyCabinets() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Class Series', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/class-series.png' },
-			{ id: 2, name: 'HR1200-IIA2-D', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-D.png' },
-			{ id: 3, name: 'HR1200-IIA2-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-S.png' },
-			{ id: 4, name: 'HR1200-IIA2-X', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-X.png' }
+			{ id: 1, name: 'Class Series', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/class-series.png', description: 'A professional localized air purification equipment suitable for pharmaceuticals, medical and health, scientific research laboratories of universities and colleges, photoelectric / microelectronics manufacturing and other fields' },
+			{ id: 2, name: 'HR1200-IIA2-D', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-D.png', description: 'Energy efficient Class I microbiological safety cabinet with two DC fans, dual exhaust HEPAs and long lasting LED lights. Suitable for microbiology, biomedicine, biosafety laboratories and other laboratories. It offers three levels of protection - operator, product and environment.' },
+			{ id: 3, name: 'HR1200-IIA2-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-S.png', description: 'These are standard Class II microbiological safety cabinets suitable for basic cell biology, microbiology, biomedicine, biosafety laboratories and other laboratories. It is the most basic protection and isolation equipment for biosafety.' },
+			{ id: 4, name: 'HR1200-IIA2-X', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biosafety-cabinets/HR1200-IIA2-X.png', description: 'The X series of standard Class II microbiological safety cabinets are suitable for basic cell biology, microbiology, biomedicine, biosafety laboratories and other laboratories. It is the most basic protection and isolation equipment for biosafety.' }
 		];
 
 		setProducts(productData);

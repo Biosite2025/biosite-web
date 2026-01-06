@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in molecular diagnostics applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional molecular diagnostics equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -202,26 +202,106 @@ export default function MolecularDiagnostics() {
 	useEffect(() => {
 		// Rapid Test Kits product data
 		const productData = [
-			{ id: 1, name: 'Troponin I Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Troponin%20I%20Rapid%20Test.png' },
-			{ id: 2, name: 'HIV Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HIV%20Rapid%20Test.png ' },
-			{ id: 3, name: 'HCV Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HCV%20Rapid%20Test.png' },
-			{ id: 4, name: 'Malaria Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Malaria%20Rapid%20Test.png' },
-			{ id: 5, name: 'hCG Pregnancy', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/hCG%20Pregnancy.png' },
-			{ id: 6, name: 'HBsAg Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HBsAg%20Rapid%20Test.png' },
-			{ id: 7, name: 'SARS CoV-2 Antigen Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SARS-CoV-2-Antigen-Rapid-Test.png' },
-			{ id: 8, name: 'Syphilis Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Syphilis%20Rapid%20Test.png' },
-			{ id: 9, name: 'FOB Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/FOB%20Rapid%20Test.png' },
-			{ id: 10, name: 'H. pylori Rapid Test', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/H.%20pylori%20Rapid%20Test.png' }
+			{
+				id: 1,
+				name: 'Troponin I Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Troponin%20I%20Rapid%20Test.png',
+				description: 'Cardiac Troponin I is a protein found in cardiac muscle. Troponin I is part of a three sub unit complex comprised of Troponin T and Troponin C. After cardiac injury, Troponin I is released into the blood 4-6 hrs after the onset of pain.'
+			},
+			{
+				id: 2,
+				name: 'HIV Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HIV%20Rapid%20Test.png ',
+				description: 'ACON HIV Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of antibodies to HIV-1, including subtype O and HIV-2 simultaneously in serum, plasma or whole blood.'
+			},
+			{
+				id: 3,
+				name: 'HCV Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HCV%20Rapid%20Test.png',
+				description: 'ACON HCV Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of antibodies to Hepatitis C Virus (HCV) in serum, plasma or whole blood.'
+			},
+			{
+				id: 4,
+				name: 'Malaria Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Malaria%20Rapid%20Test.png',
+				description: 'ACON HCV Rapid Test is a rapid test chromatographic immunoassay for the qualitative and differential detection of Histidine-Rich Protein II (HRP-II) specific to (Pf) and (pLDH) specific (Pan) in whole blood.'
+			},
+			{
+				id: 5,
+				name: 'hCG Pregnancy',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/hCG%20Pregnancy.png',
+				description: 'ACON hCG Pregnancy Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of human chorionic gonadotropin in urine or serum to aid in the early detection of pregnancy.'
+			},
+			{
+				id: 6,
+				name: 'HBsAg Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HBsAg%20Rapid%20Test.png',
+				description: 'ACON HBsAg Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of Hepatitis B Surface Antigen (HBsAg) in serum, plasma or whole blood.'
+			},
+			{
+				id: 7,
+				name: 'SARS CoV-2 Antigen Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SARS-CoV-2-Antigen-Rapid-Test.png',
+				description: 'Is a lateral flow chromatographic immunoassay for the qualitative detection the nucleocapsid protein antigen from SARS-CoV-2 in nasal swab specimens directly from individuals who are suspected with COVID-19. Can also test specimens from asymptomatic people.'
+			},
+			{
+				id: 8,
+				name: 'Syphilis Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Syphilis%20Rapid%20Test.png',
+				description: 'ACON Syphilis Rapid Test is a rapid chromatographic immunoassay for the qualitative detection of antibodies (IgG and IgM) to Treponema Pallidum (TP) in serum, plasma or whole blood to aid in the diagnosis of Syphilis.'
+			},
+			{
+				id: 9,
+				name: 'FOB Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/FOB%20Rapid%20Test.png',
+				description: 'ACON Fecal Occult Blood (FOB) Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of human fecal occult blood in feces.'
+			},
+			{
+				id: 10,
+				name: 'H. pylori Rapid Test',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/H.%20pylori%20Rapid%20Test.png',
+				description: 'ACON H. pylori Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection H. pylori antigens in human feces specimens.'
+			},
 		];
 
 		// Tulip Diagnostic (P) LTD. products (unique ids)
 		const tulipData = [
-			{ id: 1, name: 'DENGUCHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png' },
-			{ id: 2, name: 'SYPHICHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SYPHICHECK.png' },
-			{ id: 3, name: 'DENGUCHECK', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png' },
-			{ id: 4, name: 'Rhelax-ASO', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-ASO.png' },
-			{ id: 5, name: 'Rhelax-CRP', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-CRP.png' },
-			{ id: 6, name: 'Rhelax-RF', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-RF.png' }
+			{
+				id: 1,
+				name: 'DENGUCHECK',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png',
+				description: 'DENGUCHECK is a rapid diagnostic test for the detection of dengue virus antigens and antibodies.'
+			},
+			{
+				id: 2,
+				name: 'SYPHICHECK',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SYPHICHECK.png',
+				description: 'Syphicheck WB is a rapid test for Syphilis (TPHA) in serum or plasma using a dipstick format.'
+			},
+			{
+				id: 3,
+				name: 'DENGUCHECK',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png',
+				description: 'DENGUCHECK is a rapid diagnostic test for the detection of dengue virus antigens and antibodies.'
+			},
+			{
+				id: 4,
+				name: 'Rhelax-ASO',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-ASO.png',
+				description: 'Rhelax-ASO slide test for detection of antibodies to streptolysin O is based on the principle of agglutination.'
+			},
+			{
+				id: 5,
+				name: 'Rhelax-CRP',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-CRP.png',
+				description: 'Rhelax-CRP is a latex agglutination slide test for detection of C-Reactive Protein.'
+			},
+			{
+				id: 6,
+				name: 'Rhelax-RF',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-RF.png',
+				description: 'Rhelax-RF is a latex agglutination slide test for detection of rheumatoid factors of the IgM class.'
+			}
 		];
 
 		setProducts(productData);

@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in biomedical freezers applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional biomedical freezers equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,17 +201,16 @@ export default function BiomedicalFreezers() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'DW-25L92', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L92.png' },
-			{ id: 2, name: 'DW-40L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L262.png' },
-			{ id: 3, name: 'DW-40L278', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L278.png' },
-			{ id: 4, name: 'DW-40L348', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L348.png' },
-			{ id: 5, name: 'DW-40L508', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L508.png' },
-			{ id: 6, name: 'DW-40W100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W100.png' },
-			{ id: 7, name: 'DW-40W255', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W255.png' },
-			{ id: 8, name: 'DW-40W380', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W380.png' },
-			{ id: 9, name: 'DW-25L92', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L92.png' },
-			{ id: 10, name: 'DW-25L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L262.png' },
-			{ id: 11, name: 'DW-SERIES', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-SERIES.png' }
+			{ id: 1, name: 'DW-25L92', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L92.png', description: 'Compact −25 °C medical freezer for safe storage of reagents, vaccines, plasma, and biological samples. Suitable for laboratories and small healthcare facilities.' },
+			{ id: 2, name: 'DW-40L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L262.png', description: 'Medium-capacity −40 °C biomedical freezer designed for long-term preservation of plasma, biological materials, and laboratory samples with stable temperature control.' },
+			{ id: 3, name: 'DW-40L278', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L278.png', description: 'Upright −40 °C medical freezer offering slightly higher storage capacity, ideal for hospitals, blood banks, and research laboratories requiring reliable low-temperature storage.' },
+			{ id: 4, name: 'DW-40L348', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L348.png', description: 'High-capacity −40 °C biomedical freezer for large-volume storage of biological samples, reagents, and plasma in clinical and research environments.' },
+			{ id: 5, name: 'DW-40L508', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40L508.png', description: 'Extra-large −40 °C medical freezer designed for centralized laboratories and blood centers needing high-volume, stable ultra-low temperature storage.' },
+			{ id: 6, name: 'DW-40W100', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W100.png', description: 'Compact −40 °C chest freezer optimized for energy efficiency and uniform cooling, suitable for laboratories with limited space.' },
+			{ id: 7, name: 'DW-40W255', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W255.png', description: 'Mid-size −40 °C chest-type biomedical freezer providing reliable low-temperature storage with easy access and consistent cooling performance.' },
+			{ id: 8, name: 'DW-40W380', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-40W380.png', description: 'Large-capacity −40 °C chest freezer designed for bulk storage of biological materials in hospitals, research institutes, and blood banks.' },
+			{ id: 9, name: 'DW-25L262', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-25L262.png', description: 'Upright −25 °C medical freezer for routine cold storage of pharmaceuticals, reagents, vaccines, and laboratory samples.' },
+			{ id: 10, name: 'DW-SERIES', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biomedical-freezers/DW-SERIES.png', description: 'A full range of biomedical freezers (−25 °C to −40 °C) engineered for hospitals, laboratories, blood banks, and research facilities, offering precise temperature control, safety alarms, and reliable long-term storage.' }
 		];
 
 		setProducts(productData);

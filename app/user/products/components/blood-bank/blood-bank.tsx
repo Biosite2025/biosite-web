@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in blood bank applications.
+						{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in blood bank applications.'}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional blood bank equipment engineered for precision and reliability.
+					{product.description || 'Professional blood bank equipment engineered for precision and reliability.'}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,12 +201,42 @@ export default function BloodBank() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Centron SE260', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se260.png' },
-			{ id: 2, name: 'Matrix Automax 80', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png' },
-			{ id: 3, name: 'Tulip HbChek', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png' },
-			{ id: 4, name: 'CENTRON SE730', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se730.png' },
-			{ id: 5, name: 'AutoMini 40', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/AutoMini-40.png' },
-			{ id: 6, name: 'CC 2400', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CC-2400.png' }
+			{ 
+				id: 1, 
+				name: 'Centron SE260', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se260.png',
+				description: 'Centron SE260 is a reliable tube sealer designed for secure sealing of blood collection tubes and sample containers in blood banking applications.'
+			},
+			{
+				id: 2,
+				name: 'Matrix Automax 80',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png',
+				description: 'Matrix AutoMax-80 is a fully automated modular analyzer for Matrix gel cards, featuring robotic sample handling, barcode scanning, and efficient gel card processing for blood banking.'
+			},
+			{ 
+				id: 3, 
+				name: 'Tulip HbChek', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png',
+				description: 'Tulip HbChek is a hemoglobin screening system designed for quick and accurate hemoglobin level determination in blood bank and donor screening applications.'
+			},
+			{ 
+				id: 4, 
+				name: 'CENTRON SE730', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se730.png',
+				description: 'CENTRON SE730 is an advanced tube sealer with enhanced capacity for high-volume blood banking operations, ensuring reliable and secure tube sealing.'
+			},
+			{ 
+				id: 5, 
+				name: 'AutoMini 40', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/AutoMini-40.png',
+				description: 'Matrix AutoMini is a fully automated blood grouping analyzer based on column agglutination system that can process 40 tests per hour throughput. It is designed with a single robotic arm for transportation of gel cards and comes with a random access system which is modular in nature and has a STAT function. This system also features integrated barcodes and onboard inventory management.'
+			},
+			{ 
+				id: 6, 
+				name: 'CC 2400', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CC-2400.png',
+				description: 'Microprocessor controlled gel card centrifuge for controlled centrifugation of Matrix gel cards having 24 cards capacity.'
+			}
 	
 		];
 

@@ -7,12 +7,12 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Motic Slide Scanners
+// Product category
 const category = {
-  id: 'motic-slide-scanners',
-  title: 'Motic Slide Scanners',
-  description: 'High-performance digital slide scanners for pathology, research, and education. Experience precision imaging and efficient workflow with Motic’s advanced scanning solutions.',
-  folder: 'motic-slide-scanners',
+  id: 'dry-bath',
+  title: 'Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station',
+  description: 'Essential laboratory equipment for sample preparation, mixing, safety, and workflow efficiency.',
+  folder: 'dry-bath',
 };
 
 // Modal component
@@ -61,9 +61,9 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							   {product.description || 'High-performance digital slide scanner for pathology, research, and education.'}
-						   </p>
+						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+							{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
+						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
 								For detailed specifications and pricing information, please contact our sales team.
@@ -115,9 +115,9 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
 					{product.name}
 				</h3>
-				   <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					   {product.description || 'High-performance digital slide scanner for pathology, research, and education.'}
-				   </p>
+				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
+					{product.description ? product.description : 'Professional immunology equipment engineered for precision and reliability.'}
+				</p>
 				
 				{/* View Details Button */}
 				<motion.button
@@ -191,7 +191,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 	);
 }
 
-export default function Centrifuges() {
+export default function Immunology() {
 	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -199,32 +199,57 @@ export default function Centrifuges() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Motic Slide Scanners
-		const productData: any[] = [
+		// Product data for Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station
+		const productData = [
 			{
-				id: 4,
-				name: 'MoticFlexScan 60',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticFlexScan%2060.png',
-				description: 'The Motic FlexScan 60 is a high-throughput fluorescent slide scanner that can handle up to 60 slides with both brightfield and 3-color immunofluorescence imaging. It features real-time autofocus, LED illumination, barcoding, and high-resolution capture (around 0.52 μm/pixel at 20x), making it ideal for efficient digital pathology and research workflows.'
+				id: 1,
+				name: 'HP-550 PRO',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-hp-550-pro.png',
+				description: 'High-performance laboratory hotplate with precise temperature control, designed for reliable heating applications in research and routine labs.'
 			},
 			{
 				id: 2,
-				name: 'MoticEasyScan OneTwo',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20OneTwo.png',
-				description: 'The Motic EasyScan One / Two are compact whole-slide digital pathology scanners designed for efficient, high-quality imaging. They offer 20x and 40x resolutions (≈ 0.52 μm/pixel at 20x; 0.26 μm/pixel at 40x), real-time autofocus, LED illumination, barcode support, and multiple scanning modes (including extended depth of field and Z-stack). The One model handles single slides; the Two supports dual slides. Ideal for labs, education, and telepathology workflows.'
+				name: 'HP-500 PRO',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-hp-500-pro.png',
+				description: 'Compact digital hotplate offering uniform heating and stable temperature control for daily laboratory use.'
 			},
 			{
 				id: 3,
-				name: 'MoticEasyScan Pro 6',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Pro%206.jpg',
-				description: 'The Motic EasyScan Pro 6 is a high-throughput slide scanner for digital pathology, able to scan up to 6 glass slides at once with high resolution (20x, 40x, and optional 80x), LED illumination, and real-time autofocus. It supports multiple scanning modes (Standard, High Precision, EDF, Z-Stack), various output formats (SVS, DICOM, JPEG, TIFF), and includes built-in software for image capture, annotation, and remote viewing.'
+				name: 'DLAB MS7-H550-S',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-ms7-h550-s.png',
+				description: 'Magnetic stirrer with heating function, suitable for routine mixing and heating tasks with reliable speed and temperature stability.'
 			},
 			{
-				id: 1,
-				name: 'MoticEasyScan Infinity 60',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Infinity%2060.jpg',
-				description: 'The EasyScan Infinity-60 is a high-throughput slide scanner designed for lab and hospital use. It scans up to 60 slides at a time at 20x and 40x magnification, delivers high resolution (≈ 0.52 μm/pixel at 20x; 0.26 μm/pixel at 40x), supports real-time autofocus, extended depth of field (EDF), Z-stack scanning, and allows slides to be added “on the fly” without interrupting the scanning process.'
+				id: 4,
+				name: 'DLAB MS7-H550-PRO',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-ms7-h550-pro.png',
+				description: 'Advanced digital hotplate magnetic stirrer with precise control, designed for demanding laboratory mixing and heating applications.'
 			},
+			{
+				id: 5,
+				name: 'DLAB MS10-H500-PRO',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-ms10-h500-pro.png',
+				description: 'High-capacity hotplate magnetic stirrer engineered for larger volumes, providing strong stirring performance and accurate temperature control.'
+			},
+			{
+				id: 6,
+				name: 'DSC-300D',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-dsc-300d.png',
+				description: 'Digital blood shaker designed for gentle and uniform mixing of blood samples in laboratories and blood banks.'
+			},
+			{
+				id: 7,
+				name: 'PS-600T',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-ps-600t.png',
+				description: 'Multi-purpose laboratory shaker suitable for blood bags and sample containers, offering stable and adjustable shaking motion.'
+			},
+			{
+				id: 8,
+				name: 'SR-100',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/dry-bath/dlab-sr-100.png',
+				description: 'Compact rotator / shaker for continuous and gentle mixing of laboratory samples, ideal for routine workflows.'
+			},
+			
 		];
 
 		setProducts(productData);
@@ -232,7 +257,7 @@ export default function Centrifuges() {
 
 		// Preload all images
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/motic/bg-motic.jpg',
+			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
 			...productData.map((p: any) => p.image)
 		];
 
@@ -270,7 +295,6 @@ export default function Centrifuges() {
 	};
 
 	// Show loading screen until all images are preloaded
-
 	if (!imagesLoaded) {
 		return <Preloader />;
 	}
@@ -284,21 +308,12 @@ export default function Centrifuges() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Image */}
-				<div className="absolute inset-0 w-full h-full z-0">
-					<Image
-						src="/asset/motic/motic-bg.png"
-						alt="Motic Slide Scanners Background"
-						fill
-						className="object-cover w-full h-full"
-						priority={true}
-					/>
-					<div className="absolute inset-0 w-full h-full bg-black" style={{ opacity: 0.5, zIndex: 1 }} />
-				</div>
+				{/* Background Gradient */}
+				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="motic-slide-scanners-particles" />
+					<ParticlesBackground containerId="dry-bath-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -314,7 +329,7 @@ export default function Centrifuges() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Motic Slide Scanners
+							Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
@@ -328,7 +343,7 @@ export default function Centrifuges() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							High-performance digital slide scanners for pathology, research, and education. Experience precision imaging and efficient workflow with Motic’s advanced scanning solutions.
+							Essential laboratory equipment for sample preparation, mixing, safety, and workflow efficiency.
 						</motion.p>
 					</motion.div>
 
@@ -381,17 +396,17 @@ export default function Centrifuges() {
 			>
 				<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-						Ready to Upgrade Your Digital Pathology Workflow?
+						Ready to Upgrade Your Laboratory?
 					</h2>
 					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-						Our team of specialists is ready to help you find the perfect Motic Slide Scanner solution for your laboratory or research needs.
+						Our team of specialists is ready to help you find the perfect dry bath, mixer, rotator, shaker, passbox, or safety solution for your laboratory needs.
 					</p>
 					<motion.a
 						href="/user/contact"
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
 						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
-											hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
 					>
 						Contact Our Experts
 					</motion.a>

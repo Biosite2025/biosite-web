@@ -61,9 +61,9 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in arterial blood gas electrolytes co-oximetry applications.
-						</p>
+						   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+							   {product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in arterial blood gas electrolytes co-oximetry applications.'}
+						   </p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
 								For detailed specifications and pricing information, please contact our sales team.
@@ -115,9 +115,9 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
 					{product.name}
 				</h3>
-				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional arterial blood gas electrolytes co-oximetry equipment engineered for precision and reliability.
-				</p>
+				   <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
+					   {product.description || 'Professional arterial blood gas electrolytes co-oximetry equipment engineered for precision and reliability.'}
+				   </p>
 				
 				{/* View Details Button */}
 				<motion.button
@@ -201,11 +201,30 @@ export default function ArterialBloodGasElectrolytesCoOximetry() {
 	useEffect(() => {
 		// Product data based on asset folder
 		const productData = [
-			{ id: 1, name: 'Biolight D800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png' },
-			{ id: 2, name: 'GEM 3500', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-3500.png' },
-			{ id: 3, name: 'GEM 5000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-5000.png' },
-			{ id: 4, name: 'GEM ChemSTAT', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-chemstat.png' },
-			{ id: 5, name: 'GEM Premier 7000 with iQM3', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/GEM-Premier-7000-with-iQM3.png' }
+			{
+				id: 2,
+				name: 'GEM Premier 3500 with iQM',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-3500.png',
+				description: 'The GEM Premier 3500 with Intelligent Quality Management (iQM) delivers simple, reliable, and flexible point-of-care testing. Its disposable GEM PAK and touchscreen ensure zero maintenance, while the large sampling area, barcode scanner, and versatile test menu enable fast, efficient Acute Care diagnostics.'
+			},
+			{
+				id: 3,
+				name: 'GEM Premier 5000 with iQM2',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-5000.png',
+				description: 'GEM Premier 5000 blood gas testing system provides automated quality assurance with every whole blood sample. With next-generation Intelligent Quality Management (iQM2), featuring IntraSpect technology, potential errors are detected not only before and after, but also during sample analysis, along with real-time correction and documentation.'
+			},
+			{
+				id: 4,
+				name: 'GEM Premier ChemSTAT',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/gem-chemstat.png',
+				description: 'The GEM Premier ChemSTAT is a point-of-care whole blood analyzer designed for acute care settings. It measures electrolytes, metabolites (like glucose and creatinine), hematocrit, pH, partial pressure of CO₂, lactate, among others—all from a single cartridge and specimen. It uses intelligent quality management (iQM) for continuous monitoring, automatic error detection, and correction, enabling fast and reliable results for clinical decision making.'
+			},
+			{
+				id: 5,
+				name: 'GEM Premier 7000 with iQM3',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/arterial-blood-gas-electrolytes-co-oximetry/GEM-Premier-7000-with-iQM3.png',
+				description: 'The GEM Premier 7000 with iQM3 is a cutting-edge point-of-care blood gas testing system that integrates hemolysis detection in ~45 seconds. It measures key parameters like pH, electrolytes, lactate, CO-oximetry, and more, while continuously monitoring sample quality to reduce pre-analytical errors and improve diagnostic accuracy.'
+			}
 		];
 
 		setProducts(productData);

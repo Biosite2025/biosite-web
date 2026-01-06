@@ -208,55 +208,55 @@ export default function MolecularDiagnostics() {
 				id: 2,
 				name: 'Sansure Natch CS',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-natch-cs.png',
-				description: '' // No description in image, leave blank or add if available
+				description: 'A fully automated nucleic acid extraction system designed for clinical molecular laboratories. It provides stable, high-purity DNA/RNA extraction with minimal manual intervention, improving consistency, biosafety, and workflow efficiency for PCR-based diagnostics.'
 			},
 			{
 				id: 3,
 				name: 'Zybio EXM 3000',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-3000.png',
-				description: ''
+				description: 'A compact automated nucleic acid extractor suitable for small to medium laboratories. It supports multiple sample types and standardized extraction protocols, delivering reliable nucleic acid purity for downstream molecular testing.'
 			},
 			{
 				id: 4,
 				name: 'Zybio EXM 6000',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-6000.png',
-				description: ''
+				description: 'A high-throughput automated nucleic acid extraction system for medium to large laboratories. It enables simultaneous processing of multiple samples with high efficiency, reducing turnaround time while maintaining excellent extraction performance and reproducibility.'
 			},
 			{
 				id: 5,
 				name: 'Sansure Slan 96P',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-slan-96p.png',
-				description: ''
+				description: 'A real-time PCR (qPCR) system designed for accurate and sensitive molecular diagnostics. It supports 96-well testing, offers precise temperature control, and is optimized for clinical applications such as infectious disease detection and genetic analysis.'
 			},
 			{
 				id: 6,
 				name: 'Sansure MA-6000',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-6000.png',
-				description: ''
+				description: 'A fully automated molecular analysis platform integrating nucleic acid extraction, amplification, and detection. It minimizes hands-on time, reduces contamination risk, and is ideal for high-volume molecular testing environments.'
 			},
 			{
 				id: 7,
 				name: 'Sansure MA-1630Q',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-1630q.png',
-				description: ''
+				description: 'A compact automated molecular testing system tailored for laboratories requiring efficient, space-saving solutions. It combines extraction and qPCR analysis with high sensitivity, making it suitable for routine molecular diagnostics.'
 			},
 			{
 				id: 8,
 				name: 'Zybio ZIP-96V',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-zip-96v.png',
-				description: ''
+				description: 'A 96-well automated nucleic acid extraction system designed for high-throughput laboratories. It supports batch processing, improves workflow efficiency, and delivers consistent DNA/RNA quality for PCR and sequencing applications.'
 			},
 			{
 				id: 9,
 				name: 'Sansure iPonatic SQ31B',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq31b.png',
-				description: ''
+				description: 'A portable molecular diagnostic system (4-module configuration) that integrates extraction, amplification, and detection. Designed for rapid, on-site testing, it is suitable for emergency use, mobile labs, and decentralized molecular diagnostics.'
 			},
 			{
 				id: 10,
 				name: 'Sansure iPonatic SQ36A',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq36a.png',
-				description: ''
+				description: 'A portable integrated molecular testing platform offering expanded throughput compared to SQ31B. It delivers fast, accurate molecular results in a compact format, ideal for field testing, public health screening, and rapid response scenarios.'
 			},
 			{
 				id: 11,
@@ -292,7 +292,7 @@ export default function MolecularDiagnostics() {
 				id: 16,
 				name: 'Oncoscreen Screening Diagnostic Kits and Detection Kit',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Oncoscreen-Screening-Diagnostic-Kits-and-Detection%20Kit.png',
-				description: ''
+				description: 'The OncoScreen Screening and Detection Kit by Mylab Discovery Solutions is a diagnostic tool designed for the early identification and screening of cancer.'
 			},
 			
 		];

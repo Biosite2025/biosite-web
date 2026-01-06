@@ -69,7 +69,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Industry-leading digital slide scanning technology designed for exceptional imaging quality, speed, and reliability in clinical and research applications.
+						{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -123,7 +123,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Industry-leading digital slide scanning technology for precision imaging and analysis.
+				{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -209,16 +209,39 @@ export default function HamamatsuSlideScanner() {
 		// Product data based on actual folder structure
 		const productData: any = {
 			'Digital Slide Scanner': [
-				{ id: 1, name: 'NanoZoomer S360 Digital slide scanner', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20S360%20Digital%20slide%20scanner.jpg' },
-				{ id: 2, name: 'NanoZoomer® S20 Digital slide scanner', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%C2%AE%20S20%20Digital%20slide%20scanner.jpg' },
-			    { id: 3, name: 'NanoZoomer - SQ', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20-%20SQ.png' },
-				{ id: 4, name: 'NanoZoomer S60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S60.png' },
-			    { id: 5, name: 'NanoZoomer S210', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S210.png' },
-			
-			
+				{
+					id: 1,
+					name: 'NanoZoomer S360 Digital slide scanner',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20S360%20Digital%20slide%20scanner.jpg',
+					description: 'High throughput model with exceptional scanning speed. Up to 360 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
+				},
+				{
+					id: 2,
+					name: 'NanoZoomer® S20 Digital slide scanner',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%C2%AE%20S20%20Digital%20slide%20scanner.jpg',
+					description: 'Benchtop model with exceptional performance. Up to 20 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
+				},
+				{
+					id: 3,
+					name: 'NanoZoomer - SQ',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20-%20SQ.png',
+					description: 'Compact, affordable, and easy to operate model. Up to a 1”x3” (26 mm x 76 mm) slide.'
+				},
+				{
+					id: 4,
+					name: 'NanoZoomer S60',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S60.png',
+					description: 'Versatile model for both BF and FL capability. Up to 30 2”x3” (52 mm x 76 mm) slides or up to 60 1”x3” (26 mm x 76 mm) slides.'
+				},
+				{
+					id: 5,
+					name: 'NanoZoomer S210',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S210.png',
+					description: 'Standard model with a low cost of ownership. Up to 210 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
+				},
 			],
 		};
-
+			
 		setProducts(productData);
 		setLoading(false);
 
