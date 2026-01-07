@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in hematology applications.
+							{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional hematology equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,11 +201,36 @@ export default function Hematology() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'Dymind DF-55', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/dymind-df-55.png' },
-			{ id: 2, name: 'Genrui KT-60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png' },
-			{ id: 3, name: 'Z52', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/Z52.png' },
-			{ id: 4, name: 'KT-8000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/KT-8000.png' },
-			{ id: 5, name: 'EXC 8010', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/EXC%208010.png' },
+			{ 
+				id: 1, 
+				name: 'Dymind DF-55', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/dymind-df-55.png',
+				description: 'Fully automated hematology analyzer designed for routine blood testing, offering reliable CBC analysis with efficient throughput. BIOSITE PRODUCT CATALOG VERSION…'
+			},
+			{ 
+				id: 2, 
+				name: 'Genrui KT-60', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png',
+				description: 'Compact semi-automatic biochemistry analyzer suitable for small to medium laboratories, providing accurate and cost-effective biochemical testing. BIOSITE PRODUCT CATALOG VERSION…'
+			},
+			{ 
+				id: 3, 
+				name: 'Z52', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/Z52.png',
+				description: 'Compact bench-top centrifuge designed for routine laboratory sample separation with stable performance and easy operation. BIOSITE PRODUCT CATALOG VERSION…'
+			},
+			{ 
+				id: 4, 
+				name: 'KT-8000', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/KT-8000.png',
+				description: 'Fully automated biochemistry analyzer built for high-efficiency clinical laboratories, offering high throughput and precise biochemical analysis. BIOSITE PRODUCT CATALOG VERSION…'
+			},
+			{ 
+				id: 5, 
+				name: 'EXC 8010', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/EXC%208010.png',
+				description: 'High-speed clinical centrifuge designed for blood banks and laboratories, suitable for continuous operation with reliable separation performance. BIOSITE PRODUCT CATALOG VERSION…'
+			}
 		];
 
 		setProducts(productData);

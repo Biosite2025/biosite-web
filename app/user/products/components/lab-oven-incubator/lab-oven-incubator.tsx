@@ -62,7 +62,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							Professional-grade laboratory equipment designed for precision, reliability, and superior performance in lab oven incubator applications.
+						{product.description}
 						</p>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					Professional lab oven incubator equipment engineered for precision and reliability.
+					{product.description}
 				</p>
 				
 				{/* View Details Button */}
@@ -201,12 +201,42 @@ export default function LabOvenIncubator() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ id: 1, name: 'CL4 Semi Auto', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png' },
-		    { id: 2, name: 'DLAB HB 120-S', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-120-s.png' },
-		    { id: 3, name: 'DLAB HB 105-S2', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s2.png' },
-		    { id: 4, name: 'DLAB HB 105-S1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s1.png' },
-		    { id: 5, name: 'DLAB HB 150-S1', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s1.png' },
-		    { id: 6, name: 'DLAB HB 150-S2', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s2.png' }
+			{ 
+				id: 1, 
+				name: 'CL4 Semi Auto', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png',
+				description: 'A semi-automatic clinical centrifuge designed for routine laboratory applications. It provides reliable and efficient separation of blood samples, serum, plasma, and other clinical specimens. The unit emphasizes user safety, stable operation, and consistent performance, making it suitable for small to medium-sized laboratories.'
+			},
+		    { 
+				id: 2, 
+				name: 'DLAB HB 120-S', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-120-s.png',
+				description: 'A compact laboratory heating block intended for precise temperature control of samples. It supports uniform heating and is commonly used for incubation, enzyme reactions, sample preparation, and other temperature-sensitive laboratory procedures. Its digital control ensures accuracy and repeatability.'
+			},
+		    { 
+				id: 3, 
+				name: 'DLAB HB 105-S2', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s2.png',
+				description: 'A dual-block version of the HB 105 series, enabling simultaneous heating of two different sample sets. It offers improved productivity by allowing parallel experiments under the same or different temperature conditions. Ideal for laboratories requiring flexibility and higher throughput.'
+			},
+		    { 
+				id: 4, 
+				name: 'DLAB HB 105-S1', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s1.png',
+				description: 'A single-block digital heating block designed for routine heating and incubation tasks. It allows accurate temperature setting and stable heat distribution, making it suitable for applications such as sample digestion, reagent warming, and biochemical reactions in research and clinical laboratories.'
+			},
+		    { 
+				id: 5, 
+				name: 'DLAB HB 150-S1', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s1.png',
+				description: 'A high-temperature single-block heating block capable of reaching higher temperature ranges compared to the HB 105 series. It is designed for more demanding laboratory applications such as molecular biology, chemical analysis, and advanced sample preparation that require elevated and stable temperatures.'
+			},
+		    { 
+				id: 6, 
+				name: 'DLAB HB 150-S2', 
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s2.png',
+				description: 'A dual-block high-temperature heating block combining the advanced temperature capability of the HB 150 series with dual-block functionality. It supports efficient multitasking in laboratories by allowing two sets of samples to be heated simultaneously, improving workflow efficiency and experimental flexibility.'
+			}
 		];
 
 		setProducts(productData);

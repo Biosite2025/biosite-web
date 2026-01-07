@@ -262,7 +262,7 @@ export default function MolecularDiagnostics() {
 				id: 11,
 				name: 'Human Papillomavirus (HPV) Diagnostic Kit',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png',
-				description: 'Related products: • HPV 13+2 – Human Papillomavirus DNA Diagnostic Kit • HPV G16 – High-risk Human Papillomavirus DNA (Genotype) Diagnostic Kit • HPV 15HR – 15 High-risk Human Papillomavirus Nucleic Acid Diagnostic Kit • HPV 16, 18 – Human papillomavirus (Type 16 and 18) DNA Fluorescence Diagnostic Kit • HPV 6+11 – Human Papillomavirus (Type 6 and 11) DNA Fluorescence Diagnostic Kit • HPV G23 – Human Papillomavirus DNA (23 genotypes) Diagnostic Kit'
+				description: 'A comprehensive diagnostic kit for the detection and genotyping of human papillomavirus (HPV), including high-risk and low-risk types. Supports multiple genotypes and fluorescence-based DNA analysis for accurate screening and clinical diagnostics.'
 			},
 			{
 				id: 12,
