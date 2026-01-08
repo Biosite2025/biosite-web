@@ -6,14 +6,85 @@ import { motion, useMotionValue, useAnimationFrame, AnimatePresence } from 'fram
 import Image from 'next/image';
 
 const EventGallery: React.FC = () => {
-  // Video sources - from Cloudinary (saves 172MB from your server!)
-  const videoSources = [
-    'https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530540/biosite-assets/My_Video11.mp4',
-    'https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4',
-  ];
+  // Video sources - dynamically loaded from Digital Ocean Spaces
+  const [videoSources, setVideoSources] = useState<string[]>([]);
+  const [videosLoading, setVideosLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+
+  // Gallery images - dynamically loaded from Digital Ocean Spaces
+  const [topRowImages, setTopRowImages] = useState<string[]>([]);
+  const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
+  const [imagesLoading, setImagesLoading] = useState(true);
 
   // Video navigation state (show 2 at a time)
   const [videoPairIndex, setVideoPairIndex] = useState(0);
+  
+  // Ensure client-side only rendering for animations
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
+  }, []);
+
+  // Fetch gallery images from API on mount
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        console.log('[EventGallery] Fetching gallery images from API...');
+        const response = await fetch('/api/event-gallery');
+        const data = await response.json();
+        
+        if (data.folders && data.folders.length > 0) {
+          // First folder for top row
+          if (data.folders[0] && data.folders[0].length > 0) {
+            const topImages = data.folders[0].map((img: any) => img.url);
+            setTopRowImages(topImages);
+            console.log(`[EventGallery] Loaded ${topImages.length} images for top row from ${data.folderNames?.[0] || 'folder 1'}`);
+          }
+          
+          // Second folder for bottom row
+          if (data.folders[1] && data.folders[1].length > 0) {
+            const bottomImages = data.folders[1].map((img: any) => img.url);
+            setBottomRowImages(bottomImages);
+            console.log(`[EventGallery] Loaded ${bottomImages.length} images for bottom row from ${data.folderNames?.[1] || 'folder 2'}`);
+          }
+        } else {
+          console.warn('[EventGallery] No folders or images found');
+        }
+      } catch (error) {
+        console.error('[EventGallery] Error fetching gallery images:', error);
+      } finally {
+        setImagesLoading(false);
+      }
+    };
+
+    fetchGalleryImages();
+  }, []);
+
+  // Fetch videos from API on mount
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        console.log('[EventGallery] Fetching videos from API...');
+        const response = await fetch('/api/event-videos');
+        const data = await response.json();
+        
+        if (data.videos && data.videos.length > 0) {
+          const videoUrls = data.videos.map((v: any) => v.url);
+          setVideoSources(videoUrls);
+          console.log(`[EventGallery] Loaded ${videoUrls.length} videos`);
+        } else {
+          console.warn('[EventGallery] No videos found');
+        }
+      } catch (error) {
+        console.error('[EventGallery] Error fetching videos:', error);
+      } finally {
+        setVideosLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
   
   // Modal state for image viewing
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -58,50 +129,28 @@ const EventGallery: React.FC = () => {
       }
     }
   };
-  // Event images - high quality from Cloudinary
-  const eventImages = [
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/553524415_2063101971095533_1022699523949673469_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/580787992_1399117405219310_6581944115025836454_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/581965798_1533298997709326_4564642075106128466_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582047587_873690831768036_8221554468867121610_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582336549_852291710588341_8559505469722307278_n%20(1)?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/582714435_3799246460379471_349393673555837628_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/589814966_10229250512036075_2537740228372925690_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/591522302_10229250513796119_2859382229327237142_n?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(1)?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(2)?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO%20(3)?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/CLAYGO?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01197?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01354?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01479?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01527?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01550?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01559?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01577?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01593?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01722?_a=BAMAMifm0",
-    "https://res.cloudinary.com/dmvyhrewy/image/upload/f_auto,q_auto:good,w_1200/v1/biosite-assets/events/DSC01879?_a=BAMAMifm0"
-  ];
 
   // Debug: Log image loading performance
   useEffect(() => {
+    const allImages = [...topRowImages, ...bottomRowImages];
+    if (allImages.length === 0) return;
+    
     console.log('[EventGallery] Component mounted at:', new Date().toISOString());
-    console.log('[EventGallery] Total images to load:', eventImages.length);
+    console.log('[EventGallery] Total images to load:', allImages.length);
     
     const startTime = performance.now();
     let loadedCount = 0;
     
-    eventImages.forEach((src, index) => {
+    allImages.forEach((src, index) => {
       const img = new window.Image();
       const imgStartTime = performance.now();
       
       img.onload = () => {
         loadedCount++;
         const imgLoadTime = (performance.now() - imgStartTime).toFixed(2);
-        console.log(`[EventGallery] Image ${index + 1}/${eventImages.length} loaded in ${imgLoadTime}ms - Total: ${loadedCount}`);
+        console.log(`[EventGallery] Image ${index + 1}/${allImages.length} loaded in ${imgLoadTime}ms - Total: ${loadedCount}`);
         
-        if (loadedCount === eventImages.length) {
+        if (loadedCount === allImages.length) {
           const totalTime = (performance.now() - startTime).toFixed(2);
           console.log(`[EventGallery] ✅ All images loaded in ${totalTime}ms`);
         }
@@ -113,34 +162,64 @@ const EventGallery: React.FC = () => {
       
       img.src = src;
     });
-  }, []);
+  }, [topRowImages, bottomRowImages]);
 
   // Total images to render for seamless loop (optimized - no array duplication)
-  const totalLoopImages = eventImages.length * 3;
+  const totalTopLoopImages = topRowImages.length * 3;
+  const totalBottomLoopImages = bottomRowImages.length * 3;
+
+  // Calculate loop width based on image count
+  // Each image: 320px (lg:w-80) + 24px gap (lg:gap-6) = 344px on desktop
+  // Mobile: 192px (w-48) + 12px gap (gap-3) = 204px
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const imageWidth = isMobile ? 204 : 344;
+  const topLoopWidth = topRowImages.length * imageWidth;
+  const bottomLoopWidth = bottomRowImages.length * imageWidth;
 
   // Motion values for both rows
   const topRowX = useMotionValue(0);
-  const bottomRowX = useMotionValue(-1000);
+  const bottomRowX = useMotionValue(-imageWidth * bottomRowImages.length); // Start off-screen for rightward scroll
   const [paused, setPaused] = useState(false);
 
   // Animation frame for top row
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  // Start animation only when client-side is ready
+  useEffect(() => {
+    if (isClient) {
+      setIsAnimating(true);
+    }
+  }, [isClient]);
+  
   useAnimationFrame((t, delta) => {
-    if (!paused) {
-      // Move left
-      let next = topRowX.get() - (1000 / 20) * (delta / 1000); // 1000px in 20s
-      if (next <= -1000) next += 1000;
+    if (!paused && isAnimating && isClient && topLoopWidth > 0) {
+      // Move left - scroll through entire image set very smoothly
+      const speed = topLoopWidth / 400; // Complete loop in 120 seconds for very smooth viewing
+      let next = topRowX.get() - speed * (delta / 1000);
+      // Reset when we've scrolled through one complete set
+      if (next <= -topLoopWidth) next += topLoopWidth;
       topRowX.set(next);
     }
   });
+  
   // Animation frame for bottom row
   useAnimationFrame((t, delta) => {
-    if (!paused) {
-      // Move right
-      let next = bottomRowX.get() + (1000 / 25) * (delta / 1000); // 1000px in 25s
-      if (next >= 0) next -= 1000;
+    if (!paused && isAnimating && isClient && bottomLoopWidth > 0) {
+      // Move right - scroll through entire image set very smoothly
+      const speed = bottomLoopWidth / 300; // Complete loop in 140 seconds for very smooth viewing
+      let next = bottomRowX.get() + speed * (delta / 1000);
+      // Reset when we've scrolled through one complete set
+      if (next >= 0) next -= bottomLoopWidth;
       bottomRowX.set(next);
     }
   });
+  
+  // Cleanup animation on unmount
+  useEffect(() => {
+    return () => {
+      setIsAnimating(false);
+    };
+  }, []);
 
   // Pause/resume handlers
   const handlePause = () => setPaused(true);
@@ -187,9 +266,10 @@ const EventGallery: React.FC = () => {
   // Navigate to previous image in modal
   const handlePrevImage = () => {
     if (!selectedImage) return;
-    const currentIndex = eventImages.indexOf(selectedImage);
-    const prevIndex = currentIndex === 0 ? eventImages.length - 1 : currentIndex - 1;
-    const prevImage = eventImages[prevIndex];
+    const allImages = [...topRowImages, ...bottomRowImages];
+    const currentIndex = allImages.indexOf(selectedImage);
+    const prevIndex = currentIndex === 0 ? allImages.length - 1 : currentIndex - 1;
+    const prevImage = allImages[prevIndex];
     
     setImageLoading(true);
     setImageRendered(false);
@@ -207,9 +287,10 @@ const EventGallery: React.FC = () => {
   // Navigate to next image in modal
   const handleNextImage = () => {
     if (!selectedImage) return;
-    const currentIndex = eventImages.indexOf(selectedImage);
-    const nextIndex = currentIndex === eventImages.length - 1 ? 0 : currentIndex + 1;
-    const nextImage = eventImages[nextIndex];
+    const allImages = [...topRowImages, ...bottomRowImages];
+    const currentIndex = allImages.indexOf(selectedImage);
+    const nextIndex = currentIndex === allImages.length - 1 ? 0 : currentIndex + 1;
+    const nextImage = allImages[nextIndex];
     
     setImageLoading(true);
     setImageRendered(false);
@@ -286,6 +367,13 @@ const EventGallery: React.FC = () => {
 
   return (
     <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-12 lg:py-20 min-h-[400px] lg:min-h-[600px]">
+      {/* Loading State */}
+      {imagesLoading && (
+        <div className="flex justify-center items-center py-20">
+          <div className="text-white text-xl">Loading gallery images...</div>
+        </div>
+      )}
+
       {/* Image Modal - Sakura Style */}
       <AnimatePresence mode="wait">
         {isModalOpen && selectedImage && (
@@ -422,14 +510,16 @@ const EventGallery: React.FC = () => {
 
 
       {/* Infinite Scrolling Image Gallery */}
+      {!imagesLoading && (topRowImages.length > 0 || bottomRowImages.length > 0) && (
       <div className="relative overflow-hidden">
         {/* Top Row - Right to Left */}
+        {topRowImages.length > 0 && (
         <div className="flex mb-4 lg:mb-8">
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: topRowX }}
-          >            {Array.from({ length: totalLoopImages }).map((_, index) => {
-              const image = eventImages[index % eventImages.length];
+          >            {Array.from({ length: totalTopLoopImages }).map((_, index) => {
+              const image = topRowImages[index % topRowImages.length];
               const isPriority = index < 4; // Priority load first 4 images
               return (
               <motion.div
@@ -475,16 +565,17 @@ const EventGallery: React.FC = () => {
             })}
           </motion.div>
         </div>
+        )}
 
         {/* Bottom Row - Left to Right (Reversed Order) */}
+        {bottomRowImages.length > 0 && (
         <div className="flex">
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
           >
-            {Array.from({ length: totalLoopImages }).map((_, index) => {
-              const reversedImages = [...eventImages].reverse();
-              const image = reversedImages[index % reversedImages.length];
+            {Array.from({ length: totalBottomLoopImages }).map((_, index) => {
+              const image = bottomRowImages[index % bottomRowImages.length];
               return (
               <motion.div
                 key={`bottom-${index}`}
@@ -523,10 +614,12 @@ const EventGallery: React.FC = () => {
             })}
           </motion.div>
         </div>
+        )}
       </div>
-      
+      )}
 
       {/* Video Section - moved below gallery and made larger */}
+      {!videosLoading && videoSources.length > 0 && (
       <div className="container max-w-full px-4 lg:px-6 mt-12 lg:mt-20 mb-16 lg:mb-[150px]">
         {/* Video Title Section - outside video, same layout as heading */}
         <motion.div 
@@ -537,10 +630,10 @@ const EventGallery: React.FC = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-4 mt-16 lg:mt-[200px]">
-            Event Highlight Video
+            Event Highlight Video{videoSources.length > 1 ? 's' : ''}
           </h2>
           <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-2xl mx-auto px-4 lg:px-0">
-            Relive the best moments from our recent event
+            Relive the best moments from our recent event{videoSources.length > 1 ? 's' : ''}
           </p>
         </motion.div>
         {/* Drag to swipe instruction (moved below video section) */}
@@ -561,12 +654,42 @@ const EventGallery: React.FC = () => {
         </span>
       </div>
         <motion.div
-          className={`flex justify-center gap-4 lg:gap-10`}
+          className={`flex justify-center gap-4 lg:gap-10 relative`}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
+          {/* Previous Arrow - Only show if more than 2 videos */}
+          {totalPairs > 1 && (
+            <motion.button
+              onClick={handlePrevVideoPair}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 lg:p-4 text-white transition-all duration-300 shadow-lg"
+              whileHover={{ scale: 1.1, x: -4 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Previous videos"
+            >
+              <svg className="w-6 h-6 lg:w-8 lg:h-8" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </motion.button>
+          )}
+
+          {/* Next Arrow - Only show if more than 2 videos */}
+          {totalPairs > 1 && (
+            <motion.button
+              onClick={handleNextVideoPair}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 lg:p-4 text-white transition-all duration-300 shadow-lg"
+              whileHover={{ scale: 1.1, x: 4 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Next videos"
+            >
+              <svg className="w-6 h-6 lg:w-8 lg:h-8" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </motion.button>
+          )}
+
           {/* Show two videos at a time, with navigation for pairs */}
           <motion.div
             className="relative w-full flex justify-center items-center cursor-grab active:cursor-grabbing"
@@ -614,6 +737,7 @@ const EventGallery: React.FC = () => {
           </motion.div>
         </motion.div>
       </div>
+      )}
 
     </div>
   );

@@ -251,7 +251,7 @@ export default function Contact() {
 
         {/* Contact Form */}
         <motion.div
-          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px] order-2"
+          className=" bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px]  order-2"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -274,12 +274,6 @@ export default function Contact() {
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
               {error}
-            </div>
-          )}
-          
-          {submitted && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
-              Message sent successfully! We'll get back to you soon.
             </div>
           )}
           
@@ -514,6 +508,65 @@ export default function Contact() {
         </motion.div>
       </motion.div>
       </motion.section>
+
+      {/* Success Popup Modal */}
+      <AnimatePresence>
+        {submitted && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSubmitted(false)}
+          >
+            <motion.div
+              className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full"
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+             
+            >
+              {/* Success Icon */}
+              <div className="flex justify-center mb-4">
+                <motion.div
+                  className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                >
+                  <svg
+                    className="w-8 h-8 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <motion.path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M5 13l4 4L19 7"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
+                    />
+                  </svg>
+                </motion.div>
+              </div>
+              
+              {/* Success Message */}
+              <h3 className="text-2xl font-bold text-center text-[#2B3990] mb-2">
+                Message Sent Successfully!
+              </h3>
+              <p className="text-center text-gray-600 mb-6">
+                Thank you for contacting us. We'll get back to you soon.
+              </p>
+              
+              
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

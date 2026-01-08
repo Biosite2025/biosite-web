@@ -137,6 +137,15 @@ const EventShowcase: React.FC = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Reset scroll position on mount (handles refresh)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+      setIsClient(true);
+    }
+  }, []);
 
   const handleVideoSwitch = (direction: 'next' | 'prev') => {
     const newIndex = direction === 'next' 
@@ -261,9 +270,20 @@ const EventShowcase: React.FC = () => {
     // Small delay to prevent glitches on page load/refresh
     const timer = setTimeout(initVideos, 100);
 
-    // GSAP ScrollTrigger animations - only run on client side
-    if (typeof window !== 'undefined') {
-      const ctx = gsap.context(() => {
+    // GSAP ScrollTrigger animations - only run on client side AND when refs are ready
+    if (typeof window !== 'undefined' && isClient) {
+      // Wait for refs to be available before initializing GSAP
+      const initGSAP = () => {
+        // Check if all refs are available
+        if (!containerRef.current || !videoWrapperRef.current || !titleRef.current) {
+          console.warn('[EventShowcase] Refs not ready, retrying...');
+          return null;
+        }
+        
+        console.log('[EventShowcase] Initializing GSAP ScrollTrigger...');
+        
+        try {
+          const ctx = gsap.context(() => {
         // Main timeline for the video section
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -381,15 +401,40 @@ const EventShowcase: React.FC = () => {
             ease: "power2.inOut"
           });
         }
-      });
+          });
+          
+          return ctx;
+        } catch (error) {
+          console.error('[EventShowcase] GSAP initialization error:', error);
+          return null;
+        }
+      };
+      
+      // Delay GSAP initialization to ensure DOM is fully ready after refresh
+      const gsapTimer = setTimeout(() => {
+        initGSAP();
+      }, 500); // Increased delay for refresh stability
 
       return () => {
         clearTimeout(timer);
-        ctx.revert();
+        clearTimeout(gsapTimer);
         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       };
     }
-  }, []);
+    
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isClient]);
+
+  // Don't render animations until client-side is confirmed
+  if (!isClient) {
+    return (
+      <div className="relative overflow-hidden bg-gray-900 h-screen flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <>
