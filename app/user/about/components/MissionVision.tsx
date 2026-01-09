@@ -143,7 +143,7 @@ const MissionVision = () => {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530578/biosite-assets/slide_3.png"
+          src="/asset/slides/visminbuilding.png"
           alt="Background"
           fill
           loading="lazy"
