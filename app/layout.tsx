@@ -122,8 +122,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <head>
         {/* Primary Meta Tags */}
-        <title>Biosite Philippines - Advanced Healthcare & Laboratory Solutions</title>
-        <meta name="title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <title>Biosite Medical Instruments, INC.</title>
+        <meta name="title" content="Biosite Medical Instruments, INC." />
         <meta name="description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical equipment in the Philippines." />
         <meta name="keywords" content="biosite philippines, laboratory equipment, diagnostic devices, medical supplies, healthcare solutions, clinical chemistry, microscopes, medical diagnostics" />
         <meta name="author" content="Biosite Philippines" />
@@ -139,7 +139,7 @@ export default function RootLayout({
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://biositeph.com/" />
-        <meta property="og:title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <meta property="og:title" content="Biosite Medical Instruments, INC." />
         <meta property="og:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
         <meta property="og:image" content="https://biositeph.com/og-image.jpg" />
         <meta property="og:site_name" content="Biosite Philippines" />
@@ -147,7 +147,7 @@ export default function RootLayout({
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://biositeph.com/" />
-        <meta property="twitter:title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <meta property="twitter:title" content="Biosite Medical Instruments, INC." />
         <meta property="twitter:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
         <meta property="twitter:image" content="https://biositeph.com/og-image.jpg" />
         
