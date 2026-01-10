@@ -7,6 +7,7 @@ import { TopNav } from "../src/components/layout/TopNav";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { LoadingProvider } from "./LoadingContext";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -120,11 +121,71 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+        {/* Primary Meta Tags */}
+        <title>Biosite Philippines - Advanced Healthcare & Laboratory Solutions</title>
+        <meta name="title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <meta name="description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical equipment in the Philippines." />
+        <meta name="keywords" content="biosite philippines, laboratory equipment, diagnostic devices, medical supplies, healthcare solutions, clinical chemistry, microscopes, medical diagnostics" />
+        <meta name="author" content="Biosite Philippines" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        {/* Favicon - Multiple sizes for different devices */}
+        <link rel="icon" type="image/x-icon" href="/asset/favicon/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/asset/favicon/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/asset/favicon/favicon-96x96.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png" />
+        <link rel="manifest" href="/asset/favicon/site.webmanifest" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://biositeph.com/" />
+        <meta property="og:title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <meta property="og:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
+        <meta property="og:image" content="https://biositeph.com/og-image.jpg" />
+        <meta property="og:site_name" content="Biosite Philippines" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://biositeph.com/" />
+        <meta property="twitter:title" content="Biosite Philippines - Advanced Healthcare & Laboratory Solutions" />
+        <meta property="twitter:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
+        <meta property="twitter:image" content="https://biositeph.com/og-image.jpg" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://biositeph.com/" />
+        
+        {/* Additional SEO */}
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
+        {/* Structured Data for Google */}
+        <Script id="structured-data" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Biosite Philippines",
+            "url": "https://biositeph.com",
+            "logo": "https://biositeph.com/asset/favicon/favicon-96x96.png",
+            "description": "Leading provider of advanced diagnostic and medical supplies in the Philippines",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "PH",
+              "addressLocality": "Philippines"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "Customer Service",
+              "availableLanguage": "English"
+            },
+            "sameAs": []
+          })}
+        </Script>
+        
         <LoadingProvider value={loading}>
           {/* TopNav - Always visible, never affected by loading */}
           <TopNav />
