@@ -265,10 +265,52 @@ export default function JobListing() {
           }
         }
         
+        @media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
+          .joblisting-section-1366 {
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+            margin-top: -3.75rem !important;
+          }
+          
+          .joblisting-container-1366 {
+            transform: scale(0.90) !important;
+           
+            margin-bottom: -2rem !important;
+          }
+          
+          .joblisting-container-1366 h1 {
+            font-size: 1.875rem !important;
+            margin-bottom: 0.75rem !important;
+          }
+          
+          .joblisting-container-1366 .underline-bar {
+            width: 150px !important;
+          }
+          
+          .joblisting-container-1366 .image-container {
+            height: 380px !important;
+          }
+          
+          .joblisting-container-1366 form {
+            gap: 1rem !important;
+          }
+          
+          .joblisting-container-1366 input,
+          .joblisting-container-1366 textarea,
+          .joblisting-container-1366 button {
+            padding: 0.75rem 1rem !important;
+            font-size: 0.95rem !important;
+          }
+          
+          .joblisting-container-1366 .grid {
+            gap: 0.75rem !important;
+          }
+        }
+        
       `}</style>
 
       <motion.section
-        className="joblisting-section-ipad joblisting-section-ipadmini w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+        className="joblisting-section-ipad joblisting-section-ipadmini joblisting-section-1366 w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -318,7 +360,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="w-full scale-90 sm:scale-95 md:scale-100 lg:scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center z-10 relative">
+      <div className="joblisting-container-1366 w-full scale-90 sm:scale-95 md:scale-100 lg:scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center z-10 relative">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
@@ -336,13 +378,13 @@ export default function JobListing() {
               <span className="text-[#2B3990]">JOB LISTING </span> 
             </motion.h1>
             <motion.div
-              className="h-0.5 sm:h-1 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full mx-auto lg:mx-0 w-[120px] sm:w-[150px] md:w-[180px] lg:w-[200px]"
+              className="underline-bar h-0.5 sm:h-1 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full mx-auto lg:mx-0 w-[120px] sm:w-[150px] md:w-[180px] lg:w-[200px]"
               initial={{ width: 0 }}
               animate={{ width: "200px" }}
               transition={{ duration: 0.8, delay: 0.7 }}
             />
           </div>
-          <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl h-[300px] sm:h-[350px] md:h-[400px] lg:h-[520px] flex items-center">
+          <div className="image-container relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl h-[300px] sm:h-[350px] md:h-[400px] lg:h-[520px] flex items-center">
             {/* Job Listing PNG Container */}
             <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl sm:rounded-3xl p-0 shadow-lg sm:shadow-xl md:shadow-2xl relative overflow-hidden w-full h-full flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />

@@ -277,6 +277,69 @@ const ipadResponsiveStyles = `
 			}
 		}
   
+	@media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
+		/* 1366x768 Laptop Display - Reduce image zoom */
+		.hero-content-container {
+			left: 55% !important;
+			transform: translateX(-50%) scale(0.88) !important;
+			padding-left: 50px !important;
+			padding-right: 50px !important;
+			max-width: 900px !important;
+			margin-top: 20px !important;
+			width: calc(100% - 100px) !important;
+		}
+		.hero-title {
+			font-size: 2.8rem !important;
+			line-height: 1.08 !important;
+			margin-bottom: 18px !important;
+		}
+		.hero-subtitle {
+			font-size: 1.05rem !important;
+			line-height: 1.55 !important;
+			margin-bottom: 24px !important;
+			max-width: 85% !important;
+		}
+		.hero-buttons {
+			flex-direction: row !important;
+			gap: 24px !important;
+			margin-top: 20px !important;
+		}
+		.hero-button {
+			padding: 14px 32px !important;
+			font-size: 0.98rem !important;
+		}
+		.location-boxes-container {
+			padding: 0 20px !important;
+			margin-bottom: 30px !important;
+			margin-top: 30px !important;
+		}
+		.location-boxes-container > div {
+			display: flex !important;
+			flex-direction: row !important;
+			gap: 20px !important;
+			justify-content: center !important;
+			align-items: stretch !important;
+		}
+		.location-box {
+			padding: 20px !important;
+			min-width: 280px !important;
+			max-width: 340px !important;
+			flex: 1 !important;
+		}
+		.location-box-title {
+			font-size: 1.1rem !important;
+			margin-bottom: 14px !important;
+		}
+		.location-box-address {
+			font-size: 0.88rem !important;
+			margin-bottom: 20px !important;
+		}
+		.location-box-phone {
+			font-size: 0.95rem !important;
+			margin-bottom: 20px !important;
+		}
+	}
+
 	@media (min-width: 1365px) and (max-width: 1375px) and (min-height: 1020px) and (max-height: 1030px) {
 		/* iPad Pro 12.9" 1366x1024 - Zoom out hero content */
 		.hero-content-container {
@@ -530,8 +593,8 @@ const HeroSection = () => {
 							initial={false}
 							animate={
 								idx === current && fade
-									? { opacity: 1, scale: 1.1, zIndex: 10 }
-									: { opacity: 0, scale: 1.05, zIndex: 0 }
+									? { opacity: 1, scale: 1.05, zIndex: 10 }
+									: { opacity: 0, scale: 1.02, zIndex: 0 }
 							}
 							transition={{ duration: 1.2, ease: "easeOut" }}
 						>
@@ -760,18 +823,7 @@ const HeroSection = () => {
 							+63 917 111 5008
 						</div>
 						<div className="flex items-center justify-between mt-auto relative z-10">
-							<a
-								href="#"
-								className="text-white text-sm font-semibold flex items-center gap-2 hover:text-blue-200 transition-all duration-300 transform hover:translate-x-1 group/link"
-							>
-								LEARN MORE
-								<span
-									aria-hidden
-									className="transform group-hover/link:translate-x-1 transition-transform duration-300"
-								>
-									→
-								</span>
-							</a>
+							
 							<div className="w-12 h-8 rounded bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<div className="w-8 h-5 rounded bg-[#1A3578] relative">
 									<div className="w-6 h-3 rounded bg-[#2453A6] absolute top-1 left-1" />
@@ -809,18 +861,7 @@ const HeroSection = () => {
 							+63 917 111 5008
 						</div>
 						<div className="flex items-center justify-between mt-auto relative z-10">
-							<a
-								href="#"
-								className="text-white text-sm font-semibold flex items-center gap-2 hover:text-blue-200 transition-all duration-300 transform hover:translate-x-1 group/link"
-							>
-								LEARN MORE
-								<span
-									aria-hidden
-									className="transform group-hover/link:translate-x-1 transition-transform duration-300"
-								>
-									→
-								</span>
-							</a>
+							
 							<div className="w-12 h-8 rounded bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<div className="w-8 h-5 rounded bg-[#1A3578] relative">
 									<div className="w-6 h-3 rounded bg-[#2453A6] absolute top-1 left-1" />
@@ -857,18 +898,7 @@ const HeroSection = () => {
 							+63 917 111 5008
 						</div>
 						<div className="flex items-center justify-between mt-auto relative z-10">
-							<a
-								href="#"
-								className="text-white text-sm font-semibold flex items-center gap-2 hover:text-blue-200 transition-all duration-300 transform hover:translate-x-1 group/link"
-							>
-								LEARN MORE
-								<span
-									aria-hidden
-									className="transform group-hover/link:translate-x-1 transition-transform duration-300"
-								>
-									→
-								</span>
-							</a>
+							
 							<div className="w-12 h-8 rounded bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
 								<div className="w-8 h-5 rounded bg-[#1A3578] relative">
 									<div className="w-6 h-3 rounded bg-[#2453A6] absolute top-1 left-1" />

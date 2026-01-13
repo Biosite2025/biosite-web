@@ -99,6 +99,74 @@ const CoreValuesSlideshow = ({ currentLetter, startSlideshow }: { currentLetter:
   );
 };
 
+// Responsive styles for 1366x768 screen
+const responsive1366Styles = `
+  @media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
+    #mission-vision {
+      padding-top: 3rem !important;
+      padding-bottom: 3rem !important;
+      min-height: 100vh !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    
+    #mission-vision .max-w-7xl {
+      transform: scale(1) !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    
+    #mission-vision .space-y-12 {
+      gap: 2rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+    }
+    
+    #mission-vision .grid-cols-1 {
+      gap: 1.5rem !important;
+    }
+    
+    #mission-vision .rounded-2xl {
+      padding: 1.5rem !important;
+    }
+    
+    #mission-vision .text-2xl {
+      font-size: 1.5rem !important;
+    }
+    
+    #mission-vision .text-base {
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+    }
+    
+    #mission-vision .text-6xl {
+      font-size: 3.5rem !important;
+    }
+    
+    #mission-vision .text-5xl {
+      font-size: 2.5rem !important;
+    }
+    
+    #mission-vision .text-xl {
+      font-size: 1.1rem !important;
+    }
+    
+    #mission-vision .h-72 {
+      height: 16rem !important;
+    }
+    
+    #mission-vision .mt-12 {
+      margin-top: 2rem !important;
+    }
+    
+    #mission-vision .mb-6 {
+      margin-bottom: 1.5rem !important;
+    }
+  }
+`;
+
 const MissionVision = () => {
   const [currentLetterIndex, setCurrentLetterIndex] = useState(coreValues.length); // Start at "CORE VALUES"
   const [showCoreValuesText, setShowCoreValuesText] = useState(true); // Start with "CORE VALUES" visible
@@ -132,14 +200,16 @@ const MissionVision = () => {
   const currentLetterPosition = currentLetterData?.letterIndex ?? -1;
 
   return (
-    <motion.section
-      id="mission-vision"
-      className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 min-h-screen flex items-center justify-center bg-blue-500/90"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-    >
+    <>
+      <style>{responsive1366Styles}</style>
+      <motion.section
+        id="mission-vision"
+        className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 min-h-screen flex items-center justify-center bg-blue-500/90"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -286,7 +356,8 @@ const MissionVision = () => {
 
         </div>
       </div>
-    </motion.section>
+      </motion.section>
+    </>
   );
 }
 
