@@ -307,10 +307,139 @@ export default function JobListing() {
           }
         }
         
+        /* Large Tablet / Small Desktop */
+        @media (min-width: 1024px) and (max-width: 1439px) {
+          .joblisting-section-responsive {
+            padding: 1.5rem 1rem !important;
+            margin-top: -3rem !important;
+          }
+          
+          .joblisting-container-responsive {
+            transform: scale(0.85) !important;
+            max-width: 90% !important;
+            margin: -2rem auto 0 !important;
+          }
+          
+          .joblisting-container-responsive h1 {
+            font-size: 1.75rem !important;
+            margin-bottom: 0.5rem !important;
+          }
+          
+          .joblisting-container-responsive .underline-bar {
+            width: 160px !important;
+          }
+          
+          .joblisting-container-responsive .image-container {
+            height: 350px !important;
+            max-width: 100% !important;
+          }
+          
+          .joblisting-container-responsive form {
+            gap: 0.875rem !important;
+          }
+          
+          .joblisting-container-responsive input,
+          .joblisting-container-responsive textarea {
+            font-size: 0.9rem !important;
+            padding: 0.75rem 0.875rem !important;
+          }
+          
+          .joblisting-container-responsive button {
+            font-size: 0.95rem !important;
+            padding: 0.875rem 1.5rem !important;
+          }
+          
+          .joblisting-container-responsive .grid {
+            gap: 0.75rem !important;
+          }
+        }
+        
+        /* Desktop - Standard */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+          .joblisting-section-desktop {
+            padding: 2.5rem 2rem !important;
+            margin-top: -3.75rem !important;
+          }
+          
+          .joblisting-container-desktop {
+            transform: scale(1) !important;
+            max-width: 1280px !important;
+            margin: 0 auto !important;
+          }
+          
+          .joblisting-container-desktop h1 {
+            font-size: 2.25rem !important;
+          }
+          
+          .joblisting-container-desktop .underline-bar {
+            width: 200px !important;
+          }
+          
+          .joblisting-container-desktop .image-container {
+            height: 480px !important;
+          }
+          
+          .joblisting-container-desktop form {
+            gap: 1.25rem !important;
+          }
+          
+          .joblisting-container-desktop input,
+          .joblisting-container-desktop textarea {
+            font-size: 1.0625rem !important;
+            padding: 0.9375rem 1.125rem !important;
+          }
+          
+          .joblisting-container-desktop button {
+            font-size: 1.0625rem !important;
+            padding: 1rem 1.875rem !important;
+          }
+        }
+        
+        /* Desktop - Large (1920px and above like 2560x1440) */
+        @media (min-width: 1920px) {
+          .joblisting-section-desktop {
+            padding: 4rem 3rem !important;
+            margin-top: -4rem !important;
+          }
+          
+          .joblisting-container-desktop {
+            transform: scale(1.15) !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+          }
+          
+          .joblisting-container-desktop h1 {
+            font-size: 2.75rem !important;
+          }
+          
+          .joblisting-container-desktop .underline-bar {
+            width: 240px !important;
+          }
+          
+          .joblisting-container-desktop .image-container {
+            height: 560px !important;
+          }
+          
+          .joblisting-container-desktop form {
+            gap: 1.75rem !important;
+          }
+          
+          .joblisting-container-desktop input,
+          .joblisting-container-desktop textarea {
+            font-size: 1.25rem !important;
+            padding: 1.125rem 1.5rem !important;
+          }
+          
+          .joblisting-container-desktop button {
+            font-size: 1.25rem !important;
+            padding: 1.25rem 2.25rem !important;
+          }
+        }
+        
       `}</style>
 
       <motion.section
-        className="joblisting-section-ipad joblisting-section-ipadmini joblisting-section-1366 w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+        className="joblisting-section-ipad joblisting-section-ipadmini joblisting-section-1366 joblisting-section-responsive joblisting-section-desktop w-full min-h-screen -mt-15 flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 sm:py-8 md:py-10 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -360,7 +489,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="joblisting-container-1366 w-full scale-90 sm:scale-95 md:scale-100 lg:scale-110 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center z-10 relative">
+      <div className="joblisting-container-1366 joblisting-container-responsive joblisting-container-desktop w-full scale-90 sm:scale-95 md:scale-100 lg:scale-100 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center z-10 relative">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
