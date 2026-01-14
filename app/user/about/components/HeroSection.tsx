@@ -277,6 +277,70 @@ const ipadResponsiveStyles = `
 			}
 		}
   
+	@media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+		/* 1280x665 Display - Reduce zoom significantly */
+		.hero-content-container {
+			left: 50% !important;
+			transform: translateX(-50%) scale(0.75) !important;
+			padding-left: 30px !important;
+			padding-right: 30px !important;
+			max-width: 850px !important;
+			margin-top: 0 !important;
+			width: calc(100% - 60px) !important;
+		}
+		.hero-title {
+			font-size: 2.2rem !important;
+			line-height: 1.1 !important;
+			margin-bottom: 12px !important;
+		}
+		.hero-subtitle {
+			font-size: 0.95rem !important;
+			line-height: 1.5 !important;
+			margin-bottom: 16px !important;
+			max-width: 90% !important;
+		}
+		.hero-buttons {
+			flex-direction: row !important;
+			gap: 16px !important;
+			margin-top: 12px !important;
+		}
+		.hero-button {
+			padding: 10px 24px !important;
+			font-size: 0.9rem !important;
+		}
+		.location-boxes-container {
+			padding: 0 16px !important;
+			margin-bottom: 20px !important;
+			margin-top: 20px !important;
+			scale: 0.85 !important;
+		}
+		.location-boxes-container > div {
+			display: flex !important;
+			flex-direction: row !important;
+			gap: 14px !important;
+			justify-content: center !important;
+			align-items: stretch !important;
+		}
+		.location-box {
+			padding: 16px !important;
+			min-width: 240px !important;
+			max-width: 300px !important;
+			flex: 1 !important;
+		}
+		.location-box-title {
+			font-size: 1rem !important;
+			margin-bottom: 10px !important;
+		}
+		.location-box-address {
+			font-size: 0.8rem !important;
+			margin-bottom: 16px !important;
+		}
+		.location-box-phone {
+			font-size: 0.85rem !important;
+			margin-bottom: 16px !important;
+		}
+	}
+
 	@media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
 		/* 1366x768 Laptop Display - Reduce image zoom */
 		.hero-content-container {
@@ -793,9 +857,9 @@ const HeroSection = () => {
 				className="location-boxes-container absolute bottom-0 mb-6 w-full flex justify-center items-center pointer-events-none"
 				style={{ position: "relative", zIndex: 30, marginTop: "40px" }}
 			>
-				<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto">
+				<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto items-stretch">
 					{/* Enhanced Manila Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -833,7 +897,7 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Cebu Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -871,7 +935,7 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Davao Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] mx-auto group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 

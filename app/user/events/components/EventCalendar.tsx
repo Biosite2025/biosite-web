@@ -956,6 +956,43 @@ const EventCalendar: React.FC = () => {
             padding: 0.25rem 0.5rem !important;
           }
         }
+
+        /* Optimized for 1280x665 dimension */
+        @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+          .fc-daygrid-day-frame {
+            height: 4.5rem !important;
+            min-height: 4.5rem !important;
+            max-height: 4.5rem !important;
+            padding: 0.35rem !important;
+          }
+          
+          .fc-daygrid-day-number {
+            font-size: 0.8rem !important;
+            padding: 0.35rem !important;
+          }
+          
+          .fc-day-today .fc-daygrid-day-number {
+            width: 1.75rem !important;
+            height: 1.75rem !important;
+            font-size: 0.8rem !important;
+          }
+          
+          .fc-event,
+          .fc-h-event {
+            font-size: 0.7rem !important;
+            padding: 0.2rem 0.4rem !important;
+          }
+          
+          .fc-col-header-cell {
+            font-size: 0.7rem !important;
+            padding: 0.6rem !important;
+          }
+          
+          .fc-daygrid-day,
+          .fc-col-header-cell {
+            min-width: 90px !important;
+          }
+        }
       `}</style>
       </motion.div>
     </div>

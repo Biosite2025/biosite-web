@@ -11,6 +11,88 @@ const EventGallery: React.FC = () => {
   const [videosLoading, setVideosLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
+  // Add custom styles for 1280x665 screen size
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      /* Custom styles for 1280x665 screen */
+      @media (min-width: 1024px) and (max-width: 1366px) and (min-height: 600px) and (max-height: 768px) {
+        #snaps h2 {
+          font-size: 2.5rem !important;
+          line-height: 1.2 !important;
+          margin-bottom: 0.75rem !important;
+        }
+        #snaps p {
+          font-size: 1.125rem !important;
+          line-height: 1.5 !important;
+        }
+        /* Make gallery/video box more landscape */
+        #slide .flex-shrink-0 {
+          width: 340px !important;
+          height: 160px !important;
+        }
+        #event-gallery {
+          padding-top: 2.5rem !important;
+          padding-bottom: 2.5rem !important;
+        }
+        #eventsvideo h2 {
+          font-size: 2.5rem !important;
+          margin-top: 4rem !important;
+          margin-bottom: 0.75rem !important;
+        }
+        #eventsvideo p {
+          font-size: 1.125rem !important;
+        }
+        #eventsvideo .relative.w-full {
+          max-width: 800px !important;
+          height: 340px !important;
+         
+        }
+        #eventsvideo video {
+          object-fit: contain !important;
+          aspect-ratio: 16/6 !important;
+        }
+      }
+      /* Specific for exactly 1280x665 */
+      @media (width: 1280px) and (height: 665px) {
+        /* Remove/reduce gap between video boxes */
+        #eventsvideo .flex.justify-center.gap-4, #eventsvideo .flex.justify-center.gap-4.lg\:gap-10, #eventsvideo .flex.justify-center.gap-4.lg\:gap-10.relative {
+          gap: 2rem !important;
+        }
+        #snaps h2 {
+          font-size: 2.25rem !important;
+        }
+        #slide .flex-shrink-0 {
+          width: 360px !important;
+          height: 220px !important;
+        }
+        #event-gallery {
+          min-height: 320px !important;
+        }
+        #eventsvideo .relative.w-full {
+          transform: scale(1) !important;
+          max-width: 800px !important;
+          height: 260px !important;
+          display: flex !important;
+          align-items: center !important;
+          margin-top: 1.1rem !important;
+        }
+        #eventsvideo video {
+          object-fit: cover !important;
+          width: 100% !important;
+          height: 100% !important;
+          aspect-ratio: 16/9 !important;
+          background: #222 !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   // Gallery images - dynamically loaded from Digital Ocean Spaces
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
   const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
@@ -366,7 +448,10 @@ const EventGallery: React.FC = () => {
   }, [isModalOpen]);
 
   return (
-    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-12 lg:py-20 min-h-[400px] lg:min-h-[600px]">
+    <>
+      
+
+    <div id="event-gallery" className="relative bg-gradient-to-b from-gray-900 to-gray-800 py-12 lg:py-20 min-h-[400px] lg:min-h-[600px]">
       {/* Loading State */}
       {imagesLoading && (
         <div className="flex justify-center items-center py-20">
@@ -491,8 +576,10 @@ const EventGallery: React.FC = () => {
         )}
       </AnimatePresence>
 
+
       <div className="container mx-auto px-4 lg:px-6 mb-10 lg:mb-16 mt-8 lg:mt-14">
         <motion.div 
+          id='snaps'
           className="text-center text-white"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -511,7 +598,7 @@ const EventGallery: React.FC = () => {
 
       {/* Infinite Scrolling Image Gallery */}
       {!imagesLoading && (topRowImages.length > 0 || bottomRowImages.length > 0) && (
-      <div className="relative overflow-hidden">
+      <div id="slide" className="relative overflow-hidden">
         {/* Top Row - Right to Left */}
         {topRowImages.length > 0 && (
         <div className="flex mb-4 lg:mb-8">
@@ -620,7 +707,7 @@ const EventGallery: React.FC = () => {
 
       {/* Video Section - moved below gallery and made larger */}
       {!videosLoading && videoSources.length > 0 && (
-      <div className="container max-w-full px-4 lg:px-6 mt-12 lg:mt-20 mb-16 lg:mb-[150px]">
+      <div id='eventsvideo' className="container max-w-full px-4 lg:px-6 mt-12 lg:mt-20 mb-16 lg:mb-[150px]">
         {/* Video Title Section - outside video, same layout as heading */}
         <motion.div 
           className="text-center text-white mb-6 lg:mb-10"
@@ -740,6 +827,7 @@ const EventGallery: React.FC = () => {
       )}
 
     </div>
+    </>
   );
 };
 

@@ -2,6 +2,49 @@
 import React from "react";
 import Image from "next/image";
 const surfaceprostyles = `
+/* 1280x665 Display - Fit entire page in viewport */
+@media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+  #about-us {
+    min-height: 665px !important;
+    height: 665px !important;
+    max-height: 665px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    overflow: hidden !important;
+  }
+  #about-us > div {
+    transform: scale(1) !important;
+    transform-origin: center center !important;
+    height: 100% !important;
+  }
+  #about-us .aboutus-modern-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 8px !important;
+  }
+  #about-us .aboutus-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 30px !important;
+    padding-bottom: 12px !important;
+    line-height: 1.3 !important;
+  }
+  #about-us .aboutus-paragraph {
+    font-size: 0.75rem !important;
+    line-height: 1.4 !important;
+    max-width: 500px !important;
+  }
+  #about-us .aboutus-paragraph p {
+    margin-bottom: 8px !important;
+  }
+  #about-us .lg\\:scale-130,
+  #about-us .lg\\:scale-120 {
+    transform: scale(1) !important;
+  }
+  // /* Hide right overlay image to prevent text overlap */
+  // #about-us > div > div:last-child {
+  //   display: none !important;
+  // }
+}
 /* Surface Pro 13" (912x1368) */
 @media (min-width: 911px) and (max-width: 913px) and (min-height: 1367px) and (max-height: 1369px) {
   #about-us {

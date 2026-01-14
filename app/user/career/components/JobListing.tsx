@@ -253,11 +253,32 @@ export default function JobListing() {
   return (
     <>
       <motion.section
-        className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white pt-4 md:pt-6 lg:pt-8 pb-8 md:pb-12 lg:pb-16 xl:pb-20 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 relative overflow-hidden"
+        className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white pt-3 md:pt-4 lg:pt-5 xl:pt-8 pb-6 md:pb-8 lg:pb-10 xl:pb-16 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+          {/* Custom style for 1280x665 to reduce top/bottom margin */}
+          <style jsx global>{`
+            @media (width: 1280px) and (height: 665px) {
+              .custom-1280x665-padding {
+                padding-top: 0 !important;
+                padding-bottom: 2rem !important;
+                min-height: 640px !important;
+                height: 640px !important;
+                
+              }
+                #submit-button {
+                  margin-bottom: 2rem !important;
+                  margin-top: -1rem !important;
+                }
+
+                #username{
+                margin-top: 0.5rem !important;
+                
+                }
+            }
+          `}</style>
     
       {/* Decorative background */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -303,7 +324,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 items-center z-10 relative scale-90 md:scale-95 lg:scale-100 xl:scale-100 2xl:scale-105 transition-transform duration-300">
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-6 xl:gap-8 2xl:gap-16 items-center z-10 relative scale-[0.85] md:scale-90 lg:scale-[0.78] xl:scale-[0.82] 2xl:scale-100 transition-transform duration-300">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
@@ -311,9 +332,9 @@ export default function JobListing() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="mb-6 md:mb-8 lg:mb-10 xl:mb-12 w-full">
+          <div className="mb-4 md:mb-6 lg:mb-6 xl:mb-12 w-full">
             <motion.h1
-              className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#6B7280] mb-3 md:mb-4 lg:mb-5 text-center lg:text-left"
+              className="text-2xl md:text-3xl lg:text-3xl xl:text-5xl 2xl:text-6xl font-bold text-[#6B7280] mb-2 md:mb-3 lg:mb-3 xl:mb-5 text-center lg:text-left"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
@@ -321,13 +342,13 @@ export default function JobListing() {
               <span className="text-[#2B3990]">JOB LISTING </span> 
             </motion.h1>
             <motion.div
-              className="underline-bar h-1 md:h-1.5 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full mx-auto lg:mx-0 w-[150px] md:w-[180px] lg:w-[200px] xl:w-[220px] 2xl:w-[250px]"
+              className="underline-bar h-1 md:h-1.5 bg-gradient-to-r from-[#2B3990] to-[#2B7CD3] rounded-full mx-auto lg:mx-0 w-[120px] md:w-[150px] lg:w-[160px] xl:w-[220px] 2xl:w-[250px]"
               initial={{ width: 0 }}
-              animate={{ width: "200px" }}
+              animate={{ width: "160px" }}
               transition={{ duration: 0.8, delay: 0.7 }}
             />
           </div>
-          <div className="image-container relative w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] 2xl:h-[550px] flex items-center">
+          <div className="image-container relative w-full max-w-md md:max-w-lg lg:max-w-lg xl:max-w-2xl h-[280px] md:h-[320px] lg:h-[340px] xl:h-[500px] 2xl:h-[550px] flex items-center">
             {/* Job Listing PNG Container */}
             <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl md:rounded-3xl p-0 shadow-xl md:shadow-2xl relative overflow-hidden w-full h-full flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
@@ -359,7 +380,7 @@ export default function JobListing() {
         >
           <motion.form
             onSubmit={handleSubmit}
-            className="space-y-4 md:space-y-5 lg:space-y-6 xl:space-y-7"
+            className="space-y-3 md:space-y-4 lg:space-y-4 xl:space-y-7"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
@@ -367,12 +388,14 @@ export default function JobListing() {
             {/* Name Field */}
             <div>
               <input
+                
+                id="username"
                 type="text"
                 name="name"
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 text-base sm:text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 lg:py-3 xl:py-4 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base lg:text-base xl:text-lg font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                   errors.name 
                     ? 'border-red-400 bg-red-50' 
                     : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -390,7 +413,7 @@ export default function JobListing() {
             </div>
 
             {/* Email and Phone Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-4 xl:gap-6">
               <div>
                 <input
                   type="email"
@@ -398,7 +421,7 @@ export default function JobListing() {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 md:px-5 py-3 md:py-4 lg:py-4.5 rounded-lg md:rounded-xl border-2 text-base md:text-lg lg:text-xl font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                  className={`w-full px-3 md:px-4 lg:px-4 xl:px-5 py-2.5 md:py-3 lg:py-3 xl:py-4 rounded-lg md:rounded-xl border-2 text-sm md:text-base lg:text-base xl:text-xl font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                     errors.email 
                       ? 'border-red-400 bg-red-50' 
                       : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -421,7 +444,7 @@ export default function JobListing() {
                   placeholder="Phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-4 md:px-5 py-3 md:py-4 lg:py-4.5 rounded-lg md:rounded-xl border-2 text-base md:text-lg lg:text-xl font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
+                  className={`w-full px-3 md:px-4 lg:px-4 xl:px-5 py-2.5 md:py-3 lg:py-3 xl:py-4 rounded-lg md:rounded-xl border-2 text-sm md:text-base lg:text-base xl:text-xl font-medium placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 ${
                     errors.phone 
                       ? 'border-red-400 bg-red-50' 
                       : 'border-gray-200 bg-white hover:border-[#2B3990]/30 focus:border-[#2B3990]'
@@ -440,7 +463,7 @@ export default function JobListing() {
             </div>
 
             {/* Position and Location Selection - side by side */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-4 xl:gap-6">
               <div>
                 <CustomDropdown
                   options={availablePositions}
@@ -491,7 +514,7 @@ export default function JobListing() {
             {/* File Upload */}
             <div>
               <div
-                className={`relative border-2 border-dashed rounded-lg md:rounded-xl p-4 md:p-6 lg:p-7 text-center transition-all duration-300 ${
+                className={`relative border-2 border-dashed rounded-lg md:rounded-xl p-3 md:p-4 lg:p-4 xl:p-7 text-center transition-all duration-300 ${
                   dragActive 
                     ? 'border-[#2B3990] bg-[#2B3990]/5' 
                     : errors.resume 
@@ -545,16 +568,17 @@ export default function JobListing() {
                 placeholder="Message (optional)"
                 value={formData.coverLetter}
                 onChange={handleInputChange}
-                rows={4}
-                className="w-full px-4 md:px-5 py-4 md:py-4.5 rounded-xl border-2 border-gray-200 text-base md:text-lg lg:text-xl font-medium placeholder-gray-400 resize-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 hover:border-[#2B3990]/30 focus:border-[#2B3990]"
+                rows={3}
+                className="w-full px-3 md:px-4 lg:px-4 xl:px-5 py-3 md:py-3.5 lg:py-3.5 xl:py-4.5 rounded-xl border-2 border-gray-200 text-sm md:text-base lg:text-base xl:text-xl font-medium placeholder-gray-400 resize-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/20 hover:border-[#2B3990]/30 focus:border-[#2B3990]"
               />
             </div>
 
             {/* Submit Button */}
             <motion.button
+              id="submit-button"
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#2B3990] text-white font-bold py-4 md:py-4.5 lg:py-5 px-8 md:px-10 lg:px-12 rounded-xl text-base md:text-lg lg:text-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-[#FFA500]/30 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl"
+              className="w-full bg-[#2B3990] text-white font-bold py-3 md:py-3.5 lg:py-3.5 xl:py-5 px-6 md:px-8 lg:px-8 xl:px-12 rounded-xl text-sm md:text-base lg:text-base xl:text-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-[#FFA500]/30 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

@@ -132,6 +132,14 @@ const AwardSection = () => {
     return (
         <>
             <style>{`
+                    @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+                    #scaleaward{
+                    transform: scale(0.8) !important;
+                    }
+                    #awards-recognitions {
+                    height: 665px !important;
+                    }
+                    }
                 .slick-slide { 
                     padding: 0 8px;
                 }
@@ -216,7 +224,7 @@ const AwardSection = () => {
                 </div>
                 {/* White overlay to reduce background image opacity */}
                 <div style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.85)',pointerEvents:'none',zIndex:1}} />
-                <div className="max-w-7xl mx-auto text-center relative z-10 w-full" style={{position:'relative',zIndex:2}}>
+                <div id='scaleaward' className="max-w-7xl mx-auto text-center relative z-10 w-full" style={{position:'relative',zIndex:2}}>
                     <motion.div
                         className="mb-3 sm:mb-6 md:mb-8 lg:mb-10 group"
                         initial={{ opacity: 0, y: 20 }}

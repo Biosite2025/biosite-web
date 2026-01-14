@@ -224,10 +224,24 @@ export default function BiomiFAQ() {
 	};
 	
 	// Main container styles
-				return (
-					<div className="relative mb-6 sm:mb-[40px] md:mb-[60px] scale-90 sm:scale-95 md:scale-100 lg:scale-115 flex justify-center items-center min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] py-3 sm:py-5 md:py-8 lg:py-12 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 lg:pt-12 pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
+					return (
+						<>
+							{/* Custom style for specific screen size */}
+							<style>{`
+								@media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+									#bg {
+										height: 605px !important;
+									}
+									#userchatbot {
+										transform: scale(0.8) !important;
+										margin-top: -1.5rem !important;
+									}
+								}
+							`}</style>
+							<div id="bg" className="relative mb-6 sm:mb-[40px] md:mb-[60px] scale-90 sm:scale-95 md:scale-100 lg:scale-115 flex justify-center items-center min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] py-3 sm:py-5 md:py-8 lg:py-12 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 lg:pt-12 pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
 			{/* PixelBlast Animated Background */}
 			<PixelBlast
+			    
 				variant="circle"
 				pixelSize={6}
 				color="#2B3990"
@@ -248,6 +262,7 @@ export default function BiomiFAQ() {
 				transparent
 			/>
 			<motion.div
+			    id="userchatbot"
 				className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl md:shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-col sm:flex-row min-h-[350px] sm:min-h-[380px] md:min-h-[420px] max-[912px]:min-h-0 max-[912px]:mt-0 max-[912px]:mb-0"
 				initial={{ opacity: 0, scale: 0.96 }}
 				animate={{ opacity: 1, scale: 1 }}
@@ -365,5 +380,6 @@ export default function BiomiFAQ() {
 			
 			</motion.div>
 		</div>
+		</>
 	);
 }

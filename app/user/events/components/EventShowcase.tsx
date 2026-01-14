@@ -4,6 +4,43 @@
 
 
   const devicestyles = `
+    /* Custom for 1280x665: reduce title zoom on scroll */
+    @media (width: 1280px) and (height: 665px) {
+      .eventshowcase-ipadair-parent h1,
+      .eventshowcase-ipadmini-parent h1,
+      .eventshowcase-xr-parent h1,
+      .eventshowcase-asuszenbook-parent h1,
+      .eventshowcase-12pro-parent h1,
+      .eventshowcase-pixel7-parent h1,
+      .eventshowcase-14pro-parent h1,
+      .eventshowcase-surfacepro-parent h1 {
+        font-size: 4.2rem !important;
+        line-height: 1.05 !important;
+        transition: transform 0.2s !important;
+      }
+      .eventshowcase-ipadair-parent p,
+      .eventshowcase-ipadmini-parent p,
+      .eventshowcase-xr-parent p,
+      .eventshowcase-asuszenbook-parent p,
+      .eventshowcase-12pro-parent p,
+      .eventshowcase-pixel7-parent p,
+      .eventshowcase-14pro-parent p,
+      .eventshowcase-surfacepro-parent p {
+        font-size: 1.35rem !important;
+        line-height: 1.3 !important;
+      }
+      .eventshowcase-ipadair-parent,
+      .eventshowcase-ipadmini-parent,
+      .eventshowcase-xr-parent,
+      .eventshowcase-asuszenbook-parent,
+      .eventshowcase-12pro-parent,
+      .eventshowcase-pixel7-parent,
+      .eventshowcase-14pro-parent,
+      .eventshowcase-surfacepro-parent {
+        transform: scale(0.92) !important;
+        transition: transform 0.2s !important;
+      }
+    }
    
 
     /* Device-specific overrides */

@@ -99,8 +99,113 @@ const CoreValuesSlideshow = ({ currentLetter, startSlideshow }: { currentLetter:
   );
 };
 
-// Responsive styles for 1366x768 screen
+// Responsive styles for various screen sizes
 const responsive1366Styles = `
+  @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+    /* 1280x665 Display - Scale down significantly */
+    #mission-vision {
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
+      min-height: 665px !important;
+      max-height: 665px !important;
+      height: 665px !important;
+      overflow: hidden !important;
+    }
+    
+    #mission-vision .max-w-7xl {
+      transform: scale(1) !important;
+      margin-top: -3rem !important;
+      margin-bottom: -3rem !important;
+    }
+    
+    #mission-vision .space-y-12 {
+      gap: 1.5rem !important;
+    }
+    
+    #mission-vision .grid-cols-1 {
+      gap: 1.25rem !important;
+    }
+    
+    #mission-vision .rounded-2xl {
+      padding: 1.25rem !important;
+    }
+    
+    #mission-vision .text-2xl {
+      font-size: 1.35rem !important;
+    }
+    
+    #mission-vision .text-3xl {
+      font-size: 1.5rem !important;
+    }
+    
+    #mission-vision .text-base {
+      font-size: 0.875rem !important;
+      line-height: 1.4 !important;
+    }
+    
+    #mission-vision .text-lg {
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+    }
+    
+    #mission-vision .text-9xl {
+      font-size: 5rem !important;
+    }
+    
+    #mission-vision .text-8xl {
+      font-size: 4.5rem !important;
+    }
+    
+    #mission-vision .text-7xl {
+      font-size: 3.5rem !important;
+    }
+    
+    #mission-vision .text-6xl {
+      font-size: 3rem !important;
+    }
+    
+    #mission-vision .text-5xl {
+      font-size: 2rem !important;
+    }
+    
+    #mission-vision .text-xl {
+      font-size: 1rem !important;
+    }
+    
+    #mission-vision .h-72 {
+      height: 13rem !important;
+    }
+    
+    #mission-vision .mt-12 {
+      margin-top: 1.5rem !important;
+    }
+    
+    #mission-vision .mt-16 {
+      margin-top: 1.75rem !important;
+    }
+    
+    #mission-vision .mb-6 {
+      margin-bottom: 1rem !important;
+    }
+    
+    #mission-vision .mb-8 {
+      margin-bottom: 1.25rem !important;
+    }
+    
+    #mission-vision .mb-4 {
+      margin-bottom: 0.75rem !important;
+    }
+    
+    #mission-vision .p-3 {
+      padding: 0.625rem !important;
+    }
+    
+    #mission-vision .h-6 {
+      height: 1.25rem !important;
+      width: 1.25rem !important;
+    }
+  }
+  
   @media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
     #mission-vision {
       padding-top: 3rem !important;

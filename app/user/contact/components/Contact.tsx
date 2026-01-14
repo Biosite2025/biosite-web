@@ -111,6 +111,39 @@ export default function Contact() {
   return (
     <>
       <style>{`
+        /* 1280x665 - Scale to fit all content including cards */
+        @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
+          .contact-section-1280 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+            min-height: 595px !important;
+            height: 595px !important;
+            overflow: hidden !important;
+          }
+          .contact-section-1280 > div {
+            transform: scale(0.75) !important;
+            transform-origin: top center !important;
+          }
+          .contact-section-1280 .lg\\:h-\\[420px\\] {
+            height: 320px !important;
+          }
+          .contact-cards-1280 {
+            margin-top: -5.5rem !important;
+            gap: 1rem !important;
+          }
+          .contact-card-1280 {
+            padding: 1rem !important;
+          }
+          #usermap {
+          margin-top: -2rem !important;
+            height: 460px !important;}
+
+        }
+          #userform{
+            margin-top: -2rem !important;
+            height: 460px !important;
+          }
+        
         @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
           .contact-cards-ipad {
             grid-template-columns: 1fr !important;
@@ -127,7 +160,7 @@ export default function Contact() {
         }
       `}</style>
       <motion.section
-      className="w-full min-h-[100vh] flex flex-col items-center justify-start bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-2 sm:py-4 md:py-6 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden lg:pt-12 max-[912px]:pt-2"
+      className="contact-section-1280 w-full min-h-[100vh] flex flex-col items-center justify-start bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-2 sm:py-4 md:py-6 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden lg:pt-12 max-[912px]:pt-2"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -225,6 +258,7 @@ export default function Contact() {
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 z-10 relative">
         {/* Map */}
         <motion.div
+          id="usermap"
           className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] order-1"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -251,6 +285,7 @@ export default function Contact() {
 
         {/* Contact Form */}
         <motion.div
+          id="userform"
           className=" bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px]  order-2"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -361,14 +396,14 @@ export default function Contact() {
       `}</style>
       <motion.div
         key={`cards-${activeLocation}`}
-        className="contact-cards-ipad w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-12 lg:mt-16 z-10 relative"
+        className="contact-cards-ipad contact-cards-1280 w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-12 lg:mt-16 z-10 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         {/* Phone Card */}
         <motion.div
-          className="contact-card-ipad bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1"
+          className="contact-card-ipad contact-card-1280 bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
@@ -414,7 +449,7 @@ export default function Contact() {
 
         {/* Location Card */}
         <motion.div
-          className="contact-card-ipad bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1 lg:col-span-1"
+          className="contact-card-ipad contact-card-1280 bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1 lg:col-span-1"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
@@ -462,7 +497,7 @@ export default function Contact() {
 
         {/* Hours Card */}
         <motion.div
-          className="contact-card-ipad bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1"
+          className="contact-card-ipad contact-card-1280 bg-[#2B3990] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-white shadow-lg sm:shadow-xl gap-2 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-[1.04] hover:bg-[#2B3990]/95 group cursor-pointer col-span-1"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
