@@ -130,9 +130,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         {/* Favicon - Multiple sizes for different devices */}
-        <link rel="icon" type="image/x-icon" href="/asset/favicon/favicon.ico" />
+        <link rel="icon" href="/asset/favicon/favicon.ico" sizes="any" />
         <link rel="icon" type="image/svg+xml" href="/asset/favicon/favicon.svg" />
+        <link rel="shortcut icon" href="/asset/favicon/favicon.ico" />
         <link rel="icon" type="image/png" sizes="96x96" href="/asset/favicon/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/asset/favicon/web-app-manifest-192x192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/asset/favicon/site.webmanifest" />
         
@@ -170,7 +172,7 @@ export default function RootLayout({
             "@type": "Organization",
             "name": "Biosite Philippines",
             "url": "https://biositeph.com",
-            "logo": "https://biositeph.com/asset/favicon/favicon-96x96.png",
+            "logo": "https://biositeph.com/asset/favicon/web-app-manifest-512x512.png",
             "description": "Leading provider of advanced diagnostic and medical supplies in the Philippines",
             "address": {
               "@type": "PostalAddress",
