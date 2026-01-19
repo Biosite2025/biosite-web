@@ -41,6 +41,36 @@
         transition: transform 0.2s !important;
       }
     }
+
+    /* Custom for 1536x742: extend pin duration to show all text */
+    @media (width: 1536px) and (height: 742px) {
+      .eventshowcase-1536x742-parent h1 {
+        font-size: 5rem !important;
+        line-height: 1.1 !important;
+      }
+      .eventshowcase-1536x742-parent p {
+        font-size: 1.5rem !important;
+        line-height: 1.4 !important;
+      }
+      
+      /* Fix white background issue - ensure container covers full viewport */
+      .eventshowcase-container-1536 {
+        min-height: 100vh !important;
+        height: 100vh !important;
+        background: #111827 !important;
+      }
+      
+      .eventshowcase-video-section-1536 {
+        min-height: 100vh !important;
+        height: 100vh !important;
+        background: #111827 !important;
+      }
+      
+      /* Ensure no gaps during scroll */
+      body {
+        background: #111827 !important;
+      }
+    }
    
 
     /* Device-specific overrides */
@@ -321,19 +351,32 @@ const EventShowcase: React.FC = () => {
         
         try {
           const ctx = gsap.context(() => {
+        // Detect viewport size and adjust scroll distance
+        const is1536x742 = window.innerWidth === 1536 && window.innerHeight === 742;
+        const scrollDistance = is1536x742 ? "+=350%" : "+=200%"; // Extended for 1536x742
+        const scrubSpeed = is1536x742 ? 1.5 : 1; // Slightly slower scrub for 1536x742
+        
         // Main timeline for the video section
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: "+=200%", // Creates 2 viewport heights of scroll distance
-            scrub: 1,
+            end: scrollDistance, // Creates viewport heights of scroll distance
+            scrub: scrubSpeed,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
-            refreshPriority: 0,
+            invalidateOnRefresh: true,
+            refreshPriority: is1536x742 ? 10 : 0, // Higher priority for 1536x742
+            pinType: "fixed", // Force fixed positioning
             onUpdate: (self) => {
               const progress = self.progress;
+
+              // Adjust timing for 1536x742 viewport - text appears INSTANTLY and stays almost entire duration
+              const titleStartFade = is1536x742 ? 0 : 0.15; // Instant for 1536x742
+              const titleFullVisible = is1536x742 ? 0.08 : 0.35; // Fully visible at 8%
+              const titleHoldEnd = is1536x742 ? 0.92 : 0.8; // Stay until 92%
+              const titleFadeOut = is1536x742 ? 0.98 : 0.95; // Fade at very end
 
               // Video scaling animation - start small and scale up with scroll
               if (videoWrapperRef.current) {
@@ -350,23 +393,23 @@ const EventShowcase: React.FC = () => {
                 gsap.set(videoWrapperRef.current, { opacity: Math.max(0.8, 1 - opacity) });
               }
 
-              // Title animations
+              // Title animations with viewport-specific timing
               if (titleRef.current) {
-                // Hide title until user scrolls significantly into the section (progress > 0.15)
-                const titleOpacity = progress < 0.15 ? 0 :
-                  progress < 0.35 ? (progress - 0.15) / 0.2 :
-                  progress < 0.8 ? 1 :
-                  progress < 0.95 ? 1 - ((progress - 0.8) / 0.15) : 0;
+                // Show title much earlier for 1536x742
+                const titleOpacity = progress < titleStartFade ? 0 :
+                  progress < titleFullVisible ? (progress - titleStartFade) / (titleFullVisible - titleStartFade) :
+                  progress < titleHoldEnd ? 1 :
+                  progress < titleFadeOut ? 1 - ((progress - titleHoldEnd) / (titleFadeOut - titleHoldEnd)) : 0;
 
-                const titleY = progress < 0.15 ? 50 :
-                  progress < 0.35 ? 50 - ((progress - 0.15) / 0.2) * 50 :
-                  progress < 0.8 ? 0 :
-                  progress < 0.95 ? -((progress - 0.8) / 0.15) * 30 : -30;
+                const titleY = progress < titleStartFade ? 50 :
+                  progress < titleFullVisible ? 50 - ((progress - titleStartFade) / (titleFullVisible - titleStartFade)) * 50 :
+                  progress < titleHoldEnd ? 0 :
+                  progress < titleFadeOut ? -((progress - titleHoldEnd) / (titleFadeOut - titleHoldEnd)) * 30 : -30;
 
-                const titleScale = progress < 0.15 ? 0.9 :
-                  progress < 0.35 ? 0.9 + ((progress - 0.15) / 0.2) * 0.1 :
-                  progress < 0.8 ? 1 :
-                  progress < 0.95 ? 1 + ((progress - 0.8) / 0.15) * 0.05 : 1.05;
+                const titleScale = progress < titleStartFade ? 0.9 :
+                  progress < titleFullVisible ? 0.9 + ((progress - titleStartFade) / (titleFullVisible - titleStartFade)) * 0.1 :
+                  progress < titleHoldEnd ? 1 :
+                  progress < titleFadeOut ? 1 + ((progress - titleHoldEnd) / (titleFadeOut - titleHoldEnd)) * 0.05 : 1.05;
 
                 gsap.set(titleRef.current, {
                   opacity: titleOpacity,
@@ -375,22 +418,26 @@ const EventShowcase: React.FC = () => {
                 });
               }
 
-              // Overlay opacity for text readability - only show when text appears
+              // Overlay opacity for text readability - adjusted for 1536x742
               if (overlayRef.current) {
-                const overlayOpacity = progress < 0.15 ? 0 :
-                  progress < 0.35 ? (progress - 0.15) / 0.2 * 0.3 :
-                  progress < 0.8 ? 0.3 :
-                  progress < 0.95 ? 0.3 + ((progress - 0.8) / 0.15) * 0.2 : 0.5;
+                const overlayOpacity = progress < titleStartFade ? 0 :
+                  progress < titleFullVisible ? (progress - titleStartFade) / (titleFullVisible - titleStartFade) * 0.3 :
+                  progress < titleHoldEnd ? 0.3 :
+                  progress < titleFadeOut ? 0.3 + ((progress - titleHoldEnd) / (titleFadeOut - titleHoldEnd)) * 0.2 : 0.5;
 
                 gsap.set(overlayRef.current, { opacity: overlayOpacity });
               }
 
-              // Scroll indicator
+              // Scroll indicator - appears later for 1536x742
               if (scrollIndicatorRef.current) {
-                const indicatorOpacity = progress < 0.6 ? 0 :
-                  progress < 0.75 ? (progress - 0.6) / 0.15 :
-                  progress < 0.85 ? 1 :
-                  progress < 0.95 ? 1 - ((progress - 0.85) / 0.1) : 0;
+                const indicatorStart = is1536x742 ? 0.7 : 0.6;
+                const indicatorFull = is1536x742 ? 0.80 : 0.75;
+                const indicatorFadeStart = is1536x742 ? 0.88 : 0.85;
+                
+                const indicatorOpacity = progress < indicatorStart ? 0 :
+                  progress < indicatorFull ? (progress - indicatorStart) / (indicatorFull - indicatorStart) :
+                  progress < indicatorFadeStart ? 1 :
+                  progress < titleFadeOut ? 1 - ((progress - indicatorFadeStart) / (titleFadeOut - indicatorFadeStart)) : 0;
 
                 gsap.set(scrollIndicatorRef.current, { opacity: indicatorOpacity });
               }
@@ -477,9 +524,9 @@ const EventShowcase: React.FC = () => {
     <>
         <style>{devicestyles}</style>
         
-      <div ref={containerRef} className="relative overflow-hidden bg-gray-900">
+      <div ref={containerRef} className="relative overflow-hidden bg-gray-900 eventshowcase-container-1536">
       {/* Video Section - Will be pinned by GSAP ScrollTrigger */}
-      <div className="h-screen overflow-hidden">
+      <div className="h-screen overflow-hidden eventshowcase-video-section-1536">
         <div 
           ref={videoWrapperRef}
           className="relative w-full h-full"
@@ -568,7 +615,7 @@ const EventShowcase: React.FC = () => {
             className="absolute inset-0 flex items-center justify-center text-center text-white z-20 opacity-0 px-4 lg:px-8"
             style={{ opacity: 0 }}
           >
-            <div className="max-w-6xl eventshowcase-ipadair-parent eventshowcase-ipadmini-parent eventshowcase-xr-parent eventshowcase-asuszenbook-parent eventshowcase-12pro-parent eventshowcase-pixel7-parent eventshowcase-14pro-parent eventshowcase-surfacepro-parent">
+            <div className="max-w-6xl eventshowcase-ipadair-parent eventshowcase-ipadmini-parent eventshowcase-xr-parent eventshowcase-asuszenbook-parent eventshowcase-12pro-parent eventshowcase-pixel7-parent eventshowcase-14pro-parent eventshowcase-surfacepro-parent eventshowcase-1536x742-parent">
               {/* Main Title */}
               <h1 
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-black mb-4 lg:mb-8 leading-none"

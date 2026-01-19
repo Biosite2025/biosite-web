@@ -85,6 +85,66 @@ const EventGallery: React.FC = () => {
           background: #222 !important;
         }
       }
+
+      /* Specific for exactly 1536x742 */
+      @media (width: 1536px) and (height: 742px) {
+        #event-gallery {
+          padding-top: 2rem !important;
+          padding-bottom: 2rem !important;
+          min-height: auto !important;
+        }
+        
+        #snaps {
+          margin-top: 1rem !important;
+          margin-bottom: 1.5rem !important;
+          transform: scale(0.85);
+        }
+        
+        #snaps h2 {
+          font-size: 2rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+        
+        #snaps p {
+          font-size: 1rem !important;
+        }
+        
+        #slide {
+          transform: scale(1);
+          margin-top: -1rem !important;
+          margin-bottom: -1rem !important;
+        }
+        
+        #eventsvideo {
+          transform: scale(1.3);
+          margin-top: 10rem !important;
+          margin-bottom: 10rem !important;
+        }
+        
+        #eventsvideo h2 {
+          font-size: 2rem !important;
+          margin-top: 2rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+        
+        #eventsvideo p {
+          font-size: 1rem !important;
+        }
+        
+        #eventsvideo .relative.w-full {
+          max-width: 800px !important;
+          height: 320px !important;
+        }
+        
+        #eventsvideo video {
+          height: 100% !important;
+        }
+        
+        #eventsvideo .flex.justify-center {
+          margin-top: 0.5rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+      }
     `;
     document.head.appendChild(style);
     

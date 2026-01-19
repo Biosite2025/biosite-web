@@ -253,7 +253,7 @@ export default function JobListing() {
   return (
     <>
       <motion.section
-        className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white pt-3 md:pt-4 lg:pt-5 xl:pt-8 pb-6 md:pb-8 lg:pb-10 xl:pb-16 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
+        className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white pt-3 sm:height-[640px] md:pt-4 lg:pt-5 xl:pt-8 pb-6 md:pb-8 lg:pb-10 xl:pb-16 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -277,6 +277,35 @@ export default function JobListing() {
                 margin-top: 0.5rem !important;
                 
                 }
+            }
+
+            /* Custom style for 1536x742 viewport */
+            @media (width: 1536px) and (height: 742px) {
+              .custom-1280x665-padding {
+                padding-top: 0.5rem !important;
+                padding-bottom: 1.5rem !important;
+                min-height: auto !important;
+              }
+              
+              .w-full.max-w-7xl {
+                transform: scale(0.85) !important;
+                margin-top: -2rem !important;
+                margin-bottom: -2rem !important;
+              }
+
+              form.space-y-3 {
+                row-gap: 0.5rem !important;
+              }
+
+              #username {
+                margin-top: 0.25rem !important;
+              }
+
+              #submit-button {
+                margin-top: 0 !important;
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+              }
             }
           `}</style>
     
