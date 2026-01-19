@@ -10,33 +10,43 @@ import 'slick-carousel/slick/slick-theme.css';
 const awards = [
 	{
 		year: '2022',
-		title: 'COAGULATION DEALER OF THE YEAR',
-		company: 'Marsman Drysdale Medical Products, Inc.',
+		title: 'Best in Clinical Chemistry Partner in South East Asia',
+		company: 'Werfen - Pullman Resort, Phuket Thailand',
 	},
 	{
-		year: '2021',
-		title: 'BEST DISTRIBUTOR AWARD',
-		company: 'Global Healthcare Solutions',
+		year: '2023',
+		title: 'Highest Sales in Clinical Chemistry Award in Asia Pacific',
+		company: 'Werfen - Renaissance Pattaya Resort & Spa, Thailand',
 	},
 	{
-		year: '2020',
-		title: 'EXCELLENCE IN SERVICE',
-		company: 'Healthcare Innovations Ltd.',
+		year: '2023',
+		title: 'Award of Excellence in Performance',
+		company: 'Aeon',
 	},
 	{
-		year: '2019',
-		title: 'TOP PERFORMER AWARD',
-		company: 'Medical Supplies Co.',
+		year: '2024',
+		title: 'Top Channel Partner Overall Medical Business',
+		company: 'FujiFilm Philippines - Okada, Manila',
 	},
 	{
-		year: '2018',
-		title: 'INNOVATION LEADER',
-		company: 'Biotech Solutions Inc.',
+		year: '2023',
+		title: 'AIA Top Sales Award in South East Asia',
+		company: 'Tosoh - Paradox Hotel, Singapore',
 	},
 	{
-		year: '2017',
-		title: 'CUSTOMER SATISFACTION AWARD',
-		company: 'Healthcare Partners Ltd.',
+		year: '2023',
+		title: 'Top Channel Partner First Installation Award for Echelon Smart',
+		company: 'FujiFilm Philippines - Okada, Manila',
+	},
+	{
+		year: '2023',
+		title: 'Strategic Partnership Award',
+		company: 'Haier Biomedical',
+	},
+	{
+		year: '2024',
+		title: 'Strategic Partnership Award',
+		company: 'Haier Biomedical - Two Consecutive Years',
 	},
 ];
 

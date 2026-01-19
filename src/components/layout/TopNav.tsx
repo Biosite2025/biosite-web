@@ -453,7 +453,7 @@ export function TopNav() {
                         <ul className="space-y-2.5">
                           <li>
                             <Link href="/user/products/components/laboratory-equipements" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
-                              Laboratory Equipements
+                              Laboratory Equipments
                             </Link>
                           </li>
                           <li>
