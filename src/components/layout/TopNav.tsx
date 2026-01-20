@@ -156,10 +156,6 @@ export function TopNav() {
                 />
                 {/* Right vertical line for logo separation */}
                 <span className="ml-4 h-16 w-[2px] bg-[#2B3990] block" />
-                {/* Tagline attached to the right of vertical line with hover effect */}
-                <span className="ml-4 text-gray-700 font-medium text-lg italic tracking-wide whitespace-nowrap opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out">
-                  Because Every Life Deserves the Best Care
-                </span>
               </Link>
             </div>
             <div className="flex -ml-[50px] items-center space-x-4 h-full relative overflow-visible z-50 flex-1 justify-center">

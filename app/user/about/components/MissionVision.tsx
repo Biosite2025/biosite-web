@@ -5,13 +5,13 @@ import React, { useState, useEffect } from 'react';
 
 // Core Values Data - BIOSITE
 const coreValues = [
-  { letter: 'B', title: 'BELIEF', description: 'We believe in our mission to save and improve lives through reliable medical solutions.', letterIndex: 0 },
-  { letter: 'I', title: 'INTEGRITY', description: 'We conduct our business with integrity.', letterIndex: 1 },
-  { letter: 'O', title: 'OUTSTANDING SERVICE', description: 'We are committed to provide service that exceeds expectations.', letterIndex: 2 },
-  { letter: 'S', title: 'STEWARDSHIP', description: 'We take responsibility in managing our resources wisely.', letterIndex: 3 },
-  { letter: 'I', title: 'INNOVATION', description: 'We continuously introduce innovative healthcare solutions.', letterIndex: 4 },
-  { letter: 'T', title: 'TEAMWORK', description: 'We unite our strengths, support one another to succeed as ONE BIOSITE.', letterIndex: 5 },
-  { letter: 'E', title: 'EXCELLENCE', description: 'We strive for excellence in everything we do.', letterIndex: 6 }
+  { letter: 'B', title: 'Belief', description: 'We believe in our mission to save and improve lives through reliable medical solutions.', letterIndex: 0 },
+  { letter: 'I', title: 'Integrity', description: 'We conduct our business with integrity.', letterIndex: 1 },
+  { letter: 'O', title: 'Outstanding Service', description: 'We are committed to provide service that exceeds expectations.', letterIndex: 2 },
+  { letter: 'S', title: 'Stewardship', description: 'We take responsibility in managing our resources wisely.', letterIndex: 3 },
+  { letter: 'I', title: 'Innovation', description: 'We continuously introduce innovative healthcare solutions.', letterIndex: 4 },
+  { letter: 'T', title: 'Teamwork', description: 'We unite our strengths, support one another to succeed as ONE BIOSITE.', letterIndex: 5 },
+  { letter: 'E', title: 'Excellence', description: 'We strive for excellence in everything we do.', letterIndex: 6 }
 ];
 
 // Core Values Slideshow Component
@@ -347,8 +347,7 @@ const MissionVision = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               whileHover={{ scale: 1.02 }}
               onAnimationComplete={() => {
-                // Check if this is the last card to animate (Vision card has delay of 0.2)
-                setTimeout(() => setStartSlideshow(true), 700); // Wait for Vision card animation (0.2 delay + 0.7 duration = 0.9s, rounded to 700ms after Mission completes)
+                setTimeout(() => setStartSlideshow(true), 700);
               }}
             >
               <div className="flex items-center mb-4">
@@ -362,11 +361,11 @@ const MissionVision = () => {
                   </svg>
                 </motion.div>
                 <h3 className="text-2xl md:text-3xl font-bold text-[#2356a8]">
-                  MISSION
+                  OUR MISION
                 </h3>
               </div>
               <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                To deliver innovative Medical Solutions and exceptional customer service that empower professionals, institutions, and partners.
+                To deliver innovative medical solutions and exceptional customer service that empower healthcare professionals, institutions and partners.
               </p>
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-t-2xl" />
             </motion.div>
@@ -392,11 +391,11 @@ const MissionVision = () => {
                   </svg>
                 </motion.div>
                 <h3 className="text-2xl md:text-3xl font-bold text-[#2356a8]">
-                  VISION
+                  OUR VISION
                 </h3>
               </div>
               <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                To be the most trusted partner in advancing healthcare by providing innovative Medical Solutions that ensure every life receives the best care.
+                To be the most trusted partner in advancing healthcare - providing innovative medical solutions that ensure every life receives the best care.
               </p>
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-t-2xl" />
             </motion.div>

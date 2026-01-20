@@ -537,33 +537,21 @@ type SlideType = {
 const slides: SlideType[] = [
 	{
 		src: "/asset/slides/luzonbuilding.jpg",
-		headline: "Reliable Medical & Diagnostic Solution",
-		subheadline:
-			"Discover a trusted source for medical and diagnostic instruments. We specialize in the importation and distribution of high-quality diagnostic devices, laboratory supplies, and medical consumables to meet your healthcare and laboratory needs.",
-		buttons: [
-			{ label: "Get Quote", href: "/contact" },
-			{ label: "About Us", href: "/user/about" },
-		],
+		headline: "",
+		subheadline: "",
+		buttons: [],
 	},
 	{
 		src: "/asset/slides/slide_2.png",
-		headline: "Innovating Diagnostics, Elevating Care",
-		subheadline:
-			"Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools, diagnostic devices, and medical consumables designed to support excellence in medical practice.",
-		buttons: [
-			{ label: "Our Products", href: "/products" },
-			{ label: "Contact", href: "/contact" },
-		],
+		headline: "",
+		subheadline: "",
+		buttons: [],
 	},
 	{
 	src: "/asset/slides/visminbuilding.png",
-	headline: "Your Partner in Advance Healthcare",
-	subheadline:
-		"Empowering healthcare professionals with top-notch medical and laboratory products. From cutting-edge diagnostic instruments to essential consumables, we deliver quality solutions tailored for precision and reliability.",
-	buttons: [
-		{ label: "Learn More", href: "/user/about" },
-		{ label: "Join Us", href: "/careers" },
-	],
+	headline: "",
+	subheadline: "",
+	buttons: [],
 },
 ];
 
@@ -780,74 +768,42 @@ const HeroSection = () => {
 						marginTop: "0",
 					}}
 				>
+					{/* Static tagline with entrance animation */}
 					<motion.div
-						className={`flex flex-col items-start transition-all duration-800 will-change-transform relative
-              ${
-              	showText
-              	? 'opacity-100 translate-y-0 scale-100'
-              	: 'opacity-0 translate-y-12 scale-95'
-              }`}
-						initial={false}
-						animate={
-							showText
-								? { opacity: 1, y: 0, scale: 1 }
-								: { opacity: 0, y: 48, scale: 0.97 }
-						}
-						transition={{ duration: 0.7, ease: "easeOut" }}
-						style={{ pointerEvents: "auto" }}
+						className="flex flex-row items-center justify-center gap-6 sm:gap-8 md:gap-10"
+						initial={{ opacity: 0, y: 50 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+						style={{ pointerEvents: "auto", marginTop: '-80px' }}
 					>
-						{/* Subtle background accent */}
+						{/* Bear Image */}
 						<motion.div
-							className="absolute -left-6 top-0 lg:top-3 w-1.5 h-full bg-gradient-to-b from-[#2B3990] to-transparent origin-top"
-							initial={{ opacity: 0, scaleY: 0 }}
-							animate={showText ? { opacity: 0.6, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
-							transition={{ duration: 0.7, ease: "easeOut" }}
-							style={{ pointerEvents: "none" }}
-						/>
-					<motion.h1
-						className="hero-title text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-[#2B3990] text-left leading-tight mb-3 sm:mb-4 lg:mb-6 drop-shadow-lg transition-all duration-800 will-change-transform relative group whitespace-nowrap max-w-full"
-						initial={false}
-						animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-						transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-					>
-							{slides[current].headline}
-							<motion.div
-								className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#2B3990] to-blue-500 rounded-full"
-								initial={{ width: 0 }}
-								animate={showText ? { width: "min(250px, 80%)" } : { width: 0 }}
-								transition={{ duration: 0.7, ease: "easeOut" }}
-							/>
-						</motion.h1>
-						<motion.p
-							className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-[#333] text-justify mb-6 sm:mb-8 max-w-full lg:max-w-2xl leading-relaxed drop-shadow-sm transition-all duration-800 will-change-transform relative"
-							initial={false}
-							animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-							transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+							className="flex-shrink-0"
+							initial={{ opacity: 0, x: -30 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+							style={{ marginTop: '-24px' }}
 						>
-							{translate(slides[current].subheadline)}
-						</motion.p>
-						<div className="hero-buttons flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 mt-2">
-							{slides[current].buttons.map((btn, idx) => (
-								<motion.a
-									key={btn.label}
-									href={btn.href}
-									className={
-										idx === 0
-											? `hero-button bg-gradient-to-r from-[#2B3990] to-blue-700 hover:from-blue-700 hover:to-[#2B3990] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#2B3990]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
-											: `hero-button bg-gradient-to-r from-[#333] to-[#222] hover:from-[#222] hover:to-[#111] text-white font-semibold rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-xl hover:shadow-2xl focus:ring-4 focus:ring-[#333]/50 focus:outline-none transition-all duration-400 will-change-transform transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden min-h-[44px] ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`
-									}
-									tabIndex={0}
-									initial={false}
-									animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-									transition={{ duration: 0.5, delay: 0.3 + idx * 0.1, ease: "easeOut" }}
-									style={{ pointerEvents: "auto" }}
-									whileHover={{ scale: 1.07, y: -4 }}
-								>
-									<span className="relative z-10">{translate(btn.label)}</span>
-									<div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-								</motion.a>
-							))}
-						</div>
+							<Image
+								src="/asset/tagline/bear.png"
+								alt="Bear mascot"
+								width={80}
+								height={120}
+								className="w-20 sm:w-24 md:w-28 lg:w-32 h-auto object-contain"
+								priority
+							/>
+						</motion.div>
+						{/* Tagline */}
+						<motion.div
+							className="flex flex-col"
+							initial={{ opacity: 0, x: 30 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }}
+						>
+							<h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#1560b2] leading-tight drop-shadow-lg">
+								Because Every Life Deserves the Best Care
+							</h1>
+						</motion.div>
 					</motion.div>
 				</div>
 			</motion.section>
@@ -857,9 +813,9 @@ const HeroSection = () => {
 				className="location-boxes-container absolute bottom-0 mb-6 w-full flex justify-center items-center pointer-events-none"
 				style={{ position: "relative", zIndex: 30, marginTop: "40px" }}
 			>
-				<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto items-stretch">
-					{/* Enhanced Manila Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+			<div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-4 lg:px-0 pointer-events-auto items-stretch items-center lg:items-stretch">
+				{/* Enhanced Manila Box - Responsive */}
+				<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] m-3 mx-auto lg:mx-0 group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -897,7 +853,7 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Cebu Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+				<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] m-3 mx-auto lg:mx-0 group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -935,7 +891,7 @@ const HeroSection = () => {
 					</div>
 
 					{/* Enhanced Davao Box - Responsive */}
-					<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
+				<div className="location-box flex-1 bg-gradient-to-br from-[#2453A6] to-[#1a3f85] rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col min-w-[280px] sm:min-w-[300px] lg:min-w-[260px] max-w-[370px] m-3 mx-auto lg:mx-0 group hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ease-out border border-[#2453A6]/20 relative overflow-hidden">
 						{/* Subtle pattern overlay */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
