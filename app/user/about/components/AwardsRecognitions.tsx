@@ -58,7 +58,7 @@ const TrophyIcon = () => (
 		transition={{ type: 'spring', stiffness: 300, damping: 18 }}
 	>
 			    <motion.span
-				    className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full border-2 sm:border-2 md:border-3 lg:border-4 border-[#2356a8]/30 group-hover:!border-white transition-colors duration-300"
+				    className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 rounded-full border-2 sm:border-2 md:border-2 lg:border-3 xl:border-3 border-[#2356a8]/30 group-hover:!border-white transition-colors duration-300 flex-shrink-0"
 						initial={{ scale: 0.8, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
 						transition={{ type: 'spring', stiffness: 180, damping: 18, delay: 0.2 }}
@@ -66,7 +66,7 @@ const TrophyIcon = () => (
 										<svg
 												width="24"
 												height="24"
-												className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 text-[#2356a8] group-hover:!text-white transition-colors duration-300"
+											className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 text-[#2356a8] group-hover:!text-white transition-colors duration-300 flex-shrink-0"
 												viewBox="0 0 24 24"
 												fill="none"
 												xmlns="http://www.w3.org/2000/svg"
@@ -275,13 +275,13 @@ const AwardSection = () => {
                                         </span>
                                         <span className="relative z-10 flex flex-col items-center justify-center w-full text-center">
                                             <TrophyIcon />
-                                            <div className="mt-1 sm:mt-2 md:mt-3 lg:mt-4 xl:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 group-hover:text-white transition-colors duration-300">
+                                            <div className="mt-1 sm:mt-2 md:mt-2 lg:mt-3 xl:mt-4 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 group-hover:text-white transition-colors duration-300 flex-shrink-0">
                                                 {award.year}
                                             </div>
-                                            <div className="mt-1 sm:mt-2 md:mt-3 lg:mt-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-gray-500 tracking-wide group-hover:text-white transition-colors duration-300 uppercase leading-tight text-center px-1 sm:px-2">
+                                            <div className="mt-1 sm:mt-1.5 md:mt-2 lg:mt-2 xl:mt-3 text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-semibold text-gray-500 tracking-wide group-hover:text-white transition-colors duration-300 uppercase leading-tight text-center px-2 sm:px-3 md:px-4 break-words hyphens-auto w-full overflow-hidden">
                                                 {award.title}
                                             </div>
-                                            <div className="mt-0.5 sm:mt-1 md:mt-1.5 lg:mt-2 text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg text-gray-600 group-hover:text-white transition-colors duration-300 leading-snug text-center px-1 sm:px-2">
+                                            <div className="mt-0.5 sm:mt-1 md:mt-1 lg:mt-1.5 xl:mt-2 text-[9px] sm:text-[10px] md:text-xs lg:text-sm xl:text-base text-gray-600 group-hover:text-white transition-colors duration-300 leading-snug text-center px-2 sm:px-3 md:px-4 break-words w-full overflow-hidden">
                                                 {award.company}
                                             </div>
                                         </span>
