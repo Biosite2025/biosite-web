@@ -23,6 +23,282 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		e.stopPropagation();
 	};
 
+	const isLiaisonXL = product.name === 'LIAISON® XL';
+	const isTosoh = product.name?.includes('Tosoh AIA');
+	const isBioFlash = product.name === 'Werfen BIO-FLASH';
+
+	const liaisonTestMenu = (
+		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🦴</span>Bone and Mineral
+				</h4>
+				<p className="text-gray-700 ml-4 sm:ml-5 max-[912px]:ml-3">25 OH Vitamin D TOTAL assay</p>
+			</div>
+			
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔴</span>Epstein-Barr Virus
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>EBV IgM</p>
+					<p>VCA IgG</p>
+					<p>EBNA IgG</p>
+					<p>KAPI IgG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔵</span>ToRCH
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Rubella IgG</p>
+					<p>Rubella IgM</p>
+					<p>Cytomegalovirus IgM</p>
+					<p>Cytomegalovirus IgG</p>
+					<p>HSV-1 Type Specific IgG</p>
+					<p>HSV-2 Type Specific IgG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🌍</span>Infectious Disease
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Treponema Assay</p>
+					<p>VZV IgG†</p>
+					<p>Borrelia burgdorferi†</p>
+					<p>Measles IgG†</p>
+					<p>Mumps IgG†</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟡</span>Hepatitis
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Hepatitis A Total Antibodies</p>
+					<p>Hepatitis A IgM*</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟠</span>Diabetes
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Insulin</p>
+					<p>C-Peptid</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔴</span>MMRV
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Measles IgG†</p>
+					<p>Mumps IgG†</p>
+					<p>Rubella IgM</p>
+					<p>Rubella IgG</p>
+					<p>VZV IgG†</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟤</span>Growth
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Human Growth Hormone</p>
+					<p>IGF-1*</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟡</span>Hypertension
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Direct Renin†</p>
+					<p>Aldosterone</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟢</span>Fertility
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>FSH</p>
+					<p>LH</p>
+					<p>Prolactin xt</p>
+					<p>Testosterone</p>
+					<p>Estradiol II Gen</p>
+					<p>Progesterone II Gen**</p>
+					<p>hCG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟢</span>Thyroids
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>TSH</p>
+					<p>FT3</p>
+					<p>FT4</p>
+					<p>Anti-TPO*</p>
+				</div>
+			</div>
+		</div>
+	);
+
+	const tosohTestMenu = (
+		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Tumor Markers</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>AFP</p>
+					<p>CEA</p>
+					<p>PA</p>
+					<p>27.29</p>
+					<p>CA125</p>
+					<p>CA19-9</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Thyroid</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>TSH</p>
+					<p>fT3</p>
+					<p>T4</p>
+					<p>FT3</p>
+					<p>FT4</p>
+					<p>T-U</p>
+					<p>TSH 3rd-Gen *</p>
+					<p>TgAb *</p>
+					<p>TgAb *</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Cardiac Markers</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>CK-MB</p>
+					<p>c Tni 2nd-Gen</p>
+					<p>Myoglobin</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Anemia</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>FER</p>
+					<p>B12 *</p>
+					<p>FOLATE *</p>
+					<p>RBC FOLATE *</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Reproductive</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>βHCG</p>
+					<p>HCG</p>
+					<p>DHEA-S</p>
+					<p>E2</p>
+					<p>FSH</p>
+					<p>LH II</p>
+					<p>PRL</p>
+					<p>PROG II</p>
+					<p>PROG III</p>
+					<p>SHBG</p>
+					<p>Testosterone</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Kidney Markers</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>BMG</p>
+					<p>Cystatin C</p>
+					<p>intact PTH</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Metabolic</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>CORT</p>
+					<p>hGH</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Additional</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>ACTH</p>
+					<p>Homocysteine</p>
+					<p>IgE II</p>
+					<p>PAP</p>
+					<p>25-OH Vitamin D *</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Diabetes</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>C-Peptide II</p>
+					<p>IRI</p>
+				</div>
+			</div>
+		</div>
+	);
+
+	const bioflashTestMenu = (
+		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔬</span>ToRCH
+					<span className="text-[9px] sm:text-xs font-normal text-gray-500 ml-1 max-[912px]:text-[8px]">(9)</span>
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>Toxo IgG</p>
+					<p>Toxo IgM</p>
+					<p>Rubella IgG</p>
+					<p>Rubella IgM</p>
+					<p>CMV IgG</p>
+					<p>CMV IgM</p>
+					<p>HSV-1 IgG</p>
+					<p>HSV-2 IgG</p>
+					<p>HSV IgM*</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
+					<span className="text-sm sm:text-lg max-[912px]:text-xs">🏥</span>Pre-surgery
+					<span className="text-[9px] sm:text-xs font-normal text-gray-500 ml-1 max-[912px]:text-[8px]">(8)</span>
+				</h4>
+				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+					<p>HBsAg</p>
+					<p>anti-HBs</p>
+					<p>HBeAg*</p>
+					<p>anti-HBe*</p>
+					<p>anti-HBc</p>
+					<p>anti-HCV</p>
+					<p>anti-HIV（1+2）</p>
+					<p>anti-TP</p>
+				</div>
+			</div>
+		</div>
+	);
+
 	return (
 		<>
 			<div
@@ -36,7 +312,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -49,25 +325,57 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<Image
-							src={product.image}
-							alt={product.name}
-							fill
-							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-						/>
-					</div>
+					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 max-[912px]:grid-cols-2' : ''}>
+						{isLiaisonXL && (
+							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">Test Menu</h3>
+								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[60vh]">
+									{liaisonTestMenu}
+								</div>
+							</div>
+						)}
 
-					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
-						</p>
-						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
-								For detailed specifications and pricing information, please contact our sales team.
-							</p>
+						{isTosoh && (
+							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">Tosoh AIA® Test Menu</h3>
+								<p className="text-[10px] sm:text-xs italic text-gray-500 mb-2 sm:mb-3 max-[912px]:text-[9px]">(10 minute incubation unless otherwise noted.)</p>
+								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[60vh]">
+									{tosohTestMenu}
+								</div>
+							</div>
+						)}
+
+						{isBioFlash && (
+							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">BIO-FLASH Test Menu</h3>
+								<div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto max-[912px]:max-h-[60vh]">
+									{bioflashTestMenu}
+								</div>
+							</div>
+						)}
+
+						<div>
+							<div className="relative h-40 sm:h-56 md:h-56 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 sm:mb-4 md:mb-6 overflow-hidden max-[912px]:h-32">
+								<Image
+									src={product.image}
+									alt={product.name}
+									fill
+									className="object-contain p-1 sm:p-2 md:p-4 max-[912px]:p-1"
+									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
+								/>
+							</div>
+
+							<div className="space-y-2 sm:space-y-3 md:space-y-4 max-[912px]:space-y-1">
+								<h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 max-[912px]:text-sm">{product.name}</h3>
+								<p className="text-[10px] sm:text-sm md:text-base text-gray-600 leading-relaxed max-[912px]:text-[9px] max-[912px]:leading-tight">
+									{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
+								</p>
+								<div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 max-[912px]:pt-1">
+									<p className="text-[9px] sm:text-xs md:text-sm text-gray-500 max-[912px]:text-[8px]">
+										For detailed specifications and pricing information, please contact our sales team.
+									</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</motion.div>
@@ -202,26 +510,8 @@ export default function Immunology() {
 		// Product data based on CSV
 		const productData = [
 			{
-				id: 1,
-				name: 'Snibe Maglumi 800',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-800.jpg',
-				description: "As one of the world's smallest fully automated chemiluminescence immunoassay analyzers, the MAGLUMI 800 integrates a large capacity and high speed analysis into a compact design, achieving the perfect balance between size and performance in immunological testing."
-			},
-			{
-				id: 2,
-				name: 'Snibe Maglumi X3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x3.png',
-				description: "Small but powerful, the throughput is up to 200 tests/hour, and throughput per unit area is 294 T/h/m². Compatible with all MAGLUMI® reagents, one of the broadest automated CLIA test menus in the world (166 parameters). The latest intelligent washing technology and bidirectional temperature control measurement guarantee accurate and reliable results. The comprehensive advanced design of MAGLUMI® X3 ensures excellent performance. Single reaction cup can avoid light pollution and increase cuvette utilization, its integrated packaging can avoid the stuck of the cuvette and destroying the cuvette wall. No-pause loading/unloading of reagents/samples without waiting or interrupting tests."
-			},
-			{
-				id: 3,
-				name: 'Snibe Maglumi X8',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/snibe-maglumi-x8.png',
-				description: "ABEI Labelling Technology: MAGLUMI® system applies ABEI labels. ABEI is a non-enzyme small molecule with special molecular formula to enhance stability in acid and alkaline solutions. The chemical reaction process of ABEI with sodium hydroxide (NaOH) and hyperoxide (H2O2) finishes in 3 seconds. Magnetic Microbeads Separation Technology: MAGLUMI® uses Magnetic Microbeads. As a separation technology, it has been widely used in the field of CLIA. Compared with traditional separation technologies, it has the following advantages: Shortening the reaction time by enlarging the reaction area of antigens and antibodies; Enhancing the sensitivity by better and faster capturing of antigens and antibodies; Reducing inter or intra-assay discrepancies significantly by mixing the reagents thoroughly in a liquid separation platform."
-			},
-			{
 				id: 4,
-				name: 'Tosoh AIA-360',	
+				name: 'Tosoh AIA-360',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-360.png',
 				description: "The Tosoh AIA-360's size and affordability make it an excellent fit for POLs and small hospitals, as well as for specialty testing or for use as a back-up analyzer."
 			},
@@ -254,7 +544,14 @@ export default function Immunology() {
 				name: 'LIAISON® XL',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XL.png',
 				description: "Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation."
-			}
+			},
+			{
+				id: 10,
+				name: 'Werfen BIO-FLASH',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/werfen%20bioflash.png',
+				description: "BIO-FLASH is a fully automated, random access chemiluminescent analyzer for any autoimmune laboratory. It delivers enhanced workflow efficiencies, market leading ease-of-use and improved assay performance compared with existing enzyme-based systems. With on-board reagents and stored calibration curves, BIO-FLASH makes even the most specialized autoimmune tests efficient to perform."
+			},
+			
 		];
 		
 

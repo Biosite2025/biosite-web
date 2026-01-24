@@ -8,13 +8,15 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Pipettors
-const category = {
-	id: 'pipettors',
-	title: 'Pipettors',
-	description: 'Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.',
-	folder: 'pipettors',
-};
+// Product categories for Pulmonary Department
+const categories = [
+	{
+		id: 'pulmonary',
+		title: 'Pulmonary Department',
+		description: 'Advanced respiratory care solutions including ventilators and pulmonary function testing equipment for comprehensive respiratory diagnostics and treatment.',
+		folder: 'pulmonary',
+	}
+];
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -63,7 +65,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		  <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 			<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 			<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-			  {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+			  {product.description || 'Advanced respiratory care equipment designed for precision ventilation, patient safety, and optimal clinical outcomes in critical care settings.'}
 			</p>
 			<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 			  <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +118,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 		  {product.name}
 		</h3>
 		<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-		  {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+		  {product.description || 'Professional respiratory care equipment engineered for precision, reliability, and superior patient outcomes.'}
 		</p>
 		{/* View Details Button */}
 		<motion.button
@@ -192,7 +194,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function OREquipments() {
+export default function PulmonaryDepartment() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,36 +202,80 @@ export default function OREquipments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Pipettors
+		// Product data for Pulmonary Department
 		const productData = [
-			
 			{
-				id: 4,
-				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
-				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
-			},
-			{
-				id: 5,
-				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
-				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
-			},
-			{
-				id: 6,
-				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
-				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
-			},
+				category: 'pulmonary',
+				products: [
+					{
+						id: 1,
+						name: 'Crius V4',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/Crius%20V4.png',
+						description: 'This transport ventilator is approved for all types of patient transport—ground, sea, or air—ensuring reliable ventilation in any setting. It features an independent high-performance turbine, continuous O₂ support, auxiliary ventilation tools, and a battery life of up to 9 hours with hot-swappable capability for extended use.'
+					},
+					{
+						id: 2,
+						name: 'Crius V8 Ventilator Turbine Based',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/Crius%20V8%20Ventilator%20Turbine%20Based.png',
+						description: 'The Crius V8 Ventilator is an advanced, adaptive system offering volume- and pressure-controlled ventilation for patients from neonates to adults, with both invasive and non-invasive modes. It features a 12″ adjustable touchscreen, automatic leak compensation, integrated self-checks, CO₂ monitoring, and dual batteries for up to 6 hours of operation, ensuring precise and reliable respiratory support.'
+					},
+					{
+						id: 3,
+						name: 'Hamilton MR1',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/Hamilton%20MR1.png',
+						description: 'The HAMILTON-MR1 is an MRI-compatible ICU ventilator that combines compact design, high performance, and reliability. Its patient-adaptive modes support advanced lung-protective strategies, making it ideal for safely transporting ventilated patients to the MRI suite.'
+					},
+					{
+						id: 4,
+						name: 'Hamilton T1',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/Hamilton%20T1.png',
+						description: 'The HAMILTON-T1 is a transport ventilator that merges the full functionality of an ICU ventilator with compact, rugged design. It allows optimal ventilation therapy for all patient groups during transport, ensuring safe and effective respiratory support.'
+					},
+					{
+						id: 5,
+						name: 'Atlas N7',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/Atlas%20N7%20(2).png',
+						description: 'The Atlas N7 features a durable breathing system with metallic circuits, upward or downward bellows, and easy disassembly for cleaning, sterilization, and autoclaving, ensuring safe and hygienic operation. It provides accurate ventilation with multiple modes for neonates, pediatrics, and adults, integrated CO₂ absorption, fresh gas compensation, and alarms for system or canister misinstallation.'
+					},
+					{
+						id: 6,
+						name: 'NKV-550',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/nkv-550.png',
+						description: 'The NKV-550 provides versatile respiratory support for patients of all sizes, allowing seamless transitions between invasive and non-invasive ventilation as well as high-flow oxygen therapy without changing equipment or circuits. This reduces material costs, simplifies workflow, minimizes care discontinuity, and lowers training and storage demands for hospital staff.'
+					},
+					{
+						id: 7,
+						name: 'Babylog VN600',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/BABYLOG%20VN600.png',
+						description: 'The Dräger Babylog® VN600 provides advanced neonatal ventilation with lung- and brain-protective modes to support safe respiratory therapy. Its 15.6” touchscreen ensures easy, efficient operation while promoting a developmental care-friendly environment for neonates.'
+					},
+					{
+						id: 8,
+						name: 'Carestation 30',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/CARESTATION%2030.png',
+						description: 'Dependable, Intuitive, Affordable Anesthesia Delivery. Simply the best anesthesia ventilation you asked for, sophisticated ventilation capabilities that help you meets the needs of the full patient range: trauma, compromised and routine cases.'
+					},
+					{
+						id: 9,
+						name: 'Prima 320',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pulmonary/PRIMA%20320.png',
+						description: 'The Penlon Prima 320 is a versatile anaesthesia system providing the ideal solution for today’s operating room. Clinician-focused choices and benefits, including colour touchscreen display, up to six ventilation modes and optional CO₂ and SPO₂ monitoring.'
+					}
+				]
+			}
 		];
 
-		setProducts(productData);
+		// Flatten products for state management
+		const allProducts = productData.flatMap((cat: any) => 
+			cat.products.map((p: any) => ({ ...p, categoryId: cat.category }))
+		);
+		setProducts(allProducts);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/motic/bg-motic.jpg',
-			...productData.map((p: any) => p.image)
+			...allProducts.map((p: any) => p.image)
 		];
 
 		let loadedCount = 0;
@@ -285,7 +331,7 @@ export default function OREquipments() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="pipettors-particles" />
+					<ParticlesBackground containerId="pulmonary-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -301,21 +347,21 @@ export default function OREquipments() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Pipettors
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.
+						Pulmonary Department
+					</motion.h1>
+					<motion.div
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+						className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+					/>
+					<motion.p
+						initial={{ opacity: 0, y: 30 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+					>
+						Advanced respiratory care solutions including ICU ventilators, transport ventilators, and comprehensive ventilation systems for critical care and emergency settings.
 						</motion.p>
 					</motion.div>
 
@@ -350,11 +396,16 @@ export default function OREquipments() {
 			/>
 		  </div>
 		) : (
-		  <CategorySection
-			category={category}
-			products={products}
-			onViewDetails={handleViewDetails}
-		  />
+		  <>
+			{categories.map((category: any, index: number) => (
+			  <CategorySection
+				key={category.id}
+				category={category}
+				products={products.filter((p: any) => p.categoryId === category.id)}
+				onViewDetails={handleViewDetails}
+			  />
+			))}
+		  </>
 		)}
 	  </div>
 
@@ -368,10 +419,10 @@ export default function OREquipments() {
 	  >
 		<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 		  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-			Ready to Upgrade Your Operating Room?
+			Ready to Upgrade Your Respiratory Care Equipment?
 		  </h2>
 		  <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-			Our team of specialists is ready to help you find the perfect operating room equipment for your surgical needs.
+			Our team of specialists is ready to help you find the perfect ventilation solution for your critical care needs.
 		  </p>
 		  <motion.a
 			href="/user/contact"

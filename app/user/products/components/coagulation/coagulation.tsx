@@ -23,6 +23,115 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		e.stopPropagation();
 	};
 
+	const isACLProduct = product.name?.includes('ACL');
+	const isWerfenAcuStar = product.name?.includes('Werfen AcuStar');
+	const hasTestMenu = isACLProduct || isWerfenAcuStar;
+
+	const aclEliteProTestMenu = (
+		<div className="space-y-2 sm:space-y-3 text-xs sm:text-sm max-[912px]:space-y-1.5">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">General Screening and Anticoagulant Monitoring</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>PT RecombiPlasTin 2G</p>
+					<p>PT-Fibrinogen-HS Plus</p>
+					<p>PT-Fibrinogen</p>
+					<p>♦ APTT SynthASil®</p>
+					<p>♦ APTT-SP</p>
+					<p>APTT SynthAFax®</p>
+					<p>Fibrinogen-QFA</p>
+					<p>Fibrinogen-Clauss</p>
+					<p>Thrombin Time (TT)</p>
+					<p>Pro-IL-Complex®</p>
+					<p>Hepatocomplex®</p>
+					<p>♦ Liquid Anti-Xa</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">DVT and PE Diagnosis</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>D-Dimer</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">Thrombophilia Screening</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>♦ Antithrombin</p>
+					<p>Protein C (chromogenic and clotting)</p>
+					<p>Protein S (functional and antigenic)</p>
+					<p>FV Leiden (APCR-V)</p>
+					<p>Homocysteine</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">Lupus Anticoagulants</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>dRVVT Screen and dRVVT Confirm</p>
+					<p>♦ Silica Clotting Time</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">Coagulation Factors and VWF</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>FII, FV, FVII, FX Deficient Plasma</p>
+					<p>FVIII, FIX, FXI, FXII Deficient Plasma</p>
+					<p>Chromogenic FVIII</p>
+					<p>♦ von Willebrand Factor Antigen</p>
+					<p>von Willebrand Factor Activity</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">Other Specialty Assays</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>Plasminogen</p>
+					<p>Plasmin Inhibitor</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">Calibrators and Controls</h4>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>Calibration Plasma</p>
+					<p>Normal Control Plasma</p>
+					<p>Low Abnormal Control Plasma</p>
+					<p>High Abnormal Control Plasma</p>
+					<p>Special Test Control Level 1</p>
+					<p>Special Test Control Level 2</p>
+					<p>♦ D-Dimer Controls (Low and High)*</p>
+					<p>Low Fibrinogen Control</p>
+				</div>
+			</div>
+		</div>
+	);
+
+	const werfenAcuStarTestMenu = (
+		<div className="space-y-2 sm:space-y-3 text-xs sm:text-sm max-[912px]:space-y-1.5">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 sm:mb-1.5 text-sm sm:text-base max-[912px]:text-xs max-[912px]:mb-0.5">ACL AcuStar HemosIL® Test Menu</h4>
+				<p className="text-gray-600 text-[10px] sm:text-xs italic mb-2 max-[912px]:text-[9px] max-[912px]:mb-1">Comprehensive HemosIL® line of high performance chemiluminescent assays, with more on the way.</p>
+				<div className="ml-2 sm:ml-3 text-gray-700 space-y-0.5 text-[10px] sm:text-xs max-[912px]:text-[9px] max-[912px]:ml-2 max-[912px]:space-y-0">
+					<p>D-Dimer*</p>
+					<p>HIT IgG**</p>
+					<p>HIT IgG/IgM/A**</p>
+					<p>vWF:Ag**</p>
+					<p>vWF:RCo**</p>
+					<p>aCL IgG*</p>
+					<p>aCL IgM*</p>
+					<p>aβ-GPI IgG*</p>
+					<p>aβ-GPI IgM*</p>
+				</div>
+			</div>
+			<div className="pt-2 sm:pt-3 border-t border-gray-200 max-[912px]:pt-1">
+				<p className="text-gray-500 text-[9px] sm:text-xs italic max-[912px]:text-[8px]">* Products may not be available in all countries. Please enquire with your local IL representative.</p>
+				<p className="text-gray-500 text-[9px] sm:text-xs italic max-[912px]:text-[8px]">** Assays currently under development.</p>
+			</div>
+		</div>
+	);
+
 	return (
 		<>
 			<div
@@ -32,11 +141,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			></div>
 			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
 				<motion.div
-					initial={{ opacity: 0, scale: 0.9, y: 20 }}
-					animate={{ opacity: 1, scale: 1, y: 0 }}
-					exit={{ opacity: 0, scale: 0.9, y: 20 }}
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 ${hasTestMenu ? 'max-w-6xl max-h-[80vh]' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -49,31 +158,44 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
+		<div className={hasTestMenu ? 'grid grid-cols-2 gap-6 md:gap-8 max-[912px]:grid-cols-2 max-[912px]:gap-2' : ''}>
+			{hasTestMenu && (
+				<div className="border-r border-gray-200 pr-6 md:pr-8 overflow-y-auto max-h-[65vh] max-[912px]:pr-2 max-[912px]:max-h-[60vh]">
+					<h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-2 max-[912px]:text-sm max-[912px]:mb-1.5 max-[912px]:pb-1.5">Test Menu</h3>
+					{isACLProduct ? aclEliteProTestMenu : werfenAcuStarTestMenu}
+				</div>
+			)}
+
+				<div className="overflow-y-auto max-h-[65vh] max-[912px]:max-h-[60vh]">
+					<div className="relative h-56 sm:h-64 md:h-72 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40 max-[912px]:mb-3">
 						<Image
 							src={product.image}
 							alt={product.name}
 							fill
-							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
+							className="object-contain p-4 sm:p-6 max-[912px]:p-2"
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
 					</div>
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-							{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in coagulation applications.'}
-						</p>
+						<div className="max-h-32 overflow-y-auto pr-2 max-[912px]:max-h-24">
+								<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+								{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in coagulation applications.'}
+							</p>
+						</div>
 						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
 								For detailed specifications and pricing information, please contact our sales team.
 							</p>
 						</div>
 					</div>
-				</motion.div>
+				</div>
 			</div>
-		</>
-	);
+			</motion.div>
+		</div>
+	</>
+);
 }
 
 // Product card component with animations
@@ -224,6 +346,12 @@ export default function Coagulation() {
 				name: 'ACL TOP 750',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/ACL TOP 750.png',
 				description: 'Runs more tests in less time; user-friendly and high throughput for routine analysis in the labs with the heaviest work loads.'
+			},
+			{
+				id: 5,
+				name: 'Werfen AcuStar',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/coagulation/werfen%20acustar.png',
+				description: 'The first specialty testing analyzer to offer full automation of highly sensitive immunoassays, the ACL AcuStar delivers unprecedented accuracy and efficiency.  Advanced assay technology, complemented with end-to-end automation, enhances simplicity and throughput, with uncompromised results. Complete specialty testing in as little as 25 minutes, with no special training required.'
 			}
 		];
 

@@ -40,21 +40,29 @@ const Footer = () => {
             </h3>
             <div className="flex flex-row gap-x-4 sm:gap-x-6 md:gap-x-8 gap-y-2 text-xs sm:text-sm w-full">
               <ul className="space-y-3">
-                
                 <li className="flex items-center gap-2 group/item">
                   <span className="text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
-                  <a href="/user/events" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">Events</a>
+                  <a href="#" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">About Us</a>
                 </li>
                 <li className="flex items-center gap-2 group/item">
-                  <span className="text-base sm:text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
-                  <a href="/user/career" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">Careers</a>
+                  <span className="text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
+                  <a href="#" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">Products</a>
                 </li>
                 <li className="flex items-center gap-2 group/item">
-                  <span className="text-base sm:text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
-                  <a href="/user" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">FAQ</a>
+                  <span className="text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
+                  <a href="#" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">Events</a>
                 </li>
               </ul>
-             
+              <ul className="space-y-2 sm:space-y-3 ml-4 sm:ml-6 md:ml-8">
+                <li className="flex items-center gap-2 group/item">
+                  <span className="text-base sm:text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
+                  <a href="#" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">Careers</a>
+                </li>
+                <li className="flex items-center gap-2 group/item">
+                  <span className="text-base sm:text-lg text-blue-300 group-hover/item:text-white transition-colors duration-200">&#8250;</span>
+                  <a href="#" className="hover:text-blue-200 transition-colors duration-200 transform hover:translate-x-1">FAQ</a>
+                </li>
+              </ul>
             </div>
           </div>
           {/* Enhanced Open Hours */}

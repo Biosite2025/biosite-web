@@ -230,6 +230,18 @@ export default function Hematology() {
 				name: 'EXC 8010', 
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/EXC%208010.png',
 				description: 'High-speed clinical centrifuge designed for blood banks and laboratories, suitable for continuous operation with reliable separation performance. BIOSITE PRODUCT CATALOG VERSION…'
+			},
+			{
+				id: 6,
+				name: 'DH-800',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/DH%20800.png',
+				description: 'The DH-800 is a high-performance hematology analyzer that delivers fast and accurate blood cell analysis with advanced technology. It supports comprehensive differential parameters, high-throughput testing, and efficient workflow, making it suitable for busy clinical laboratories'
+			},
+			{
+				id: 7,
+				name: 'DH-615',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/DH-615.png',
+				description: 'The DH-615 is an AI-powered hematology analyzer that provides accurate 6DIFF and RET results using advanced multi-system blood cell analysis and dual platelet methods. It supports automatic capillary sampling with barcode scanning for faster, more efficient testing and features a flexible design to meet various laboratory needs.'
 			}
 		];
 

@@ -8,12 +8,12 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Pipettors
+// Product category for Surgical Disposables
 const category = {
-	id: 'pipettors',
-	title: 'Pipettors',
-	description: 'Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.',
-	folder: 'pipettors',
+	id: 'surgical-disposables',
+	title: 'Surgical Disposables',
+	description: 'High-quality surgical staplers, trocars, and accessories for minimally invasive procedures. Designed for precision, safety, and optimal surgical outcomes.',
+	folder: 'surgical',
 };
 
 // Modal component
@@ -63,7 +63,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		  <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 			<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 			<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-			  {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+			  {product.description || 'Professional-grade surgical disposable designed for precision, safety, and optimal surgical outcomes.'}
 			</p>
 			<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 			  <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +116,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 		  {product.name}
 		</h3>
 		<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-		  {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+		  {product.description || 'Professional surgical disposable engineered for precision, safety, and optimal surgical outcomes.'}
 		</p>
 		{/* View Details Button */}
 		<motion.button
@@ -192,7 +192,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function OREquipments() {
+export default function SurgicalDisposables() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,26 +200,91 @@ export default function OREquipments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Pipettors
+		// Product data for Surgical Disposables
 		const productData = [
-			
+			{
+				id: 1,
+				name: 'Disposable Endo Cutter Stapler and Cartridge (KUN Type)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge%20KUN%20Type.png',
+				description: 'Disposable endoscopic cutter stapler with reliable cartridge for minimally invasive surgical procedures.'
+			},
+			{
+				id: 2,
+				name: 'Disposable Endo Cutter Stapler and Cartridge (QIAN Type)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge-QIAN%20type.png',
+				description: 'Advanced endoscopic cutter stapler designed for precision and consistent performance in laparoscopic surgery.'
+			},
+			{
+				id: 3,
+				name: 'Disposable Prolapse Hemorrhoids Stapler (PPH)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(PPH).png',
+				description: 'PPH stapler for hemorrhoidectomy procedures with complete accessories for optimal results.'
+			},
 			{
 				id: 4,
-				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
-				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
+				name: 'Disposable Prolapse Hemorrhoids Stapler (TST)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(TST).png',
+				description: 'TST stapler system for transanal stapling technique in hemorrhoid treatment.'
 			},
 			{
 				id: 5,
-				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
-				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
+				name: 'Disposable Circular Stapler',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Circular%20Stapler.png',
+				description: 'Circular stapler for end-to-end, end-to-side, and side-to-side anastomoses in gastrointestinal surgery.'
 			},
 			{
 				id: 6,
-				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
-				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
+				name: 'Disposable Linear Cutter Stapler and Cartridge',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Linear%20Cutter%20Stapler%20and%20Cartridge.png',
+				description: 'Linear cutter stapler for transection and simultaneous stapling in thoracic and abdominal procedures.'
+			},
+			{
+				id: 7,
+				name: 'Disposable Linear Stapler and Cartridge',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Linear%20Stapler%20and%20Cartridge.png',
+				description: 'Linear stapler for tissue approximation and hemostasis in various surgical applications.'
+			},
+			{
+				id: 8,
+				name: 'Disposable Curved Cutter Stapler and Cartridge',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Curved%20Cutter%20Stapler%20and%20Cartridge.png',
+				description: 'Curved cutter stapler for enhanced access in confined surgical spaces and difficult-to-reach areas.'
+			},
+			{
+				id: 9,
+				name: 'Disposable Laparoscopic Trocar',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Laparoscopic%20Trocar.png',
+				description: 'Laparoscopic trocar system for safe and efficient access in minimally invasive procedures.'
+			},
+			{
+				id: 10,
+				name: 'Disposable Wound Protector',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Wound%20Protector.png',
+				description: 'Surgical wound protector to minimize contamination and protect incision sites during procedures.'
+			},
+			{
+				id: 11,
+				name: 'Disposable Endo Bag',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Bag.png',
+				description: 'Endoscopic specimen retrieval bag for safe removal of tissue and organs during laparoscopic surgery.'
+			},
+			{
+				id: 12,
+				name: 'Disposable Skin Stapler',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Skin%20Stapler.png',
+				description: 'Skin stapler for fast and reliable wound closure with consistent staple formation.'
+			},
+			{
+				id: 13,
+				name: 'Disposable Purse String Stapler',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Purse%20String%20Stapler.png',
+				description: 'Purse string stapler for creating secure circular anastomoses in gastrointestinal procedures.'
+			},
+			{
+				id: 14,
+				name: 'Disposable Circumcision Stapler',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Circumcision%20Stapler.png',
+				description: 'Circumcision stapler for safe, efficient, and minimally invasive circumcision procedures.'
 			},
 		];
 
@@ -285,7 +350,7 @@ export default function OREquipments() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="pipettors-particles" />
+					<ParticlesBackground containerId="surgical-disposables-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -301,7 +366,7 @@ export default function OREquipments() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Pipettors
+							Surgical Disposables
 						</motion.h1>
 						<motion.div
 							initial={{ scaleX: 0 }}
@@ -315,7 +380,7 @@ export default function OREquipments() {
 							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
 							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
 						>
-							Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.
+							High-quality surgical staplers, trocars, and accessories for minimally invasive procedures. Designed for precision, safety, and optimal surgical outcomes.
 						</motion.p>
 					</motion.div>
 
@@ -368,10 +433,10 @@ export default function OREquipments() {
 	  >
 		<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 		  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-			Ready to Upgrade Your Operating Room?
+			Ready to Enhance Your Surgical Procedures?
 		  </h2>
 		  <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-			Our team of specialists is ready to help you find the perfect operating room equipment for your surgical needs.
+			Our team of specialists is ready to help you find the perfect surgical disposables for your medical facility.
 		  </p>
 		  <motion.a
 			href="/user/contact"

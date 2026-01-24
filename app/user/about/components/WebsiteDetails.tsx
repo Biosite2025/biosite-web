@@ -147,33 +147,35 @@ const WebsiteDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
           {/* Enhanced Left Image Box - Responsive */}
           <motion.div
-            className="rounded-md sm:rounded-lg lg:rounded-xl overflow-hidden flex items-center justify-center p-0 bg-white shadow-md hover:shadow-lg transition-all duration-500 group border border-gray-100 hover:border-[#2356a8]/30 h-full order-2 lg:order-1"
+            className="rounded-md sm:rounded-lg lg:rounded-xl overflow-hidden flex items-center justify-center p-0 bg-white shadow-md hover:shadow-lg transition-all duration-500 group border border-gray-100 hover:border-[#2356a8]/30 order-2 lg:order-1"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             whileHover={{ scale: 1.01, boxShadow: '0 8px 32px 0 rgba(35,86,168,0.10)' }}
+            style={{ minHeight: 300 }}
           >
             <Image
-              src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530499/biosite-assets/image1.png"
-              alt="Community Engagement"
+              src="/asset/outreach.png"
+              alt="Community Outreach"
               width={600}
               height={300}
               priority={false}
               quality={85}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
               className="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              style={{ minHeight: 180, maxHeight: 300, objectFit: 'cover' }}
+              style={{ minHeight: 300, objectFit: 'cover' }}
             />
           </motion.div>
           {/* Enhanced Community Engagement Card - Responsive */}
           <motion.div
-            className="bg-white rounded-lg sm:rounded-xl border border-gray-100 p-4 sm:p-5 md:p-6 flex flex-col justify-center hover:border-[#2356a8]/40 transition-all duration-500 group shadow-md hover:shadow-lg transform hover:-translate-y-1 relative overflow-hidden h-full order-1 lg:order-2"
+            className="bg-white rounded-lg sm:rounded-xl border border-gray-100 p-4 sm:p-5 md:p-6 flex flex-col justify-center hover:border-[#2356a8]/40 transition-all duration-500 group shadow-md hover:shadow-lg transform hover:-translate-y-1 relative overflow-hidden order-1 lg:order-2"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.5, ease: 'easeOut' }}
             whileHover={{ scale: 1.01, boxShadow: '0 8px 32px 0 rgba(35,86,168,0.10)' }}
+            style={{ minHeight: 300 }}
           >
             {/* Blue left vertical accent line */}
             <div className="absolute left-0 top-0 h-full w-1 sm:w-1.5 bg-gradient-to-b from-[#2356a8] to-blue-500 rounded-l-lg sm:rounded-l-xl" style={{ zIndex: 12 }} />
@@ -185,7 +187,7 @@ const WebsiteDetails = () => {
               transition={{ duration: 0.5 }}
             />
             <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-800 group-hover:text-[#2356a8] transition-colors duration-300 relative z-10">
-              Community Engagement and Support
+              Community Outreach and Support
               <motion.div
                 className="absolute -bottom-1 left-0 h-0.5 bg-[#2356a8]"
                 initial={{ width: 0 }}
@@ -195,8 +197,8 @@ const WebsiteDetails = () => {
               />
             </h3>
             <p className="text-gray-700 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-gray-600 transition-colors duration-300 relative z-10">
-              During the <span className="font-semibold text-[#2356a8]">COVID-19 pandemic</span>, BMI played a crucial role in supporting the Philippine Department of Health by supplying essential COVID-19 consumables and installing biosafety refrigerators nationwide, thereby contributing significantly to the country&apos;s healthcare response.<br /><br />
-              Through these initiatives and partnerships, <span className="font-semibold text-[#2356a8]">BMI continues to strengthen its position</span> as a trusted provider of integrated medical and diagnostic solutions, dedicated to improving healthcare outcomes across the Philippines.
+              Through the <span className="font-semibold text-[#2356a8]">Biosite Medical Instruments, Inc. Cares</span> initiative, the company extended help to the community by providing support and sharing meaningful moments with children and families in need. This outreach activity reflects Biosite&apos;s commitment to compassion and service, focusing on helping others through genuine care and kindness.<br /><br />
+              These efforts are deeply aligned with the company&apos;s guiding principle, <span className="font-semibold text-[#2356a8]">&quot;Because Every Life Deserves The Best Care.&quot;</span> By reaching beyond its role as a medical instruments provider and offering support where it is most needed, Biosite continues to live out its mission of caring for lives and strengthening communities.
             </p>
           </motion.div>
         </div>

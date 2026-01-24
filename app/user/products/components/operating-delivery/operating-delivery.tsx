@@ -8,13 +8,15 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Pipettors
-const category = {
-	id: 'pipettors',
-	title: 'Pipettors',
-	description: 'Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.',
-	folder: 'pipettors',
-};
+// Product categories for Operating and Delivery Room Department
+const categories = [
+	{
+		id: 'operating-delivery',
+		title: 'Operating and Delivery Room Department',
+		description: 'Advanced surgical lights, operating tables, delivery beds, and specialized equipment for operating rooms and delivery suites.',
+		folder: 'operating-delivery',
+	}
+];
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -63,7 +65,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		  <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 			<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 			<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-			  {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+			  {product.description || 'Professional operating room and delivery suite equipment designed for optimal surgical outcomes and patient safety.'}
 			</p>
 			<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 			  <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +118,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 		  {product.name}
 		</h3>
 		<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-		  {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+		  {product.description || 'Professional operating room and delivery suite equipment engineered for surgical excellence and patient care.'}
 		</p>
 		{/* View Details Button */}
 		<motion.button
@@ -192,7 +194,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function OREquipments() {
+export default function OperatingDeliveryRoom() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,36 +202,117 @@ export default function OREquipments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Pipettors
+		// Product data for Operating and Delivery Room Department
 		const productData = [
-			
 			{
-				id: 4,
-				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
-				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
-			},
-			{
-				id: 5,
-				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
-				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
-			},
-			{
-				id: 6,
-				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
-				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
-			},
+				category: 'operating-delivery',
+				products: [
+					{
+						id: 1,
+						name: '700-700ELED Surgical Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/700-700ELED.png',
+						description: 'The 700/700 LED shadowless operating lamp features adjustable color temperature from 3800K to 5000K with a high color rendering index of 93, allowing surgeons to optimize tissue contrast and resolution for different surgical sites. It also includes a one-key low-light mode for endoscopic procedures, enabling quick adjustments without obstructing the surgeon’s view.'
+					},
+					{
+						id: 2,
+						name: '700ELED Surgical Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/700ELED.png',
+						description: 'The 700/500 LED shadowless operating lamp offers adjustable color temperature from 3800K to 5000K with a high color rendering index of 95, allowing surgeons to optimize tissue contrast and resolution for different surgical sites. It also features a one-key low-light mode for endoscopic procedures, enabling quick switching without obstructing the surgeon’s view.'
+					},
+					{
+						id: 3,
+						name: 'HF-FS LED Examination Lamp',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HF-FS%20LED.png',
+						description: 'The HF-FS LED examination lamp is a versatile lighting solution for medical, industrial, and scientific applications, designed for use during patient examinations or minor procedures. It features a spring-loaded, articulated 105 cm arm with an on/off switch and built-in electronic transformer, a soft gooseneck lamp head for easy positioning, and a stable base for mobility and convenience.'
+					},
+					{
+						id: 4,
+						name: 'HFEOT99 Electric Operating Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HFEOT99.png',
+						description: 'The HFEOT99 electric operating table features an extra-wide tabletop with long horizontal sliding, suitable for X-ray and C-arm procedures, and a built-in kidney bridge for surgical convenience. It offers smooth, flexible adjustments via a micro touch remote, high automation, low noise, and reliable performance with key imported components, making it an ideal choice for various surgical departments.'
+					},
+					{
+						id: 5,
+						name: 'HFMPB06C Hydraulic Operating Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HFMPB06C.png',
+						description: 'The HFMPB06C is a hydraulic operating table designed for gynecology and obstetrics, featuring a fully adjustable mattress available in various colors. It includes a German-made gas spring to control the back plate, providing smooth and precise positioning for patient comfort and surgical efficiency.'
+					},
+					{
+						id: 6,
+						name: 'EK-410 Electrosurgical Unit',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/EK-410.png',
+						description: 'This electrosurgical unit delivers a maximum output power of 400 W in cut mode and supports monopolar, bipolar, and vessel-sealing functions, with multiple device modes and 50 data memory slots. It features voice alerts, adjustable volume, an LCD and seven-segment display with date and clock, multilingual support, electrical safety compliance (CE, EN 60601 series), foot switch alarm, high-temperature and internal parameter control, and weighs 18 kg (net) with packaging dimensions of 470 × 610 × 420 mm.'
+					},
+					{
+						id: 7,
+						name: 'Novela Surgical Suction Unit',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/NOVELA%20EXTRACTOR.png',
+						description: 'Surgical suction units are designed to remove unwanted fluids, secretions, and particles from the body, aiding in treatment and disease prevention by collecting them in a jar. They feature fast aspiration, stable vacuum performance, adjustable and monitorable vacuum levels, oil-free pumps for easy maintenance, and simple cleaning, making them suitable for operating rooms, ICUs, emergency rooms, dental clinics, and other surgical settings, with CE certification and compliance with ISO 10079-1 and EN 60601 standards.'
+					},
+					{
+						id: 8,
+						name: 'Liquid Soap Dispenser Elbow Control',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20ELBOW%20CONTROL.png',
+						description: 'You can adjust the amount of soap according to your needs in this product, which can be controlled with the elbow.'
+					},
+					{
+						id: 9,
+						name: 'OM-6N Operating Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/OPERATING%20TABLE.png',
+						description: 'The OM-6N operating table is designed for surgical procedures, featuring a durable polyurethane pillow and a wireless controller for adjusting height, backrest, Trendelenburg/reverse Trendelenburg, side tilt, and horizontal slide. Its X-ray transparent top plate, T-shaped base with 300 cm sliding function, and integrated guides provide high-quality imaging, easy equipment access, and optimal visibility for a comfortable and efficient surgical workflow.'
+					},
+					{
+						id: 10,
+						name: 'JM-4F Delivery Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/DELIVERY%20TABLE.png',
+						description: 'The roll cover dispenser positioned at the back is placed in order to meet patient comfort and hygiene requirements. The waste collection system integrated under the sitting area, support hygiene conditions. The knee support section is made of polyurethane material and can rotate 360 degrees around its own axis and is fixed at the desired angle.The lifting capacity of the table is 180kg and there are 4 different color options.'
+					},
+					{
+						id: 11,
+						name: 'DL-62CM Operating Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/OPERATING%20LIGHT.png',
+						description: 'During the operation, the camera located in the center of the light transfers the image to the monitor and allows other people to watch the operation. The camera attached to the light head is commanded via the control panel. The monitor, which is mounted on the lamp arm, has the ability to move and make positioning. LED technology does not cause temperature increase in both the surgical area and the surgeon head. The life of the led bulbs used in these light heads, which can produce 160,000 lux and 120,000 lux power, is 60,000 hours. There are 68 LEDs in the main head part and 28 LEDs in the satellite head part.'
+					},
+					{
+						id: 12,
+						name: 'DL-2MB Mobile Operating Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/MOBILE%20OPERATING%20LIGHT.png',
+						description: 'This model with 28 LED bulbs is 44 cm wide and has 120,000 lux power. All functions can be accessed thanks to the LCD touch screen placed on the edge of the hood. The panel on the base shows in which mode the device is operating and the power of the battery in 4 steps. The lamp has 4 wheels, 2 of which have brakes.'
+					},
+					{
+						id: 13,
+						name: 'Scrub Sink Double 80700',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/SCRUB%20SINK%20DOUBLE.png',
+						description: 'It has a photocell display screen on which the temperature and duration of the water flowing from each battery are monitored alternately.  It has a rounded concave corner in accordance with international hygienic norms, taking to consideration the usage areas and user requests. It provides ease of use with the water flow controlled by the panel and the soap flow controlled by the knee panel.  It has an internal thermostatic valve that allows the water temperature to be adjusted according to the user request.'
+					},
+					{
+						id: 14,
+						name: 'Brush Holder 20 Capacity',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/BRUSH%20HOLDER%2020%20CAPACITY%20(2).png',
+						description: 'This product, which has the capacity to take 20 brushes, is made of stainless steel and can be sterilized. Thanks to the glass cover, the amount of brush remaining inside can be seen.'
+					},
+					{
+						id: 15,
+						name: 'Liquid Soap Dispenser Foot Pump',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20FOOT%20PUMP.png',
+						description: 'It is designed to control the soap flow with a foot pump. The soap tank is 1 liter.'
+					}
+				]
+			}
+
 		];
 
-		setProducts(productData);
+		// Flatten products for state management
+		const allProducts = productData.flatMap((cat: any) => 
+			cat.products.map((p: any) => ({ ...p, categoryId: cat.category }))
+		);
+		setProducts(allProducts);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/motic/bg-motic.jpg',
-			...productData.map((p: any) => p.image)
+			...allProducts.map((p: any) => p.image)
 		];
 
 		let loadedCount = 0;
@@ -285,7 +368,7 @@ export default function OREquipments() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="pipettors-particles" />
+					<ParticlesBackground containerId="operating-delivery-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -301,21 +384,21 @@ export default function OREquipments() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Pipettors
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.
+						Operating and Delivery Room Department
+					</motion.h1>
+					<motion.div
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+						className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+					/>
+					<motion.p
+						initial={{ opacity: 0, y: 30 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+					>
+						Comprehensive surgical equipment and delivery room solutions including LED surgical lights, operating tables, delivery beds, infant warmers, and smoke evacuation systems.
 						</motion.p>
 					</motion.div>
 
@@ -350,11 +433,16 @@ export default function OREquipments() {
 			/>
 		  </div>
 		) : (
-		  <CategorySection
-			category={category}
-			products={products}
-			onViewDetails={handleViewDetails}
-		  />
+		  <>
+			{categories.map((category: any, index: number) => (
+			  <CategorySection
+				key={category.id}
+				category={category}
+				products={products.filter((p: any) => p.categoryId === category.id)}
+				onViewDetails={handleViewDetails}
+			  />
+			))}
+		  </>
 		)}
 	  </div>
 
@@ -368,10 +456,10 @@ export default function OREquipments() {
 	  >
 		<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 		  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-			Ready to Upgrade Your Operating Room?
+			Ready to Upgrade Your Operating and Delivery Room?
 		  </h2>
 		  <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-			Our team of specialists is ready to help you find the perfect operating room equipment for your surgical needs.
+			Our team of specialists is ready to help you find the perfect surgical and delivery room equipment for your facility.
 		  </p>
 		  <motion.a
 			href="/user/contact"

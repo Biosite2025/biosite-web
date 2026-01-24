@@ -45,6 +45,92 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		e.stopPropagation();
 	};
 
+	const isILabProduct = product.name?.includes('ILab');
+
+	const ilabAriesTestMenu = (
+		<div className="space-y-1.5 sm:space-y-2 text-[9px] sm:text-sm pr-1 sm:pr-2 max-[912px]:space-y-1">
+			<div className="mb-2 sm:mb-3 max-[912px]:mb-1">
+				<h4 className="font-bold text-[#2B3990] text-sm sm:text-base mb-1 sm:mb-2 max-[912px]:text-[10px] max-[912px]:mb-0.5">Test menu</h4>
+			</div>
+
+			<div className="grid grid-cols-3 gap-2 sm:gap-4 max-[912px]:gap-1">
+				{/* Column 1 - Clinical Chemistry */}
+				<div className="space-y-0.5 max-[912px]:space-y-0">
+					<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">Clinical Chemistry</h5>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Uric Acid</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Albumin</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ALT/GPT</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Amylase</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">AST/GOT</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Direct Bilirubin</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Bilirubin</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Calcium</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CK</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CK-MB</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Chloride</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">HDL Cholesterol</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">LDL Cholesterol</p>
+				</div>
+
+				{/* Column 2 - Continued Clinical Chemistry */}
+				<div className="space-y-0.5 max-[912px]:space-y-0">
+					<h5 className="font-bold text-transparent text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">.</h5>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Cholesterol</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cholinesterase</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Creatinine</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Iron</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ALP</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">GGT</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Glucose</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Glycated Albumin</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">LDH-P</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Lipase</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Magnesium</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Potassium</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Protein Serum</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Protein Urine</p>
+				</div>
+
+				{/* Column 3 - Final Tests */}
+				<div className="space-y-0.5 max-[912px]:space-y-0">
+					<h5 className="font-bold text-transparent text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">.</h5>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Sodium</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Triglycerides</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total CO<sub>2</sub></p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Urea</p>
+					
+					<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mt-2 sm:mt-3 mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mt-1 max-[912px]:mb-0.5">Immunodiagnostics</h5>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">HbA1c</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Rheumatoid Factor</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ASO</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CRP</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">C3, C4</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Microalbumin</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">IgA, IgG, IgM</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Transferrin</p>
+				</div>
+			</div>
+
+			{/* Drugs of Abuse Section */}
+			<div className="mt-2 sm:mt-4 pt-2 sm:pt-3 border-t border-gray-200 max-[912px]:mt-1 max-[912px]:pt-1">
+				<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">Drugs of Abuse*</h5>
+				<div className="grid grid-cols-3 gap-1 sm:gap-1.5 max-[912px]:gap-0.5">
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Amphetamines</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Benzodiazepine</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cannabinoid</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cocaine Metabolite</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Ecstasy</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Ethyl Alcohol</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Methadone</p>
+					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Opiate</p>
+				</div>
+				<p className="text-gray-500 text-[8px] sm:text-xs italic mt-1 sm:mt-2 max-[912px]:text-[7px] max-[912px]:mt-0.5">
+					* Products may not be available in all countries. Please enquire with your local IL representative.
+				</p>
+			</div>
+		</div>
+	);
+
 	return (
 		<>
 			<div
@@ -54,11 +140,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			></div>
 			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
 				<motion.div
-					initial={{ opacity: 0, scale: 0.9, y: 20 }}
-					animate={{ opacity: 1, scale: 1, y: 0 }}
-					exit={{ opacity: 0, scale: 0.9, y: 20 }}
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+		className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 ${isILabProduct ? 'max-w-6xl max-h-[80vh]' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -71,19 +157,30 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
+<div className={isILabProduct ? 'grid grid-cols-2 gap-6 md:gap-8 max-[912px]:grid-cols-2 max-[912px]:gap-2' : ''}>
+				{isILabProduct && (
+					<div className="border-r border-gray-200 pr-6 md:pr-8 overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:pr-2 max-[912px]:max-h-[60vh]">
+						{ilabAriesTestMenu}
+					</div>
+				)}
+
+					<div className="overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:max-h-[60vh]">
+						<div className="relative h-56 sm:h-64 md:h-72 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
 						<Image
 							src={product.image}
 							alt={product.name}
 							fill
-							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
+							className="object-contain p-4 sm:p-6 max-[912px]:p-2"
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
 					</div>
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<div className="max-h-48 sm:max-h-56 md:max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+						
+						
+
+						<div className="max-h-32 overflow-y-auto pr-2 custom-scrollbar max-[912px]:max-h-24">
 							<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
 								{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in clinical chemistry applications.'}
 							</p>
@@ -94,6 +191,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 							</p>
 						</div>
 					</div>
+					</div>
+				</div>
 				</motion.div>
 			</div>
 		</>
@@ -255,18 +354,7 @@ export default function ClinicalChemistry() {
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Smartlyte Plus.png',
 				description: 'The SmartLyte Plus is a dedicated electrolyte analyzer specifically designed for rapid and accurate measurement of sodium, potassium, chloride, ionized calcium, pH, and lithium in various sample types including serum, plasma, whole blood, and urine. Utilizing advanced ion-selective electrode (ISE) technology, this compact system delivers precise electrolyte results in approximately 60 seconds per sample, making it ideal for emergency departments, critical care units, and routine laboratory operations. The SmartLyte Plus features automatic calibration and quality control functions that ensure consistent analytical performance throughout extended operation periods. Its low sample volume requirements minimize waste and make it particularly suitable for pediatric and neonatal testing applications. The analyzer incorporates intelligent sample detection with automatic aspiration and comprehensive error detection systems that alert operators to potential sample or system issues. With its intuitive touchscreen interface, minimal training requirements, and straightforward maintenance procedures, the SmartLyte Plus offers laboratories a reliable and cost-effective solution for electrolyte testing. The system supports bi-directional LIS connectivity for seamless integration into existing laboratory information systems and includes comprehensive data management capabilities with full traceability of all test results.'
 			},
-			{ 
-				id: 6, 
-				name: 'Genrui GE500', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Genrui GE500.png',
-				description: 'The Genrui GE500 is an advanced semi-automated clinical chemistry analyzer that combines affordability with reliable performance, making it an excellent choice for small to medium-sized laboratories, clinics, and point-of-care testing facilities. This versatile system supports a comprehensive test menu covering routine chemistry parameters including glucose, cholesterol, triglycerides, liver enzymes, kidney function markers, and electrolytes. The GE500 features a user-friendly interface with simplified operation that minimizes training requirements while maintaining analytical accuracy and precision. Its semi-automated design allows for flexible testing workflows, accommodating both individual tests and small batch processing. The analyzer utilizes high-quality optical components for reliable photometric measurements across multiple wavelengths, ensuring consistent results even with challenging samples. With its compact footprint and minimal space requirements, the GE500 fits easily into laboratories with limited bench space. The system includes built-in quality control functions and comprehensive data management capabilities for result tracking and reporting. Its low reagent consumption, reduced maintenance needs, and cost-effective operation make the GE500 an economical solution for laboratories requiring dependable clinical chemistry testing without the high costs associated with larger automated systems.'
-			},
-			{
-				id: 7,
-				name: 'Genrui GE300',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-chemistry/Genrui GE300.png',
-				description: 'The Genrui GE300 is a compact and efficient clinical chemistry analyzer designed for small laboratories and clinics. It offers reliable performance for routine chemistry assays, user-friendly operation, and low maintenance requirements, making it an ideal solution for cost-effective and accurate diagnostic testing.'
-			}
+			
 		];
 
 		setProducts(productData);

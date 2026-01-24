@@ -23,6 +23,138 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		e.stopPropagation();
 	};
 
+	const isLiaisonXL = product.name === 'LIAISON® XL';
+
+	const liaisonTestMenu = (
+		<div className="space-y-3 text-xs max-h-[500px] overflow-y-auto pr-2">
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🦴</span>Bone and Mineral
+				</h4>
+				<p className="text-gray-700 ml-5">25 OH Vitamin D TOTAL assay</p>
+			</div>
+			
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🔴</span>Epstein-Barr Virus
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>EBV IgM</p>
+					<p>VCA IgG</p>
+					<p>EBNA IgG</p>
+					<p>KAPI IgG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🔵</span>ToRCH
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Rubella IgG</p>
+					<p>Rubella IgM</p>
+					<p>Cytomegalovirus IgM</p>
+					<p>Cytomegalovirus IgG</p>
+					<p>HSV-1 Type Specific IgG</p>
+					<p>HSV-2 Type Specific IgG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🌍</span>Infectious Disease
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Treponema Assay</p>
+					<p>VZV IgG†</p>
+					<p>Borrelia burgdorferi†</p>
+					<p>Measles IgG†</p>
+					<p>Mumps IgG†</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟡</span>Hepatitis
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Hepatitis A Total Antibodies</p>
+					<p>Hepatitis A IgM*</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟠</span>Diabetes
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Insulin</p>
+					<p>C-Peptid</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🔴</span>MMRV
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Measles IgG†</p>
+					<p>Mumps IgG†</p>
+					<p>Rubella IgM</p>
+					<p>Rubella IgG</p>
+					<p>VZV IgG†</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟤</span>Growth
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Human Growth Hormone</p>
+					<p>IGF-1*</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟡</span>Hypertension
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>Direct Renin†</p>
+					<p>Aldosterone</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟢</span>Fertility
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>FSH</p>
+					<p>LH</p>
+					<p>Prolactin xt</p>
+					<p>Testosterone</p>
+					<p>Estradiol II Gen</p>
+					<p>Progesterone II Gen**</p>
+					<p>hCG</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
+					<span className="text-lg">🟢</span>Thyroids
+				</h4>
+				<div className="ml-5 text-gray-700">
+					<p>TSH</p>
+					<p>FT3</p>
+					<p>FT4</p>
+					<p>Anti-TPO*</p>
+				</div>
+			</div>
+		</div>
+	);
+
 	return (
 		<>
 			<div
@@ -36,7 +168,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -49,25 +181,36 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<Image
-							src={product.image}
-							alt={product.name}
-							fill
-							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-						/>
-					</div>
+					<div className={isLiaisonXL ? 'grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6' : ''}>
+						{isLiaisonXL && (
+							<div className="border-r border-gray-200 pr-4 md:pr-6">
+								<h3 className="text-lg font-bold text-gray-900 mb-3 border-b border-gray-200 pb-2">Test Menu</h3>
+								{liaisonTestMenu}
+							</div>
+						)}
 
-					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-						{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in blood bank applications.'}
-						</p>
-						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
-								For detailed specifications and pricing information, please contact our sales team.
-							</p>
+						<div>
+							<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
+								<Image
+									src={product.image}
+									alt={product.name}
+									fill
+									className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+								/>
+							</div>
+
+							<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
+								<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
+								<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+								{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in blood bank applications.'}
+								</p>
+								<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
+									<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
+										For detailed specifications and pricing information, please contact our sales team.
+									</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</motion.div>
@@ -193,62 +336,258 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 export default function BloodBank() {
 	const [products, setProducts] = useState<any[]>([]);
+	const [tubeSealer, setTubeSealer] = useState<any[]>([]);
+	const [bloodCollectionMixer, setBloodCollectionMixer] = useState<any[]>([]);
+	const [plasmaSeparator, setPlasmaSeparator] = useState<any[]>([]);
+	const [centrifugeBalance, setCentrifugeBalance] = useState<any[]>([]);
+	const [tulipEryclone, setTulipEryclone] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on CSV
+		// Blood Bank Product data
 		const productData = [
-			{ 
-				id: 1, 
-				name: 'Centron SE260', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se260.png',
-				description: 'Centron SE260 is a reliable tube sealer designed for secure sealing of blood collection tubes and sample containers in blood banking applications.'
-			},
 			{
 				id: 2,
 				name: 'Matrix Automax 80',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png',
 				description: 'Matrix AutoMax-80 is a fully automated modular analyzer for Matrix gel cards, featuring robotic sample handling, barcode scanning, and efficient gel card processing for blood banking.'
 			},
-			{ 
-				id: 3, 
-				name: 'Tulip HbChek', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/tulip-hbchek.png',
-				description: 'Tulip HbChek is a hemoglobin screening system designed for quick and accurate hemoglobin level determination in blood bank and donor screening applications.'
-			},
-			{ 
-				id: 4, 
-				name: 'CENTRON SE730', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/centron-se730.png',
-				description: 'CENTRON SE730 is an advanced tube sealer with enhanced capacity for high-volume blood banking operations, ensuring reliable and secure tube sealing.'
-			},
-			{ 
-				id: 5, 
-				name: 'AutoMini 40', 
+			{
+				id: 5,
+				name: 'AutoMini 40',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/AutoMini-40.png',
 				description: 'Matrix AutoMini is a fully automated blood grouping analyzer based on column agglutination system that can process 40 tests per hour throughput. It is designed with a single robotic arm for transportation of gel cards and comes with a random access system which is modular in nature and has a STAT function. This system also features integrated barcodes and onboard inventory management.'
 			},
-			{ 
-				id: 6, 
-				name: 'CC 2400', 
+			{
+				id: 6,
+				name: 'CC 2400',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CC-2400.png',
 				description: 'Microprocessor controlled gel card centrifuge for controlled centrifugation of Matrix gel cards having 24 cards capacity.'
+			},
+			{
+				id: 7,
+				name: 'Plasma Apheresis System',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Plasma%20Apheresis%20System.png',
+				description: 'The system offers full process traceability through intelligent interconnection, improving safety and security for donors. It features smart identification with effective error prevention, automatic monitoring and management throughout the workflow, and a large color touch screen for easy operation. The compact, movable design makes it convenient to use, while optimized structure and noise-reduction technology ensure quiet operation.'
+			},
+            {
+                id: 8,
+                name: 'Plasma Thawing',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Plasma%20Thawing.png',
+                description: 'Suitable for use in blood centres and supply institutions, as well as hospital transfusion departments, for thawing and rewarming frozen plasma and cryoprecipitated coagulation factors. It improves operational efficiency, shortens thawing times, and helps ensure blood quality and safety.'
+            },
+            {
+                id: 9,
+                name: 'Sterile Tube Welder',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Sterile%20Tube%20Welder.png',
+                description: 'The STW6810-RFID Sterile Tube Welder is a fully automated device used to safely connect blood tubing while maintaining sterility during blood collection, processing, and storage. It uses an innovative heated wire and non-contact radiant heating system to create clean, reliable welds with minimal stress and contamination risk, features a 10-inch touchscreen for easy operation, supports multiple tubing materials, meets international certifications (CE, FDA, China), and has been widely adopted globally since its launch in 2019.'
+            },
+            {
+                id: 10,
+                name: 'LIAISON® XL',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XL.png',
+                description: 'Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation.'
+            },
+			{
+				id: 11,
+				name: 'HemoPro',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/HemoPro.png',
+				description: 'Hemoglobin testing with microcuvettes certainly has its advantages, such as direct sampling, results in a few seconds and room-temperature storage of consumables. The Mission® HemoPro Hemoglobin Testing System is a cost-effective, optical hemoglobin analyzer that uses microcuvettes instead of traditional test strips or test cartridges. It provides highly accurate results with excellent precision, along with the many convenient features microcuvettes have to offer. The Mission® HemoPro Hemoglobin Testing System can be used to screen for anemia and related conditions, as well as for therapeutic monitoring.'
+			},
+		];
+
+		// Tube Sealer Product data
+		const tubeSealerData = [
+			{
+				id: 1,
+				name: 'Multi-Head (Segment) SE170',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE170.png',
+				description: 'SureSeal™ SE170 is designed for both single and multi-segment operation. Adjustable sealing power modes and compact design guarantee optimal sealing outputs under any condition.'
+			},
+			{
+				id: 2,
+				name: 'Multi-Head (Segment) SE160',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE160.png',
+				description: 'SureSeal™ SE160 is designed in consideration of multi tube sealing environment. It provides an ideal space-efficient solution. '
+			},
+			{
+				id: 3,
+				name: 'Portable SE730',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Portable%20SE730.png',
+				description: 'SureSeal™ SE730 is a compact portable sealer'
+			},
+			{
+				id: 4,
+				name: 'Portable SE700',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Portable%20SE700.png',
+				description: 'SureSeal™ SE700 is a lightweight portable machine with a hand unit.'
+			},
+			{
+				id: 5,
+				name: 'Benchtop (Heavyduty) SE260',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE260.png',
+				description: 'SureSeal™ SE260 is AC powered benchtop tube sealer with integrated sealing head and optional sealing hand unit. New sealing technology and enforced reliability make SE260 ideal for most demanding environments.'
+			},
+			{
+				id: 6,
+				name: 'Benchtop (Heavyduty) SE175',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE175.png',
+				description: 'SureSeal™ SE175 is a space conscious sealer with a hand unit. Compact and lightweight design is suitable for where work space  is limited or one tube sealer is shared by multiple users.'
+			},
+			{
+				id: 7,
+				name: 'Benchtop (Heavyduty) SE470',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE470.png',
+				description: 'SureSeal™ SE470 is a compact and lightweight tube sealer with a hand unit. The device is specially designed to seal the cord blood freezing bags and tubing. '
+			},
+			{
+				id: 8,
+				name: 'Benchtop (Heavyduty) SE450',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE450.png',
+				description: 'SureSeal™ SE450 is a compact and lightweight tube sealer with a hand unit. The machine is suitable for use where work space is limited or where one tube sealer machine will be shared by multiple users.'
 			}
-	
+		];
+
+		// Blood Collection Mixer Product data
+		const bloodCollectionMixerData = [
+			{
+				id: 1,
+				name: 'CM735A',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM735A.png',
+				description: 'This device automatically clamps the blood bag when the preset volume is reached, gently rocks the bag to mix blood with anticoagulant, and shows all key details on an LCD screen, with visual and audible alarms for safety. It is lightweight, fully portable, supports multiple blood bags, runs on a rechargeable battery with built-in and separate chargers, and comes with a canvas carrying bag, making it ideal for mobile blood collection units.'
+			},
+			{
+				id: 2,
+				name: 'CM760',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM760.png',
+				description: 'This device provides accurate weighing and mixing of blood with a simple 5-inch LCD interface, alarms with voice guidance, and barcode scanning for easy operation. It also supports wireless data transfer, has a reliable battery for portable and emergency use, and is compatible with accessories like the SureSeal™ tube sealer.'
+			},
+			{
+				id: 3,
+				name: 'CM745',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM745.png',
+				description: 'This is a cost-efficient solution with proven accurate weighing and mixing technology and easy digital weight calibration. It features visual and audible alarms, a barcode scanner for label checking, large Li-ion and emergency backup batteries for portable use, and comes with a durable canvas carrying bag.'
+			}
+		];
+
+		// Plasma Separator Product data
+		const plasmaSeparatorData = [
+			{
+				id: 1,
+				name: 'ES315',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/ES315.png',
+				description: 'ES315 is an electromechanical device that easy separation of blood components. It is semiautomatic equipment to separate blood into red cells and plasma.'
+			}
+		];
+
+		// Centrifuge Balance Product data
+		const centrifugeBalanceData = [
+			{
+				id: 1,
+				name: 'CB220',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CB220.png',
+				description: 'ES315 is an electromechanical device that easy separation of blood components. It is semiautomatic equipment to separate blood into red cells and plasma.'
+			}
+		];
+
+		// Tulip Eryclone Typing Sera's Product data
+		const tulipErycloneData = [
+			{
+				id: 1,
+				name: 'Eryclone Anti-D (Rho) (IgG)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Ereclone-Anti-D-(Rho)-(IgG).jpg',
+				description: 'ANTI-D is a Rho(D) typing reagent used for slide and modified tube tests, formulated as a monoclonal IgG antibody derived from an EBV-transformed human B cell line with a titre of ≥1:32 and 100% specificity to the Rho(D) antigen. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C. '
+			},
+			{
+				id: 2,
+				name: 'Eryclone Anti-B',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-B.jpg',
+				description: 'ANTI-B is an ABO blood grouping reagent used for slide and tube tests, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to B antigens, without reacting to acquired B characteristics. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C.'
+			},
+			{
+				id: 3,
+				name: 'Eryclone Anti-AB',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-AB.jpg',
+				description: 'ANTI-A,B is an ABO blood grouping reagent used for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256. It provides 100% specificity to A and B antigens, complies with AABB and FDA guidelines, and is supplied in various pack sizes with a shelf life of 24 months when stored at 2–8 °C.'
+			},
+			{
+				id: 4,
+				name: 'Eryclone Anti-A',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-A.jpg',
+				description: 'ANTI-A is an ABO blood grouping reagent for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to A1, A2, and Ax antigens. It complies with AABB and FDA guidelines and is supplied in multiple pack sizes with a 24-month shelf life when stored at 2–8 °C.'
+			},
+			{
+				id: 5,
+				name: 'Eryclone Anti-C+D+E',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-C+D+E.jpg',
+				description: 'ANTI-C+D+E is a Rh genotyping reagent for slide and tube testing, detecting C, D, and E antigens with a titre of ~1:32 across common Rh phenotypes. It contains IgM for C and E antigens and IgM + IgG for D antigen, is produced from a human cell line, follows AABB and FDA standards, and is stable for 24 months at 2–8 °C. It is available in a 5 ml pack.'
+			},
+			{
+				id: 6,
+				name: 'Eryclone Anti-e (hr)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-e_hr.jpg',
+				description: 'ANTI-e is an IgM monoclonal Rh genotyping reagent for slide and tube testing, specifically detecting the e antigen across common Rh phenotypes with a titre of approximately 1:32. It is produced from a human cell line, complies with AABB and FDA standards, stable for 24 months at 2–8 °C, and is available in 2 ml and 5 ml pack sizes.'
+			},
+			{
+				id: 7,
+				name: 'Eryclone Anti-E (rh)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-E_rh.jpg',
+				description: 'ANTI-E is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the E antigen across common Rh phenotypes with an approximate titre of 1:32. Produced from a human cell line, it meets AABB and FDA standards, offers 24-month stability at 2–8 °C, and is available in 2 ml and 5 ml pack sizes.'
+			},
+			{
+				id: 8,
+				name: 'Eryclone Anti-c (hr)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-c_hr.jpg',
+				description: 'ANTI-c is an IgM monoclonal Rh genotyping reagent designed for slide and tube testing, ensuring accurate identification of the c antigen across common Rh phenotypes. Derived from a human cell line, it offers high specificity with an approximate titre of 1:32, complies with AABB and FDA standards, and remains stable for 24 months when stored at 2–8 °C, with availability in 2 ml and 5 ml pack sizes.'
+			},
+			{
+				id: 9,
+				name: 'Eryclone Anti-C (rh)',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-C_rh.jpg',
+				description: 'ANTI-C is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the C antigen across common Rh phenotypes. Produced from a human cell line, it offers high specificity with a titre of approximately 1:32, complies with AABB and FDA guidelines, and maintains stability for 24 months when stored at 2–8 °C. The reagent is available in 2 ml and 5 ml pack sizes for routine laboratory use.'
+			},
+			{
+				id: 10,
+				name: 'Eryclone MONOSPECIFIC COOMBS SERA (Anti-C3d) ',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-Human-C3d.jpg',
+				description: 'MONOSPECIFIC COOMBS SERA (Anti-C3d) is a monoclonal IgM reagent specifically designed for Direct and Indirect Antiglobulin Tests (DAT and IAT), enabling accurate detection of the complement component C3d. It complies with AABB and FDA guidelines, offers stable performance with a 24-month shelf life when stored at 2–8 °C, and is available in multiple pack sizes to suit laboratory needs.'
+			},
+			{
+				id: 11,
+				name: 'Eryclone Anti-Human Globulin',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti_Human_Globulin.jpg',
+				description: 'ANTI HUMAN GLOBULIN is a polyspecific AHG reagent used for Direct and Indirect Coombs’ tests, providing reliable detection of human IgG and complement components C3b and C3d. It combines purified goat anti-IgG antibodies with murine monoclonal anti-C3d, complies with AABB and FDA standards, and offers a 24-month shelf life when stored at 2–8 °C, with multiple pack size options available.'
+			},
+			{
+				id: 12,
+				name: 'Eryclone Anti-D IgM',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-D-IgM.jpg',
+				description: 'ANTI-D is a saline-reacting Rho(D) typing reagent for slide and tube tests, formulated as a monoclonal IgM antibody derived from an EBV-transformed human B cell line with a high titre of ≥1:256 and 100% specificity to the Rho(D) antigen. It meets AABB and FDA standardization requirements and offers a 24-month shelf life when stored at 2–8 °C, with availability in multiple pack sizes.'
+			}
 		];
 
 		setProducts(productData);
+		setTubeSealer(tubeSealerData);
+		setBloodCollectionMixer(bloodCollectionMixerData);
+		setPlasmaSeparator(plasmaSeparatorData);
+		setCentrifugeBalance(centrifugeBalanceData);
+		setTulipEryclone(tulipErycloneData);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
+			...productData.map((p: any) => p.image),
+			...tubeSealerData.map((p: any) => p.image),
+			...bloodCollectionMixerData.map((p: any) => p.image),
+			...plasmaSeparatorData.map((p: any) => p.image),
+			...centrifugeBalanceData.map((p: any) => p.image),
+			...tulipErycloneData.map((p: any) => p.image)
 		];
-		
+        
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -286,6 +625,7 @@ export default function BloodBank() {
 	if (!imagesLoaded) {
 		return <Preloader />;
 	}
+
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -335,25 +675,25 @@ export default function BloodBank() {
 						</motion.p>
 					</motion.div>
 
-					{/* Scroll Indicator */}
+				{/* Scroll Indicator */}
+				<motion.div
+					initial={{ opacity: 0, y: 10 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 1, delay: 1.5 }}
+					className="mt-2 max-[912px]:mt-1"
+				>
 					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1, delay: 1.5 }}
-						className="mt-2 max-[912px]:mt-1"
+						animate={{ y: [0, 18, 0] }}
+						transition={{ duration: 1.8, repeat: Infinity }}
+						className="text-white"
 					>
-						<motion.div
-							animate={{ y: [0, 18, 0] }}
-							transition={{ duration: 1.8, repeat: Infinity }}
-							className="text-white"
-						>
-							<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-							</svg>
-						</motion.div>
+						<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+						</svg>
 					</motion.div>
-				</div>
-			</motion.section>
+				</motion.div>
+			</div>
+		</motion.section>
 
 			{/* Main Content */}
 			<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6">
@@ -366,11 +706,63 @@ export default function BloodBank() {
 						/>
 					</div>
 				) : (
-					<CategorySection
-						category={category}
-						products={products}
-						onViewDetails={handleViewDetails}
-					/>
+					<>
+						<CategorySection
+							category={category}
+							products={products}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'tube-sealer',
+								title: 'Tube Sealer',
+								description: 'Reliable tube sealers for blood collection, processing, and storage in blood bank operations.',
+								folder: 'tube-sealer',
+							}}
+							products={tubeSealer}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'blood-collection-mixer',
+								title: 'Blood Collection Mixer',
+								description: 'Mixers for gentle, uniform, and efficient blood collection in blood bank procedures.',
+								folder: 'blood-collection-mixer',
+							}}
+							products={bloodCollectionMixer}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'plasma-separator',
+								title: 'Plasma Separator',
+								description: 'Efficient plasma separators for laboratory and blood bank applications.',
+								folder: 'plasma-separator',
+							}}
+							products={plasmaSeparator}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'centrifuge-balance',
+								title: 'Centrifuge Balance',
+								description: 'Precision centrifuge balances for safe and accurate centrifugation in blood banks.',
+								folder: 'centrifuge-balance',
+							}}
+							products={centrifugeBalance}
+							onViewDetails={handleViewDetails}
+						/>
+						<CategorySection
+							category={{
+								id: 'tulip-eryclone-typing-sera',
+								title: "Tulip Eryclone Typing Sera's",
+								description: 'High-quality typing sera for blood group determination and compatibility testing.',
+								folder: 'tulip-eryclone-typing-sera',
+							}}
+							products={tulipEryclone}
+							onViewDetails={handleViewDetails}
+						/>
+					</>
 				)}
 			</div>
 

@@ -266,12 +266,7 @@ export default function MolecularDiagnostics() {
 
 		// Tulip Diagnostic (P) LTD. products (unique ids)
 		const tulipData = [
-			{
-				id: 1,
-				name: 'DENGUCHECK',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png',
-				description: 'DENGUCHECK is a rapid diagnostic test for the detection of dengue virus antigens and antibodies.'
-			},
+			
 			{
 				id: 2,
 				name: 'SYPHICHECK',
@@ -301,6 +296,12 @@ export default function MolecularDiagnostics() {
 				name: 'Rhelax-RF',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-RF.png',
 				description: 'Rhelax-RF is a latex agglutination slide test for detection of rheumatoid factors of the IgM class.'
+			},
+			{
+				id: 7,
+				name: 'Virdict 4',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Virdict4-new.jpg',
+				description: 'The Virdict 4 is a rapid immunochromatographic test kit for simultaneous detection of HIV 1/2 antibodies, HCV antibodies, Syphilis antibodies, and HBsAg in human serum or plasma. It delivers 100% sensitivity for HIV, HCV, HBsAg, and Syphilis (specificity >95% for Syphilis), with ready-to-use individually pouched test devices. Each device contains antigen-colloidal gold conjugates for the respective markers and control regions for validation. The test takes 30 minutes and is stable at 4–30°C for 24 months. The kit includes test devices, sample droppers, and diluent buffer, available in packs of 25 or 50 tests.'
 			}
 		];
 

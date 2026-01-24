@@ -8,13 +8,21 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Pipettors
-const category = {
-	id: 'pipettors',
-	title: 'Pipettors',
-	description: 'Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.',
-	folder: 'pipettors',
-};
+// Product categories for Sterilizers & Autoclaves
+const categories = [
+	{
+		id: 'haier',
+		title: 'Haier',
+		description: 'Reliable and efficient autoclaves for laboratory and medical sterilization applications.',
+		folder: 'sterilizer-autoclave/Haier',
+	},
+	{
+		id: 'tuttnauer',
+		title: 'Tuttnauer',
+		description: 'Industry-leading sterilization solutions for laboratories, hospitals, and research facilities.',
+		folder: 'sterilizer-autoclave/Tuttnauer',
+	}
+];
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -63,7 +71,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		  <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 			<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 			<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-			  {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+			  {product.description || 'Professional-grade sterilization equipment designed for reliability, safety, and optimal sterilization performance.'}
 			</p>
 			<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 			  <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +124,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 		  {product.name}
 		</h3>
 		<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-		  {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+		  {product.description || 'Professional sterilization equipment engineered for reliability, safety, and optimal sterilization performance.'}
 		</p>
 		{/* View Details Button */}
 		<motion.button
@@ -192,7 +200,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function OREquipments() {
+export default function SterilizerAutoclave() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,36 +208,136 @@ export default function OREquipments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Pipettors
+		// Product data for Sterilizers & Autoclaves
 		const productData = [
-			
 			{
-				id: 4,
-				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
-				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
+				category: 'haier',
+				products: [
+					{
+						id: 1,
+						name: 'Horizontal Bench-top Autoclaves',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Haier/Horizontal%20Bench-top%20Autoclaves.png',
+						description: 'As a type of high pressure sterilizer, it takes steam as its sterilization medium which is fast, safe and economic .They are common used in scientific institutions or R&D institution to make the sterilization for wrapped or unwrapped instrument, fabric, utensils, culture medium, unsealed liquid, etc.'
+					},
+					{
+						id: 2,
+						name: 'Vertical Autoclave',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Haier/Vertical%20Autoclave.png',
+						description: 'This upright automatic rapid sterilization unit uses high temperature saturated steam as the sterilization medium. Applicable to testing laboratories, laboratories, operating rooms, supply rooms, higher education, animal husbandry, disease control centers and other medical and biomedical research units, achieves rapid sterilization of instruments, dressings, rubber, liquids, glassware, bacteria and cell culture medium, wastes, etc.'
+					}
+				]
 			},
 			{
-				id: 5,
-				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
-				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
-			},
-			{
-				id: 6,
-				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
-				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
-			},
+				category: 'tuttnauer',
+				products: [
+					{
+						id: 1,
+						name: '2540EKA',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/2540EKA.png',
+						description: 'With extra fast and efficient drying cycles, the 2540EKA autoclave significantly increases your productivity. This model has the added benefit of a high efficiency air pump which allows closed door active drying. The 2540 EKA is built for perfect sterilization with improved drying of packs and pouches.'
+					},
+					{
+						id: 2,
+						name: '3870ELV-D',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/3870ELV-D.png',
+						description: 'High-capacity vertical autoclave with advanced vacuum system for efficient air removal. Features dual temperature sensors and comprehensive data logging capabilities.'
+					},
+					{
+						id: 3,
+						name: '3870MLV Vertical Top-Loading Autoclave',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/3870MLV%20Vertical%20Top-Loading%20Autoclave.png',
+						description: 'Versatile top-loading vertical autoclave with large chamber capacity for sterilizing liquids, glassware, and laboratory equipment. Includes multiple cycle options and safety features.'
+					},
+					{
+						id: 4,
+						name: '5075ELV-D',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/5075ELV-D.png',
+						description: 'Large capacity vertical autoclave with enhanced vacuum system for superior sterilization performance. Ideal for high-volume laboratory and research applications.'
+					},
+					{
+						id: 5,
+						name: '5596 Laboratory Autoclave',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/5596%20Laboratory%20Autoclave.png',
+						description: 'Advanced laboratory autoclave with large chamber volume and programmable cycles. Features automatic water filling, advanced diagnostics, and comprehensive safety systems.'
+					},
+					{
+						id: 6,
+						name: '66120 Laboratory Autoclave',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/66120%20Laboratory%20Autoclave.png',
+						description: 'High-performance laboratory autoclave with extra-large chamber capacity for demanding sterilization requirements. Includes advanced cycle options and user-friendly touchscreen interface.'
+					},
+					{
+						id: 7,
+						name: '667/130 Laboratory Autoclave',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/6671130%20Laboratory%20Autoclave.png',
+						description: 'Premium laboratory autoclave with maximum chamber capacity for large-scale sterilization operations. Features state-of-the-art control systems and comprehensive documentation.'
+					},
+					{
+						id: 8,
+						name: 'D-Line EA and EKA',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/D-Line%20EA%20and%20EKA.png',
+						description: 'The D-Line EA and EKA Class S autoclaves feature chamber volumes from 28.5 to 85 liters and use dynamic pulsed air removal for uniform temperature distribution. They include an advanced multi-color display control system, allow cycle data download via USB, and have a user-friendly, self-locking door with a double safety locking mechanism for easy and secure one-hand operation.'
+					},
+					{
+						id: 9,
+						name: 'EA and EKA Series',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/EA%20and%20EKA.png',
+						description: 'With extra fast and efficient drying cycles, the EA and EKA autoclaves significantly increase your productivity. These two models have the added benefit of a high efficiency air pump which allows closed door active drying. The EKA model has an additional quick cycle which significantly decreases sterilization cycle time, saving you time and optimizing results. The EA and EKA are built for improved sterilization with the ability to dry packs and pouches.'
+					},
+					{
+						id: 10,
+						name: 'ELV D-Line Series',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/ELV%20-%20D%20Line.png',
+						description: 'Advanced ELV D-Line autoclaves with superior vacuum technology for optimal sterilization results. Includes automated features and comprehensive cycle monitoring.'
+					},
+					{
+						id: 11,
+						name: 'Low Temperature Sterilizers',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/Low%20Temperature%20Sterilizers.png',
+						description: 'Innovative low-temperature sterilization systems for heat-sensitive instruments and equipment. Utilizes hydrogen peroxide vapor for effective sterilization without thermal damage.'
+					}
+,
+					// Newly added Tuttnauer products
+					{
+						id: 12,
+						name: 'T-Top Medical Autoclaves',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Top%20Medical%20Autoclaves.png',
+						description: 'T-Top is a family of tabletop autoclaves designed specifically for medical and dental clinics in small to medium-size practices. Developed with simplicity, efficiency, and cost-effectiveness in mind, T-Top devices address the core sterilization needs of everyday clinical workflows, helping increase productivity and streamline routine operations.'
+					},
+					{
+						id: 13,
+						name: 'T-Lab Eco',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Lab%20Eco.png',
+						description: 'Eco-friendly T-Lab Eco autoclave designed for energy efficiency and high performance in laboratory sterilization.'
+					},
+					{
+						id: 14,
+						name: 'T-Edge Autoclaves',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Edge%20Autoclaves.png',
+						description: 'Get peace of mind with T-Edge autoclaves. The T-Edge 10 and T-Edge 11 are space-saving tabletop autoclaves that give you high speed Class B performance saving you time so you can assist your patients, while meeting current international standards and regulatory requirements to protect your staff and patients.'
+					},
+                    {
+                        id: 15,
+                        name: 'M and MK Autoclaves',
+                        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/M%20and%20MK%20Autoclaves.png',
+                        description: 'The Semi-Automatic Autoclave is an affordable sterilizer for private clinics that do not want to compromise on quality, safety and reliability. Tuttnauer semi-automatic autoclaves are an effortless Plug andx Play solution. After installation, the sterilizer is virtually maintenance free with low running costs.'
+                    },
+					
+				]
+			}
 		];
 
-		setProducts(productData);
+		// Flatten products for state management
+		const allProducts = productData.flatMap((cat: any) => 
+			cat.products.map((p: any) => ({ ...p, categoryId: cat.category }))
+		);
+		setProducts(allProducts);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/motic/bg-motic.jpg',
-			...productData.map((p: any) => p.image)
+			...allProducts.map((p: any) => p.image)
 		];
 
 		let loadedCount = 0;
@@ -285,7 +393,7 @@ export default function OREquipments() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="pipettors-particles" />
+					<ParticlesBackground containerId="sterilizer-autoclave-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -301,21 +409,21 @@ export default function OREquipments() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Pipettors
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.
+						Sterilizers & Autoclaves
+					</motion.h1>
+					<motion.div
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+						className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+					/>
+					<motion.p
+						initial={{ opacity: 0, y: 30 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+					>
+						Advanced sterilization solutions for laboratories, hospitals, and medical facilities. Reliable autoclaves ensuring complete sterilization and safety.
 						</motion.p>
 					</motion.div>
 
@@ -350,11 +458,16 @@ export default function OREquipments() {
 			/>
 		  </div>
 		) : (
-		  <CategorySection
-			category={category}
-			products={products}
-			onViewDetails={handleViewDetails}
-		  />
+		  <>
+			{categories.map((category: any, index: number) => (
+			  <CategorySection
+				key={category.id}
+				category={category}
+				products={products.filter((p: any) => p.categoryId === category.id)}
+				onViewDetails={handleViewDetails}
+			  />
+			))}
+		  </>
 		)}
 	  </div>
 
@@ -368,10 +481,10 @@ export default function OREquipments() {
 	  >
 		<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 		  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-			Ready to Upgrade Your Operating Room?
+			Ready to Upgrade Your Sterilization Equipment?
 		  </h2>
 		  <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-			Our team of specialists is ready to help you find the perfect operating room equipment for your surgical needs.
+			Our team of specialists is ready to help you find the perfect sterilization solution for your facility.
 		  </p>
 		  <motion.a
 			href="/user/contact"

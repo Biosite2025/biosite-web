@@ -192,7 +192,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 }
 
 export default function ClinicalMicroscopy() {
-	const [products, setProducts] = useState<any[]>([]);
+	
 	const [fecalysis, setFecalysis] = useState<any[]>([]);
 	const [urinalysis, setUrinalysis] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -209,12 +209,7 @@ export default function ClinicalMicroscopy() {
 			{ id: 4, name: 'Zybio U3600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-u3600.png', description: 'ZYBIO U3600 is a fully automated biochemical analyzer used in clinical laboratories for the analysis of various biochemical parameters in blood and other body fluids. This instrument is designed to perform a wide range of tests, including those for liver function, kidney function, lipid profiles, and more.' },
 		];
 
-		const productsOther = [
-			{ id: 5, name: 'Zybio Q8 Pro', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-q8-pro.png', description: 'A point-of-care testing analyzer designed for rapid clinical diagnostics in various healthcare settings. Provides quick and reliable results for efficient patient management and clinical decision-making.' },
-			{ id: 6, name: 'Zybio EXM 3000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-3000.png', description: 'A compact automated nucleic acid extractor suitable for small to medium laboratories. It supports multiple sample types and standardized extraction protocols, delivering reliable nucleic acid purity for downstream molecular testing.' },
-			{ id: 7, name: 'Zybio EXM 6000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-exm-6000.png', description: 'A high-throughput automated nucleic acid extraction system for medium to large laboratories. It enables simultaneous processing of multiple samples with high efficiency, reducing turnaround time while maintaining excellent extraction performance and reproducibility.' },
-			{ id: 8, name: 'Zybio ZIP-96V', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/zybio-zip-96v.png', description: 'A 96-well automated nucleic acid extraction system designed for high-throughput laboratories. It supports batch processing, improves workflow efficiency, and delivers consistent DNA/RNA quality for PCR and sequencing applications.' },
-		];
+
 
 		const fecalysis = [
 			{ id: 9, name: 'KU-F40', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/clinical-microscopy/KU-F40.png', description: 'The sealing design prevents liquid waste and exhaust odor. Easy to operate with 50 samples available in the waiting tray and it is equipped with Iodine Staining. Fully automatic and avoids biological risks. Automatic input information with both-way LIS transmission. Perform test different elements simultaneously with Iodine Staining. Fully automatic and avoids biological risks. Perform test different elements simultaneously with multi-channel. Automatic input information with both-way LIS transmission.' },
@@ -223,14 +218,14 @@ export default function ClinicalMicroscopy() {
 		];
 		
 		setUrinalysis(urinalysis);
-		setProducts(productsOther);
+		
 		setFecalysis(fecalysis);
 		setLoading(false);
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
 			...urinalysis.map((p: any) => p.image),
-			...productsOther.map((p: any) => p.image),
+		
 			...fecalysis.map((f: any) => f.image)
 		];
 		let loadedCount = 0;
@@ -350,14 +345,7 @@ export default function ClinicalMicroscopy() {
 					</div>
 				) : (
 					<>
-						   {/* Other Clinical Microscopy Products (Main) - now first */}
-						   {products.length > 0 && (
-							   <CategorySection
-								   category={category}
-								   products={products}
-								   onViewDetails={handleViewDetails}
-							   />
-						   )}
+						   
 						   {/* Urinalysis Category Section */}
 						   {urinalysis.length > 0 && (
 							   <CategorySection

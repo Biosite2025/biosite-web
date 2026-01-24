@@ -8,13 +8,15 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category for Pipettors
-const category = {
-	id: 'pipettors',
-	title: 'Pipettors',
-	description: 'Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.',
-	folder: 'pipettors',
-};
+// Product categories for Histopathology Chemicals & Consumables
+const categories = [
+	{
+		id: 'histopathology',
+		title: 'Histopathology Chemicals & Consumables',
+		description: 'High-quality chemicals and consumables for histopathology laboratories, including paraffin wax, embedding cassettes, and specialized microscope slides.',
+		folder: 'Chemicals-Consumables',
+	}
+];
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -63,7 +65,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		  <div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 			<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
 			<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-			  {product.description || 'Professional-grade medical diagnostic imaging equipment designed for precision, reliability, and superior performance.'}
+			  {product.description || 'High-quality histopathology supplies designed for precision, reliability, and optimal laboratory performance.'}
 			</p>
 			<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
 			  <p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
@@ -116,7 +118,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 		  {product.name}
 		</h3>
 		<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-		  {product.description || 'Professional medical diagnostic imaging equipment engineered for precision and reliability.'}
+		  {product.description || 'Premium histopathology supplies engineered for precision, quality, and optimal laboratory results.'}
 		</p>
 		{/* View Details Button */}
 		<motion.button
@@ -192,7 +194,7 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 
 
 
-export default function OREquipments() {
+export default function HistopathologyChemicalsConsumables() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -200,36 +202,116 @@ export default function OREquipments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data for Pipettors
+		// Product data for Histopathology Chemicals & Consumables
 		const productData = [
-			
 			{
-				id: 4,
-				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
-				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
-			},
-			{
-				id: 5,
-				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
-				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
-			},
-			{
-				id: 6,
-				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
-				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
-			},
+				category: 'histopathology',
+				products: [
+					{
+						id: 1,
+						name: 'Paraffin Wax',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Paraffin%20Wax.png',
+						description: 'Designed for improved tissue section infiltration & embedding and supplied in convenient pearl shape'
+					},
+					{
+						id: 2,
+						name: 'Histoflo™ Embedding Cassettes',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Embedding%20Cassettes.png',
+						description: 'Safe specimen, effective processing, smooth sectioning'
+					},
+					{
+						id: 3,
+						name: 'Histoflo™ Microscope Slides',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Microscope%20Slides.png',
+						description: 'Great laser print outcome and long-term storage'
+					},
+					{
+						id: 4,
+						name: 'Histoflo™ Adhesion Microscope Slides',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Adhesion%20Microscope%20Slides.png',
+						description: 'Special coating to improve tissue adherence'
+					},
+					{
+						id: 5,
+						name: 'Histoflo™ Etching Microscope Slides',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Etching%20Microscope%20Slides.png',
+						description: 'Enhanced, extra dark printing outcome'
+					},
+					{
+					  id: 6,
+					  name: 'Reagent Alcohol',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/REAGENT%20ALCOHOL.png',
+					  description: 'Reagent Alcohol is a balanced blend of ethanol, methanol, and isopropanol designed for efficient and gradual tissue dehydration. This combination ensures consistent water removal while minimizing tissue distortion and preserving cellular morphology.'
+					},	
+					{
+					  id: 7,
+					  name: 'Absolute Ethanol & Denatured Ethanol',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ABSOLUTE%20ETHANOL%20&%20DENATURED%20ETHANOL.png',
+					  description: 'Absolute and denatured ethanol are commonly used dehydrating agents in histology and cytology to remove water from tissue specimens. They effectively prepare tissues for embedding or staining while maintaining cellular integrity for accurate microscopic evaluation.'
+					},
+					{
+					  id: 8,
+					  name: 'Isopropyl Alcohol',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ISOPROPYL%20ALCOHOL.png',
+					  description: 'Isopropyl Alcohol is a fast-acting dehydrating agent widely used to remove water from tissue samples during processing. Its reliable performance helps preserve cellular structure, ensuring high-quality results for embedding, staining, and diagnostic analysis.'
+					},
+					{
+					  id: 9,
+					  name: 'Methanol',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/METHANOL.png',
+					  description: 'Methanol is primarily used as a fixative rather than a dehydrating agent, especially for blood smears and cytological preparations. It rapidly preserves cellular components by preventing autolysis, maintaining detailed morphology for microscopic examination.'
+					},
+					{
+					  id: 10,
+					  name: 'Acetone',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ACETONE.png',
+					  description: 'Acetone is a powerful solvent used for rapid dehydration and fixation of tissue samples, particularly in final dehydration stages. Its protein-coagulating properties help preserve cellular structure and prevent degradation for accurate diagnostic analysis.'
+					},
+					{
+					  id: 11,
+					  name: 'Xylene',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/XYLENE.png',
+					  description: 'Xylene is a key clearing agent in histopathology, used to remove alcohol from tissues and prepare them for paraffin embedding. It ensures optimal penetration of embedding media while maintaining tissue structure for precise microscopic evaluation.'
+					},
+					{
+					  id: 12,
+					  name: 'Xylene Substitute',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/XYLENE%20SUBSTITUTE.png',
+					  description: 'Xylene Substitute provides a safer, low-toxicity alternative to traditional xylene while delivering comparable clearing performance. It effectively removes alcohol during tissue processing while reducing health and environmental risks.'
+					},
+					{
+					  id: 13,
+					  name: 'Zitrus-Clear',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ZITRUS-CLEAR.png',
+					  description: 'Zitrus-Clear is a biodegradable, citrus-based clearing agent formulated with D-Limonene as an eco-friendly alternative to xylene. It delivers excellent solvency for deparaffinization and clearing while minimizing toxicity and environmental impact.'
+					},
+					{
+						id: 14,
+						name: 'Neutral Buffered Formalin, 10%',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
+						description: 'Natural Buffered Formalin 10% is a ready-to-use primary fixative containing 4% formaldehyde stabilized with methanol and buffered to pH 7.0. It preserves cellular architecture, proteins, and biomolecules, ensuring tissue stability for processing, examination, and long-term archival storage.'
+					},
+					{
+						id: 15,
+						name: 'Prefilled Neutral Buffered Formalin, 10%',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/PREFILLED%20NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
+						description: 'Prefilled Neutral Buffered Formalin 10% is a ready-to-use primary fixative containing 4% formaldehyde stabilized with methanol and buffered to pH 7.0. It preserves cellular architecture, proteins, and other biomolecules, ensuring tissue stability for accurate examination, processing, and long-term archival storage.'
+					}
+				]
+			}
 		];
 
-		setProducts(productData);
+		// Flatten products for state management
+		const allProducts = productData.flatMap((cat: any) => 
+			cat.products.map((p: any) => ({ ...p, categoryId: cat.category }))
+		);
+		setProducts(allProducts);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/motic/bg-motic.jpg',
-			...productData.map((p: any) => p.image)
+			...allProducts.map((p: any) => p.image)
 		];
 
 		let loadedCount = 0;
@@ -285,7 +367,7 @@ export default function OREquipments() {
 				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="pipettors-particles" />
+					<ParticlesBackground containerId="histopathology-particles" />
 					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 				</div>
 
@@ -301,21 +383,21 @@ export default function OREquipments() {
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
 							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
 						>
-							Pipettors
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Accurate and ergonomic pipettors for precise liquid handling in laboratories. Discover single and multi-channel pipettes for research, diagnostics, and routine lab work.
+						Histopathology Chemicals & Consumables
+					</motion.h1>
+					<motion.div
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+						className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+					/>
+					<motion.p
+						initial={{ opacity: 0, y: 30 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+						className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+					>
+						Premium quality chemicals and consumables for histopathology laboratories. Essential supplies for tissue processing, embedding, and microscopic examination.
 						</motion.p>
 					</motion.div>
 
@@ -350,11 +432,16 @@ export default function OREquipments() {
 			/>
 		  </div>
 		) : (
-		  <CategorySection
-			category={category}
-			products={products}
-			onViewDetails={handleViewDetails}
-		  />
+		  <>
+			{categories.map((category: any, index: number) => (
+			  <CategorySection
+				key={category.id}
+				category={category}
+				products={products.filter((p: any) => p.categoryId === category.id)}
+				onViewDetails={handleViewDetails}
+			  />
+			))}
+		  </>
 		)}
 	  </div>
 
@@ -368,10 +455,10 @@ export default function OREquipments() {
 	  >
 		<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
 		  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
-			Ready to Upgrade Your Operating Room?
+			Need Quality Histopathology Supplies?
 		  </h2>
 		  <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
-			Our team of specialists is ready to help you find the perfect operating room equipment for your surgical needs.
+			Our team of specialists is ready to help you find the perfect chemicals and consumables for your laboratory.
 		  </p>
 		  <motion.a
 			href="/user/contact"

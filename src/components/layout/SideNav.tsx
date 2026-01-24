@@ -135,7 +135,7 @@ export function SideNav() {
 				{ name: "Nikon Microscopes", href: "/user/products/components/nikonmicroscopes" },
 				{ name: "Motic Slide Scanners", href: "/user/products/components/moticsliderscanner" },
 				{ name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
-				{ name: "Fuji Synapse PACS for Digital Pathology", href: "#" }
+				// { name: "Fuji Synapse PACS for Digital Pathology", href: "#" }
 			]
 		},
 		generalLab: {
@@ -148,23 +148,25 @@ export function SideNav() {
 				{ name: "Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage", href: "/user/products/components/biomedical-freezers" },
 				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "/user/products/components/biosafety-cabinets" },
 				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "/user/products/components/lab-oven-incubator" },
-				{ name: "Sterilizer & Autoclave", href: "#" },
+				{ name: "Sterilizer & Autoclave", href: "/user/products/components/sterilizer-autoclave" },
 				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/user/products/components/dry-bath" }
 			]
 		},
 		medical: {
 			title: "IV. Medical & Hospital Equipments",
 			items: [
-				{ name: "Medical Diagnostic Imaging", href: "/user/products/components/medical-diagnostic-imaging" },
-				{ name: "ICU / ER Equipments", href: "/user/products/components/icu-er-equipments" },
-				{ name: "OR Equipments", href: "/user/products/components/or-equipment" },
-				{ name: "OB Gyn Equipments", href: "#" },
-				{ name: "Gastro & Endo", href: "/user/products/components/gastro-endo" },
-				{ name: "Anesthesia Equipments", href: "#" },
-				{ name: "Autoclave, Plasma Sterilizers, Washers", href: "#" },
-				{ name: "Neonatal Intensive Care Products (NICU)", href: "#" },
-				{ name: "Hospital Medical Furnitures", href: "#" },
-				{ name: "Dialysis / Renal Care Equipments", href: "/user/products/components/dialysis-renal-equipments" }
+				// { name: "Medical Diagnostic Imaging", href: "/user/products/components/medical-diagnostic-imaging" },
+				{ name: "Radiology Department", href: "/user/products/components/RADIOLOGY-DEPARTMENT" },
+				// { name: "ICU / ER Equipments", href: "/user/products/components/icu-er-equipments" },
+				{ name: "Pulmonary Department", href: "/user/products/components/pulmonary-department" },
+				{ name: "Emergency and Out Patient ", href: "/user/products/components/emergency-outpatient" },
+				{ name: "Medical Surgical and Rehabilatation Ward ", href: "/user/products/components/surgical-rehabilation" },
+				{ name: "Operating  and Delivery Room", href: "/user/products/components/operating-delivery" },
+				{ name: "NICU PICU AND ICU ", href: "/user/products/components/nicu-picu-icu" },
+				// { name: "Autoclave, Plasma Sterilizers, Washers", href: "#" },
+				// { name: "Neonatal Intensive Care Products (NICU)", href: "#" },
+				// { name: "Hospital Medical Furnitures", href: "#" },
+				// { name: "Dialysis / Renal Care Equipments", href: "/user/products/components/dialysis-renal-equipments" }
 			]
 		},
 		disposables: {
@@ -173,8 +175,8 @@ export function SideNav() {
 				{ name: "Laboratory Equipements", href: "/user/products/components/laboratory-equipements" },
 				{ name: "Laboratory Disposables", href: "/user/products/components/laboratory-disposables" },
 				{ name: "Hospital Disposables", href: "/user/products/components/hospital-disposables" },
-				{ name: "Histopathology Chemicals & Consumables", href: "#" },
-				{ name: "Surgical Disposables", href: "#" }
+				{ name: "Histopathology Chemicals & Consumables", href: "/user/products/components/chemicals-consumables" },
+				{ name: "Surgical Disposables", href: "/user/products/components/surgical-disposable" }
 			]
 		}
 	};

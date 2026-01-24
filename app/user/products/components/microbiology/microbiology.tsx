@@ -7,12 +7,33 @@ import Link from 'next/link';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 
-// Product category
-const category = {
-	id: 'microbiology',
-	title: 'Microbiology',
-	description: 'Advanced microbiology systems and equipment for comprehensive laboratory diagnostics',
-	folder: 'microbiology',
+// Product categories
+const bloodCultureCategory = {
+	id: 'blood-culture',
+	title: 'Blood Culture',
+	description: '',
+	folder: 'blood-culture',
+};
+
+const idAstCategory = {
+	id: 'id-ast',
+	title: 'ID/AST',
+	description: '',
+	folder: 'id-ast',
+};
+
+const pretreatmentCategory = {
+	id: 'pretreatment-streaking',
+	title: 'Pretreatment & Streaking System',
+	description: '',
+	folder: 'pretreatment-streaking',
+};
+
+const malditofCategory = {
+	id: 'malditof',
+	title: 'MALDI-TOF',
+	description: '',
+	folder: 'malditof',
 };
 
 // Modal component
@@ -192,33 +213,62 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 }
 
 export default function Microbiology() {
-	const [products, setProducts] = useState<any[]>([]);
+	const [bloodCulture, setBloodCulture] = useState<any[]>([]);
+	const [idAst, setIdAst] = useState<any[]>([]);
+	const [pretreatment, setPretreatment] = useState<any[]>([]);
+	const [malditof, setMalditof] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		// Product data based on CSV
-		const productData = [
-			{ id: 1, name: 'Autobio AutoMic i600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-automic-i600.png', description: 'Automated microorganism identification and antimicrobial susceptibility testing analyzer AutoMic-i600 can quickly and accurately identify microorganisms by biochemical and detect antibiotic sensitivity in vitro. The identification results of the bacteria were determined by comparing with the database about biochemical reaction, such as the carbon source utilization, enzyme activity and antibiotic resistance of the bacteria.' },
+		// Blood Culture products
+		const bloodCultureData = [
+			{ id: 1, name: 'Autobio BC60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc601.png', description: 'The Automated BC60 Blood Culture system adopts automatic advanced non-invasive and visualization technology with a unique optical detection system which realizes full automation of blood culture testing for up to 60 samples per pod. Its stable temperature control system and reliable vibrating model greatly shortens the detection time of positive results and reduces the false positive rate.' },
 			{ id: 2, name: 'Autobio BC120', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc120.png', description: 'An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design.' },
-			{ id: 3, name: 'Autobio BC60', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-bc601.png', description: 'The Automated BC60 Blood Culture system adopts automatic advanced non-invasive and visualization technology with a unique optical detection system which realizes full automation of blood culture testing for up to 60 samples per pod. Its stable temperature control system and reliable vibrating model greatly shortens the detection time of positive results and reduces the false positive rate.' },
-			{ id: 4, name: 'Autobes BCX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobes bcx.png', description: 'An automated blood culture system designed for continuous incubation and rapid detection of microbial growth in blood samples, supporting faster diagnosis of bloodstream infections.' },
-			{ id: 5, name: 'Autof MS1000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/Autof-ms1000.jpg', description: 'The Autof MS1000 is a Matrix Assisted Laser Desorption Ionisation–Time of Flight mass spectrometry microbial identification system. MALDI’s purpose is to fire a laser on to the co-crystallisation film formed by the target plate samples and matrix. The TOF principle is to accelerate the ions under a uniform electric field, meaning the differences in acceleration are based on the different masses of the ions (they all carry the same charge), and then to plot them on a graph with mass to charge ratio (m/z) on the x-axis and relative abundance or intensity on the y axis.' },
-			{ id: 6, name: 'BC120 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/BC120 Plus.jpg', description: 'An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design.' },
-			{ id: 7, name: 'AutoStreak S1800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/AutoStreak%20S1800.png', description: 'An automated microbial sample pretreatment and streaking system that standardizes inoculation, improves bacterial isolation, and increases laboratory efficiency while enhancing biosafety.' }
+			{ id: 3, name: 'BC120 Plus', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/BC120 Plus.jpg', description: 'An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design.' },
+			{ id: 4, name: 'Autobes BCX', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobes bcx.png', description: 'An automated blood culture system designed for continuous incubation and rapid detection of microbial growth in blood samples, supporting faster diagnosis of bloodstream infections.' }
 		];
 
-		setProducts(productData);
+		// ID/AST products
+		const idAstData = [
+			{ id: 1, name: 'Autobio AutoMic i600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/autobio-automic-i600.png', description: 'Automated microorganism identification and antimicrobial susceptibility testing analyzer AutoMic-i600 can quickly and accurately identify microorganisms by biochemical and detect antibiotic sensitivity in vitro. The identification results of the bacteria were determined by comparing with the database about biochemical reaction, such as the carbon source utilization, enzyme activity and antibiotic resistance of the bacteria.' }
+		];
+
+		// Pretreatment & Breaking System products
+		const pretreatmentData = [
+			{ id: 1, name: 'AutoStreak S1800', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/AutoStreak%20S1800.png', description: 'An automated microbial sample pretreatment and streaking system that standardizes inoculation, improves bacterial isolation, and increases laboratory efficiency while enhancing biosafety.' }
+		];
+
+		// Malditof products
+		const malditofData = [
+			{ id: 1, name: 'Autof MS1000', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/Autof-ms1000.jpg', description: 'The Autobio Autof MS1000 is an automated MALDI-TOF mass spectrometry system designed for rapid, accurate microbial identification (bacteria, fungi, mycobacteria) in clinical and industrial labs. It offers a high-capacity 96-sample target plate, identifying organisms in minutes with a, extensive, updateable database of over 16,000 strains and 5,000 species. ' },
+			{ id: 2, name: 'MS1600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/MS1600.jpg', description: 'The Autof ms1600 is a MALDI-TOF (Matrix-Assisted Laser Desorption/Ionization-Time of Flight) mass spectrometry system for rapid, accurate microbial identification, capable of switching between positive and negative ion modes. It features a large database (>999 genera, >4943 species), 96-sample capacity, and a 1200 x 705 x 450 mm footprint. ' },
+			{ id: 3, name: 'MS2600', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/ms2600.jpg', description: 'The Autof MS2600 is a MALDI-TOF mass spectrometry system by Autobio Diagnostics designed for rapid, high-throughput microbial identification. It utilizes a 355 nm solid-state laser at 100 Hz to identify bacteria and yeasts within minutes, featuring a library of over 5,000 species. The system includes a 96-well sample target plate, intelligent vacuum system, and cloud-based database. ' },
+			{
+				id: 4,
+				name: 'TX8 MALDI-TOF MS',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/microbiology/TX8.png',
+				description: 'MALDI-TOF MS (Matrix Assisted Laser Desorption/Ionization Time-of-Flight Mass Spectrometry) has been used more and more widely in microbiological clinical laboratory for the identiﬁcation of pathogenic bacteria, especially microaerobes, anaerobes, mycobacteria and fungi with its powerful database and excellent performance.'
+			}
+		];
+
+		setBloodCulture(bloodCultureData);
+		setIdAst(idAstData);
+		setPretreatment(pretreatmentData);
+		setMalditof(malditofData);
 		setLoading(false);
 
 		// Preload all images
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
-			...productData.map((p: any) => p.image)
+			...bloodCultureData.map((p: any) => p.image),
+			...idAstData.map((p: any) => p.image),
+			...pretreatmentData.map((p: any) => p.image),
+			...malditofData.map((p: any) => p.image)
 		];
-		
+
 		let loadedCount = 0;
 		const preloadImages = () => {
 			allImages.forEach((src: string) => {
@@ -257,92 +307,110 @@ export default function Microbiology() {
 		return <Preloader />;
 	}
 
-	return (
-		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-			{/* Hero Section */}
-			<motion.section
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 1 }}
-				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
-			>
-				{/* Background Gradient */}
-				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
-				{/* Particles Background Animation */}
-				<div className="absolute inset-0 w-full h-full z-10">
-					<ParticlesBackground containerId="microbiology-particles" />
-					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
-				</div>
+		return (
+			<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+				{/* Hero Section */}
+				<motion.section
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 1 }}
+					className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
+				>
+					{/* Background Gradient */}
+					<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
 
-				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
-					<motion.div
-						initial={{ y: 30, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.8, delay: 0.2 }}
-					>
-						<motion.h1
-							initial={{ scale: 0.9, opacity: 0, y: 40 }}
-							animate={{ scale: 1, opacity: 1, y: 0 }}
-							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
-						>
-							Microbiology
-						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
-						<motion.p
-							initial={{ opacity: 0, y: 30 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
-							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
-						>
-							Advanced microbiology systems and equipment for comprehensive laboratory diagnostics
-						</motion.p>
-					</motion.div>
-
-					{/* Scroll Indicator */}
-					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1, delay: 1.5 }}
-						className="mt-2 max-[912px]:mt-1"
-					>
-						<motion.div
-							animate={{ y: [0, 18, 0] }}
-							transition={{ duration: 1.8, repeat: Infinity }}
-							className="text-white"
-						>
-							<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-							</svg>
-						</motion.div>
-					</motion.div>
-				</div>
-			</motion.section>
-
-			{/* Main Content */}
-			<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6">
-				{loading ? (
-					<div className="flex justify-center items-center h-32 sm:h-48 md:h-64">
-						<motion.div
-							animate={{ rotate: 360 }}
-							transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-							className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-[#2B3990] border-t-transparent rounded-full"
-						/>
+					{/* Particles Background Animation */}
+					<div className="absolute inset-0 w-full h-full z-10">
+						<ParticlesBackground containerId="microbiology-particles" />
+						<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
 					</div>
-				) : (
-					<CategorySection
-						category={category}
-						products={products}
-						onViewDetails={handleViewDetails}
-					/>
-				)}
-			</div>
+
+					<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
+						<motion.div
+							initial={{ y: 30, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.8, delay: 0.2 }}
+						>
+				<motion.h1
+					initial={{ scale: 0.9, opacity: 0, y: 40 }}
+					animate={{ scale: 1, opacity: 1, y: 0 }}
+					transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+					className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-2 sm:mb-4 md:mb-6 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-2"
+				>
+					Microbiology
+				</motion.h1>
+				<motion.p
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.8, delay: 0.3 }}
+					className="text-lg sm:text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto font-medium mb-4 sm:mb-6 md:mb-8 drop-shadow-lg max-[912px]:text-base max-[912px]:mb-3"
+				>
+					Advanced solutions for blood culture, ID/AST, pretreatment, and MALDI-TOF systems for modern microbiology laboratories.
+				</motion.p>
+							<motion.div
+								initial={{ scaleX: 0 }}
+								animate={{ scaleX: 1 }}
+								transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+								className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+							/>
+						</motion.div>
+
+						{/* Scroll Indicator */}
+						<motion.div
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 1, delay: 1.5 }}
+							className="mt-2 max-[912px]:mt-1"
+						>
+							<motion.div
+								animate={{ y: [0, 18, 0] }}
+								transition={{ duration: 1.8, repeat: Infinity }}
+								className="text-white"
+							>
+								<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+								</svg>
+							</motion.div>
+						</motion.div>
+					</div>
+				</motion.section>
+
+				{/* Main Content */}
+				<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6">
+					{loading ? (
+						<div className="flex justify-center items-center h-32 sm:h-48 md:h-64">
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+								className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-[#2B3990] border-t-transparent rounded-full"
+							/>
+						</div>
+					) : (
+						<>
+							<CategorySection
+								category={bloodCultureCategory}
+								products={bloodCulture}
+								onViewDetails={handleViewDetails}
+							/>
+							<CategorySection
+								category={idAstCategory}
+								products={idAst}
+								onViewDetails={handleViewDetails}
+							/>
+							<CategorySection
+								category={pretreatmentCategory}
+								products={pretreatment}
+								onViewDetails={handleViewDetails}
+							/>
+							<CategorySection
+								category={malditofCategory}
+								products={malditof}
+								onViewDetails={handleViewDetails}
+							/>
+						</>
+					)}
+				</div>
 
 			{/* Footer CTA Section */}
 			<motion.section
@@ -364,7 +432,7 @@ export default function Microbiology() {
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
 						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
-									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+						hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
 					>
 						Contact Our Experts
 					</motion.a>

@@ -112,7 +112,7 @@ function ProductCard({ product, index, onViewDetails }: { product: any; index: n
 
 			{/* Content */}
 			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
+				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base truncate">
 					{product.name}
 				</h3>
 				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
@@ -201,42 +201,13 @@ export default function LabOvenIncubator() {
 	useEffect(() => {
 		// Product data based on CSV
 		const productData = [
-			{ 
-				id: 1, 
-				name: 'CL4 Semi Auto', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/cl4-semi-auto.png',
-				description: 'A semi-automatic clinical centrifuge designed for routine laboratory applications. It provides reliable and efficient separation of blood samples, serum, plasma, and other clinical specimens. The unit emphasizes user safety, stable operation, and consistent performance, making it suitable for small to medium-sized laboratories.'
-			},
-		    { 
-				id: 2, 
-				name: 'DLAB HB 120-S', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-120-s.png',
-				description: 'A compact laboratory heating block intended for precise temperature control of samples. It supports uniform heating and is commonly used for incubation, enzyme reactions, sample preparation, and other temperature-sensitive laboratory procedures. Its digital control ensures accuracy and repeatability.'
-			},
-		    { 
-				id: 3, 
-				name: 'DLAB HB 105-S2', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s2.png',
-				description: 'A dual-block version of the HB 105 series, enabling simultaneous heating of two different sample sets. It offers improved productivity by allowing parallel experiments under the same or different temperature conditions. Ideal for laboratories requiring flexibility and higher throughput.'
-			},
-		    { 
-				id: 4, 
-				name: 'DLAB HB 105-S1', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-105-s1.png',
-				description: 'A single-block digital heating block designed for routine heating and incubation tasks. It allows accurate temperature setting and stable heat distribution, making it suitable for applications such as sample digestion, reagent warming, and biochemical reactions in research and clinical laboratories.'
-			},
-		    { 
-				id: 5, 
-				name: 'DLAB HB 150-S1', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s1.png',
-				description: 'A high-temperature single-block heating block capable of reaching higher temperature ranges compared to the HB 105 series. It is designed for more demanding laboratory applications such as molecular biology, chemical analysis, and advanced sample preparation that require elevated and stable temperatures.'
-			},
-		    { 
-				id: 6, 
-				name: 'DLAB HB 150-S2', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/dlab-hb-150-s2.png',
-				description: 'A dual-block high-temperature heating block combining the advanced temperature capability of the HB 150 series with dual-block functionality. It supports efficient multitasking in laboratories by allowing two sets of samples to be heated simultaneously, improving workflow efficiency and experimental flexibility.'
-			}
+		  { id: 7, name: 'CO₂ Incubator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/HCP-168%20Front%202.png', description: 'The CO2 incubator is the most important piece of equipment for biosafety laboratory R&D. The Haier Biomedical CO2 incubator uses professional and superior technology to provide reliable conditions for frontline medical staff to carry out epidemiological and translational research, and to create a stable cell and virus culture environment for researchers.' },
+		  { id: 8, name: 'Drying Oven', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/Drying%20Oven.png', description: 'Typically used for drying and sterilization of laboratory consumables, instruments and samples; as well as heating and curing, drying and dehydration, heat removal, moisture content determination of materials and samples in the fields of medicine, chemical industry, agricultural products as key examples. Other uses include, high temperature heat resistance tests and thermal aging tests of rubber, plastic products and electrical insulation materials.' },
+		  { id: 9, name: 'Standard Incubator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/Standard%20Incubator.png', description: 'The solution is widely used in bacteria, fungi and other microorganisms culture; as well as enzyme digestion reaction, ligation reaction, embedded incubation and other related constant temperature experiments.' },
+		  { id: 10, name: 'Cooled Incubator', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/HSP-260%20Left.png', description: 'The equipment finds extensive use across variety of settings, including the scientific research institutions, university laboratories and production departments, in the realms of environmental conservation, public health and epidemic prevention, agriculture and animal husbandry, drug testing, and aquatic industries. It is highly specialized in cultivation, enabling it to meet the cultivation and preservation of most bacteria, molds, and microorganisms, as well as to serve purposes such as water analysis and biochemical oxygen demand (BOD) determination, and it can also conduct darkroom cultivation of plant tissues.' },
+		  { id: 11, name: 'Climate Chamber', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/HHS-%20256.png', description: 'Drug stability tests (made for stability studies according to ICH guidelines), cosmetic stability tests, food shelf life tests, electronic components aging tests, packaging material stability tests.' },
+		  { id: 12, name: 'Climate Chamber - Compressor Series', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/HHS-810.png', description: 'Used for drug stability testing, food shelf-life testing, electronic component aging testing, microbiological research, sample storage.' },
+		  { id: 13, name: 'CO₂ Incubator 168E front', image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/lab-oven-incubator/CO%E2%82%82%20Incubator%20168E%20front.png', description: 'Haier Biomedical CO2 incubator with 90°C moist heat sterilization provides a safe and secure reproducible growth environment for cell cultures.' }
 		];
 
 		setProducts(productData);
@@ -355,7 +326,7 @@ export default function LabOvenIncubator() {
 			</motion.section>
 
 			{/* Main Content */}
-			<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6">
+			<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6 ">
 				{loading ? (
 					<div className="flex justify-center items-center h-32 sm:h-48 md:h-64">
 						<motion.div
