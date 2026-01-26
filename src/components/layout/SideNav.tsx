@@ -210,7 +210,7 @@ export function SideNav() {
 				{/* Tagline - Hidden on very small screens */}
 				<div className="hidden sm:flex flex-1 justify-center px-4">
 					<span className="text-gray-700 font-medium text-sm italic tracking-wide text-center opacity-80">
-						Because Every Life deserves the Best Care
+						Because Every Life Deserves the Best Care
 					</span>
 				</div>
 				{/* Hamburger Menu Button */}
