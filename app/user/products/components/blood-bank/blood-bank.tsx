@@ -26,19 +26,19 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	const isLiaisonXL = product.name === 'LIAISON® XL';
 
 	const liaisonTestMenu = (
-		<div className="space-y-3 text-xs max-h-[500px] overflow-y-auto pr-2">
+		<div className="space-y-2 text-[9px] md:text-xs max-h-[33vh] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🦴</span>Bone and Mineral
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🦴</span>Bone and Mineral
 				</h4>
-				<p className="text-gray-700 ml-5">25 OH Vitamin D TOTAL assay</p>
+				<p className="text-gray-700 ml-3 md:ml-5">25 OH Vitamin D TOTAL assay</p>
 			</div>
 			
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🔴</span>Epstein-Barr Virus
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔴</span>Epstein-Barr Virus
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>EBV IgM</p>
 					<p>VCA IgG</p>
 					<p>EBNA IgG</p>
@@ -47,10 +47,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🔵</span>ToRCH
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔵</span>ToRCH
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Rubella IgG</p>
 					<p>Rubella IgM</p>
 					<p>Cytomegalovirus IgM</p>
@@ -61,10 +61,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🌍</span>Infectious Disease
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🌍</span>Infectious Disease
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Treponema Assay</p>
 					<p>VZV IgG†</p>
 					<p>Borrelia burgdorferi†</p>
@@ -74,30 +74,30 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟡</span>Hepatitis
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟡</span>Hepatitis
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Hepatitis A Total Antibodies</p>
 					<p>Hepatitis A IgM*</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟠</span>Diabetes
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟠</span>Diabetes
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Insulin</p>
 					<p>C-Peptid</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🔴</span>MMRV
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔴</span>MMRV
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Measles IgG†</p>
 					<p>Mumps IgG†</p>
 					<p>Rubella IgM</p>
@@ -107,30 +107,30 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟤</span>Growth
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟤</span>Growth
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Human Growth Hormone</p>
 					<p>IGF-1*</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟡</span>Hypertension
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟡</span>Hypertension
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Direct Renin†</p>
 					<p>Aldosterone</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟢</span>Fertility
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟢</span>Fertility
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>FSH</p>
 					<p>LH</p>
 					<p>Prolactin xt</p>
@@ -142,10 +142,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1">
-					<span className="text-lg">🟢</span>Thyroids
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟢</span>Thyroids
 				</h4>
-				<div className="ml-5 text-gray-700">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>TSH</p>
 					<p>FT3</p>
 					<p>FT4</p>
@@ -162,13 +162,13 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 				onClick={product.onClose}
 				style={{ cursor: 'pointer' }}
 			></div>
-			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-2">
 				<motion.div
 					initial={{ opacity: 0, scale: 0.9, y: 20 }}
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4`}
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[40vh] max-[912px]:overflow-hidden`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -181,32 +181,32 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className={isLiaisonXL ? 'grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6' : ''}>
+					<div className={isLiaisonXL ? 'grid grid-cols-2 gap-2 md:gap-6' : ''}>
 						{isLiaisonXL && (
-							<div className="border-r border-gray-200 pr-4 md:pr-6">
-								<h3 className="text-lg font-bold text-gray-900 mb-3 border-b border-gray-200 pb-2">Test Menu</h3>
+							<div className="border-r border-gray-200 pr-2 md:pr-6">
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">Test Menu</h3>
 								{liaisonTestMenu}
 							</div>
 						)}
 
 						<div>
-							<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
+							<div className="relative h-20 md:h-64 lg:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 md:mb-6 overflow-hidden">
 								<Image
 									src={product.image}
 									alt={product.name}
 									fill
-									className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
-									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+									className="object-contain p-1 md:p-6"
+									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
 							</div>
 
-							<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-								<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-								<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
+							<div className="space-y-1 md:space-y-4">
+								<h3 className="text-xs md:text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h3>
+								<p className="text-[10px] md:text-base text-gray-600 leading-snug md:leading-relaxed">
 								{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in blood bank applications.'}
 								</p>
-								<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-									<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
+								<div className="pt-1 md:pt-4 border-t border-gray-200">
+									<p className="text-[9px] md:text-sm text-gray-500 leading-tight">
 										For detailed specifications and pricing information, please contact our sales team.
 									</p>
 								</div>

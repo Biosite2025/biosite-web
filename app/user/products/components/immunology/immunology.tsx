@@ -28,19 +28,19 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	const isBioFlash = product.name === 'Werfen BIO-FLASH';
 
 	const liaisonTestMenu = (
-		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🦴</span>Bone and Mineral
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🦴</span>Bone and Mineral
 				</h4>
-				<p className="text-gray-700 ml-4 sm:ml-5 max-[912px]:ml-3">25 OH Vitamin D TOTAL assay</p>
+				<p className="text-gray-700 ml-3 md:ml-5">25 OH Vitamin D TOTAL assay</p>
 			</div>
 			
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔴</span>Epstein-Barr Virus
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔴</span>Epstein-Barr Virus
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>EBV IgM</p>
 					<p>VCA IgG</p>
 					<p>EBNA IgG</p>
@@ -49,10 +49,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔵</span>ToRCH
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔵</span>ToRCH
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Rubella IgG</p>
 					<p>Rubella IgM</p>
 					<p>Cytomegalovirus IgM</p>
@@ -63,10 +63,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🌍</span>Infectious Disease
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🌍</span>Infectious Disease
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Treponema Assay</p>
 					<p>VZV IgG†</p>
 					<p>Borrelia burgdorferi†</p>
@@ -76,30 +76,30 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟡</span>Hepatitis
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟡</span>Hepatitis
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Hepatitis A Total Antibodies</p>
 					<p>Hepatitis A IgM*</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟠</span>Diabetes
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟠</span>Diabetes
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Insulin</p>
 					<p>C-Peptid</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔴</span>MMRV
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔴</span>MMRV
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Measles IgG†</p>
 					<p>Mumps IgG†</p>
 					<p>Rubella IgM</p>
@@ -109,30 +109,30 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟤</span>Growth
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟤</span>Growth
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Human Growth Hormone</p>
 					<p>IGF-1*</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟡</span>Hypertension
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟡</span>Hypertension
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Direct Renin†</p>
 					<p>Aldosterone</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟢</span>Fertility
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟢</span>Fertility
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>FSH</p>
 					<p>LH</p>
 					<p>Prolactin xt</p>
@@ -144,10 +144,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🟢</span>Thyroids
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🟢</span>Thyroids
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>TSH</p>
 					<p>FT3</p>
 					<p>FT4</p>
@@ -158,10 +158,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 
 	const tosohTestMenu = (
-		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Tumor Markers</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Tumor Markers</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>AFP</p>
 					<p>CEA</p>
 					<p>PA</p>
@@ -172,8 +172,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Thyroid</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Thyroid</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>TSH</p>
 					<p>fT3</p>
 					<p>T4</p>
@@ -187,8 +187,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Cardiac Markers</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Cardiac Markers</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>CK-MB</p>
 					<p>c Tni 2nd-Gen</p>
 					<p>Myoglobin</p>
@@ -196,8 +196,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Anemia</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Anemia</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>FER</p>
 					<p>B12 *</p>
 					<p>FOLATE *</p>
@@ -206,8 +206,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Reproductive</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Reproductive</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>βHCG</p>
 					<p>HCG</p>
 					<p>DHEA-S</p>
@@ -223,8 +223,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Kidney Markers</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Kidney Markers</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>BMG</p>
 					<p>Cystatin C</p>
 					<p>intact PTH</p>
@@ -232,16 +232,16 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Metabolic</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Metabolic</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>CORT</p>
 					<p>hGH</p>
 				</div>
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Additional</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Additional</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>ACTH</p>
 					<p>Homocysteine</p>
 					<p>IgE II</p>
@@ -251,8 +251,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">Diabetes</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Diabetes</h4>
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>C-Peptide II</p>
 					<p>IRI</p>
 				</div>
@@ -261,13 +261,13 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 
 	const bioflashTestMenu = (
-		<div className="space-y-2 sm:space-y-3 text-[9px] sm:text-xs max-[912px]:space-y-1 max-[912px]:text-[8px]">
+		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[300px] overflow-y-auto pr-1 md:pr-2">
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🔬</span>ToRCH
-					<span className="text-[9px] sm:text-xs font-normal text-gray-500 ml-1 max-[912px]:text-[8px]">(9)</span>
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🔬</span>ToRCH
+					<span className="text-[8px] md:text-xs font-normal text-gray-500 ml-1">(9)</span>
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>Toxo IgG</p>
 					<p>Toxo IgM</p>
 					<p>Rubella IgG</p>
@@ -281,11 +281,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 			</div>
 
 			<div>
-				<h4 className="font-bold text-[#2B3990] mb-1 flex items-center gap-1 max-[912px]:text-[9px] max-[912px]:mb-0.5">
-					<span className="text-sm sm:text-lg max-[912px]:text-xs">🏥</span>Pre-surgery
-					<span className="text-[9px] sm:text-xs font-normal text-gray-500 ml-1 max-[912px]:text-[8px]">(8)</span>
+				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
+					<span className="text-sm md:text-lg">🏥</span>Pre-surgery
+					<span className="text-[8px] md:text-xs font-normal text-gray-500 ml-1">(8)</span>
 				</h4>
-				<div className="ml-4 sm:ml-5 text-gray-700 max-[912px]:ml-3">
+				<div className="ml-3 md:ml-5 text-gray-700">
 					<p>HBsAg</p>
 					<p>anti-HBs</p>
 					<p>HBeAg*</p>
@@ -306,13 +306,13 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 				onClick={product.onClose}
 				style={{ cursor: 'pointer' }}
 			></div>
-			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-2">
 				<motion.div
 					initial={{ opacity: 0, scale: 0.9, y: 20 }}
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-max`}
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[60vh] max-[912px]:overflow-hidden`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -325,53 +325,47 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</svg>
 					</button>
 
-					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 max-[912px]:grid-cols-2' : ''}>
+					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 md:gap-6' : ''}>
 						{isLiaisonXL && (
-							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">Test Menu</h3>
-								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[35vh]">
-									{liaisonTestMenu}
-								</div>
+							<div className="border-r border-gray-200 pr-2 md:pr-6">
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">Test Menu</h3>
+								{liaisonTestMenu}
 							</div>
 						)}
 
 						{isTosoh && (
-							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">Tosoh AIA® Test Menu</h3>
-								<p className="text-[10px] sm:text-xs italic text-gray-500 mb-2 sm:mb-3 max-[912px]:text-[9px] max-[912px]:mb-1">(10 minute incubation unless otherwise noted.)</p>
-								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[35vh]">
-									{tosohTestMenu}
-								</div>
+							<div className="border-r border-gray-200 pr-2 md:pr-6">
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">Tosoh AIA® Test Menu</h3>
+								<p className="text-[9px] md:text-xs italic text-gray-500 mb-1 md:mb-3">(10 minute incubation unless otherwise noted.)</p>
+								{tosohTestMenu}
 							</div>
 						)}
 
 						{isBioFlash && (
-							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">BIO-FLASH Test Menu</h3>
-								<div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto max-[912px]:max-h-[35vh]">
-									{bioflashTestMenu}
-								</div>
+							<div className="border-r border-gray-200 pr-2 md:pr-6">
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">BIO-FLASH Test Menu</h3>
+								{bioflashTestMenu}
 							</div>
 						)}
 
 						<div>
-							<div className="relative h-40 sm:h-56 md:h-56 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 sm:mb-4 md:mb-6 overflow-hidden max-[912px]:h-28 max-[912px]:mb-1">
+							<div className="relative h-20 md:h-64 lg:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 md:mb-6 overflow-hidden">
 								<Image
 									src={product.image}
 									alt={product.name}
 									fill
-									className="object-contain p-1 sm:p-2 md:p-4 max-[912px]:p-1"
+									className="object-contain p-1 md:p-6"
 									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
 							</div>
 
-							<div className="space-y-2 sm:space-y-3 md:space-y-4 max-[912px]:space-y-1">
-								<h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 max-[912px]:text-sm max-[912px]:leading-tight">{product.name}</h3>
-								<p className="text-[10px] sm:text-sm md:text-base text-gray-600 leading-relaxed max-[912px]:text-[9px] max-[912px]:leading-tight">
+							<div className="space-y-1 md:space-y-4">
+								<h3 className="text-xs md:text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h3>
+								<p className="text-[10px] md:text-base text-gray-600 leading-snug md:leading-relaxed">
 									{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
 								</p>
-								<div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 max-[912px]:pt-1 max-[912px]:border-t-0">
-									<p className="text-[9px] sm:text-xs md:text-sm text-gray-500 max-[912px]:text-[8px]">
+								<div className="pt-1 md:pt-4 border-t border-gray-200">
+									<p className="text-[9px] md:text-sm text-gray-500 leading-tight">
 										For detailed specifications and pricing information, please contact our sales team.
 									</p>
 								</div>
