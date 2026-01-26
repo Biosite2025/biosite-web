@@ -15,6 +15,17 @@ const EventGallery: React.FC = () => {
   useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
       /* Custom styles for 1280x665 screen */
       @media (min-width: 1024px) and (max-width: 1366px) and (min-height: 600px) and (max-height: 768px) {
         #snaps h2 {
@@ -322,6 +333,8 @@ const EventGallery: React.FC = () => {
   const topRowX = useMotionValue(0);
   const bottomRowX = useMotionValue(-imageWidth * bottomRowImages.length); // Start off-screen for rightward scroll
   const [paused, setPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartTime, setDragStartTime] = useState(0);
 
   // Animation frame for top row
   const [isAnimating, setIsAnimating] = useState(false);
@@ -658,13 +671,28 @@ const EventGallery: React.FC = () => {
 
       {/* Infinite Scrolling Image Gallery */}
       {!imagesLoading && (topRowImages.length > 0 || bottomRowImages.length > 0) && (
-      <div id="slide" className="relative overflow-hidden">
+      <div id="slide" className="relative">
         {/* Top Row - Right to Left */}
         {topRowImages.length > 0 && (
-        <div className="flex mb-4 lg:mb-8">
+        <div className="flex mb-4 lg:mb-8 overflow-x-auto scrollbar-hide hover:cursor-grab active:cursor-grabbing scroll-smooth" 
+             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+             onMouseEnter={handlePause}
+             onMouseLeave={handleResume}>
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: topRowX }}
+            drag="x"
+            dragConstraints={{ left: -topLoopWidth + 1000, right: 0 }}
+            dragElastic={0.1}
+            onDragStart={() => {
+              handlePause();
+              setIsDragging(true);
+              setDragStartTime(Date.now());
+            }}
+            onDragEnd={() => {
+              handleResume();
+              setTimeout(() => setIsDragging(false), 100);
+            }}
           >            {Array.from({ length: totalTopLoopImages }).map((_, index) => {
               const image = topRowImages[index % topRowImages.length];
               const isPriority = index < 4; // Priority load first 4 images
@@ -677,9 +705,13 @@ const EventGallery: React.FC = () => {
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
                 }}
                 transition={{ duration: 0.3 }}
-                onMouseEnter={handlePause}
-                onMouseLeave={handleResume}
-                onClick={() => openModal(image)}
+                onClick={(e) => {
+                  if (isDragging || Date.now() - dragStartTime < 200) {
+                    e.preventDefault();
+                    return;
+                  }
+                  openModal(image);
+                }}
               >
                 <Image
                   src={image}
@@ -716,10 +748,25 @@ const EventGallery: React.FC = () => {
 
         {/* Bottom Row - Left to Right (Reversed Order) */}
         {bottomRowImages.length > 0 && (
-        <div className="flex">
+        <div className="flex overflow-x-auto scrollbar-hide hover:cursor-grab active:cursor-grabbing scroll-smooth"
+             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+             onMouseEnter={handlePause}
+             onMouseLeave={handleResume}>
           <motion.div
             className="flex gap-3 lg:gap-6 min-w-max"
             style={{ x: bottomRowX }}
+            drag="x"
+            dragConstraints={{ left: -bottomLoopWidth + 1000, right: 0 }}
+            dragElastic={0.1}
+            onDragStart={() => {
+              handlePause();
+              setIsDragging(true);
+              setDragStartTime(Date.now());
+            }}
+            onDragEnd={() => {
+              handleResume();
+              setTimeout(() => setIsDragging(false), 100);
+            }}
           >
             {Array.from({ length: totalBottomLoopImages }).map((_, index) => {
               const image = bottomRowImages[index % bottomRowImages.length];
@@ -732,9 +779,13 @@ const EventGallery: React.FC = () => {
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
                 }}
                 transition={{ duration: 0.3 }}
-                onMouseEnter={handlePause}
-                onMouseLeave={handleResume}
-                onClick={() => openModal(image)}
+                onClick={(e) => {
+                  if (isDragging || Date.now() - dragStartTime < 200) {
+                    e.preventDefault();
+                    return;
+                  }
+                  openModal(image);
+                }}
               >
                 <Image
                   src={image}
