@@ -430,7 +430,7 @@ export function SideNav() {
 								<div className="mt-auto p-4 border-t border-gray-200/50 bg-gray-50/50">
 									<div className="text-center">
 										<p className="text-xs text-gray-500 italic">
-											Because Every Life deserves the Best Care
+											Because Every Life Deserves the Best Care
 										</p>
 									</div>
 								</div>
