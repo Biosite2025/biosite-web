@@ -206,6 +206,7 @@ export default function SterilizerAutoclave() {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('haier');
 
 	useEffect(() => {
 		// Product data for Sterilizers & Autoclaves
@@ -459,14 +460,87 @@ export default function SterilizerAutoclave() {
 		  </div>
 		) : (
 		  <>
-			{categories.map((category: any, index: number) => (
-			  <CategorySection
-				key={category.id}
-				category={category}
-				products={products.filter((p: any) => p.categoryId === category.id)}
-				onViewDetails={handleViewDetails}
-			  />
-			))}
+			{/* Tabs Navigation */}
+			<div className="mb-8 sm:mb-12">
+				<div className="border-b border-gray-200">
+					{/* Desktop/Tablet: Horizontal Tabs */}
+					<nav className="hidden sm:flex flex-wrap gap-2 sm:gap-4 -mb-px" aria-label="Tabs">
+						<button
+							onClick={() => setActiveTab('haier')}
+							className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+								activeTab === 'haier'
+									? 'border-[#2B3990] text-[#2B3990]'
+									: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+							}`}
+						>
+							Haier
+						</button>
+						<button
+							onClick={() => setActiveTab('tuttnauer')}
+							className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+								activeTab === 'tuttnauer'
+									? 'border-[#2B3990] text-[#2B3990]'
+									: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+							}`}
+						>
+							Tuttnauer
+						</button>
+					</nav>
+
+					{/* Mobile: Grid Layout */}
+					<nav className="grid grid-cols-2 gap-2 sm:hidden -mb-px pb-2" aria-label="Tabs">
+						<button
+							onClick={() => setActiveTab('haier')}
+							className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+								activeTab === 'haier'
+									? 'bg-[#2B3990] text-white shadow-md'
+									: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+							}`}
+						>
+							Haier
+						</button>
+						<button
+							onClick={() => setActiveTab('tuttnauer')}
+							className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+								activeTab === 'tuttnauer'
+									? 'bg-[#2B3990] text-white shadow-md'
+									: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+							}`}
+						>
+							Tuttnauer
+						</button>
+					</nav>
+				</div>
+			</div>
+
+			{/* Tab Content with Fade Animation */}
+			{activeTab === 'haier' && (
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.3 }}
+				>
+					<CategorySection
+						category={categories[0]}
+						products={products.filter((p: any) => p.categoryId === 'haier')}
+						onViewDetails={handleViewDetails}
+					/>
+				</motion.div>
+			)}
+
+			{activeTab === 'tuttnauer' && (
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.3 }}
+				>
+					<CategorySection
+						category={categories[1]}
+						products={products.filter((p: any) => p.categoryId === 'tuttnauer')}
+						onViewDetails={handleViewDetails}
+					/>
+				</motion.div>
+			)}
 		  </>
 		)}
 	  </div>

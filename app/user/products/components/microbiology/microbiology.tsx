@@ -221,6 +221,7 @@ export default function Microbiology() {
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [activeTab, setActiveTab] = useState('blood-culture');
 
 	useEffect(() => {
 		// Blood Culture products
@@ -388,26 +389,136 @@ export default function Microbiology() {
 						</div>
 					) : (
 						<>
-							<CategorySection
-								category={bloodCultureCategory}
-								products={bloodCulture}
-								onViewDetails={handleViewDetails}
-							/>
-							<CategorySection
-								category={idAstCategory}
-								products={idAst}
-								onViewDetails={handleViewDetails}
-							/>
-							<CategorySection
-								category={pretreatmentCategory}
-								products={pretreatment}
-								onViewDetails={handleViewDetails}
-							/>
-							<CategorySection
-								category={malditofCategory}
-								products={malditof}
-								onViewDetails={handleViewDetails}
-							/>
+							{/* Tabs Navigation */}
+							<div className="mb-8 sm:mb-12">
+								<div className="border-b border-gray-200">
+									{/* Desktop/Tablet: Horizontal Tabs */}
+									<nav className="hidden sm:flex flex-wrap gap-2 sm:gap-4 -mb-px" aria-label="Tabs">
+										<button
+											onClick={() => setActiveTab('blood-culture')}
+											className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+												activeTab === 'blood-culture'
+													? 'border-[#2B3990] text-[#2B3990]'
+													: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+											}`}
+										>
+											Blood Culture
+										</button>
+										<button
+											onClick={() => setActiveTab('id-ast')}
+											className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+												activeTab === 'id-ast'
+													? 'border-[#2B3990] text-[#2B3990]'
+													: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+											}`}
+										>
+											ID/AST
+										</button>
+										<button
+											onClick={() => setActiveTab('pretreatment-streaking')}
+											className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+												activeTab === 'pretreatment-streaking'
+													? 'border-[#2B3990] text-[#2B3990]'
+													: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+											}`}
+										>
+											Pretreatment & Streaking
+										</button>
+										<button
+											onClick={() => setActiveTab('malditof')}
+											className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+												activeTab === 'malditof'
+													? 'border-[#2B3990] text-[#2B3990]'
+													: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+											}`}
+										>
+											MALDI-TOF
+										</button>
+									</nav>
+
+									{/* Mobile: Grid Layout */}
+									<nav className="grid grid-cols-2 gap-2 sm:hidden -mb-px pb-2" aria-label="Tabs">
+										<button
+											onClick={() => setActiveTab('blood-culture')}
+											className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+												activeTab === 'blood-culture'
+													? 'bg-[#2B3990] text-white shadow-md'
+													: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+											}`}
+										>
+											Blood Culture
+										</button>
+										<button
+											onClick={() => setActiveTab('id-ast')}
+											className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+												activeTab === 'id-ast'
+													? 'bg-[#2B3990] text-white shadow-md'
+													: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+											}`}
+										>
+											ID/AST
+										</button>
+										<button
+											onClick={() => setActiveTab('pretreatment-streaking')}
+											className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+												activeTab === 'pretreatment-streaking'
+													? 'bg-[#2B3990] text-white shadow-md'
+													: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+											}`}
+										>
+											Pretreatment
+										</button>
+										<button
+											onClick={() => setActiveTab('malditof')}
+											className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+												activeTab === 'malditof'
+													? 'bg-[#2B3990] text-white shadow-md'
+													: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+											}`}
+										>
+											MALDI-TOF
+										</button>
+									</nav>
+								</div>
+							</div>
+
+							{/* Tab Content */}
+							<motion.div
+								key={activeTab}
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								exit={{ opacity: 0, y: -20 }}
+								transition={{ duration: 0.3 }}
+							>
+								{activeTab === 'blood-culture' && (
+									<CategorySection
+										category={bloodCultureCategory}
+										products={bloodCulture}
+										onViewDetails={handleViewDetails}
+									/>
+								)}
+								{activeTab === 'id-ast' && (
+									<CategorySection
+										category={idAstCategory}
+										products={idAst}
+										onViewDetails={handleViewDetails}
+									/>
+								)}
+								{activeTab === 'pretreatment-streaking' && (
+									<CategorySection
+										category={pretreatmentCategory}
+										products={pretreatment}
+										onViewDetails={handleViewDetails}
+									/>
+								)}
+								{activeTab === 'malditof' && (
+									<CategorySection
+										category={malditofCategory}
+										products={malditof}
+										onViewDetails={handleViewDetails}
+									/>
+								)}
+							</motion.div>
 						</>
 					)}
 				</div>

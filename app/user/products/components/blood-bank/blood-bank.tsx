@@ -345,6 +345,7 @@ export default function BloodBank() {
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [activeTab, setActiveTab] = useState('analyzers-systems');
 
 	useEffect(() => {
 		// Blood Bank Product data
@@ -707,61 +708,220 @@ export default function BloodBank() {
 					</div>
 				) : (
 					<>
-						<CategorySection
-							category={category}
-							products={products}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'tube-sealer',
-								title: 'Tube Sealer',
-								description: 'Reliable tube sealers for blood collection, processing, and storage in blood bank operations.',
-								folder: 'tube-sealer',
-							}}
-							products={tubeSealer}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'blood-collection-mixer',
-								title: 'Blood Collection Mixer',
-								description: 'Mixers for gentle, uniform, and efficient blood collection in blood bank procedures.',
-								folder: 'blood-collection-mixer',
-							}}
-							products={bloodCollectionMixer}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'plasma-separator',
-								title: 'Plasma Separator',
-								description: 'Efficient plasma separators for laboratory and blood bank applications.',
-								folder: 'plasma-separator',
-							}}
-							products={plasmaSeparator}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'centrifuge-balance',
-								title: 'Centrifuge Balance',
-								description: 'Precision centrifuge balances for safe and accurate centrifugation in blood banks.',
-								folder: 'centrifuge-balance',
-							}}
-							products={centrifugeBalance}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'tulip-eryclone-typing-sera',
-								title: "Tulip Eryclone Typing Sera's",
-								description: 'High-quality typing sera for blood group determination and compatibility testing.',
-								folder: 'tulip-eryclone-typing-sera',
-							}}
-							products={tulipEryclone}
-							onViewDetails={handleViewDetails}
-						/>
+						{/* Tabs Navigation */}
+						<div className="mb-8 sm:mb-12">
+							<div className="border-b border-gray-200">
+								{/* Desktop/Tablet: Horizontal Tabs */}
+								<nav className="hidden sm:flex flex-wrap gap-2 sm:gap-4 -mb-px" aria-label="Tabs">
+									<button
+										onClick={() => setActiveTab('analyzers-systems')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'analyzers-systems'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Analyzers & Systems
+									</button>
+									<button
+										onClick={() => setActiveTab('tube-sealer')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'tube-sealer'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Tube Sealer
+									</button>
+									<button
+										onClick={() => setActiveTab('blood-collection-mixer')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'blood-collection-mixer'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Blood Collection Mixer
+									</button>
+									<button
+										onClick={() => setActiveTab('plasma-separator')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'plasma-separator'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Plasma Separator
+									</button>
+									<button
+										onClick={() => setActiveTab('centrifuge-balance')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'centrifuge-balance'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Centrifuge Balance
+									</button>
+									<button
+										onClick={() => setActiveTab('tulip-eryclone')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'tulip-eryclone'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Typing Sera's
+									</button>
+								</nav>
+
+								{/* Mobile: Grid Layout */}
+								<nav className="grid grid-cols-2 gap-2 sm:hidden -mb-px pb-2" aria-label="Tabs">
+									<button
+										onClick={() => setActiveTab('analyzers-systems')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'analyzers-systems'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Analyzers & Systems
+									</button>
+									<button
+										onClick={() => setActiveTab('tube-sealer')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'tube-sealer'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Tube Sealer
+									</button>
+									<button
+										onClick={() => setActiveTab('blood-collection-mixer')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'blood-collection-mixer'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Collection Mixer
+									</button>
+									<button
+										onClick={() => setActiveTab('plasma-separator')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'plasma-separator'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Plasma Separator
+									</button>
+									<button
+										onClick={() => setActiveTab('centrifuge-balance')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'centrifuge-balance'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Centrifuge Balance
+									</button>
+									<button
+										onClick={() => setActiveTab('tulip-eryclone')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'tulip-eryclone'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Typing Sera's
+									</button>
+								</nav>
+							</div>
+						</div>
+
+						{/* Tab Content */}
+						<motion.div
+							key={activeTab}
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -20 }}
+							transition={{ duration: 0.3 }}
+						>
+							{activeTab === 'analyzers-systems' && (
+								<CategorySection
+									category={{
+										id: 'analyzers-systems',
+										title: 'Analyzers & Systems',
+										description: 'Advanced blood bank analyzers and automated systems for comprehensive laboratory diagnostics',
+										folder: 'analyzers-systems',
+									}}
+									products={products}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+							{activeTab === 'tube-sealer' && (
+								<CategorySection
+									category={{
+										id: 'tube-sealer',
+										title: 'Tube Sealer',
+										description: 'Reliable tube sealers for blood collection, processing, and storage in blood bank operations.',
+										folder: 'tube-sealer',
+									}}
+									products={tubeSealer}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+							{activeTab === 'blood-collection-mixer' && (
+								<CategorySection
+									category={{
+										id: 'blood-collection-mixer',
+										title: 'Blood Collection Mixer',
+										description: 'Mixers for gentle, uniform, and efficient blood collection in blood bank procedures.',
+										folder: 'blood-collection-mixer',
+									}}
+									products={bloodCollectionMixer}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+							{activeTab === 'plasma-separator' && (
+								<CategorySection
+									category={{
+										id: 'plasma-separator',
+										title: 'Plasma Separator',
+										description: 'Efficient plasma separators for laboratory and blood bank applications.',
+										folder: 'plasma-separator',
+									}}
+									products={plasmaSeparator}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+							{activeTab === 'centrifuge-balance' && (
+								<CategorySection
+									category={{
+										id: 'centrifuge-balance',
+										title: 'Centrifuge Balance',
+										description: 'Precision centrifuge balances for safe and accurate centrifugation in blood banks.',
+										folder: 'centrifuge-balance',
+									}}
+									products={centrifugeBalance}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+							{activeTab === 'tulip-eryclone' && (
+								<CategorySection
+									category={{
+										id: 'tulip-eryclone-typing-sera',
+										title: "Tulip Eryclone Typing Sera's",
+										description: 'High-quality typing sera for blood group determination and compatibility testing.',
+										folder: 'tulip-eryclone-typing-sera',
+									}}
+									products={tulipEryclone}
+									onViewDetails={handleViewDetails}
+								/>
+							)}
+						</motion.div>
 					</>
 				)}
 			</div>

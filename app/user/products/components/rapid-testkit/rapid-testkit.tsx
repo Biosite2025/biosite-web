@@ -198,6 +198,7 @@ export default function MolecularDiagnostics() {
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [activeTab, setActiveTab] = useState('rapid-test-kits');
 
 	useEffect(() => {
 		// Rapid Test Kits product data
@@ -433,20 +434,91 @@ export default function MolecularDiagnostics() {
 					</div>
 				) : (
 					<>
-						<CategorySection
-							category={category}
-							products={products}
-							onViewDetails={handleViewDetails}
-						/>
-						<CategorySection
-							category={{
-								id: 'tulip-diagnostic',
-								title: 'Tulip Diagnostic (P) LTD.',
-								description: 'Rapid test kits from Tulip Diagnostic (P) LTD. for specialized diagnostics.'
-							}}
-							products={tulipProducts}
-							onViewDetails={handleViewDetails}
-						/>
+						{/* Tabs Navigation */}
+						<div className="mb-8 sm:mb-12">
+							<div className="border-b border-gray-200">
+								{/* Desktop/Tablet: Horizontal Tabs */}
+								<nav className="hidden sm:flex flex-wrap gap-2 sm:gap-4 -mb-px" aria-label="Tabs">
+									<button
+										onClick={() => setActiveTab('rapid-test-kits')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'rapid-test-kits'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Rapid Test Kits
+									</button>
+									<button
+										onClick={() => setActiveTab('tulip-diagnostic')}
+										className={`whitespace-nowrap py-3 sm:py-4 px-4 sm:px-6 border-b-2 font-semibold text-sm sm:text-base transition-all duration-300 ${
+											activeTab === 'tulip-diagnostic'
+												? 'border-[#2B3990] text-[#2B3990]'
+												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+										}`}
+									>
+										Tulip Diagnostic
+									</button>
+								</nav>
+
+								{/* Mobile: Grid Layout */}
+								<nav className="grid grid-cols-2 gap-2 sm:hidden -mb-px pb-2" aria-label="Tabs">
+									<button
+										onClick={() => setActiveTab('rapid-test-kits')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'rapid-test-kits'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Rapid Test Kits
+									</button>
+									<button
+										onClick={() => setActiveTab('tulip-diagnostic')}
+										className={`py-3 px-3 rounded-lg font-semibold text-xs transition-all duration-300 touch-manipulation ${
+											activeTab === 'tulip-diagnostic'
+												? 'bg-[#2B3990] text-white shadow-md'
+												: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+										}`}
+									>
+										Tulip Diagnostic
+									</button>
+								</nav>
+							</div>
+						</div>
+
+						{/* Tab Content with Fade Animation */}
+						{activeTab === 'rapid-test-kits' && (
+							<motion.div
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.3 }}
+							>
+								<CategorySection
+									category={category}
+									products={products}
+									onViewDetails={handleViewDetails}
+								/>
+							</motion.div>
+						)}
+
+						{activeTab === 'tulip-diagnostic' && (
+							<motion.div
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.3 }}
+							>
+								<CategorySection
+									category={{
+										id: 'tulip-diagnostic',
+										title: 'Tulip Diagnostic (P) LTD.',
+										description: 'Rapid test kits from Tulip Diagnostic (P) LTD. for specialized diagnostics.'
+									}}
+									products={tulipProducts}
+									onViewDetails={handleViewDetails}
+								/>
+							</motion.div>
+						)}
 					</>
 				)}
 			</div>
