@@ -312,7 +312,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden`}
+					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-max`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -328,8 +328,8 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 max-[912px]:grid-cols-2' : ''}>
 						{isLiaisonXL && (
 							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">Test Menu</h3>
-								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[60vh]">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">Test Menu</h3>
+								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[35vh]">
 									{liaisonTestMenu}
 								</div>
 							</div>
@@ -337,9 +337,9 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 						{isTosoh && (
 							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">Tosoh AIA® Test Menu</h3>
-								<p className="text-[10px] sm:text-xs italic text-gray-500 mb-2 sm:mb-3 max-[912px]:text-[9px]">(10 minute incubation unless otherwise noted.)</p>
-								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[60vh]">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">Tosoh AIA® Test Menu</h3>
+								<p className="text-[10px] sm:text-xs italic text-gray-500 mb-2 sm:mb-3 max-[912px]:text-[9px] max-[912px]:mb-1">(10 minute incubation unless otherwise noted.)</p>
+								<div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto max-[912px]:max-h-[35vh]">
 									{tosohTestMenu}
 								</div>
 							</div>
@@ -347,15 +347,15 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 						{isBioFlash && (
 							<div className="border-r border-gray-200 pr-2 sm:pr-4 md:pr-6 max-[912px]:pr-2">
-								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs">BIO-FLASH Test Menu</h3>
-								<div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto max-[912px]:max-h-[60vh]">
+								<h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-b border-gray-200 pb-1 sm:pb-2 max-[912px]:text-xs max-[912px]:mb-1">BIO-FLASH Test Menu</h3>
+								<div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto max-[912px]:max-h-[35vh]">
 									{bioflashTestMenu}
 								</div>
 							</div>
 						)}
 
 						<div>
-							<div className="relative h-40 sm:h-56 md:h-56 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 sm:mb-4 md:mb-6 overflow-hidden max-[912px]:h-32">
+							<div className="relative h-40 sm:h-56 md:h-56 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 sm:mb-4 md:mb-6 overflow-hidden max-[912px]:h-28 max-[912px]:mb-1">
 								<Image
 									src={product.image}
 									alt={product.name}
@@ -366,11 +366,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 							</div>
 
 							<div className="space-y-2 sm:space-y-3 md:space-y-4 max-[912px]:space-y-1">
-								<h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 max-[912px]:text-sm">{product.name}</h3>
+								<h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 max-[912px]:text-sm max-[912px]:leading-tight">{product.name}</h3>
 								<p className="text-[10px] sm:text-sm md:text-base text-gray-600 leading-relaxed max-[912px]:text-[9px] max-[912px]:leading-tight">
 									{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
 								</p>
-								<div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 max-[912px]:pt-1">
+								<div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 max-[912px]:pt-1 max-[912px]:border-t-0">
 									<p className="text-[9px] sm:text-xs md:text-sm text-gray-500 max-[912px]:text-[8px]">
 										For detailed specifications and pricing information, please contact our sales team.
 									</p>

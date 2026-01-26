@@ -198,14 +198,14 @@ export function SideNav() {
 			>
 				{/* Logo Section */}
 				<Link href="/user/about" className="flex items-center h-full touch-manipulation">
-					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530483/biosite-assets/BMI_logo.png"
-						alt="Biosite Medical Instruments Logo"
-						width={140}
-						height={40}
-						className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
-						priority
-					/>
+					   <Image
+						   src="/asset/BMI_logo4.png"
+						   alt="Biosite Medical Instruments Logo"
+						   width={140}
+						   height={40}
+						   className="object-contain h-10 w-auto transform hover:scale-105 transition-transform duration-300"
+						   priority
+					   />
 				</Link>
 				{/* Tagline - Hidden on very small screens */}
 				<div className="hidden sm:flex flex-1 justify-center px-4">
@@ -252,13 +252,13 @@ export function SideNav() {
 							{/* Header */}
 							<div className="flex items-center justify-between p-4 border-b border-gray-200/50 bg-gradient-to-r from-[#2B3990] to-[#3d4db0]">
 								<div className="flex items-center space-x-3">
-									<Image
-										src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530483/biosite-assets/BMI_logo.png"
-										alt="BMI Logo"
-										width={80}
-										height={24}
-										className="object-contain h-10 w-auto brightness-0 invert"
-									/>
+									   <Image
+										   src="/asset/BMI_logo4.png"
+										   alt="BMI Logo"
+										   width={80}
+										   height={24}
+										   className="object-contain h-10 w-auto brightness-0 invert"
+									   />
 									
 								</div>
 								<button 
