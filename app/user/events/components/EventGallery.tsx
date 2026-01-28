@@ -348,8 +348,8 @@ const EventGallery: React.FC = () => {
   
   useAnimationFrame((t, delta) => {
     if (!paused && isAnimating && isClient && topLoopWidth > 0) {
-      // Move left - scroll through entire image set very smoothly
-      const speed = topLoopWidth / 400; // Complete loop in 120 seconds for very smooth viewing
+      // Move left at constant speed (40 pixels per second for smooth viewing)
+      const speed = 40; // Fixed speed in pixels per second
       let next = topRowX.get() - speed * (delta / 1000);
       // Reset when we've scrolled through one complete set
       if (next <= -topLoopWidth) next += topLoopWidth;
@@ -360,8 +360,8 @@ const EventGallery: React.FC = () => {
   // Animation frame for bottom row
   useAnimationFrame((t, delta) => {
     if (!paused && isAnimating && isClient && bottomLoopWidth > 0) {
-      // Move right - scroll through entire image set very smoothly
-      const speed = bottomLoopWidth / 300; // Complete loop in 140 seconds for very smooth viewing
+      // Move right at constant speed (40 pixels per second for smooth viewing)
+      const speed = 40; // Fixed speed in pixels per second
       let next = bottomRowX.get() + speed * (delta / 1000);
       // Reset when we've scrolled through one complete set
       if (next >= 0) next -= bottomLoopWidth;
@@ -835,22 +835,7 @@ const EventGallery: React.FC = () => {
           </p>
         </motion.div>
         {/* Drag to swipe instruction (moved below video section) */}
-      <div className="flex justify-center mt-2 mb-8">
-        <span className="text-base lg:text-lg text-gray-300 bg-gray-900/70 px-4 py-2 rounded-full shadow-md border border-gray-700 flex items-center gap-2">
-          <motion.svg
-            className="w-5 h-5 text-[#2B3990]"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 12h16M10 18l-6-6 6-6" />
-          </motion.svg>
-          Drag to swipe videos
-        </span>
-      </div>
+     
         <motion.div
           className={`flex justify-center gap-4 lg:gap-10 relative`}
           initial={{ opacity: 0, y: 50 }}
