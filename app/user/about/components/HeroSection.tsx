@@ -585,33 +585,15 @@ const HeroSection = () => {
 		}, TRANSITION_DURATION);
 	};
 
-	// Manual navigation
-	const prevSlide = () => {
-		goToSlide(current === 0 ? slides.length - 1 : current - 1);
-		pauseAutoAdvance();
-	};
-	const nextSlide = () => {
-		goToSlide(current === slides.length - 1 ? 0 : current + 1);
-		pauseAutoAdvance();
-	};
+	// Manual navigation removed
 
-	// Pause auto-advance on user interaction
-	const pauseAutoAdvance = () => {
-		isPaused.current = true;
-		if (intervalRef.current) clearInterval(intervalRef.current);
-		setTimeout(() => {
-			isPaused.current = false;
-			startAutoAdvance();
-		}, SLIDE_DURATION * 2);
-	};
+	// Pause auto-advance on user interaction removed
 
 	// Auto-advance logic
 	const startAutoAdvance = () => {
 		if (intervalRef.current) clearInterval(intervalRef.current);
 		intervalRef.current = setInterval(() => {
-			if (!isPaused.current) {
-				goToSlide((current + 1) % slides.length);
-			}
+			goToSlide((current + 1) % slides.length);
 		}, SLIDE_DURATION);
 	};
 
@@ -676,87 +658,7 @@ const HeroSection = () => {
 					))}
 				</div>
 
-				{/* Animated navigation arrows only visible on group hover with fade-in */}
-				{/* Left hover area */}
-				<motion.div
-					className="absolute left-0 top-0 h-full w-1/2 z-40 pointer-events-none  "
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-				>
-					<motion.button
-						onClick={prevSlide}
-						onMouseEnter={pauseAutoAdvance}
-						onFocus={pauseAutoAdvance}
-						aria-label="Previous slide"
-						tabIndex={0}
-						initial={false}
-						animate={{ opacity: 0 }}
-						whileHover={{ opacity: 1 }}
-						whileFocus={{ opacity: 1 }}
-						className="w-full h-full flex items-center justify-start bg-transparent border-none outline-none p-0 m-0 cursor-pointer group pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-						transition={{ duration: 0.4, ease: "easeOut" }}
-						style={{ pointerEvents: "auto" }}
-					>
-						<span className="sr-only">Previous</span>
-						<span className="ml-10 flex items-center justify-center rounded-full bg-white/95 border-2 border-[#2B3990]/30 text-[#2B3990] w-12 h-12 shadow-xl hover:shadow-2xl hover:bg-[#2B3990] hover:text-white hover:border-[#2B3990] transition-all duration-200 backdrop-blur-md">
-							<svg
-								width="24"
-								height="24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2.5"
-								viewBox="0 0 24 24"
-								className="transition-transform duration-300"
-							>
-								<path
-									d="M15 19l-7-7 7-7"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</span>
-					</motion.button>
-				</motion.div>
-				{/* Right hover area */}
-				<motion.div
-					className="absolute right-0 top-0 h-full w-1/2 z-40 pointer-events-none"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-				>
-					<motion.button
-						onClick={nextSlide}
-						onMouseEnter={pauseAutoAdvance}
-						onFocus={pauseAutoAdvance}
-						aria-label="Next slide"
-						tabIndex={0}
-						initial={false}
-						animate={{ opacity: 0 }}
-						whileHover={{ opacity: 1 }}
-						whileFocus={{ opacity: 1 }}
-						className="w-full h-full flex items-center justify-end bg-transparent border-none outline-none p-0 m-0 cursor-pointer group pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-						transition={{ duration: 0.4, ease: "easeOut" }}
-						style={{ pointerEvents: "auto" }}
-					>
-						<span className="sr-only">Next</span>
-						<span className="mr-10 flex items-center justify-center rounded-full bg-white/95 border-2 border-[#2B3990]/30 text-[#2B3990] w-12 h-12 shadow-xl hover:shadow-2xl hover:bg-[#2B3990] hover:text-white hover:border-[#2B3990] transition-all duration-200 backdrop-blur-md">
-							<svg
-								width="24"
-								height="24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2.5"
-								viewBox="0 0 24 24"
-								className="transition-transform duration-300"
-							>
-								<path
-									d="M9 5l7 7-7 7"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</span>
-					</motion.button>
-				</motion.div>
+				{/* Navigation arrows removed */}
 
 				{/* Enhanced content section with modern styling - Responsive */}
 				<div
