@@ -1,9 +1,8 @@
+"use client";
+      import React, { useState, useEffect, useRef } from "react";
+  import ReCAPTCHA from "react-google-recaptcha";
+      import { motion, AnimatePresence } from "framer-motion";
 
-
-      "use client";
-
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface LocationData {
   id: string;
@@ -45,14 +44,43 @@ const locations: LocationData[] = [
   }
 ];
 
-export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+function ContactForm() {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+  const recaptchaRef = useRef<any>(null);
+  const [deptFocused, setDeptFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
   const [mounted, setMounted] = useState(false);
+  const [recaptchaUserInteracted, setRecaptchaUserInteracted] = useState(false);
+  const [showCaptchaVerifiedMsg, setShowCaptchaVerifiedMsg] = useState(false);
+  const [showRecaptcha, setShowRecaptcha] = useState(true);
+
+  // Reset form and reCAPTCHA when activeLocation changes
+  useEffect(() => {
+    setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+    setError("");
+    setRecaptchaToken("");
+    setRecaptchaVerified(false);
+    setShowCaptchaVerifiedMsg(false);
+    setRecaptchaUserInteracted(false);
+    setShowRecaptcha(true);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
+  }, [activeLocation]);
+
+  // On mount, clear reCAPTCHA session storage to prevent auto-verification after refresh
+  useEffect(() => {
+    if (window && window.sessionStorage) {
+      window.sessionStorage.removeItem('_grecaptcha');
+    }
+  }, []);
 
   // Ensure proper hydration
   useEffect(() => {
@@ -70,38 +98,93 @@ export default function Contact() {
     );
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError(""); // Clear error on input change
   };
 
+  // reCAPTCHA v2: require user to check box before submit
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token || "");
+    if (token) {
+      setRecaptchaUserInteracted(true); // Always set to true on any token
+      setRecaptchaVerified(true);
+      setShowCaptchaVerifiedMsg(true);
+      setShowRecaptcha(false); // Show the send button immediately
+      setTimeout(() => setShowCaptchaVerifiedMsg(false), 3000);
+      if (window && window.sessionStorage) {
+        window.sessionStorage.removeItem('_grecaptcha');
+      }
+    } else {
+      setRecaptchaVerified(false);
+      setShowCaptchaVerifiedMsg(false);
+      setShowRecaptcha(true);
+    }
+  };
+
+  const handleRecaptchaClick = () => {
+    setRecaptchaUserInteracted(true);
+  };
+
+  const handleRecaptchaExpired = () => {
+    setRecaptchaToken("");
+    setRecaptchaVerified(false);
+    setShowCaptchaVerifiedMsg(false);
+    setRecaptchaUserInteracted(false);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitting(true);
     setError("");
-
+    setShowErrorPopup(false);
+    if (!recaptchaToken || !recaptchaVerified) {
+      setError("Please verify you are not a robot.");
+      setShowErrorPopup(true);
+      return;
+    }
+    setSubmitting(true);
     try {
-      const formData = new FormData(e.currentTarget);
-      
-      // Add custom subject with location
-      formData.set("subject", `Contact Form: ${form.subject || 'New Inquiry'} - ${currentLocation.name} Branch`);
-      
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const payload = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        subject: form.subject || 'New Inquiry',
+        message: form.message,
+        recipient: form.department,
+        recaptchaToken: recaptchaToken,
+      };
+      const response = await fetch("/api/send-contact-email", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-
       const data = await response.json();
-
       if (data.success) {
         setSubmitted(true);
-        setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+        setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+        setRecaptchaToken("");
+        setRecaptchaVerified(false);
+        setShowCaptchaVerifiedMsg(false);
+        setRecaptchaUserInteracted(false);
+        setShowRecaptcha(true);
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
         setTimeout(() => setSubmitted(false), 3000);
       } else {
-        setError("Failed to send message. Please try again.");
+        setError(data.error || "Failed to send message. Please try again.");
+        setShowErrorPopup(true);
+        setTimeout(() => setShowErrorPopup(false), 3500);
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 3500);
       console.error("Form submission error:", err);
     } finally {
       setSubmitting(false);
@@ -259,7 +342,7 @@ export default function Contact() {
         {/* Map */}
         <motion.div
           id="usermap"
-          className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] order-1"
+          className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] mb-6 md:mb-8 lg:mb-0"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
@@ -286,45 +369,125 @@ export default function Contact() {
         {/* Contact Form */}
         <motion.div
           id="userform"
-          className=" bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px]  order-2"
+          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px]"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-2 flex items-center gap-2">
-            <span className="relative inline-block">
-              Get in Touch
-              <motion.span
-                className="block h-0.5 sm:h-1 bg-gradient-to-r from-[#2B3990] to-blue-500 rounded-full mt-1 sm:mt-2"
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-                style={{ position: 'absolute', left: 0, right: 0, bottom: -4 }}
-              />
-            </span>
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-2 text-center  w-full">
+            Get in Touch
           </h2>
-          <p className="text-gray-600 mb-3 sm:mb-4 md:mb-6 text-sm sm:text-base">If you have any questions please feel free to contact with us.</p>
-          
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-              {error}
+          {/* Department Dropdown as To: ... with floating label */}
+          <div className="mb-2 sm:mb-3 md:mb-4 relative" style={{ minHeight: '60px' }}>
+            <div className="relative w-full" style={{ minHeight: '56px' }}>
+              {/* Floating label */}
+              <label
+                htmlFor="department-select"
+                className={`absolute left-0 px-1 transition-all duration-300 ease-in-out
+                  text-[#2B3990] font-semibold pointer-events-none
+                  ${
+                    deptFocused || form.department
+                      ? 'text-xs -top-4 bg-white rounded px-1 py-0.5 shadow-sm'
+                      : 'text-base top-4 sm:top-5'
+                  }
+                `}
+                style={{
+                  transition: 'all 0.28s cubic-bezier(0.4,0,0.2,1)',
+                  background: deptFocused || form.department ? '#fff' : 'transparent',
+                  zIndex: 10,
+                }}
+              >
+                To:
+              </label>
+              <select
+                id="department-select"
+                name="department"
+                className={"appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"}
+                value={form.department}
+                onChange={handleChange}
+                onFocus={() => setDeptFocused(true)}
+                onBlur={() => setDeptFocused(false)}
+                required
+                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px'}}
+              >
+                <option value="" disabled hidden></option>
+                {activeLocation === 'manila' ? (
+                  <>
+                    <option value="quotation.luzon@biositeph.com">Quotation - Luzon</option>
+                    <option value="nsm@biositeph.com">Sales - Luzon</option>
+                    <option value="mnl.servicecoordinator@biositeph.com">Technical Service - Luzon</option>
+                    <option value="customerengagement@biositeph.com">Marketing - Luzon</option>
+                    
+                  </>
+                ) : (
+                  <>
+                    <option value="quotation.vismin@biositeph.com">Quotation - VisMin</option>
+                    <option value="sheereann.barnes@biositeph.com">Sales - VisMin</option>
+                    <option value="irisclint.caro@biositeph.com">Technical Service - VisMin</option>
+                    <option value="customerengagement@biositeph.com">Marketing - VisMin</option>
+                    
+                  </>
+                )}
+              </select>
+              <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-[#2B3990] text-lg">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
             </div>
-          )}
+          </div>
+          
+
+      {/* Error Popup Modal */}
+      <AnimatePresence>
+        {showErrorPopup && error && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowErrorPopup(false)}
+          >
+            <motion.div
+              className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full border border-red-200"
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-center text-red-700 mb-2">
+                {error}
+              </h3>
+              <p className="text-center text-gray-600 mb-6">
+                Please check your input and try again.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
           
           <form className="space-y-2 sm:space-y-3 md:space-y-4" onSubmit={handleSubmit}>
-            {/* Web3Forms Access Key */}
-            <input type="hidden" name="access_key" value="ef98e53f-33cf-4511-ac85-c37695a96267" />
-            
-            {/* Redirect */}
-            <input type="hidden" name="redirect" value="false" />
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+              {/* Subject first on mobile/tablet, normal on desktop */}
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-1 lg:order-4"
+                value={form.subject}
+                onChange={handleChange}
+              />
               <input
                 type="text"
                 name="name" 
                 placeholder="Name"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium"
+                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-2 lg:order-1"
                 value={form.name}
                 onChange={handleChange}
                 required
@@ -333,7 +496,7 @@ export default function Contact() {
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium"
+                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-3"
                 value={form.email}
                 onChange={handleChange}
                 required
@@ -342,37 +505,46 @@ export default function Contact() {
                 type="text"
                 name="phone"
                 placeholder="Phone"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium"
+                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-4"
                 value={form.phone}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium"
-                value={form.subject}
                 onChange={handleChange}
               />
               <textarea
                 name="message"
                 placeholder="Your Message"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white min-h-[60px] sm:min-h-[80px] md:min-h-[100px] text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium lg:col-span-2"
+                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white min-h-[60px] sm:min-h-[80px] md:min-h-[100px] text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium lg:col-span-2 order-5"
                 value={form.message}
                 onChange={handleChange}
                 required
               />
             </div>
-            <motion.button
-              type="submit"
-              disabled={submitting}
-              className={`w-full rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-white font-semibold py-2 sm:py-3 text-base sm:text-lg shadow-md hover:from-blue-700 hover:to-[#2B3990] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 mt-1 sm:mt-2 ${
-                submitting ? 'opacity-70 cursor-not-allowed' : ''
-              }`}
-              whileTap={submitting ? {} : { scale: 0.97 }}
-            >
-              {submitting ? "Sending..." : submitted ? "Sent!" : "Send Message"}
-            </motion.button>
+            <div className="flex flex-col items-center w-full">
+              {/* Only render after mounted is true */}
+              {mounted && showRecaptcha && !recaptchaVerified && (
+                <div onClick={handleRecaptchaClick} style={{ width: '100%' }}>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey="6LeM1lksAAAAAKZz5AEPqlGz3RUjWn_CWJi9Dvww"
+                    onChange={handleRecaptchaChange}
+                    onExpired={handleRecaptchaExpired}
+                    onErrored={handleRecaptchaExpired}
+                    theme="light"
+                  />
+                </div>
+              )}
+              {mounted && !showRecaptcha && recaptchaVerified && (
+                <motion.button
+                  type="submit"
+                  disabled={submitting}
+                  className={`w-full rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-white font-semibold py-2 sm:py-3 text-base sm:text-lg shadow-md hover:from-blue-700 hover:to-[#2B3990] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 mt-3 sm-:mt-2 ${
+                    submitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
+                  whileTap={submitting ? {} : { scale: 0.97 }}
+                >
+                  {submitting ? 'Sending...' : submitted ? 'Sent!' : 'Send Message'}
+                </motion.button>
+              )}
+            </div>
           </form>
         </motion.div>
       </div>
@@ -604,4 +776,8 @@ export default function Contact() {
       </AnimatePresence>
     </>
   );
+}
+
+export default function Contact() {
+  return <ContactForm />;
 }
