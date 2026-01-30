@@ -1,7 +1,6 @@
 "use client";
       import React, { useState, useEffect, useRef } from "react";
-  import ReCAPTCHA from "react-google-recaptcha";
-import { motion, AnimatePresence } from "framer-motion"; 
+  import { motion, AnimatePresence } from "framer-motion";
 
 
 interface LocationData {
@@ -46,9 +45,6 @@ const locations: LocationData[] = [
 
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
-  const [recaptchaToken, setRecaptchaToken] = useState("");
-  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
-  const recaptchaRef = useRef<any>(null);
   const [deptFocused, setDeptFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -57,30 +53,14 @@ function ContactForm() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
   const [mounted, setMounted] = useState(false);
-  const [recaptchaUserInteracted, setRecaptchaUserInteracted] = useState(false);
-  const [showCaptchaVerifiedMsg, setShowCaptchaVerifiedMsg] = useState(false);
-  const [showRecaptcha, setShowRecaptcha] = useState(true);
 
-  // Reset form and reCAPTCHA when activeLocation changes
+  // Reset form when activeLocation changes
   useEffect(() => {
     setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
     setError("");
-    setRecaptchaToken("");
-    setRecaptchaVerified(false);
-    setShowCaptchaVerifiedMsg(false);
-    setRecaptchaUserInteracted(false);
-    setShowRecaptcha(true);
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
   }, [activeLocation]);
 
-  // On mount, clear reCAPTCHA session storage to prevent auto-verification after refresh
-  useEffect(() => {
-    if (window && window.sessionStorage) {
-      window.sessionStorage.removeItem('_grecaptcha');
-    }
-  }, []);
+  // ...existing code...
 
   // Ensure proper hydration
   useEffect(() => {
@@ -103,48 +83,12 @@ function ContactForm() {
     setError(""); // Clear error on input change
   };
 
-  // reCAPTCHA v2: require user to check box before submit
-  const handleRecaptchaChange = (token: string | null) => {
-    setRecaptchaToken(token || "");
-    if (token) {
-      setRecaptchaUserInteracted(true); // Always set to true on any token
-      setRecaptchaVerified(true);
-      setShowCaptchaVerifiedMsg(true);
-      setShowRecaptcha(false); // Show the send button immediately
-      setTimeout(() => setShowCaptchaVerifiedMsg(false), 3000);
-      if (window && window.sessionStorage) {
-        window.sessionStorage.removeItem('_grecaptcha');
-      }
-    } else {
-      setRecaptchaVerified(false);
-      setShowCaptchaVerifiedMsg(false);
-      setShowRecaptcha(true);
-    }
-  };
-
-  const handleRecaptchaClick = () => {
-    setRecaptchaUserInteracted(true);
-  };
-
-  const handleRecaptchaExpired = () => {
-    setRecaptchaToken("");
-    setRecaptchaVerified(false);
-    setShowCaptchaVerifiedMsg(false);
-    setRecaptchaUserInteracted(false);
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
-  };
+  // ...existing code...
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setShowErrorPopup(false);
-    if (!recaptchaToken || !recaptchaVerified) {
-      setError("Please verify you are not a robot.");
-      setShowErrorPopup(true);
-      return;
-    }
     setSubmitting(true);
     try {
       const payload = {
@@ -154,7 +98,6 @@ function ContactForm() {
         subject: form.subject || 'New Inquiry',
         message: form.message,
         recipient: form.department,
-        recaptchaToken: recaptchaToken,
       };
       const response = await fetch("/api/send-contact-email", {
         method: "POST",
@@ -167,14 +110,6 @@ function ContactForm() {
       if (data.success) {
         setSubmitted(true);
         setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
-        setRecaptchaToken("");
-        setRecaptchaVerified(false);
-        setShowCaptchaVerifiedMsg(false);
-        setRecaptchaUserInteracted(false);
-        setShowRecaptcha(true);
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
-        }
         setTimeout(() => setSubmitted(false), 3000);
       } else {
         setError(data.error || "Failed to send message. Please try again.");
@@ -426,7 +361,7 @@ function ContactForm() {
                     <option value="sheereann.barnes@biositeph.com">Sales - VisMin</option>
                     <option value="irisclint.caro@biositeph.com">Technical Service - VisMin</option>
                     <option value="customerengagement@biositeph.com">Marketing - VisMin</option>
-                    
+                    <option value="mktg.creatives@biositeph.com">Mktg - VisMin</option>
                   </>
                 )}
               </select>
@@ -520,19 +455,6 @@ function ContactForm() {
             </div>
             <div className="flex flex-col items-center w-full">
               {/* Only render after mounted is true */}
-              {mounted && showRecaptcha && !recaptchaVerified && (
-                <div onClick={handleRecaptchaClick} style={{ width: '100%' }}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey="6LeM1lksAAAAAKZz5AEPqlGz3RUjWn_CWJi9Dvww"
-                    onChange={handleRecaptchaChange}
-                    onExpired={handleRecaptchaExpired}
-                    onErrored={handleRecaptchaExpired}
-                    theme="light"
-                  />
-                </div>
-              )}
-              {mounted && !showRecaptcha && recaptchaVerified && (
                 <motion.button
                   type="submit"
                   disabled={submitting}
@@ -543,7 +465,6 @@ function ContactForm() {
                 >
                   {submitting ? 'Sending...' : submitted ? 'Sent!' : 'Send Message'}
                 </motion.button>
-              )}
             </div>
           </form>
         </motion.div>

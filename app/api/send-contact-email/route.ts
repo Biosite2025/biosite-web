@@ -11,7 +11,7 @@ function isValidEmail(email: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, subject, message, recipient, recaptchaToken } = body;
+    const { name, email, phone, subject, message, recipient } = body;
 
     // Validate required fields
     if (!name || !email || !message || !recipient) {
@@ -26,17 +26,6 @@ export async function POST(request: NextRequest) {
         { success: false, error: 'Invalid recipient email selected' },
         { status: 400 }
       );
-    }
-
-    // Verify reCAPTCHA v2
-    if (!recaptchaToken) {
-      return NextResponse.json({ success: false, error: 'reCAPTCHA token missing' }, { status: 400 });
-    }
-    const secret = "6LeM1lksAAAAALsWu2A1BMmGB3B348iWrWuGJO01";
-    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
-    const recaptchaRes = await axios.post(verifyUrl);
-    if (!recaptchaRes.data.success) {
-      return NextResponse.json({ success: false, error: 'reCAPTCHA verification failed' }, { status: 400 });
     }
 
     // Create transporter
