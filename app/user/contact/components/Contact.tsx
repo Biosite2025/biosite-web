@@ -1,7 +1,7 @@
 "use client";
       import React, { useState, useEffect, useRef } from "react";
   import ReCAPTCHA from "react-google-recaptcha";
-      import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; 
 
 
 interface LocationData {
