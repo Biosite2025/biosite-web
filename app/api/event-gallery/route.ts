@@ -16,7 +16,7 @@ export async function GET() {
     // First, list all folders (prefixes) in events-gallery
     const foldersParams = {
       Bucket: 'biositeassets',
-      Prefix: 'events/events-gallery/',
+      Prefix: 'biosite-web/events/events-gallery/',
       Delimiter: '/',
     };
 

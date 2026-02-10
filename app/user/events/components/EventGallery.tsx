@@ -905,7 +905,7 @@ const EventGallery: React.FC = () => {
                     autoPlay
                     muted
                     className="absolute inset-0 w-full h-full object-cover rounded-xl lg:rounded-2xl cursor-pointer"
-                    poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_600,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
+                    poster="/assets/BMI_WhiteLogo.png"
                     style={{ background: 'rgba(43,57,144,0.2)', aspectRatio: '16/9' }}
                     onClick={() => handleVideoClick(offset)}
                     onDoubleClick={() => handleVideoDoubleClick(offset)}

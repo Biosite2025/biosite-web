@@ -16,7 +16,7 @@ export async function GET() {
     
     const params = {
       Bucket: 'biositeassets',
-      Prefix: 'events/events-showcase/',
+      Prefix: 'biosite-web/events/events-showcase/',
     };
 
     const data = await s3.listObjectsV2(params).promise();
