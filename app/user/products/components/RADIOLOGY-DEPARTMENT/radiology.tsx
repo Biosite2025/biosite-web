@@ -210,109 +210,109 @@ export default function RadiologyDepartment() {
 					{
 						id: 1,
 						name: 'Amulet Innovality',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Amulet-Innovality.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Amulet-Innovality.png',
 						description: 'AMULET Innovality- the result of Fujifilm’s ongoing “innovation” and commitment to providing top “quality” mammography services. The Innovality utilises Fujifilm’s unique a-Se direct conversion flat panel detector (FPD)* to produce clear images with a low X-ray dose. This system makes use of intelligent AEC (i-AEC) combined with a new image analysis technology to automatically optimize the X-ray dosage for each breast type. AMULET Innovality is a highly advanced mammography system which offers an extremely fast image interval of just 15 seconds. With this new system, Fujifilm furthers the provision of high quality examinations with superior image quality.'
 					},
 					{
 						id: 2,
 						name: 'FDR Smart X',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/FDR%20Smart%20X%20(2).png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/FDR%20Smart%20X%20(2).png',
 						description: 'FDR Smart X is Fujifilm’s newly developed X-ray system, providing multi-function, high-quality, cost-effective X-ray solutions.The Smart X offers ceiling suspended X-ray tube configurations as well as a floor mounted X-ray tube option for use with the upright stand and table, providing flexible solutions for your imaging department'
 					},
 					{
 						id: 3,
 						name: 'Supria 128',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/supria128.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/supria128.png',
 						description: 'Due to the advance of medical care, CT device needs to be optimizedfor patient care and accelerate clinical decision-making more than before. On the other hand, the economical benefit is also demandedon medical finances due to rapidly growing aging society. Supria128 has evolved in order to respond to the paradigm shiftin the medical field with employing latest technologies such as whole-body submillimeter high-speed imaging and dose reduction technologies, which have become the "Next Standard" for challenging various clinical demands.'
 					},
 					{
 						id: 4,
 						name: 'Acclarix AX8',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Acclarix%20AX8.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Acclarix%20AX8.png',
 						description: 'Powered by the latest SynSight zoon sonography platform, the AX8 offers extraordinary profitability in both imaging quality and automatic solutions, combined with its portable design and simplified workflow, make it ideal for critical care and emergency application. In particular, the smart cardiopulmonary assessment solution saves more time for critical scenarios.'
 					},
 					{
 						id: 5,
 						name: 'F9 Series Fetal & Maternal Monitor',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/F9%20Series%20Fetal%20&%20Maternal%20Monitor.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/F9%20Series%20Fetal%20&%20Maternal%20Monitor.png',
 						description: 'he F9 Express Fetal and Maternal Monitor utilizes a 12-crystal, 1.0 MHz waterproof transducer to produce a wider ultrasound beam with a more homogenous signal for advanced performance in all phases of the birthing process.'
 					},
 					{
 						id: 6,
 						name: 'F6 Fetal & Maternal Monitor',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/F6%20Fetal%20&%20Maternal%20Monitor.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/F6%20Fetal%20&%20Maternal%20Monitor.png',
 						description: 'The F6 Fetal Monitor features a foldable color TFT screen with four adjustable viewing angles, allowing better visibility and quick setup for efficient clinical use. It offers one-button operation, multiple thermal printing options, and built-in antepartum CTG analysis to support accurate fetal heart rate assessment and streamlined workflow for caregivers.'
 					},
 					{
 						id: 7,
 						name: 'EDAN Nano C5 EXP',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/EDAN%20Nano%20C5%20EXP.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/EDAN%20Nano%20C5%20EXP.png',
 						description: 'Experience the future of medical imaging with our handheld ultrasound solution. Its sleek and intuitive interface, coupled with state-of-the-art features, ensures efficient and accurate assessments across various clinical settings. From clinics to emergency response scenarios, our device revolutionizes point-of-care diagnostics, enabling informed decision-making and optimizing patient outcomes.'
 					},
 					{
 						id: 8,
 						name: 'SE-1200 Express',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/SE-1200%20Express.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/SE-1200%20Express.png',
 						description: 'This ECG system features an intuitive 8” high-resolution touchscreen, streamlined one-touch workflow, and advanced signal processing for accurate clinical performance, including real-time waveform review and automatic interpretation validated against international databases. It offers flexible printing, robust data storage and management, and extensive connectivity options, enabling seamless reporting, data exchange, and efficient clinical diagnostics.'
 					},
 					{
 						id: 9,
 						name: 'M50-1A',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/M50-IA.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/M50-IA.png',
 						description: 'The new generation M50-1A mobile DR is equipped with 100um large FPD and exposure visualization technology, which provides visualized patient positioning and remote exposure control in compartment. The M50-1A features an exquisite structural design that incorporates a narrow body and lightweight design, making it easy to manage different scenes in routine use, such as in general ward, ICU, or elevator.'
 					},
 					{
 						id: 10,
 						name: 'New Oriental 1000N1a Digital Radiography System',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/New%20Oriental%201000N1a%20Digital%20Radiography%20System.jpg',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/New%20Oriental%201000N1a%20Digital%20Radiography%20System.jpg',
 						description: 'NEW ORIENTAL 1000N1a FPD-DR is a combination of digital flat panel imaging and classical radiographic mechanical structure. The system fits for most common clinical applications of Radiography in both vertical and horizontal projections, as well as chest examinations, greatly enhance patient throughput Absolutely, your filmless workflow will be more convenient and faster than conventional radiographic process. Patients also benefit from low radiation and smooth-running procedures. In addition, the administration of your medical facility will appreciate NEW ORIENTAL 1000N1a’s streamlines cost-effective processes and high quality results. NEW ORIENTAL 1000N1a is DICOM 3.0 compliance that means you can benefit from all relevant DICOM services, including DICOM worklist, image storage, printing and other functions will significantly improve your workflow. '
 					},
 					{
 						id: 11,
 						name: 'Acclarix LX9',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Acclarix%20LX9%20(2).png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Acclarix%20LX9%20(2).png',
 						description: 'orn of a vision to deliver meaningful design innovations that benefit the user,  the Acclarix LX9 features a host of design breakthroughs that make day-to-day operation in general diagnostic environment easy, fast and intuitive.'
 					},
 					{
 						id: 12,
 						name: 'Acclarix AX3',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Acclarix%20AX3.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Acclarix%20AX3.png',
 						description: 'Alone with the unique dual – sockets inspiration in a 4.5kg lightweight magnesium alloy body, the remarkable  Acclarix AX3 Compact Ultrasound System delivers a surprising combination of features to meet the demands of point-of-care imaging. The Acclarix AX3 has been design from the relentless focus on delivering uncompromising performance at a cost-effect price to each sonographer. '
 					},
 					{
 						id: 13,
 						name: 'SE-301',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/SE-301.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/SE-301.png',
 						description: 'SE-301 is the new generation 3-channel ECG, which incorporates the benefits of the advanced technology and innovative design in an extremely compact and lightweight device. It is specifically developed for those who pursue superb portability without compromising on the quality for mobile environments. A variety of fantastic features are embodied in an amazing small body, making it more than just a 3-Channel ECG.'
 					},
 					{
 						id: 14,
 						name: 'TurboTom 3',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/TurboTom%203%20Datasheet.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/TurboTom%203%20Datasheet.png',
 						description: 'The TurboTom 3 CT scanner combines WDM’s patient-centered precision design with advanced IQI technology to deliver 32-row imaging that offers high-quality scans at lower radiation doses and reduced device consumption. Its intelligent workflow, versatile clinical functions, and responsive support enhance hospital efficiency and patient satisfaction, achieving both economic and clinical benefits.'
 					},
 					{
 						id: 15,
 						name: 'DM-2 Digital Mammary X-ray Machine',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/DM-2%20Digital%20Mammary%20X-ray%20Machine.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/DM-2%20Digital%20Mammary%20X-ray%20Machine.png',
 						description: 'The DM-2 Digital Mammary X-ray Machine features automatic positioning, intelligent AEC exposure control, and advanced image processing algorithms to deliver high-quality breast images with the lowest possible radiation dose. With a smart electric breast compressor, DICOM 3.0 compliance, and support for magnification imaging, it ensures comfortable, efficient, and accurate breast screening and diagnosis.'
 					},
 					{
 						id: 16,
 						name: 'Innovative Solution for Liver Diagnosis',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Innovative%20Solution%20for%20Liver%20Diagnosis.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Innovative%20Solution%20for%20Liver%20Diagnosis.png',
 						description: 'This system combines Transient Elastography with 2D imaging and optimized algorithms to deliver accurate liver stiffness measurement, ultrasound attenuation analysis, and tissue morphology assessment with real-time deep scanning over 200 mm. It features a 19″ high-resolution monitor, large data storage, multiple connectivity options, and a compact, clinic-ready design for reliable and efficient operation.'
 					},
 					{
 						id: 17,
 						name: 'Echelon Smart',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/Echolon%20Smart.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/Echolon%20Smart.png',
 						description: 'The ECHELON Smart features a small footprint and limited cost, without compromising diagnostic quality and speed. Based on our proprietary technology, this system has opened up the potential for 1.5T systems, providing superb image quality and superior install flexibility inherited from permanent-magnet MRI systems. ECHELON Smart offers new options for superconductive MRI.'
 					},
 					{
 						id: 18,
 						name: 'FDR GO PLUS',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/radiology/FDR%20GO%20PLUS%20(2).png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/radiology/FDR%20GO%20PLUS%20(2).png',
 						description: 'Fujifilm mobile imaging has been renewed for a more proficient mobile exam experience. Designed to provide sophisticated yet simple harmonized operation, the FDR Go® PLUS, together with Fujifilm trademark image quality and dose performance, offers exactly what you need everyday for your most challenging mobile exams.'
 					}
 				]

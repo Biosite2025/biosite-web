@@ -210,91 +210,91 @@ export default function HistopathologyChemicalsConsumables() {
 					{
 						id: 1,
 						name: 'Paraffin Wax',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Paraffin%20Wax.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/Paraffin%20Wax.png',
 						description: 'Designed for improved tissue section infiltration & embedding and supplied in convenient pearl shape'
 					},
 					{
 						id: 2,
 						name: 'Histoflo™ Embedding Cassettes',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Embedding%20Cassettes.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Embedding%20Cassettes.png',
 						description: 'Safe specimen, effective processing, smooth sectioning'
 					},
 					{
 						id: 3,
 						name: 'Histoflo™ Microscope Slides',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Microscope%20Slides.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Microscope%20Slides.png',
 						description: 'Great laser print outcome and long-term storage'
 					},
 					{
 						id: 4,
 						name: 'Histoflo™ Adhesion Microscope Slides',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Adhesion%20Microscope%20Slides.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Adhesion%20Microscope%20Slides.png',
 						description: 'Special coating to improve tissue adherence'
 					},
 					{
 						id: 5,
 						name: 'Histoflo™ Etching Microscope Slides',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Etching%20Microscope%20Slides.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/Histoflo%E2%84%A2%20Etching%20Microscope%20Slides.png',
 						description: 'Enhanced, extra dark printing outcome'
 					},
 					{
 					  id: 6,
 					  name: 'Reagent Alcohol',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/REAGENT%20ALCOHOL.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/REAGENT%20ALCOHOL.png',
 					  description: 'Reagent Alcohol is a balanced blend of ethanol, methanol, and isopropanol designed for efficient and gradual tissue dehydration. This combination ensures consistent water removal while minimizing tissue distortion and preserving cellular morphology.'
 					},	
 					{
 					  id: 7,
 					  name: 'Absolute Ethanol & Denatured Ethanol',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ABSOLUTE%20ETHANOL%20&%20DENATURED%20ETHANOL.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/ABSOLUTE%20ETHANOL%20&%20DENATURED%20ETHANOL.png',
 					  description: 'Absolute and denatured ethanol are commonly used dehydrating agents in histology and cytology to remove water from tissue specimens. They effectively prepare tissues for embedding or staining while maintaining cellular integrity for accurate microscopic evaluation.'
 					},
 					{
 					  id: 8,
 					  name: 'Isopropyl Alcohol',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ISOPROPYL%20ALCOHOL.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/ISOPROPYL%20ALCOHOL.png',
 					  description: 'Isopropyl Alcohol is a fast-acting dehydrating agent widely used to remove water from tissue samples during processing. Its reliable performance helps preserve cellular structure, ensuring high-quality results for embedding, staining, and diagnostic analysis.'
 					},
 					{
 					  id: 9,
 					  name: 'Methanol',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/METHANOL.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/METHANOL.png',
 					  description: 'Methanol is primarily used as a fixative rather than a dehydrating agent, especially for blood smears and cytological preparations. It rapidly preserves cellular components by preventing autolysis, maintaining detailed morphology for microscopic examination.'
 					},
 					{
 					  id: 10,
 					  name: 'Acetone',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ACETONE.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/ACETONE.png',
 					  description: 'Acetone is a powerful solvent used for rapid dehydration and fixation of tissue samples, particularly in final dehydration stages. Its protein-coagulating properties help preserve cellular structure and prevent degradation for accurate diagnostic analysis.'
 					},
 					{
 					  id: 11,
 					  name: 'Xylene',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/XYLENE.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/XYLENE.png',
 					  description: 'Xylene is a key clearing agent in histopathology, used to remove alcohol from tissues and prepare them for paraffin embedding. It ensures optimal penetration of embedding media while maintaining tissue structure for precise microscopic evaluation.'
 					},
 					{
 					  id: 12,
 					  name: 'Xylene Substitute',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/XYLENE%20SUBSTITUTE.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/XYLENE%20SUBSTITUTE.png',
 					  description: 'Xylene Substitute provides a safer, low-toxicity alternative to traditional xylene while delivering comparable clearing performance. It effectively removes alcohol during tissue processing while reducing health and environmental risks.'
 					},
 					{
 					  id: 13,
 					  name: 'Zitrus-Clear',
-					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/ZITRUS-CLEAR.png',
+					  image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/ZITRUS-CLEAR.png',
 					  description: 'Zitrus-Clear is a biodegradable, citrus-based clearing agent formulated with D-Limonene as an eco-friendly alternative to xylene. It delivers excellent solvency for deparaffinization and clearing while minimizing toxicity and environmental impact.'
 					},
 					{
 						id: 14,
 						name: 'Neutral Buffered Formalin, 10%',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
 						description: 'Natural Buffered Formalin 10% is a ready-to-use primary fixative containing 4% formaldehyde stabilized with methanol and buffered to pH 7.0. It preserves cellular architecture, proteins, and biomolecules, ensuring tissue stability for processing, examination, and long-term archival storage.'
 					},
 					{
 						id: 15,
 						name: 'Prefilled Neutral Buffered Formalin, 10%',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Chemicals-Consumables/PREFILLED%20NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Chemicals-Consumables/PREFILLED%20NEUTRAL%20BUFFERED%20FORMALIN,%2010%25.png',
 						description: 'Prefilled Neutral Buffered Formalin 10% is a ready-to-use primary fixative containing 4% formaldehyde stabilized with methanol and buffered to pH 7.0. It preserves cellular architecture, proteins, and other biomolecules, ensuring tissue stability for accurate examination, processing, and long-term archival storage.'
 					}
 				]

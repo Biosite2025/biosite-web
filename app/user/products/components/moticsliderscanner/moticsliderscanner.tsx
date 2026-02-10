@@ -204,25 +204,25 @@ export default function Centrifuges() {
 			{
 				id: 4,
 				name: 'MoticFlexScan 60',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticFlexScan%2060.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/moticslide/MoticFlexScan%2060.png',
 				description: 'The Motic FlexScan 60 is a high-throughput fluorescent slide scanner that can handle up to 60 slides with both brightfield and 3-color immunofluorescence imaging. It features real-time autofocus, LED illumination, barcoding, and high-resolution capture (around 0.52 μm/pixel at 20x), making it ideal for efficient digital pathology and research workflows.'
 			},
 			{
 				id: 2,
 				name: 'MoticEasyScan OneTwo',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20OneTwo.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/moticslide/MoticEasyScan%20OneTwo.png',
 				description: 'The Motic EasyScan One / Two are compact whole-slide digital pathology scanners designed for efficient, high-quality imaging. They offer 20x and 40x resolutions (≈ 0.52 μm/pixel at 20x; 0.26 μm/pixel at 40x), real-time autofocus, LED illumination, barcode support, and multiple scanning modes (including extended depth of field and Z-stack). The One model handles single slides; the Two supports dual slides. Ideal for labs, education, and telepathology workflows.'
 			},
 			{
 				id: 3,
 				name: 'MoticEasyScan Pro 6',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Pro%206.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/moticslide/MoticEasyScan%20Pro%206.jpg',
 				description: 'The Motic EasyScan Pro 6 is a high-throughput slide scanner for digital pathology, able to scan up to 6 glass slides at once with high resolution (20x, 40x, and optional 80x), LED illumination, and real-time autofocus. It supports multiple scanning modes (Standard, High Precision, EDF, Z-Stack), various output formats (SVS, DICOM, JPEG, TIFF), and includes built-in software for image capture, annotation, and remote viewing.'
 			},
 			{
 				id: 1,
 				name: 'MoticEasyScan Infinity 60',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/moticslide/MoticEasyScan%20Infinity%2060.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/moticslide/MoticEasyScan%20Infinity%2060.jpg',
 				description: 'The EasyScan Infinity-60 is a high-throughput slide scanner designed for lab and hospital use. It scans up to 60 slides at a time at 20x and 40x magnification, delivers high resolution (≈ 0.52 μm/pixel at 20x; 0.26 μm/pixel at 40x), supports real-time autofocus, extended depth of field (EDF), Z-stack scanning, and allows slides to be added “on the fly” without interrupting the scanning process.'
 			},
 		];

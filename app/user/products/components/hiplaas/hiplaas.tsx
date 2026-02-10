@@ -205,31 +205,31 @@ export default function Hiplaas() {
       {
         id: 1,
         name: 'EVO120 SFBT',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hiplaas/EVO120 SFBT.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO120 SFBT.png',
         description: 'The EVO120SFBT is an ideal Grossing Station Countertop with Sink for small laboratories. Its small size allows operators to save valuable space by resting on an existing worktop, but also useful in larger structures as an additional work surface.'
       },
       {
         id: 2,
         name: 'EVO150 FD',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hiplaas/EVO150 FD.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO150 FD.png',
         description: 'The EVO150FD is a Grossing Station Non Elevating 150cm Dualdraft provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
       },
       {
         id: 3,
         name: 'EVO150 ED',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hiplaas/EVO150 ED.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO150 ED.png',
         description: 'The EVO150ED grossing stations elevating 150cm dual draft imaging system provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
       },
       {
         id: 4,
         name: 'KC21',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hiplaas/KC21.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/KC21.png',
         description: 'The KC21 (morgue refrigeration small door two-body), ideal for the storage of bodies in funeral homes and morgues, has panels, floor and ceiling of are 10 cm in thickness, and manufactured in fire-retardant high density. HCFC free, polyurethane foam (min content 40/45 kg/m2), sandwiched on both sides by corrosion resistant white coated steel or stainless steel. Heavy-duty strengthened floor with internal anti-slip surface. Pre-formed internal corners as an integral part of the panels to provide an interior finish that is the most hygienic available.'
       },
       {
         id: 5,
         name: 'ATPTABLE-E300',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hiplaas/ATPTABLE-E300.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/ATPTABLE-E300.png',
         description: 'The ATPTABLE-E300 is a ventilated and elevating autopsy table designed by Mopec Europe. It features an AISI 304 stainless steel top and a central pedestal that houses a ventilation system to extract toxic fumes using a DOWN-DRAFT system.'
       },
     ];

@@ -205,7 +205,7 @@ export default function MedicalDiagnosticImaging() {
       {
         id: 1,
         name: 'X12 Patient Monitor',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/X12.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/X12.png',
         description: 'With its expandability of monitoring parameters the X12 series fulfills primary clinical requirements in various scenarios, including emergency rooms, general wards, rehabilitation departments, and cardiac units.'
       },
     ];

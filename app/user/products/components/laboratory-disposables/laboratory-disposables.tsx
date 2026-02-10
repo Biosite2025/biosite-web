@@ -195,73 +195,73 @@ export default function LaboratoryEquipements() {
       {
         id: 12,
         name: 'Vacuum Blood Tubes',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Vacuum-Blood-Tubes.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Vacuum-Blood-Tubes.png',
         description: 'Vacuum Blood Tubes are sterile glass or plastic test tubes with a colored rubber stopper creating a vacuum seal inside of the tube, facilitating the drawing of a predetermined volume of liquid. Contains additives designed to stabilize and preserve the specimen prior to analytical testing.'
       },
       {
         id: 4,
         name: 'Microscope Slides & Coverslip',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Microscope-Slides-&-Coverslip.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Microscope-Slides-&-Coverslip.png',
         description: 'Bruner Microscope Slides and Coverslips are available in plain and frosted glass that are made of high-quality optical glass for clear sample identification. The glass slides are light and thin with good light transmission, enables clear sample identification.'
       },
       {
         id: 11,
         name: 'URS-4SG & URS-10A',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/URS-4SG-&-URS-10A.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/URS-4SG-&-URS-10A.png',
         description: 'Bruner URS contains 100 pieces reagent strips for urinalysis. Individual results for each parameter to international increments. Professional quality accuracy suitable for doctors, surgeries, A&E and healthcare clinics.'
       },
       {
         id: 3,
         name: 'Filtered Tips',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Filtered-Tips.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Filtered-Tips.png',
         description: 'Bruner filtered tip guarantees the increased accuracy of pipetting and to prevent aerosol bypass during delivery of the samples. It is ideal for applications that are sensitive to trace and it helps to protect the danger of cross-contamination. Universal fit and compatible with most brand.'
       },
       {
         id: 9,
         name: 'Specimen Containers',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Specimen-Containers.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Specimen-Containers.png',
         description: 'Bruner Specimen Container are made of medical plastic which forms a closed collection and transportation of specimens providing clean and convenient testing. Available for stool, urine and sputum specimen containers.'
       },
       {
         id: 7,
         name: 'Pipette Tips',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Pipette-Tips.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Pipette-Tips.png',
         description: 'Pipette Tips are disposable, autoclavable attachments for the uptake and dispensing of liquids using a pipette. Micropipettes are used in a number of laboratories. A research/ diagnostic lab can use pipette tips to dispense liquids into a well plate for PCR assays.'
       },
       {
         id: 8,
         name: 'Sharps Container',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Sharps-Container.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Sharps-Container.png',
         description: 'Disposable Sharps Container help reduce the risk of infections from used needles and other sharps. It is made from rigid plastic and clearly labeled to warn for the hazardous waste inside the container. It comes with a variety of sizes and closure types.'
       },
       {
         id: 1,
         name: 'ABG Syringe',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/ABG-Syringe.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/ABG-Syringe.png',
         description: 'ABG Syringe is a sterile, single-use syringe designed for arterial blood gas sampling.'
       },
       {
         id: 2,
         name: 'Capillary ABG Sampler',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Capillary-ABG-Sampler.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Capillary-ABG-Sampler.png',
         description: 'Capillary ABG Sampler is a sterile device for capillary blood gas collection.'
       },
       {
         id: 5,
         name: 'PCR 8 Strips & Film',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/PCR-8-Strips-&-Film.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/PCR-8-Strips-&-Film.png',
         description: 'PCR 8 Strips & Film are disposable consumables for PCR sample preparation.'
       },
       {
         id: 6,
         name: 'PCR Plates',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/PCR-Plates.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/PCR-Plates.png',
         description: 'PCR Plates are disposable plates for PCR sample processing.'
       },
       {
         id: 10,
         name: 'Tournistrip',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/laboratory-disposables/Tournistrip.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/laboratory-disposables/Tournistrip.png',
         description: 'Asep Tournistrip looks and operates like a conventional tourniquet. Its unique design and construction means the tourniquet is truly single-use and it cannot be re-used.'
       },
     ];

@@ -204,43 +204,43 @@ export default function Hematology() {
 			{ 
 				id: 1, 
 				name: 'Dymind DF-55', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/dymind-df-55.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/dymind-df-55.png',
 				description: 'Fully automated hematology analyzer designed for routine blood testing, offering reliable CBC analysis with efficient throughput. BIOSITE PRODUCT CATALOG VERSION…'
 			},
 			{ 
 				id: 2, 
 				name: 'Genrui KT-60', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/genrui-kt-60.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/genrui-kt-60.png',
 				description: 'Compact semi-automatic biochemistry analyzer suitable for small to medium laboratories, providing accurate and cost-effective biochemical testing. BIOSITE PRODUCT CATALOG VERSION…'
 			},
 			{ 
 				id: 3, 
 				name: 'Z52', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/Z52.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/Z52.png',
 				description: 'Compact bench-top centrifuge designed for routine laboratory sample separation with stable performance and easy operation. BIOSITE PRODUCT CATALOG VERSION…'
 			},
 			{ 
 				id: 4, 
 				name: 'KT-8000', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/KT-8000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/KT-8000.png',
 				description: 'Fully automated biochemistry analyzer built for high-efficiency clinical laboratories, offering high throughput and precise biochemical analysis. BIOSITE PRODUCT CATALOG VERSION…'
 			},
 			{ 
 				id: 5, 
 				name: 'EXC 8010', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/EXC%208010.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/EXC%208010.png',
 				description: 'High-speed clinical centrifuge designed for blood banks and laboratories, suitable for continuous operation with reliable separation performance. BIOSITE PRODUCT CATALOG VERSION…'
 			},
 			{
 				id: 6,
 				name: 'DH-800',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/DH%20800.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/DH%20800.png',
 				description: 'The DH-800 is a high-performance hematology analyzer that delivers fast and accurate blood cell analysis with advanced technology. It supports comprehensive differential parameters, high-throughput testing, and efficient workflow, making it suitable for busy clinical laboratories'
 			},
 			{
 				id: 7,
 				name: 'DH-615',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/hematology/DH-615.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hematology/DH-615.png',
 				description: 'The DH-615 is an AI-powered hematology analyzer that provides accurate 6DIFF and RET results using advanced multi-system blood cell analysis and dual platelet methods. It supports automatic capillary sampling with barcode scanning for faster, more efficient testing and features a flexible design to meet various laboratory needs.'
 			}
 		];

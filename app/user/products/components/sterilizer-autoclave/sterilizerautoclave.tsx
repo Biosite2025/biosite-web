@@ -217,13 +217,13 @@ export default function SterilizerAutoclave() {
 					{
 						id: 1,
 						name: 'Horizontal Bench-top Autoclaves',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Haier/Horizontal%20Bench-top%20Autoclaves.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Haier/Horizontal%20Bench-top%20Autoclaves.png',
 						description: 'As a type of high pressure sterilizer, it takes steam as its sterilization medium which is fast, safe and economic .They are common used in scientific institutions or R&D institution to make the sterilization for wrapped or unwrapped instrument, fabric, utensils, culture medium, unsealed liquid, etc.'
 					},
 					{
 						id: 2,
 						name: 'Vertical Autoclave',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Haier/Vertical%20Autoclave.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Haier/Vertical%20Autoclave.png',
 						description: 'This upright automatic rapid sterilization unit uses high temperature saturated steam as the sterilization medium. Applicable to testing laboratories, laboratories, operating rooms, supply rooms, higher education, animal husbandry, disease control centers and other medical and biomedical research units, achieves rapid sterilization of instruments, dressings, rubber, liquids, glassware, bacteria and cell culture medium, wastes, etc.'
 					}
 				]
@@ -234,67 +234,67 @@ export default function SterilizerAutoclave() {
 					{
 						id: 1,
 						name: '2540EKA',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/2540EKA.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/2540EKA.png',
 						description: 'With extra fast and efficient drying cycles, the 2540EKA autoclave significantly increases your productivity. This model has the added benefit of a high efficiency air pump which allows closed door active drying. The 2540 EKA is built for perfect sterilization with improved drying of packs and pouches.'
 					},
 					{
 						id: 2,
 						name: '3870ELV-D',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/3870ELV-D.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/3870ELV-D.png',
 						description: 'High-capacity vertical autoclave with advanced vacuum system for efficient air removal. Features dual temperature sensors and comprehensive data logging capabilities.'
 					},
 					{
 						id: 3,
 						name: '3870MLV Vertical Top-Loading Autoclave',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/3870MLV%20Vertical%20Top-Loading%20Autoclave.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/3870MLV%20Vertical%20Top-Loading%20Autoclave.png',
 						description: 'Versatile top-loading vertical autoclave with large chamber capacity for sterilizing liquids, glassware, and laboratory equipment. Includes multiple cycle options and safety features.'
 					},
 					{
 						id: 4,
 						name: '5075ELV-D',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/5075ELV-D.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/5075ELV-D.png',
 						description: 'Large capacity vertical autoclave with enhanced vacuum system for superior sterilization performance. Ideal for high-volume laboratory and research applications.'
 					},
 					{
 						id: 5,
 						name: '5596 Laboratory Autoclave',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/5596%20Laboratory%20Autoclave.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/5596%20Laboratory%20Autoclave.png',
 						description: 'Advanced laboratory autoclave with large chamber volume and programmable cycles. Features automatic water filling, advanced diagnostics, and comprehensive safety systems.'
 					},
 					{
 						id: 6,
 						name: '66120 Laboratory Autoclave',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/66120%20Laboratory%20Autoclave.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/66120%20Laboratory%20Autoclave.png',
 						description: 'High-performance laboratory autoclave with extra-large chamber capacity for demanding sterilization requirements. Includes advanced cycle options and user-friendly touchscreen interface.'
 					},
 					{
 						id: 7,
 						name: '667/130 Laboratory Autoclave',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/6671130%20Laboratory%20Autoclave.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/6671130%20Laboratory%20Autoclave.png',
 						description: 'Premium laboratory autoclave with maximum chamber capacity for large-scale sterilization operations. Features state-of-the-art control systems and comprehensive documentation.'
 					},
 					{
 						id: 8,
 						name: 'D-Line EA and EKA',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/D-Line%20EA%20and%20EKA.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/D-Line%20EA%20and%20EKA.png',
 						description: 'The D-Line EA and EKA Class S autoclaves feature chamber volumes from 28.5 to 85 liters and use dynamic pulsed air removal for uniform temperature distribution. They include an advanced multi-color display control system, allow cycle data download via USB, and have a user-friendly, self-locking door with a double safety locking mechanism for easy and secure one-hand operation.'
 					},
 					{
 						id: 9,
 						name: 'EA and EKA Series',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/EA%20and%20EKA.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/EA%20and%20EKA.png',
 						description: 'With extra fast and efficient drying cycles, the EA and EKA autoclaves significantly increase your productivity. These two models have the added benefit of a high efficiency air pump which allows closed door active drying. The EKA model has an additional quick cycle which significantly decreases sterilization cycle time, saving you time and optimizing results. The EA and EKA are built for improved sterilization with the ability to dry packs and pouches.'
 					},
 					{
 						id: 10,
 						name: 'ELV D-Line Series',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/ELV%20-%20D%20Line.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/ELV%20-%20D%20Line.png',
 						description: 'Advanced ELV D-Line autoclaves with superior vacuum technology for optimal sterilization results. Includes automated features and comprehensive cycle monitoring.'
 					},
 					{
 						id: 11,
 						name: 'Low Temperature Sterilizers',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/Low%20Temperature%20Sterilizers.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/Low%20Temperature%20Sterilizers.png',
 						description: 'Innovative low-temperature sterilization systems for heat-sensitive instruments and equipment. Utilizes hydrogen peroxide vapor for effective sterilization without thermal damage.'
 					}
 ,
@@ -302,25 +302,25 @@ export default function SterilizerAutoclave() {
 					{
 						id: 12,
 						name: 'T-Top Medical Autoclaves',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Top%20Medical%20Autoclaves.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/T-Top%20Medical%20Autoclaves.png',
 						description: 'T-Top is a family of tabletop autoclaves designed specifically for medical and dental clinics in small to medium-size practices. Developed with simplicity, efficiency, and cost-effectiveness in mind, T-Top devices address the core sterilization needs of everyday clinical workflows, helping increase productivity and streamline routine operations.'
 					},
 					{
 						id: 13,
 						name: 'T-Lab Eco',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Lab%20Eco.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/T-Lab%20Eco.png',
 						description: 'Eco-friendly T-Lab Eco autoclave designed for energy efficiency and high performance in laboratory sterilization.'
 					},
 					{
 						id: 14,
 						name: 'T-Edge Autoclaves',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/T-Edge%20Autoclaves.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/T-Edge%20Autoclaves.png',
 						description: 'Get peace of mind with T-Edge autoclaves. The T-Edge 10 and T-Edge 11 are space-saving tabletop autoclaves that give you high speed Class B performance saving you time so you can assist your patients, while meeting current international standards and regulatory requirements to protect your staff and patients.'
 					},
                     {
                         id: 15,
                         name: 'M and MK Autoclaves',
-                        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/sterilizer-autoclave/Tuttnauer/M%20and%20MK%20Autoclaves.png',
+                        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/sterilizer-autoclave/Tuttnauer/M%20and%20MK%20Autoclaves.png',
                         description: 'The Semi-Automatic Autoclave is an affordable sterilizer for private clinics that do not want to compromise on quality, safety and reliability. Tuttnauer semi-automatic autoclaves are an effortless Plug andx Play solution. After installation, the sterilizer is virtually maintenance free with low running costs.'
                     },
 					

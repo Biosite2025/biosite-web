@@ -205,61 +205,61 @@ export default function MedicalDiagnosticImaging() {
       {
         id: 1,
         name: 'Acclarix LX9',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix LX9.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Acclarix LX9.png',
         description: 'New generation of capability and flexibility integrated with compact appearance, cutting-edge technology and intelligent workflow. Its excellent image performance plays an important role in the prevention and early detection in primary medical care, enriching the diagnostic application and enhancing the clinical value.'
       },
       {
         id: 2,
         name: 'Acclarix AX8',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX8.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Acclarix-AX8.png',
         description: 'The Edan Acclarix AX8 is a portable, high-performance ultrasound system with dual touchscreens, advanced imaging technologies, and a full suite of transducers for versatile clinical use.'
       },
       {
         id: 3,
         name: 'Acclarix AX9',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Acclarix-AX9.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Acclarix-AX9.png',
         description: 'The Edan Acclarix AX9 is a portable ultrasound system based on the SynSight platform, offering high image clarity, smart automation tools (Auto EF, Auto B-Line, Auto IVC, etc.), and continuous scanning capability with built-in battery power. Designed for flexibility, ergonomic handling, and reliable performance in clinical settings.'
       },
       {
         id: 4,
         name: 'Nano C5 & L15',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Nano%20C5%20&%20L15.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Nano%20C5%20&%20L15.png',
         description: 'A high-performance portable ultrasound probe set designed for superior imaging in both deep and superficial applications. The Nano C5 provides excellent penetration for abdominal, obstetric, and general imaging, while the L15 delivers high resolution for vascular, small parts, and musculoskeletal work. Both feature SynSight zone sonography platform with ergonomic design, fast connectivity (wired / wireless), and rugged build for point-of-care use.'
       },
       {
         id: 5,
         name: 'FCT iStream 128',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FCT%20iStream%20128.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/FCT%20iStream%20128.png',
         description: 'The Fujifilm FCT iStream 128 is a high-performance CT scanner that delivers fast, high-quality imaging with advanced dose reduction, metal artifact reduction, and automated workflow for efficient, safe diagnostics.'
       },
       {
         id: 6,
         name: 'Amulet Innovality',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Amulet%20Innovality.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Amulet%20Innovality.png',
         description: 'AMULET Innovality – the result of Fujifilm\'s ongoing "innovation" and commercial breakthroughs providing top "quality" mammography services. The Innovality utilises Fujifilm\'s unique and direct conversion panel detector (FPD)" to produce clear images with a low X-ray dose. This system makes use of intelligent AEC (i-AEC) combined with a image analysis technology to automatically adjust the X-ray dosage for each breast type.'
       },
       {
         id: 7,
         name: 'FDR Nano',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Nano.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/FDR%20Nano.png',
         description: 'Operation panel and hand switch which are frequently touched for radiography are coated with "Hydro Ag" which has an antibacterial effect 100 times greater than that of conventional Ag coating. The long-lasting greater antibacterial effect prevents bacterial growth. AI hyper-hydro-philic binder allows for an easy-to-clean unit and hygienic use.'
       },
       {
         id: 8,
         name: 'FDR Go Plus',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Go%20Plus.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/FDR%20Go%20Plus.png',
         description: 'Fujifilm\'s FDR Go PLUS redefines mobile imaging with improved mobility workflow and Image Quality. Building on Fujifilm\'s advanced image quality and dose performance, the FDR Go PLUS provides sophisticated yet simple harmonized mobile operation.'
       },
       {
         id: 9,
         name: 'FDR Smart X',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/FDR%20Smart%20X.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/FDR%20Smart%20X.png',
         description: 'The Smart X offers ceiling suspended X-ray tube computer tions as well as an R floor mounted X-ray tube option for use with the upright stand and table, providing flexible solutions for your imaging department.'
       },
       {
         id: 10,
         name: 'Arietta 850',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/Arietta%20850.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/Arietta%20850.png',
         description: 'The Fujifilm ARIETTA 850 SE is a premium diagnostic ultrasound platform featuring the advanced Pure Symphonic Architecture, which delivers exceptional image quality and responsiveness. It offers seamless workflow with ergonomic design, a wide range of clinical applications including sonography, fetal 3D imaging, and Real-time Virtual Sonography (RVS). With eFocusing technology, it ensures high definition imaging from near to far fields.'
       },
       

@@ -205,85 +205,85 @@ export default function SurgicalDisposables() {
 			{
 				id: 1,
 				name: 'Disposable Endo Cutter Stapler and Cartridge (KUN Type)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge%20KUN%20Type.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge%20KUN%20Type.png',
 				description: 'Disposable endoscopic cutter stapler with reliable cartridge for minimally invasive surgical procedures.'
 			},
 			{
 				id: 2,
 				name: 'Disposable Endo Cutter Stapler and Cartridge (QIAN Type)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge-QIAN%20type.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Endo%20Cutter%20Stapler%20and%20Cartridge-QIAN%20type.png',
 				description: 'Advanced endoscopic cutter stapler designed for precision and consistent performance in laparoscopic surgery.'
 			},
 			{
 				id: 3,
 				name: 'Disposable Prolapse Hemorrhoids Stapler (PPH)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(PPH).png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(PPH).png',
 				description: 'PPH stapler for hemorrhoidectomy procedures with complete accessories for optimal results.'
 			},
 			{
 				id: 4,
 				name: 'Disposable Prolapse Hemorrhoids Stapler (TST)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(TST).png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Prolapse%20Hemorrhoids%20Stapler%20and%20Accessories%20(TST).png',
 				description: 'TST stapler system for transanal stapling technique in hemorrhoid treatment.'
 			},
 			{
 				id: 5,
 				name: 'Disposable Circular Stapler',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Circular%20Stapler.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Circular%20Stapler.png',
 				description: 'Circular stapler for end-to-end, end-to-side, and side-to-side anastomoses in gastrointestinal surgery.'
 			},
 			{
 				id: 6,
 				name: 'Disposable Linear Cutter Stapler and Cartridge',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Linear%20Cutter%20Stapler%20and%20Cartridge.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Linear%20Cutter%20Stapler%20and%20Cartridge.png',
 				description: 'Linear cutter stapler for transection and simultaneous stapling in thoracic and abdominal procedures.'
 			},
 			{
 				id: 7,
 				name: 'Disposable Linear Stapler and Cartridge',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Linear%20Stapler%20and%20Cartridge.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Linear%20Stapler%20and%20Cartridge.png',
 				description: 'Linear stapler for tissue approximation and hemostasis in various surgical applications.'
 			},
 			{
 				id: 8,
 				name: 'Disposable Curved Cutter Stapler and Cartridge',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Curved%20Cutter%20Stapler%20and%20Cartridge.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Curved%20Cutter%20Stapler%20and%20Cartridge.png',
 				description: 'Curved cutter stapler for enhanced access in confined surgical spaces and difficult-to-reach areas.'
 			},
 			{
 				id: 9,
 				name: 'Disposable Laparoscopic Trocar',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Laparoscopic%20Trocar.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Laparoscopic%20Trocar.png',
 				description: 'Laparoscopic trocar system for safe and efficient access in minimally invasive procedures.'
 			},
 			{
 				id: 10,
 				name: 'Disposable Wound Protector',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Wound%20Protector.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Wound%20Protector.png',
 				description: 'Surgical wound protector to minimize contamination and protect incision sites during procedures.'
 			},
 			{
 				id: 11,
 				name: 'Disposable Endo Bag',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Endo%20Bag.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Endo%20Bag.png',
 				description: 'Endoscopic specimen retrieval bag for safe removal of tissue and organs during laparoscopic surgery.'
 			},
 			{
 				id: 12,
 				name: 'Disposable Skin Stapler',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Skin%20Stapler.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Skin%20Stapler.png',
 				description: 'Skin stapler for fast and reliable wound closure with consistent staple formation.'
 			},
 			{
 				id: 13,
 				name: 'Disposable Purse String Stapler',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Purse%20String%20Stapler.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Purse%20String%20Stapler.png',
 				description: 'Purse string stapler for creating secure circular anastomoses in gastrointestinal procedures.'
 			},
 			{
 				id: 14,
 				name: 'Disposable Circumcision Stapler',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/surgical/Disposable%20Circumcision%20Stapler.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical/Disposable%20Circumcision%20Stapler.png',
 				description: 'Circumcision stapler for safe, efficient, and minimally invasive circumcision procedures.'
 			},
 		];

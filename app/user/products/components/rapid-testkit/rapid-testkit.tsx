@@ -206,61 +206,61 @@ export default function MolecularDiagnostics() {
 			{
 				id: 1,
 				name: 'Troponin I Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Troponin%20I%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Troponin%20I%20Rapid%20Test.png',
 				description: 'Cardiac Troponin I is a protein found in cardiac muscle. Troponin I is part of a three sub unit complex comprised of Troponin T and Troponin C. After cardiac injury, Troponin I is released into the blood 4-6 hrs after the onset of pain.'
 			},
 			{
 				id: 2,
 				name: 'HIV Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HIV%20Rapid%20Test.png ',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/HIV%20Rapid%20Test.png ',
 				description: 'ACON HIV Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of antibodies to HIV-1, including subtype O and HIV-2 simultaneously in serum, plasma or whole blood.'
 			},
 			{
 				id: 3,
 				name: 'HCV Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HCV%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/HCV%20Rapid%20Test.png',
 				description: 'ACON HCV Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of antibodies to Hepatitis C Virus (HCV) in serum, plasma or whole blood.'
 			},
 			{
 				id: 4,
 				name: 'Malaria Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Malaria%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Malaria%20Rapid%20Test.png',
 				description: 'ACON HCV Rapid Test is a rapid test chromatographic immunoassay for the qualitative and differential detection of Histidine-Rich Protein II (HRP-II) specific to (Pf) and (pLDH) specific (Pan) in whole blood.'
 			},
 			{
 				id: 5,
 				name: 'hCG Pregnancy',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/hCG%20Pregnancy.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/hCG%20Pregnancy.png',
 				description: 'ACON hCG Pregnancy Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of human chorionic gonadotropin in urine or serum to aid in the early detection of pregnancy.'
 			},
 			{
 				id: 6,
 				name: 'HBsAg Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/HBsAg%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/HBsAg%20Rapid%20Test.png',
 				description: 'ACON HBsAg Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of Hepatitis B Surface Antigen (HBsAg) in serum, plasma or whole blood.'
 			},
 			{
 				id: 7,
 				name: 'SARS CoV-2 Antigen Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SARS-CoV-2-Antigen-Rapid-Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/SARS-CoV-2-Antigen-Rapid-Test.png',
 				description: 'Is a lateral flow chromatographic immunoassay for the qualitative detection the nucleocapsid protein antigen from SARS-CoV-2 in nasal swab specimens directly from individuals who are suspected with COVID-19. Can also test specimens from asymptomatic people.'
 			},
 			{
 				id: 8,
 				name: 'Syphilis Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Syphilis%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Syphilis%20Rapid%20Test.png',
 				description: 'ACON Syphilis Rapid Test is a rapid chromatographic immunoassay for the qualitative detection of antibodies (IgG and IgM) to Treponema Pallidum (TP) in serum, plasma or whole blood to aid in the diagnosis of Syphilis.'
 			},
 			{
 				id: 9,
 				name: 'FOB Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/FOB%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/FOB%20Rapid%20Test.png',
 				description: 'ACON Fecal Occult Blood (FOB) Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection of human fecal occult blood in feces.'
 			},
 			{
 				id: 10,
 				name: 'H. pylori Rapid Test',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/H.%20pylori%20Rapid%20Test.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/H.%20pylori%20Rapid%20Test.png',
 				description: 'ACON H. pylori Rapid Test is a rapid test chromatographic immunoassay for the qualitative detection H. pylori antigens in human feces specimens.'
 			},
 		];
@@ -271,37 +271,37 @@ export default function MolecularDiagnostics() {
 			{
 				id: 2,
 				name: 'SYPHICHECK',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/SYPHICHECK.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/SYPHICHECK.png',
 				description: 'Syphicheck WB is a rapid test for Syphilis (TPHA) in serum or plasma using a dipstick format.'
 			},
 			{
 				id: 3,
 				name: 'DENGUCHECK',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/DENGUCHECK.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/DENGUCHECK.png',
 				description: 'DENGUCHECK is a rapid diagnostic test for the detection of dengue virus antigens and antibodies.'
 			},
 			{
 				id: 4,
 				name: 'Rhelax-ASO',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-ASO.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Rhelax-ASO.png',
 				description: 'Rhelax-ASO slide test for detection of antibodies to streptolysin O is based on the principle of agglutination.'
 			},
 			{
 				id: 5,
 				name: 'Rhelax-CRP',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-CRP.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Rhelax-CRP.png',
 				description: 'Rhelax-CRP is a latex agglutination slide test for detection of C-Reactive Protein.'
 			},
 			{
 				id: 6,
 				name: 'Rhelax-RF',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Rhelax-RF.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Rhelax-RF.png',
 				description: 'Rhelax-RF is a latex agglutination slide test for detection of rheumatoid factors of the IgM class.'
 			},
 			{
 				id: 7,
 				name: 'Virdict 4',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/rapid-test-kits/Virdict4-new.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/rapid-test-kits/Virdict4-new.jpg',
 				description: 'The Virdict 4 is a rapid immunochromatographic test kit for simultaneous detection of HIV 1/2 antibodies, HCV antibodies, Syphilis antibodies, and HBsAg in human serum or plasma. It delivers 100% sensitivity for HIV, HCV, HBsAg, and Syphilis (specificity >95% for Syphilis), with ready-to-use individually pouched test devices. Each device contains antigen-colloidal gold conjugates for the respective markers and control regions for validation. The test takes 30 minutes and is stable at 4–30°C for 24 months. The kit includes test devices, sample droppers, and diluent buffer, available in packs of 25 or 50 tests.'
 			}
 		];

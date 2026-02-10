@@ -210,91 +210,91 @@ export default function OperatingDeliveryRoom() {
 					{
 						id: 1,
 						name: '700-700ELED Surgical Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/700-700ELED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/700-700ELED.png',
 						description: 'The 700/700 LED shadowless operating lamp features adjustable color temperature from 3800K to 5000K with a high color rendering index of 93, allowing surgeons to optimize tissue contrast and resolution for different surgical sites. It also includes a one-key low-light mode for endoscopic procedures, enabling quick adjustments without obstructing the surgeon’s view.'
 					},
 					{
 						id: 2,
 						name: '700ELED Surgical Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/700ELED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/700ELED.png',
 						description: 'The 700/500 LED shadowless operating lamp offers adjustable color temperature from 3800K to 5000K with a high color rendering index of 95, allowing surgeons to optimize tissue contrast and resolution for different surgical sites. It also features a one-key low-light mode for endoscopic procedures, enabling quick switching without obstructing the surgeon’s view.'
 					},
 					{
 						id: 3,
 						name: 'HF-FS LED Examination Lamp',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HF-FS%20LED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/HF-FS%20LED.png',
 						description: 'The HF-FS LED examination lamp is a versatile lighting solution for medical, industrial, and scientific applications, designed for use during patient examinations or minor procedures. It features a spring-loaded, articulated 105 cm arm with an on/off switch and built-in electronic transformer, a soft gooseneck lamp head for easy positioning, and a stable base for mobility and convenience.'
 					},
 					{
 						id: 4,
 						name: 'HFEOT99 Electric Operating Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HFEOT99.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/HFEOT99.png',
 						description: 'The HFEOT99 electric operating table features an extra-wide tabletop with long horizontal sliding, suitable for X-ray and C-arm procedures, and a built-in kidney bridge for surgical convenience. It offers smooth, flexible adjustments via a micro touch remote, high automation, low noise, and reliable performance with key imported components, making it an ideal choice for various surgical departments.'
 					},
 					{
 						id: 5,
 						name: 'HFMPB06C Hydraulic Operating Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/HFMPB06C.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/HFMPB06C.png',
 						description: 'The HFMPB06C is a hydraulic operating table designed for gynecology and obstetrics, featuring a fully adjustable mattress available in various colors. It includes a German-made gas spring to control the back plate, providing smooth and precise positioning for patient comfort and surgical efficiency.'
 					},
 					{
 						id: 6,
 						name: 'EK-410 Electrosurgical Unit',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/EK-410.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/EK-410.png',
 						description: 'This electrosurgical unit delivers a maximum output power of 400 W in cut mode and supports monopolar, bipolar, and vessel-sealing functions, with multiple device modes and 50 data memory slots. It features voice alerts, adjustable volume, an LCD and seven-segment display with date and clock, multilingual support, electrical safety compliance (CE, EN 60601 series), foot switch alarm, high-temperature and internal parameter control, and weighs 18 kg (net) with packaging dimensions of 470 × 610 × 420 mm.'
 					},
 					{
 						id: 7,
 						name: 'Novela Surgical Suction Unit',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/NOVELA%20EXTRACTOR.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/NOVELA%20EXTRACTOR.png',
 						description: 'Surgical suction units are designed to remove unwanted fluids, secretions, and particles from the body, aiding in treatment and disease prevention by collecting them in a jar. They feature fast aspiration, stable vacuum performance, adjustable and monitorable vacuum levels, oil-free pumps for easy maintenance, and simple cleaning, making them suitable for operating rooms, ICUs, emergency rooms, dental clinics, and other surgical settings, with CE certification and compliance with ISO 10079-1 and EN 60601 standards.'
 					},
 					{
 						id: 8,
 						name: 'Liquid Soap Dispenser Elbow Control',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20ELBOW%20CONTROL.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20ELBOW%20CONTROL.png',
 						description: 'You can adjust the amount of soap according to your needs in this product, which can be controlled with the elbow.'
 					},
 					{
 						id: 9,
 						name: 'OM-6N Operating Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/OPERATING%20TABLE.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20TABLE.png',
 						description: 'The OM-6N operating table is designed for surgical procedures, featuring a durable polyurethane pillow and a wireless controller for adjusting height, backrest, Trendelenburg/reverse Trendelenburg, side tilt, and horizontal slide. Its X-ray transparent top plate, T-shaped base with 300 cm sliding function, and integrated guides provide high-quality imaging, easy equipment access, and optimal visibility for a comfortable and efficient surgical workflow.'
 					},
 					{
 						id: 10,
 						name: 'JM-4F Delivery Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/DELIVERY%20TABLE.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/DELIVERY%20TABLE.png',
 						description: 'The roll cover dispenser positioned at the back is placed in order to meet patient comfort and hygiene requirements. The waste collection system integrated under the sitting area, support hygiene conditions. The knee support section is made of polyurethane material and can rotate 360 degrees around its own axis and is fixed at the desired angle.The lifting capacity of the table is 180kg and there are 4 different color options.'
 					},
 					{
 						id: 11,
 						name: 'DL-62CM Operating Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/OPERATING%20LIGHT.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20LIGHT.png',
 						description: 'During the operation, the camera located in the center of the light transfers the image to the monitor and allows other people to watch the operation. The camera attached to the light head is commanded via the control panel. The monitor, which is mounted on the lamp arm, has the ability to move and make positioning. LED technology does not cause temperature increase in both the surgical area and the surgeon head. The life of the led bulbs used in these light heads, which can produce 160,000 lux and 120,000 lux power, is 60,000 hours. There are 68 LEDs in the main head part and 28 LEDs in the satellite head part.'
 					},
 					{
 						id: 12,
 						name: 'DL-2MB Mobile Operating Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/MOBILE%20OPERATING%20LIGHT.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/MOBILE%20OPERATING%20LIGHT.png',
 						description: 'This model with 28 LED bulbs is 44 cm wide and has 120,000 lux power. All functions can be accessed thanks to the LCD touch screen placed on the edge of the hood. The panel on the base shows in which mode the device is operating and the power of the battery in 4 steps. The lamp has 4 wheels, 2 of which have brakes.'
 					},
 					{
 						id: 13,
 						name: 'Scrub Sink Double 80700',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/SCRUB%20SINK%20DOUBLE.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/SCRUB%20SINK%20DOUBLE.png',
 						description: 'It has a photocell display screen on which the temperature and duration of the water flowing from each battery are monitored alternately.  It has a rounded concave corner in accordance with international hygienic norms, taking to consideration the usage areas and user requests. It provides ease of use with the water flow controlled by the panel and the soap flow controlled by the knee panel.  It has an internal thermostatic valve that allows the water temperature to be adjusted according to the user request.'
 					},
 					{
 						id: 14,
 						name: 'Brush Holder 20 Capacity',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/BRUSH%20HOLDER%2020%20CAPACITY%20(2).png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/BRUSH%20HOLDER%2020%20CAPACITY%20(2).png',
 						description: 'This product, which has the capacity to take 20 brushes, is made of stainless steel and can be sterilized. Thanks to the glass cover, the amount of brush remaining inside can be seen.'
 					},
 					{
 						id: 15,
 						name: 'Liquid Soap Dispenser Foot Pump',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20FOOT%20PUMP.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20FOOT%20PUMP.png',
 						description: 'It is designed to control the soap flow with a foot pump. The soap tank is 1 liter.'
 					}
 				]

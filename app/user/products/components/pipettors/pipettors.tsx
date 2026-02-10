@@ -206,19 +206,19 @@ export default function OREquipments() {
 			{
 				id: 4,
 				name: 'Micropette Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus.png',
 				description: 'Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.'
 			},
 			{
 				id: 5,
 				name: 'Micropette Plus 2',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus2.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus2.png',
 				description: 'Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.'
 			},
 			{
 				id: 6,
 				name: 'Micropette Plus 3',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/pipettors/micropette-plus3.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus3.png',
 				description: 'Micropette Plus 3: Advanced pipettor for demanding laboratory applications.'
 			},
 		];

@@ -214,13 +214,13 @@ export default function HBA1CHPLC() {
 				{
 					id: 1,
 					name: 'TOSOH HLC-723 G11',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20G11.png',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20G11.png',
 					description: 'The Tosoh HLC-723G11 features fast start-up and daily checks, with analyzing routines completed in seconds. It delivers high-resolution chromatograms and results in as little as 30 seconds in standard mode or 60 seconds in variant mode. Simple operation with one-button analysis makes it ideal for efficient HbA1c testing.'
 				},
 				{
 					id: 2,
 					name: 'TOSOH HLC-723 GX',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20GX.png',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/HBA1C%20-%20HPLC/TOSOH%20HLC-723%20GX.png',
 					description: 'The Tosoh HLC-723GX offers stable HbA1c results with variant detection in just 2.2 minutes and first results in 6.6 minutes. It is designed for low-volume HbA1c testing and incorporates all the qualities of Tosoh’s best-in-class analyzers. Reliable and efficient, it is ideal for routine glycohemoglobin analysis.'
 				},
 			],

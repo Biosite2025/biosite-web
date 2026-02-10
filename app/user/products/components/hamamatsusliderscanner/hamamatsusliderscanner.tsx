@@ -212,31 +212,31 @@ export default function HamamatsuSlideScanner() {
 				{
 					id: 1,
 					name: 'NanoZoomer S360 Digital slide scanner',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20S360%20Digital%20slide%20scanner.jpg',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20S360%20Digital%20slide%20scanner.jpg',
 					description: 'High throughput model with exceptional scanning speed. Up to 360 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
 				},
 				{
 					id: 2,
 					name: 'NanoZoomer® S20 Digital slide scanner',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%C2%AE%20S20%20Digital%20slide%20scanner.jpg',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%C2%AE%20S20%20Digital%20slide%20scanner.jpg',
 					description: 'Benchtop model with exceptional performance. Up to 20 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
 				},
 				{
 					id: 3,
 					name: 'NanoZoomer - SQ',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20-%20SQ.png',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20-%20SQ.png',
 					description: 'Compact, affordable, and easy to operate model. Up to a 1”x3” (26 mm x 76 mm) slide.'
 				},
 				{
 					id: 4,
 					name: 'NanoZoomer S60',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S60.png',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S60.png',
 					description: 'Versatile model for both BF and FL capability. Up to 30 2”x3” (52 mm x 76 mm) slides or up to 60 1”x3” (26 mm x 76 mm) slides.'
 				},
 				{
 					id: 5,
 					name: 'NanoZoomer S210',
-					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S210.png',
+					image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/Hamamatsu%20Slide%20Scanner/NanoZoomer%20%20S210.png',
 					description: 'Standard model with a low cost of ownership. Up to 210 1”x3” (26 mm x 76 mm) slides automatically in one batch.'
 				},
 			],

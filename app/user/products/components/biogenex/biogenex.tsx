@@ -204,13 +204,13 @@ export default function Biogenex() {
 			{ 
 				id: 1, 
 				name: 'NanoVIP', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-nanovip.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/biogenex/biogenex-nanovip.png',
 				description: 'NanoVIP® diverse, fully automated barcoded systems for fluorescence in situ hybridization (FISH), in situ hybridization (ISH), miRNA ISH, and IHC. Its reliable automation combined with ex ACT® temperature modules, predefined protocols, and liquid level sensors for accurate liquid handling ensures robust and reproducible results.'
 			},
 			{ 
 				id: 2, 
 				name: 'Xmatrx Elite', 
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/biogenex/biogenex-xmatrx-elite.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/biogenex/biogenex-xmatrx-elite.png',
 				description: 'The Xmatrx® ELITE is an All-in-One and All-at-Once fully automated system that provides an adaptable workflow solution for efficiency, productivity, and profitability. Features include: High throughput up to 100 slides per day, 60 slides in eight hour shift and 40 slides in a delayed overnight run. Multi slide processing options: Random access, STAT, and Continuous mode for interrupted runs. More than 600+ optimized, pre-loaded factory protocols and ability to include user-defined protocols. Simultaneous operation of 40 different protocols in a single run. LIMS-enabled data tracking and management. Accurate reagent tracking for inventory management.'
 			}
 		];

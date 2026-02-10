@@ -205,7 +205,7 @@ export default function GastroEndo() {
       {
         id: 1,
         name: 'C6 HD / C6A HD',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/medical-equipments/C6 HD&C6A HD.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/medical-equipments/C6 HD&C6A HD.png',
         description: 'The Edan C6A / C6AHD Video Colposcope provides high-definition cervical imaging with an LED cold light system, rapid auto-focusing, and magnification ranging from 1× to 36×. It features an electronic green filter for enhanced vascular visibility, built-in timers for acetic acid/iodine tests, and supports image capture, reporting, and DICOM compatibility.'
       },
       ];

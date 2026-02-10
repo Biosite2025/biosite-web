@@ -506,43 +506,43 @@ export default function Immunology() {
 			{
 				id: 4,
 				name: 'Tosoh AIA-360',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-360.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-360.png',
 				description: "The Tosoh AIA-360's size and affordability make it an excellent fit for POLs and small hospitals, as well as for specialty testing or for use as a back-up analyzer."
 			},
 			{
 				id: 5,
 				name: 'Tosoh AIA-900',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/tosoh-aia-900.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-900.png',
 				description: "Tosoh Bioscience's AIA-900 is the new generation stand alone, flexible and fully scalable high throughput immunoassay analyzer."
 			},
 			{
 				id: 6,
 				name: 'Tosoh AIA-2000',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-2000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-2000.png',
 				description: "AIA-2000 is a fully automated immunoassay analyzer has become the new global standard for speed and reliability amongst fully featured immunoassay analyzers. Equipped with a complete line of test menu, the user can load up to 960 tests (48 trays x 20 tests) in a new, easy-to-load hybrid sort; increasing walkaway time to approximately 4 hours."
 			},
 			{
 				id: 7,
 				name: 'Tosoh AIA-CL300',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/AIA-CL300.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-CL300.png',
 				description: "AIA-CL300 utilises the unique CL-AIA Pack twin cup format. With a throughput of up to 30 results per hour, first result within 15 minutes for most assays, this innovative desktop automated analyzer meets the needs from small to large laboratories, to perform routine analysis, esoteric assays, and up to 30 results per hour. Users who experience the unique technology of the AIA-CL series which have already made their proof in terms of ease of use, reliability, and analytical performance."
 			},
 			{
 				id: 8,
 				name: 'LIAISON® XS',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XS.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XS.png',
 				description: "A fully automated, easy-to-use benchtop analyzer. Maximize productivity with optimal cost management, no daily maintenance, straightforward integration, and the same capabilities as Diasorin’s high-throughput analyzers."
 			},
 			{
 				id: 9,
 				name: 'LIAISON® XL',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XL.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XL.png',
 				description: "Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation."
 			},
 			{
 				id: 10,
 				name: 'Werfen BIO-FLASH',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/werfen%20bioflash.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/werfen%20bioflash.png',
 				description: "BIO-FLASH is a fully automated, random access chemiluminescent analyzer for any autoimmune laboratory. It delivers enhanced workflow efficiencies, market leading ease-of-use and improved assay performance compared with existing enzyme-based systems. With on-board reagents and stored calibration curves, BIO-FLASH makes even the most specialized autoimmune tests efficient to perform."
 			},
 			

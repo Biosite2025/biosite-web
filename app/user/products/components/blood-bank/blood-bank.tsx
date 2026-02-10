@@ -353,49 +353,49 @@ export default function BloodBank() {
 			{
 				id: 2,
 				name: 'Matrix Automax 80',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/matrix-automax-80.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/matrix-automax-80.png',
 				description: 'Matrix AutoMax-80 is a fully automated modular analyzer for Matrix gel cards, featuring robotic sample handling, barcode scanning, and efficient gel card processing for blood banking.'
 			},
 			{
 				id: 5,
 				name: 'AutoMini 40',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/AutoMini-40.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/AutoMini-40.png',
 				description: 'Matrix AutoMini is a fully automated blood grouping analyzer based on column agglutination system that can process 40 tests per hour throughput. It is designed with a single robotic arm for transportation of gel cards and comes with a random access system which is modular in nature and has a STAT function. This system also features integrated barcodes and onboard inventory management.'
 			},
 			{
 				id: 6,
 				name: 'CC 2400',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CC-2400.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/CC-2400.png',
 				description: 'Microprocessor controlled gel card centrifuge for controlled centrifugation of Matrix gel cards having 24 cards capacity.'
 			},
 			{
 				id: 7,
 				name: 'Plasma Apheresis System',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Plasma%20Apheresis%20System.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Plasma%20Apheresis%20System.png',
 				description: 'The system offers full process traceability through intelligent interconnection, improving safety and security for donors. It features smart identification with effective error prevention, automatic monitoring and management throughout the workflow, and a large color touch screen for easy operation. The compact, movable design makes it convenient to use, while optimized structure and noise-reduction technology ensure quiet operation.'
 			},
             {
                 id: 8,
                 name: 'Plasma Thawing',
-                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Plasma%20Thawing.png',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Plasma%20Thawing.png',
                 description: 'Suitable for use in blood centres and supply institutions, as well as hospital transfusion departments, for thawing and rewarming frozen plasma and cryoprecipitated coagulation factors. It improves operational efficiency, shortens thawing times, and helps ensure blood quality and safety.'
             },
             {
                 id: 9,
                 name: 'Sterile Tube Welder',
-                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Sterile%20Tube%20Welder.png',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Sterile%20Tube%20Welder.png',
                 description: 'The STW6810-RFID Sterile Tube Welder is a fully automated device used to safely connect blood tubing while maintaining sterility during blood collection, processing, and storage. It uses an innovative heated wire and non-contact radiant heating system to create clean, reliable welds with minimal stress and contamination risk, features a 10-inch touchscreen for easy operation, supports multiple tubing materials, meets international certifications (CE, FDA, China), and has been widely adopted globally since its launch in 2019.'
             },
             {
                 id: 10,
                 name: 'LIAISON® XL',
-                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/immunology/LIAISON%C2%AE%20XL.png',
+                image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XL.png',
                 description: 'Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation.'
             },
 			{
 				id: 11,
 				name: 'HemoPro',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/HemoPro.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/HemoPro.png',
 				description: 'Hemoglobin testing with microcuvettes certainly has its advantages, such as direct sampling, results in a few seconds and room-temperature storage of consumables. The Mission® HemoPro Hemoglobin Testing System is a cost-effective, optical hemoglobin analyzer that uses microcuvettes instead of traditional test strips or test cartridges. It provides highly accurate results with excellent precision, along with the many convenient features microcuvettes have to offer. The Mission® HemoPro Hemoglobin Testing System can be used to screen for anemia and related conditions, as well as for therapeutic monitoring.'
 			},
 		];
@@ -405,49 +405,49 @@ export default function BloodBank() {
 			{
 				id: 1,
 				name: 'Multi-Head (Segment) SE170',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE170.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE170.png',
 				description: 'SureSeal™ SE170 is designed for both single and multi-segment operation. Adjustable sealing power modes and compact design guarantee optimal sealing outputs under any condition.'
 			},
 			{
 				id: 2,
 				name: 'Multi-Head (Segment) SE160',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE160.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Multi-Head(Segment)%20SE160.png',
 				description: 'SureSeal™ SE160 is designed in consideration of multi tube sealing environment. It provides an ideal space-efficient solution. '
 			},
 			{
 				id: 3,
 				name: 'Portable SE730',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Portable%20SE730.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Portable%20SE730.png',
 				description: 'SureSeal™ SE730 is a compact portable sealer'
 			},
 			{
 				id: 4,
 				name: 'Portable SE700',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Portable%20SE700.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Portable%20SE700.png',
 				description: 'SureSeal™ SE700 is a lightweight portable machine with a hand unit.'
 			},
 			{
 				id: 5,
 				name: 'Benchtop (Heavyduty) SE260',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE260.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE260.png',
 				description: 'SureSeal™ SE260 is AC powered benchtop tube sealer with integrated sealing head and optional sealing hand unit. New sealing technology and enforced reliability make SE260 ideal for most demanding environments.'
 			},
 			{
 				id: 6,
 				name: 'Benchtop (Heavyduty) SE175',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE175.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE175.png',
 				description: 'SureSeal™ SE175 is a space conscious sealer with a hand unit. Compact and lightweight design is suitable for where work space  is limited or one tube sealer is shared by multiple users.'
 			},
 			{
 				id: 7,
 				name: 'Benchtop (Heavyduty) SE470',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE470.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE470.png',
 				description: 'SureSeal™ SE470 is a compact and lightweight tube sealer with a hand unit. The device is specially designed to seal the cord blood freezing bags and tubing. '
 			},
 			{
 				id: 8,
 				name: 'Benchtop (Heavyduty) SE450',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE450.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Tube%20Sealer/Benchtop(Heavyduty)%20SE450.png',
 				description: 'SureSeal™ SE450 is a compact and lightweight tube sealer with a hand unit. The machine is suitable for use where work space is limited or where one tube sealer machine will be shared by multiple users.'
 			}
 		];
@@ -457,19 +457,19 @@ export default function BloodBank() {
 			{
 				id: 1,
 				name: 'CM735A',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM735A.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Blood%20Collection%20Mixer/CM735A.png',
 				description: 'This device automatically clamps the blood bag when the preset volume is reached, gently rocks the bag to mix blood with anticoagulant, and shows all key details on an LCD screen, with visual and audible alarms for safety. It is lightweight, fully portable, supports multiple blood bags, runs on a rechargeable battery with built-in and separate chargers, and comes with a canvas carrying bag, making it ideal for mobile blood collection units.'
 			},
 			{
 				id: 2,
 				name: 'CM760',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM760.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Blood%20Collection%20Mixer/CM760.png',
 				description: 'This device provides accurate weighing and mixing of blood with a simple 5-inch LCD interface, alarms with voice guidance, and barcode scanning for easy operation. It also supports wireless data transfer, has a reliable battery for portable and emergency use, and is compatible with accessories like the SureSeal™ tube sealer.'
 			},
 			{
 				id: 3,
 				name: 'CM745',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/Blood%20Collection%20Mixer/CM745.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Blood%20Collection%20Mixer/CM745.png',
 				description: 'This is a cost-efficient solution with proven accurate weighing and mixing technology and easy digital weight calibration. It features visual and audible alarms, a barcode scanner for label checking, large Li-ion and emergency backup batteries for portable use, and comes with a durable canvas carrying bag.'
 			}
 		];
@@ -479,7 +479,7 @@ export default function BloodBank() {
 			{
 				id: 1,
 				name: 'ES315',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/ES315.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/ES315.png',
 				description: 'ES315 is an electromechanical device that easy separation of blood components. It is semiautomatic equipment to separate blood into red cells and plasma.'
 			}
 		];
@@ -489,7 +489,7 @@ export default function BloodBank() {
 			{
 				id: 1,
 				name: 'CB220',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/CB220.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/CB220.png',
 				description: 'ES315 is an electromechanical device that easy separation of blood components. It is semiautomatic equipment to separate blood into red cells and plasma.'
 			}
 		];
@@ -499,73 +499,73 @@ export default function BloodBank() {
 			{
 				id: 1,
 				name: 'Eryclone Anti-D (Rho) (IgG)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Ereclone-Anti-D-(Rho)-(IgG).jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Ereclone-Anti-D-(Rho)-(IgG).jpg',
 				description: 'ANTI-D is a Rho(D) typing reagent used for slide and modified tube tests, formulated as a monoclonal IgG antibody derived from an EBV-transformed human B cell line with a titre of ≥1:32 and 100% specificity to the Rho(D) antigen. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C. '
 			},
 			{
 				id: 2,
 				name: 'Eryclone Anti-B',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-B.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-B.jpg',
 				description: 'ANTI-B is an ABO blood grouping reagent used for slide and tube tests, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to B antigens, without reacting to acquired B characteristics. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C.'
 			},
 			{
 				id: 3,
 				name: 'Eryclone Anti-AB',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-AB.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-AB.jpg',
 				description: 'ANTI-A,B is an ABO blood grouping reagent used for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256. It provides 100% specificity to A and B antigens, complies with AABB and FDA guidelines, and is supplied in various pack sizes with a shelf life of 24 months when stored at 2–8 °C.'
 			},
 			{
 				id: 4,
 				name: 'Eryclone Anti-A',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-A.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-A.jpg',
 				description: 'ANTI-A is an ABO blood grouping reagent for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to A1, A2, and Ax antigens. It complies with AABB and FDA guidelines and is supplied in multiple pack sizes with a 24-month shelf life when stored at 2–8 °C.'
 			},
 			{
 				id: 5,
 				name: 'Eryclone Anti-C+D+E',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-C+D+E.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-C+D+E.jpg',
 				description: 'ANTI-C+D+E is a Rh genotyping reagent for slide and tube testing, detecting C, D, and E antigens with a titre of ~1:32 across common Rh phenotypes. It contains IgM for C and E antigens and IgM + IgG for D antigen, is produced from a human cell line, follows AABB and FDA standards, and is stable for 24 months at 2–8 °C. It is available in a 5 ml pack.'
 			},
 			{
 				id: 6,
 				name: 'Eryclone Anti-e (hr)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-e_hr.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-e_hr.jpg',
 				description: 'ANTI-e is an IgM monoclonal Rh genotyping reagent for slide and tube testing, specifically detecting the e antigen across common Rh phenotypes with a titre of approximately 1:32. It is produced from a human cell line, complies with AABB and FDA standards, stable for 24 months at 2–8 °C, and is available in 2 ml and 5 ml pack sizes.'
 			},
 			{
 				id: 7,
 				name: 'Eryclone Anti-E (rh)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-E_rh.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-E_rh.jpg',
 				description: 'ANTI-E is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the E antigen across common Rh phenotypes with an approximate titre of 1:32. Produced from a human cell line, it meets AABB and FDA standards, offers 24-month stability at 2–8 °C, and is available in 2 ml and 5 ml pack sizes.'
 			},
 			{
 				id: 8,
 				name: 'Eryclone Anti-c (hr)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-c_hr.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-c_hr.jpg',
 				description: 'ANTI-c is an IgM monoclonal Rh genotyping reagent designed for slide and tube testing, ensuring accurate identification of the c antigen across common Rh phenotypes. Derived from a human cell line, it offers high specificity with an approximate titre of 1:32, complies with AABB and FDA standards, and remains stable for 24 months when stored at 2–8 °C, with availability in 2 ml and 5 ml pack sizes.'
 			},
 			{
 				id: 9,
 				name: 'Eryclone Anti-C (rh)',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti-C_rh.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-C_rh.jpg',
 				description: 'ANTI-C is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the C antigen across common Rh phenotypes. Produced from a human cell line, it offers high specificity with a titre of approximately 1:32, complies with AABB and FDA guidelines, and maintains stability for 24 months when stored at 2–8 °C. The reagent is available in 2 ml and 5 ml pack sizes for routine laboratory use.'
 			},
 			{
 				id: 10,
 				name: 'Eryclone MONOSPECIFIC COOMBS SERA (Anti-C3d) ',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-Human-C3d.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-Human-C3d.jpg',
 				description: 'MONOSPECIFIC COOMBS SERA (Anti-C3d) is a monoclonal IgM reagent specifically designed for Direct and Indirect Antiglobulin Tests (DAT and IAT), enabling accurate detection of the complement component C3d. It complies with AABB and FDA guidelines, offers stable performance with a 24-month shelf life when stored at 2–8 °C, and is available in multiple pack sizes to suit laboratory needs.'
 			},
 			{
 				id: 11,
 				name: 'Eryclone Anti-Human Globulin',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone_Anti_Human_Globulin.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti_Human_Globulin.jpg',
 				description: 'ANTI HUMAN GLOBULIN is a polyspecific AHG reagent used for Direct and Indirect Coombs’ tests, providing reliable detection of human IgG and complement components C3b and C3d. It combines purified goat anti-IgG antibodies with murine monoclonal anti-C3d, complies with AABB and FDA standards, and offers a 24-month shelf life when stored at 2–8 °C, with multiple pack size options available.'
 			},
 			{
 				id: 12,
 				name: 'Eryclone Anti-D IgM',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/blood-bank/eryclone%20item/Eryclone-Anti-D-IgM.jpg',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-D-IgM.jpg',
 				description: 'ANTI-D is a saline-reacting Rho(D) typing reagent for slide and tube tests, formulated as a monoclonal IgM antibody derived from an EBV-transformed human B cell line with a high titre of ≥1:256 and 100% specificity to the Rho(D) antigen. It meets AABB and FDA standardization requirements and offers a 24-month shelf life when stored at 2–8 °C, with availability in multiple pack sizes.'
 			}
 		];

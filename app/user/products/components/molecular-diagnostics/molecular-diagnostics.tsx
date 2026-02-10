@@ -201,97 +201,97 @@ export default function MolecularDiagnostics() {
 			{
 				id: 1,
 				name: 'Genolution Nextractor NX-48s',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/genolution-nx48s.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/genolution-nx48s.png',
 				description: 'Genolution Nextractor® NX-48S is automated system for rapid isolation of DNA and RNA from a variety of samples. Genolution Nextractor® NX-48S can extract nucleic acid from up to 48 samples at once, saving your valuable time and labor.'
 			},
 			{
 				id: 2,
 				name: 'Sansure Natch CS',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-natch-cs.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-natch-cs.png',
 				description: 'A fully automated nucleic acid extraction system designed for clinical molecular laboratories. It provides stable, high-purity DNA/RNA extraction with minimal manual intervention, improving consistency, biosafety, and workflow efficiency for PCR-based diagnostics.'
 			},
 			{
 				id: 3,
 				name: 'Zybio EXM 3000',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-3000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/zybio-exm-3000.png',
 				description: 'A compact automated nucleic acid extractor suitable for small to medium laboratories. It supports multiple sample types and standardized extraction protocols, delivering reliable nucleic acid purity for downstream molecular testing.'
 			},
 			{
 				id: 4,
 				name: 'Zybio EXM 6000',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-exm-6000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/zybio-exm-6000.png',
 				description: 'A high-throughput automated nucleic acid extraction system for medium to large laboratories. It enables simultaneous processing of multiple samples with high efficiency, reducing turnaround time while maintaining excellent extraction performance and reproducibility.'
 			},
 			{
 				id: 5,
 				name: 'Sansure Slan 96P',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-slan-96p.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-slan-96p.png',
 				description: 'A real-time PCR (qPCR) system designed for accurate and sensitive molecular diagnostics. It supports 96-well testing, offers precise temperature control, and is optimized for clinical applications such as infectious disease detection and genetic analysis.'
 			},
 			{
 				id: 6,
 				name: 'Sansure MA-6000',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-6000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-ma-6000.png',
 				description: 'A fully automated molecular analysis platform integrating nucleic acid extraction, amplification, and detection. It minimizes hands-on time, reduces contamination risk, and is ideal for high-volume molecular testing environments.'
 			},
 			{
 				id: 7,
 				name: 'Sansure MA-1630Q',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-ma-1630q.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-ma-1630q.png',
 				description: 'A compact automated molecular testing system tailored for laboratories requiring efficient, space-saving solutions. It combines extraction and qPCR analysis with high sensitivity, making it suitable for routine molecular diagnostics.'
 			},
 			{
 				id: 8,
 				name: 'Zybio ZIP-96V',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/zybio-zip-96v.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/zybio-zip-96v.png',
 				description: 'A 96-well automated nucleic acid extraction system designed for high-throughput laboratories. It supports batch processing, improves workflow efficiency, and delivers consistent DNA/RNA quality for PCR and sequencing applications.'
 			},
 			{
 				id: 9,
 				name: 'Sansure iPonatic SQ31B',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq31b.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-iponatic-sq31b.png',
 				description: 'A portable molecular diagnostic system (4-module configuration) that integrates extraction, amplification, and detection. Designed for rapid, on-site testing, it is suitable for emergency use, mobile labs, and decentralized molecular diagnostics.'
 			},
 			{
 				id: 10,
 				name: 'Sansure iPonatic SQ36A',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/sansure-iponatic-sq36a.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/sansure-iponatic-sq36a.png',
 				description: 'A portable integrated molecular testing platform offering expanded throughput compared to SQ31B. It delivers fast, accurate molecular results in a compact format, ideal for field testing, public health screening, and rapid response scenarios.'
 			},
 			{
 				id: 11,
 				name: 'Human Papillomavirus (HPV) Diagnostic Kit',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Human-Papillomavirus-(HPV)-Diagnostic-Kit.png',
 				description: 'A comprehensive diagnostic kit for the detection and genotyping of human papillomavirus (HPV), including high-risk and low-risk types. Supports multiple genotypes and fluorescence-based DNA analysis for accurate screening and clinical diagnostics.'
 			},
 			{
 				id: 12,
 				name: 'Mycobacterium Tuberculosis Nucleic Acid and Rifampicin Resistance Fluorescence Diagnostic Kit',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Mycobacterium-Tuberculosis-Nucleic-Acid-and-Rifampicin-Resistance-Fluorescence-Diagnostic-Kit.png',
 				description: 'Sansure Mycobacterium Tuberculosis and Rifampicin Resistance Nucleic Acid Diagnostic Kit (PCR-Fluorescence Probing) is a real-time polymerase chain reaction test kit intended for the qualitative detection of the nucleic acid of mycobacterium tuberculosis and rifampicin resistance mutations in human sputum samples. The test results can be used as an aid in the diagnosis of TB patients and patients with an increased risk of RFP drug-resistant TB, providing an accurate diagnosis basis for infected patients.'
 			},
 			{
 				id: 13,
 				name: 'Natch CS3 Plus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Natch CS3 Plus.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Natch CS3 Plus.png',
 				description: 'Natch CS3 Plus is a fully automated nucleic acid extraction and amplification system developed by Sansure Biotech, featuring high-throughput, high-precision, high-efficiency and anti-contamination. The system can directly use normal sampling tubes and complete uncapping and recapping, liquid transfer, nucleic acid extraction and PCR set-up with one click. Its advantages of convenient operation and standardized workflow greatly reduce manual errors and improve the accuracy of test results. It is a ideal solution for creating a simplified, high-precision, automated and systematic laboratory.'
 			},
 			{
 				id: 14,
 				name: 'Novel Coronavirus (2019-nCoV) Nucleic Acid Diagnostic Kit',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Novel-Coronavirus-(2019-nCoV)-Nucleic-Acid-Diagnostic-Kit (2).png',
 				description: 'Sansure COVID-19 diagnostic solutions are used to directly detect the presence of viral RNA, which will be detectable in patients before antibodies form or symptoms of the disease are present, which means the test results can tell whether or not that someone gets virus very early on in their illness.'
 			},
 			{
 				id: 15,
 				name: 'Nucleic Acid Test Kit for HBV HCV & HIV',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Nucleic-Acid-Test-Kit-for-HBV-HCV&HIV.png',
 				description: 'This kit is intended for use as a blood donor screening test to detect HBV DNA, HCV RNA, HIV-1 RNA and HIV-2 RNA in pooled or individual sample from healthy blood donors, blood donors of various components (red blood cells, platelets and plasma) and other types of blood donors. *Available soon. Inquire availability.'
 			},
 			{
 				id: 16,
 				name: 'Oncoscreen Screening Diagnostic Kits and Detection Kit',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/molecular-diagnostics/Oncoscreen-Screening-Diagnostic-Kits-and-Detection%20Kit.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/molecular-diagnostics/Oncoscreen-Screening-Diagnostic-Kits-and-Detection%20Kit.png',
 				description: 'The OncoScreen Screening and Detection Kit by Mylab Discovery Solutions is a diagnostic tool designed for the early identification and screening of cancer.'
 			},
 			

@@ -210,61 +210,61 @@ export default function SterilizerAutoclave() {
 					{
 						id: 1,
 						name: 'BN300 LED Phototherapy Unit',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/BN300%20%20LED%20%20Phototherapy%20%20Unit.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/BN300%20%20LED%20%20Phototherapy%20%20Unit.png',
 						description: 'The BN300 features 16 blue and 4 white super LEDs with a lamp lifetime of 50,000 hours, delivering adjustable irradiance (I, II, III) in the 400–550 nm range (peak 440–460 nm). It has a 3.5″ LCD touch screen with a 0–999 h treatment timer and 48 h down-counter, real-time clock, and date display. The fanless unit operates at <30 dB, emits no heat, UV, or IR, and is compatible with infant incubators, warmers, and cribs. The 360° rotatable head and height-adjustable trolley provide flexible positioning, while an ergonomic handle, storage basket, and power adapter holder enhance mobility and usability. Operating conditions: 15–30 °C, 5–99% RH; electrical: 220–240 V AC, 50/60 Hz.'
 					},
 					{
 						id: 2,
 						name: 'X01-5 Baby Crib',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/X01-5_Baby-Crib_SaikangMedical.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/X01-5_Baby-Crib_SaikangMedical.png',
 						description: 'The X01-5 infant bed features a sturdy epoxy powder-coated steel frame from Baosteel, with 11-step epoxy painting for durability and impact resistance. It includes a transparent, non-toxic acrylic baby basin that can be sterilized above 100 °C, a Trendelenburg pneumatic lift for safe backward tilting, and 3″ covered TPR casters designed for long-lasting, smooth movement. The bed also offers a utility basket for storage, a custom mattress for easy cleaning, and a full stainless steel IV pole capable of supporting 15 kg.'
 					},
 					{
 						id: 3,
 						name: 'V8v Electric ICU Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/V8v_Electric-ICU-Bed.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/V8v_Electric-ICU-Bed.png',
 						description: 'The V8V electric ICU bed is designed to enhance patient comfort and prevent complications such as pressure ulcers. Its backrest can be adjusted to a 30-degree smart-stop position, clinically recommended to reduce the risk of respiratory infections. The bed features an innovative dual retraction system, with the backrest and thigh rest retracting 67 mm and 47 mm respectively. This patented design extends the pelvic area, distributes pressure evenly, and minimizes shear forces, proactively preventing bedsores while improving overall patient well-being.'
 					},
 					{
 						id: 4,
 						name: 'CR2q Hospital Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/CR2q.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/CR2q.png',
 						description: 'The CR2q hospital bed combines durability, safety, and customization for patient care. Its steel frame is made from Baosteel and finished with 11-step epoxy painting, providing antibacterial protection and impact resistance up to 50 kg. The bed features a suspended hand crank for manual adjustment, extreme protection sensors to prevent tipping, and customizable fire-proof MDF head and foot boards. Additional features include a full stainless steel IV pole with 15 kg capacity, optional lifting pole and adjustable oxygen cylinder rack, foldable guardrails with protection handles, mobile plastic drainage hooks, and a smooth punching platform supporting up to 250 kg. Optional resin X-ray translucent platforms and adjustable shoe holders enhance functionality, while Panasonic robotic welding ensures a seamless and durable construction.'
 					},
 					{
 						id: 5,
 						name: 'Ecosy930 Infant Warmer',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/Ecosy930%20%20Infant%20%20Warmer.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/Ecosy930%20%20Infant%20%20Warmer.png',
 						description: 'The Ecosy 930 Infant Warmer provides precise and efficient newborn care with a far-infrared heating tube for high thermal efficiency and low energy use. Its ergonomically designed heating head adjusts horizontally and vertically for stable, uniform warming, while a 10.4-inch LCD touch screen ensures easy operation and clear visibility. The unit features an integrated observation lamp with adjustable brightness, hands-free alarm silence via a wave sensor, transparent guard doors for a quieter and safer rescue platform, a spacious storage drawer, and a two-position pull-out X-ray cassette to minimize newborn handling. Real-time monitoring of noise and light levels helps create a supportive environment for the infant.'
 					},
 					{
 						id: 6,
 						name: 'EcoLa3000 Infant Incubator',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/EcoLa3000%20Infant%20%20Incubator.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/EcoLa3000%20Infant%20%20Incubator.png',
 						description: 'The EcoLa 3000 provides precise temperature control using a PID fuzzy algorithm, continuously adjusting based on the difference between set and real-time temperature. Its dual heating protection combines a thermocouple and mechanical switch for safety. The incubator features reliable sensor modules that monitor hood temperature and two-channel probes for newborn core and peripheral temperatures. Additional safety comes from over 30 alarm types, an advanced air circuit ensuring temperature uniformity within 0.5 °C, and a double-wall design with air curtain to reduce heat loss when accessing the incubator.'
 					},
 					{
 						id: 7,
 						name: 'ENP-1 Enteral Nutrition Pump',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/ENP-1.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/ENP-1.png',
 						description: 'The ENP-1 is a smart, portable enteral nutrition pump that offers micro, constant, and time/volume-controlled feeding. It displays real-time cumulative feeding, automatically recognizes multiple feeding sets, and supports Wi-Fi for improved medical supervision. Safety features include a rechargeable battery for backup, intelligent alarms with animation guidance, adjustable pressure levels, dynamic pressure display, history records, and IP34 dust/water protection. User-friendly design highlights include a transparent pump door, multiple feeding modes (continuous, intermittent, reverse), 3.5″ TFT screen, touchscreen/keyboard input with shuttle key, and a removable battery compartment for easy replacement.'
 					},
 					{
 						id: 8,
 						name: 'Pedia Manual 2 Cranks Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/PEDIA%20MANUAL%202%20CRANKS%20BED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/PEDIA%20MANUAL%202%20CRANKS%20BED.png',
 						description: 'The CX2x pediatric manual 2-crank bed is a 2-section pediatric bed designed for children in hospital or home care settings, featuring a 250kg weight capacity, 2 manual cranks for back/knee-rest adjustment, and 4 locking castors. It includes, 3-gear adjustable full-length side rails and cartoon-themed ABS plastic head/foot boards for safety and comfort. '
 					},
 					{
 						id: 9,
 						name: 'Pedia Manual 3 Cranks Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/PEDIA%20MANUAL%203%20CRANKS%20BED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/PEDIA%20MANUAL%203%20CRANKS%20BED.png',
 						description: 'The CD3q children’s bed is designed for ward use, featuring curved head and foot boards that provide comfort for patients. Made from sterilizable virgin ABS plastic with a tensile strength of up to 30 MPa, it is built on a solid chassis with 5 mm stamped rotating steel plates. The bed frame undergoes epoxy painting for durability, with a 0.12 mm thick, 60° brightness coating that resists impacts up to 50 kg. Panasonic robotic welding ensures a smooth, 360° finish, while a retractable hand crank and extreme protection device provide safe and reliable operation. The stamping-formed platform has a smooth surface capable of bearing 250 kg, with an optional resin X-ray translucent platform available.'
 					},
 					{
 						id: 10,
 						name: 'Pedia Electric 5 Function Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/products/nicu-picu-icu/PEDIA%20ELECTRIC%205%20FUNCTION%20BED.png',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/PEDIA%20ELECTRIC%205%20FUNCTION%20BED.png',
 						description: 'The Saikang CQ8k Electric Children Bed is a 5-function, motorized pediatric bed (1975x880mm) designed for safe, hygienic, and comfortable pediatric care with a 200kg safe working load. Key features include 0-75° back-rest, 0-35° knee-rest, 12° Trendelenburg/reverse Trendelenburg, and 465-760mm height adjustment, controlled via a handheld controller. '
 					}
 				]
