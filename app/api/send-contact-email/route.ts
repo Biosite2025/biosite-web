@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #2B3990 0%, #2B7CD3 100%); padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">${subject } Form</h1>
+            <h1 style="color: white; margin: 0;">${subject }</h1>
           </div>
           
           <div style="background: #f7f9fc; padding: 30px;">
@@ -81,12 +81,15 @@ export async function POST(request: NextRequest) {
               </div>
             </div>
           </div>
+
           
+
           <div style="background: #2B3990; padding: 20px; text-align: center;">
             <p style="color: white; margin: 0; font-size: 14px;">
               This email was sent from the Biosite website contact form
             </p>
           </div>
+          
         </div>
       `,
       replyTo: email,
