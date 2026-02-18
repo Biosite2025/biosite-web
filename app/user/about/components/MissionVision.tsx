@@ -1,7 +1,7 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Core Values Data - BIOSITE
 const coreValues = [
@@ -15,85 +15,35 @@ const coreValues = [
 ];
 
 // Core Values Slideshow Component
-const CoreValuesSlideshow = ({ currentLetter, startSlideshow }: { currentLetter: string, startSlideshow: boolean }) => {
-  const [currentIndex, setCurrentIndex] = useState(coreValues.length); // Start at "CORE VALUES"
-  const [showCoreValuesText, setShowCoreValuesText] = useState(true); // Start with "CORE VALUES" visible
-
-  // Slides include all core values + final "CORE VALUES" text
-  const totalSlides = coreValues.length + 1;
-
-  useEffect(() => {
-    if (!startSlideshow) return; // Don't start until cards finish animating
-
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const next = prev + 1;
-        if (next >= totalSlides) {
-          return 0; // Loop back to start
-        }
-        return next;
-      });
-    }, 4500); // Change slide every 4.5 seconds for better readability
-
-    return () => clearInterval(timer);
-  }, [totalSlides, startSlideshow]);
-
-  useEffect(() => {
-    // Show "CORE VALUES" text when we reach the last slide
-    setShowCoreValuesText(currentIndex === coreValues.length);
-  }, [currentIndex]);
-
+const CoreValuesSlideshow = ({ currentIndex }: { currentIndex: number }) => {
   return (
     <div className="relative h-72 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden px-4">
       <AnimatePresence mode="wait">
-        {!showCoreValuesText ? (
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 60, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -60, scale: 0.9 }}
-            transition={{ 
-              duration: 0.9, 
-              ease: [0.43, 0.13, 0.23, 0.96],
-              opacity: { duration: 0.6 },
-              scale: { duration: 0.7, ease: "easeOut" }
-            }}
-            className="absolute text-center max-w-5xl"
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -60, scale: 0.9 }}
+          transition={{ 
+            duration: 0.9, 
+            ease: [0.43, 0.13, 0.23, 0.96],
+            opacity: { duration: 0.6 },
+            scale: { duration: 0.7, ease: "easeOut" }
+          }}
+          className="absolute text-center max-w-5xl"
+        >
+          <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 md:mb-8">
+            {coreValues[currentIndex]?.title}
+          </h3>
+          <motion.p 
+            className="text-xl md:text-2xl lg:text-3xl text-white/95 font-medium leading-relaxed px-4 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 md:mb-8">
-              {coreValues[currentIndex]?.title}
-            </h3>
-            <motion.p 
-              className="text-xl md:text-2xl lg:text-3xl text-white/95 font-medium leading-relaxed px-4 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-            >
-              {coreValues[currentIndex]?.description}
-            </motion.p>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="core-values-finale"
-            initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            exit={{ opacity: 0, scale: 0.5, rotateY: 180 }}
-            transition={{ 
-              duration: 1.3, 
-              ease: [0.34, 1.56, 0.64, 1],
-              scale: {
-                type: "spring",
-                stiffness: 120,
-                damping: 12
-              }
-            }}
-            className="absolute text-center"
-          >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white drop-shadow-2xl">
-              CORE VALUES
-            </h2>
-          </motion.div>
-        )}
+            {coreValues[currentIndex]?.description}
+          </motion.p>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
@@ -272,47 +222,45 @@ const responsive1366Styles = `
   }
 `;
 
+// 0 = BIOSITE centered, 1 = BIOSITE animating up, 2 = slideshow running
+type Phase = 0 | 1 | 2;
+
 const MissionVision = () => {
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(coreValues.length); // Start at "CORE VALUES"
-  const [showCoreValuesText, setShowCoreValuesText] = useState(true); // Start with "CORE VALUES" visible
-  const [startSlideshow, setStartSlideshow] = useState(false); // Control when slideshow starts
+  const [phase, setPhase] = useState<Phase>(0);
+  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
 
-  // Sync with slideshow timing
+  // Trigger animations only when the section enters the viewport
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { once: true, amount: 0.25 });
+
+  // Phase progression starts only after section is visible
   useEffect(() => {
-    if (!startSlideshow) return;
+    if (!inView) return;
+    const t1 = setTimeout(() => setPhase(1), 1200);  // wait before moving up
+    const t2 = setTimeout(() => setPhase(2), 3000);  // wait before slideshow
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [inView]);
 
-    const totalSlides = coreValues.length + 1;
-    
+  // Loop slideshow once phase 2 is active
+  useEffect(() => {
+    if (phase < 2) return;
     const timer = setInterval(() => {
-      setCurrentLetterIndex((prev) => {
-        const next = prev + 1;
-        if (next >= totalSlides) {
-          return 0;
-        }
-        return next;
-      });
+      setCurrentLetterIndex((prev) => (prev + 1) % coreValues.length);
     }, 4500);
-
     return () => clearInterval(timer);
-  }, [startSlideshow]);
+  }, [phase]);
 
-  useEffect(() => {
-    setShowCoreValuesText(currentLetterIndex === coreValues.length);
-  }, [currentLetterIndex]);
-
-  const currentLetterData = showCoreValuesText ? null : coreValues[currentLetterIndex];
-  const currentLetter = currentLetterData?.letter || '';
-  const currentLetterPosition = currentLetterData?.letterIndex ?? -1;
+  const currentLetterPosition = phase >= 2 ? coreValues[currentLetterIndex]?.letterIndex ?? -1 : -1;
 
   return (
     <>
       <style>{responsive1366Styles}</style>
       <motion.section
+        ref={sectionRef}
         id="mission-vision"
         className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 min-h-screen flex items-center justify-center bg-blue-500/90"
         initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
       {/* Background image */}
@@ -342,13 +290,9 @@ const MissionVision = () => {
             <motion.div
               className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 border border-white/30 relative overflow-hidden"
               initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               whileHover={{ scale: 1.02 }}
-              onAnimationComplete={() => {
-                setTimeout(() => setStartSlideshow(true), 700);
-              }}
             >
               <div className="flex items-center mb-4">
                 <motion.div
@@ -374,9 +318,8 @@ const MissionVision = () => {
             <motion.div
               className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 border border-white/30 relative overflow-hidden"
               initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
+              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center mb-4">
@@ -402,50 +345,39 @@ const MissionVision = () => {
           </div>
 
           {/* Core Values Section - BIOSITE */}
-          <div className="mt-12 md:mt-16">
+          <div className="mt-12 md:mt-16" style={{ minHeight: '32rem' }}>
             {/* BIOSITE Letters */}
             <motion.div
               className="text-center mb-6 md:mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              initial={{ opacity: 1, y: 160 }}
+              animate={{ y: phase >= 1 ? 0 : 160 }}
+              transition={{ duration: 1.4, ease: [0.43, 0.13, 0.23, 0.96] }}
             >
               <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 flex-wrap">
                 {['B', 'I', 'O', 'S', 'I', 'T', 'E'].map((letter, index) => {
-                  const isActive = index === currentLetterPosition && !showCoreValuesText;
+                  const isActive = index === currentLetterPosition;
                   return (
                     <motion.span
                       key={index}
-                      className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold ${
-                        isActive ? 'text-[#2356a8]' : 'text-white/90'
-                      }`}
+                      className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold"
                       initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-                      whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ 
-                        duration: 0.6, 
-                        delay: 0.5 + (index * 0.1),
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 15
-                      }}
-                      whileHover={{ 
-                        scale: 1.15,
-                        transition: { duration: 0.2 }
-                      }}
-                      animate={{
-                        color: isActive ? '#2356a8' : 'rgba(255, 255, 255, 0.9)',
+                      animate={inView ? {
+                        opacity: 1,
                         scale: isActive ? 1.15 : 1,
-                        textShadow: isActive 
-                          ? '0 0 20px rgba(35, 86, 168, 0.5), 0 0 40px rgba(35, 86, 168, 0.3)' 
+                        rotateY: 0,
+                        color: isActive ? '#2356a8' : 'rgba(255, 255, 255, 0.9)',
+                        textShadow: isActive
+                          ? '0 0 20px rgba(35, 86, 168, 0.5), 0 0 40px rgba(35, 86, 168, 0.3)'
                           : '0 0 0px rgba(255, 255, 255, 0)',
-                        transition: {
-                          color: { duration: 0.3, ease: "easeInOut" },
-                          scale: { duration: 0.4, ease: "easeOut" },
-                          textShadow: { duration: 0.3 }
-                        }
+                      } : { opacity: 0, scale: 0.5, rotateY: -180 }}
+                      transition={{
+                        opacity: { duration: 0.9, delay: 0.2 + index * 0.12 },
+                        rotateY: { duration: 1.0, delay: 0.2 + index * 0.12, type: 'spring', stiffness: 120, damping: 18 },
+                        scale: { duration: 0.6, ease: 'easeOut' },
+                        color: { duration: 0.5, ease: 'easeInOut' },
+                        textShadow: { duration: 0.5 },
                       }}
+                      whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
                     >
                       {letter}
                     </motion.span>
@@ -454,8 +386,14 @@ const MissionVision = () => {
               </div>
             </motion.div>
 
-            {/* Core Values Slideshow */}
-            <CoreValuesSlideshow currentLetter={currentLetter} startSlideshow={startSlideshow} />
+            {/* Core Values Slideshow — always rendered to reserve space, opacity animates in */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+            >
+              <CoreValuesSlideshow currentIndex={currentLetterIndex} />
+            </motion.div>
           </div>
 
         </div>
