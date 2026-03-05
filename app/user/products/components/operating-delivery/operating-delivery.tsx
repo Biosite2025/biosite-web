@@ -226,6 +226,18 @@ export default function OperatingDeliveryRoom() {
 						description: 'The HF-FS LED examination lamp is a versatile lighting solution for medical, industrial, and scientific applications, designed for use during patient examinations or minor procedures. It features a spring-loaded, articulated 105 cm arm with an on/off switch and built-in electronic transformer, a soft gooseneck lamp head for easy positioning, and a stable base for mobility and convenience.'
 					},
 					{
+						id: 11,
+						name: 'DL-62CM Operating Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20LIGHT.png',
+						description: 'During the operation, the camera located in the center of the light transfers the image to the monitor and allows other people to watch the operation. The camera attached to the light head is commanded via the control panel. The monitor, which is mounted on the lamp arm, has the ability to move and make positioning. LED technology does not cause temperature increase in both the surgical area and the surgeon head. The life of the led bulbs used in these light heads, which can produce 160,000 lux and 120,000 lux power, is 60,000 hours. There are 68 LEDs in the main head part and 28 LEDs in the satellite head part.'
+					},
+					{
+						id: 12,
+						name: 'DL-2MB Mobile Operating Light',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/MOBILE%20OPERATING%20LIGHT.png',
+						description: 'This model with 28 LED bulbs is 44 cm wide and has 120,000 lux power. All functions can be accessed thanks to the LCD touch screen placed on the edge of the hood. The panel on the base shows in which mode the device is operating and the power of the battery in 4 steps. The lamp has 4 wheels, 2 of which have brakes.'
+					},
+					{
 						id: 4,
 						name: 'HFEOT99 Electric Operating Table',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/HFEOT99.png',
@@ -236,6 +248,18 @@ export default function OperatingDeliveryRoom() {
 						name: 'HFMPB06C Hydraulic Operating Table',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/HFMPB06C.png',
 						description: 'The HFMPB06C is a hydraulic operating table designed for gynecology and obstetrics, featuring a fully adjustable mattress available in various colors. It includes a German-made gas spring to control the back plate, providing smooth and precise positioning for patient comfort and surgical efficiency.'
+					},
+					{
+						id: 9,
+						name: 'OM-6N Operating Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20TABLE.png',
+						description: 'The OM-6N operating table is designed for surgical procedures, featuring a durable polyurethane pillow and a wireless controller for adjusting height, backrest, Trendelenburg/reverse Trendelenburg, side tilt, and horizontal slide. Its X-ray transparent top plate, T-shaped base with 300 cm sliding function, and integrated guides provide high-quality imaging, easy equipment access, and optimal visibility for a comfortable and efficient surgical workflow.'
+					},
+					{
+						id: 10,
+						name: 'JM-4F Delivery Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/DELIVERY%20TABLE.png',
+						description: 'The roll cover dispenser positioned at the back is placed in order to meet patient comfort and hygiene requirements. The waste collection system integrated under the sitting area, support hygiene conditions. The knee support section is made of polyurethane material and can rotate 360 degrees around its own axis and is fixed at the desired angle.The lifting capacity of the table is 180kg and there are 4 different color options.'
 					},
 					{
 						id: 6,
@@ -254,30 +278,6 @@ export default function OperatingDeliveryRoom() {
 						name: 'Liquid Soap Dispenser Elbow Control',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/LQUID%20SOAP%20DISPENSER%20ELBOW%20CONTROL.png',
 						description: 'You can adjust the amount of soap according to your needs in this product, which can be controlled with the elbow.'
-					},
-					{
-						id: 9,
-						name: 'OM-6N Operating Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20TABLE.png',
-						description: 'The OM-6N operating table is designed for surgical procedures, featuring a durable polyurethane pillow and a wireless controller for adjusting height, backrest, Trendelenburg/reverse Trendelenburg, side tilt, and horizontal slide. Its X-ray transparent top plate, T-shaped base with 300 cm sliding function, and integrated guides provide high-quality imaging, easy equipment access, and optimal visibility for a comfortable and efficient surgical workflow.'
-					},
-					{
-						id: 10,
-						name: 'JM-4F Delivery Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/DELIVERY%20TABLE.png',
-						description: 'The roll cover dispenser positioned at the back is placed in order to meet patient comfort and hygiene requirements. The waste collection system integrated under the sitting area, support hygiene conditions. The knee support section is made of polyurethane material and can rotate 360 degrees around its own axis and is fixed at the desired angle.The lifting capacity of the table is 180kg and there are 4 different color options.'
-					},
-					{
-						id: 11,
-						name: 'DL-62CM Operating Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/OPERATING%20LIGHT.png',
-						description: 'During the operation, the camera located in the center of the light transfers the image to the monitor and allows other people to watch the operation. The camera attached to the light head is commanded via the control panel. The monitor, which is mounted on the lamp arm, has the ability to move and make positioning. LED technology does not cause temperature increase in both the surgical area and the surgeon head. The life of the led bulbs used in these light heads, which can produce 160,000 lux and 120,000 lux power, is 60,000 hours. There are 68 LEDs in the main head part and 28 LEDs in the satellite head part.'
-					},
-					{
-						id: 12,
-						name: 'DL-2MB Mobile Operating Light',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/operating-delivery/MOBILE%20OPERATING%20LIGHT.png',
-						description: 'This model with 28 LED bulbs is 44 cm wide and has 120,000 lux power. All functions can be accessed thanks to the LCD touch screen placed on the edge of the hood. The panel on the base shows in which mode the device is operating and the power of the battery in 4 steps. The lamp has 4 wheels, 2 of which have brakes.'
 					},
 					{
 						id: 13,

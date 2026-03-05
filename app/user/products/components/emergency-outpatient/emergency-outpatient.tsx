@@ -214,18 +214,6 @@ export default function EmergencyOutpatient() {
 						description: 'The CX15 patient monitor is designed for easy, reliable, and affordable patient monitoring, combining Edan’s 20 years of expertise with accurate performance and user-friendly operation. Featuring a 15.6” full HD display, portable design, long battery life, wide viewing angle, and 5G Wi-Fi connectivity, it supports gesture operation and HDMI output. Advanced algorithms ensure precise ECG, SpO₂, NIBP, and CO₂ monitoring with fast measurement, low false alarms, and strong motion resistance—making CX15 a practical and dependable solution for everyday clinical needs.'
 					},
 					{
-						id: 2,
-						name: 'H10 Finger Oximeter',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/H10%20Finger%20Oximeter.png',
-						description: 'The H10 finger oximeter features EDAN’s iMAT™ algorithm to deliver accurate SpO₂, pulse rate, and perfusion index readings for spot checks, triage, and homecare use. With a color OLED display, multiple viewing modes, adjustable brightness, long battery life, and IP22 protection, it is portable, reliable, and easy to operate.'
-					},
-					{
-						id: 3,
-						name: 'H100B Pulse Oximeter',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/H100B%20Pulse%20Oximeter.png',
-						description: 'The H100B handheld pulse oximeter provides reliable and accurate SpO₂ and pulse rate measurements for spot checks, even in challenging conditions. It features a backlit LCD with plethysmogram display, trend review, large data storage up to 300 hours, and PC data management for efficient patient monitoring'
-					},
-					{
 						id: 4,
 						name: 'iM3 Vital Signs Monitor',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/iM3%20Vital%20Signs%20Monitor.png',
@@ -238,17 +226,19 @@ export default function EmergencyOutpatient() {
 						description: 'The X12 patient monitor features a 12.1” ultra-slim display and supports monitoring for all patient types, from neonates to adults, in settings such as emergency rooms, general wards, cardiac units, and during in-hospital transfers. It provides standard parameters including 3/5-lead ECG, RESP, SpO₂, NIBP, and 2-channel TEMP, with optional 12-lead ECG, IBP, C.O., and EDAN G2 CO₂, all enhanced by proprietary algorithms for accurate arrhythmia detection, motion-resistant SpO₂ readings, precise NIBP, and intelligent CO₂ monitoring.'
 					},
 					{
-						id: 6,
-						name: 'A048 Gynecological Examination Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/A048%20GynecoloGical%20examination%20table.png',
-						description: 'The A048 examination table features a mechanically adjustable back plate (0–75° ±10°) and a retractable foot board for patient comfort and space efficiency. It includes an integrated pillow, hidden basin, lithotomy rod (adjustable in height and angle), paper roll holder, and large drawers for tool storage. Built with a 0.8 mm thick base cabinet, the table supports up to 250 kg, and also offers a retractable auxiliary leg section and step stool. Additional features include a stainless steel basin and a power outlet for convenient clinical use.'
+						id: 2,
+						name: 'H10 Finger Oximeter',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/H10%20Finger%20Oximeter.png',
+						description: 'The H10 finger oximeter features EDAN’s iMAT™ algorithm to deliver accurate SpO₂, pulse rate, and perfusion index readings for spot checks, triage, and homecare use. With a color OLED display, multiple viewing modes, adjustable brightness, long battery life, and IP22 protection, it is portable, reliable, and easy to operate.'
 					},
 					{
-						id: 7,
-						name: 'SKB041-10 Patient Transportation Trolley',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/SKB041-10.png',
-						description: 'The SKB041-10 features fixable side-rails that can be positioned horizontally to support IV administration or other treatments, with an innovative design allowing zero-gap patient transfer from stretcher to bed. It includes a degree indicator on the guardrail, a T-shaped gap for tubing, a full stainless-steel IV pole (15 kg capacity), waterproof mattress, foldable handle, bumpers at all four corners, 8″ central castors, and a center wheel for easy directional control. Height adjustment and Trendelenburg/reverse Trendelenburg functions are supported by a high-quality American hydraulic pump.'
+						id: 3,
+						name: 'H100B Pulse Oximeter',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/H100B%20Pulse%20Oximeter.png',
+						description: 'The H100B handheld pulse oximeter provides reliable and accurate SpO₂ and pulse rate measurements for spot checks, even in challenging conditions. It features a backlit LCD with plethysmogram display, trend review, large data storage up to 300 hours, and PC data management for efficient patient monitoring'
 					},
+					
+					
 					{
 						id: 8,
 						name: 'PA-2S Portable Aspirator',
@@ -256,11 +246,12 @@ export default function EmergencyOutpatient() {
 						description: 'The UZUMCU portable aspirator is a battery-powered, lightweight device for minor surgical and bedside fluid removal. It delivers up to 620 mm Hg vacuum with 30 L/min flow, operates quietly (45 dBA), and features a 2 L transparent jar, hydrophobic filters, and an oil-free pump for easy cleaning and maintenance. CE-certified and suitable for OR, ICU, emergency, and dental use, it runs up to 30 minutes per charge. Made of durable ABS plastic, it includes all standard hoses and accessories. Dimensions: 230×420×360 mm; Weight: 4.132 kg (with battery).'
 					},
 					{
-						id: 9,
-						name: 'X09 Examination Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/X09%20Examination%20table.png',
-						description: 'The X09 features a backrest adjustable from 0–65° (±10°) and supports up to 175 kg. It has a durable 1.2–1.5 mm powder-coated steel frame, 4 anti-slip feet, and high-density 6 cm flame-retardant foam with 30 kg/m³ density. Upholstery is flame retardant, mildew-resistant, and wear-resistant (100,000 cycles). Constructed with Baosteel and precision robotic welding, it includes 11-layer epoxy painting (0.12 mm, 60° brightness) resistant to 50 kg impacts. External dimensions: 1900×600×680 mm.'
+						id: 16,
+						name: 'SD3 Ultrasonic Pocket Doppler',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/SD3%20Ultrasonic%20Pocket%20Doppler.png',
+						description: 'With excellent sensitivity, complete interchangeability and high durability, SD3 series Ultrasonic Pocket Dopplers are ideal for routine fetal heart rate detection by clinicians.'
 					},
+					
 					{
 						id: 10,
 						name: 'Hopefusion Series Infusion Pump',
@@ -297,17 +288,30 @@ export default function EmergencyOutpatient() {
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/C6%20HDC6A%20HD%20Video%20Colposcope.png',
 						description: 'The C6 HD/C6A HD Video Colposcope combines a high-definition camera, advanced software, and a convenient workstation to meet the demanding needs of gynecological screening. It delivers superior image quality with over 900 TVL resolution, HD illumination, and adjustable LED lighting to clearly visualize examination areas. The green light mode enhances tissue contrast and highlights abnormal blood vessels for more accurate diagnosis. With flexible magnification, wide viewing angles, patient management software, and support for USB, SD, HDMI, and printing, this system enables easy, standardized, and efficient clinical use as well as teaching and case discussions.'
 					},
-					{
-						id: 16,
-						name: 'SD3 Ultrasonic Pocket Doppler',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/SD3%20Ultrasonic%20Pocket%20Doppler.png',
-						description: 'With excellent sensitivity, complete interchangeability and high durability, SD3 series Ultrasonic Pocket Dopplers are ideal for routine fetal heart rate detection by clinicians.'
-					},
+					
 					{
 						id: 17,
 						name: 'UHD Series Video Colposcope',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/UHD%20Series%20Video%20Colposcope.png',
 						description: 'UHD Series Video Colposcope has 8-megapixel resolution (3840×2160), delivering ultra-high-definition imaging that clearly reveals tiny lesions, vascular morphology, and subtle changes during acetic acid testing. Combined with BT.2020 wide color gamut, medical-grade 4K display, and multispectral light source imaging using white and narrow-band blue/green light, it provides true-to-life color reproduction, enhanced vessel contrast, and precise lesion boundary identification for more accurate clinical assessment.'
+					},
+					{
+						id: 9,
+						name: 'X09 Examination Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/X09%20Examination%20table.png',
+						description: 'The X09 features a backrest adjustable from 0–65° (±10°) and supports up to 175 kg. It has a durable 1.2–1.5 mm powder-coated steel frame, 4 anti-slip feet, and high-density 6 cm flame-retardant foam with 30 kg/m³ density. Upholstery is flame retardant, mildew-resistant, and wear-resistant (100,000 cycles). Constructed with Baosteel and precision robotic welding, it includes 11-layer epoxy painting (0.12 mm, 60° brightness) resistant to 50 kg impacts. External dimensions: 1900×600×680 mm.'
+					},
+					{
+						id: 6,
+						name: 'A048 Gynecological Examination Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/A048%20GynecoloGical%20examination%20table.png',
+						description: 'The A048 examination table features a mechanically adjustable back plate (0–75° ±10°) and a retractable foot board for patient comfort and space efficiency. It includes an integrated pillow, hidden basin, lithotomy rod (adjustable in height and angle), paper roll holder, and large drawers for tool storage. Built with a 0.8 mm thick base cabinet, the table supports up to 250 kg, and also offers a retractable auxiliary leg section and step stool. Additional features include a stainless steel basin and a power outlet for convenient clinical use.'
+					},
+					{
+						id: 7,
+						name: 'SKB041-10 Patient Transportation Trolley',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/emergency-outpatient/SKB041-10.png',
+						description: 'The SKB041-10 features fixable side-rails that can be positioned horizontally to support IV administration or other treatments, with an innovative design allowing zero-gap patient transfer from stretcher to bed. It includes a degree indicator on the guardrail, a T-shaped gap for tubing, a full stainless-steel IV pole (15 kg capacity), waterproof mattress, foldable handle, bumpers at all four corners, 8″ central castors, and a center wheel for easy directional control. Height adjustment and Trendelenburg/reverse Trendelenburg functions are supported by a high-quality American hydraulic pump.'
 					},
 					{
 						id: 18,

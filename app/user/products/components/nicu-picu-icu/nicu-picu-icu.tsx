@@ -213,24 +213,7 @@ export default function SterilizerAutoclave() {
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/BN300%20%20LED%20%20Phototherapy%20%20Unit.png',
 						description: 'The BN300 features 16 blue and 4 white super LEDs with a lamp lifetime of 50,000 hours, delivering adjustable irradiance (I, II, III) in the 400–550 nm range (peak 440–460 nm). It has a 3.5″ LCD touch screen with a 0–999 h treatment timer and 48 h down-counter, real-time clock, and date display. The fanless unit operates at <30 dB, emits no heat, UV, or IR, and is compatible with infant incubators, warmers, and cribs. The 360° rotatable head and height-adjustable trolley provide flexible positioning, while an ergonomic handle, storage basket, and power adapter holder enhance mobility and usability. Operating conditions: 15–30 °C, 5–99% RH; electrical: 220–240 V AC, 50/60 Hz.'
 					},
-					{
-						id: 2,
-						name: 'X01-5 Baby Crib',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/X01-5_Baby-Crib_SaikangMedical.png',
-						description: 'The X01-5 infant bed features a sturdy epoxy powder-coated steel frame from Baosteel, with 11-step epoxy painting for durability and impact resistance. It includes a transparent, non-toxic acrylic baby basin that can be sterilized above 100 °C, a Trendelenburg pneumatic lift for safe backward tilting, and 3″ covered TPR casters designed for long-lasting, smooth movement. The bed also offers a utility basket for storage, a custom mattress for easy cleaning, and a full stainless steel IV pole capable of supporting 15 kg.'
-					},
-					{
-						id: 3,
-						name: 'V8v Electric ICU Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/V8v_Electric-ICU-Bed.png',
-						description: 'The V8V electric ICU bed is designed to enhance patient comfort and prevent complications such as pressure ulcers. Its backrest can be adjusted to a 30-degree smart-stop position, clinically recommended to reduce the risk of respiratory infections. The bed features an innovative dual retraction system, with the backrest and thigh rest retracting 67 mm and 47 mm respectively. This patented design extends the pelvic area, distributes pressure evenly, and minimizes shear forces, proactively preventing bedsores while improving overall patient well-being.'
-					},
-					{
-						id: 4,
-						name: 'CR2q Hospital Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/CR2q.png',
-						description: 'The CR2q hospital bed combines durability, safety, and customization for patient care. Its steel frame is made from Baosteel and finished with 11-step epoxy painting, providing antibacterial protection and impact resistance up to 50 kg. The bed features a suspended hand crank for manual adjustment, extreme protection sensors to prevent tipping, and customizable fire-proof MDF head and foot boards. Additional features include a full stainless steel IV pole with 15 kg capacity, optional lifting pole and adjustable oxygen cylinder rack, foldable guardrails with protection handles, mobile plastic drainage hooks, and a smooth punching platform supporting up to 250 kg. Optional resin X-ray translucent platforms and adjustable shoe holders enhance functionality, while Panasonic robotic welding ensures a seamless and durable construction.'
-					},
+					
 					{
 						id: 5,
 						name: 'Ecosy930 Infant Warmer',
@@ -250,6 +233,18 @@ export default function SterilizerAutoclave() {
 						description: 'The ENP-1 is a smart, portable enteral nutrition pump that offers micro, constant, and time/volume-controlled feeding. It displays real-time cumulative feeding, automatically recognizes multiple feeding sets, and supports Wi-Fi for improved medical supervision. Safety features include a rechargeable battery for backup, intelligent alarms with animation guidance, adjustable pressure levels, dynamic pressure display, history records, and IP34 dust/water protection. User-friendly design highlights include a transparent pump door, multiple feeding modes (continuous, intermittent, reverse), 3.5″ TFT screen, touchscreen/keyboard input with shuttle key, and a removable battery compartment for easy replacement.'
 					},
 					{
+						id: 2,
+						name: 'X01-5 Baby Crib',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/X01-5_Baby-Crib_SaikangMedical.png',
+						description: 'The X01-5 infant bed features a sturdy epoxy powder-coated steel frame from Baosteel, with 11-step epoxy painting for durability and impact resistance. It includes a transparent, non-toxic acrylic baby basin that can be sterilized above 100 °C, a Trendelenburg pneumatic lift for safe backward tilting, and 3″ covered TPR casters designed for long-lasting, smooth movement. The bed also offers a utility basket for storage, a custom mattress for easy cleaning, and a full stainless steel IV pole capable of supporting 15 kg.'
+					},
+					{
+						id: 4,
+						name: 'CR2q Hospital Bed',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/CR2q.png',
+						description: 'The CR2q hospital bed combines durability, safety, and customization for patient care. Its steel frame is made from Baosteel and finished with 11-step epoxy painting, providing antibacterial protection and impact resistance up to 50 kg. The bed features a suspended hand crank for manual adjustment, extreme protection sensors to prevent tipping, and customizable fire-proof MDF head and foot boards. Additional features include a full stainless steel IV pole with 15 kg capacity, optional lifting pole and adjustable oxygen cylinder rack, foldable guardrails with protection handles, mobile plastic drainage hooks, and a smooth punching platform supporting up to 250 kg. Optional resin X-ray translucent platforms and adjustable shoe holders enhance functionality, while Panasonic robotic welding ensures a seamless and durable construction.'
+					},
+					{
 						id: 8,
 						name: 'Pedia Manual 2 Cranks Bed',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/PEDIA%20MANUAL%202%20CRANKS%20BED.png',
@@ -266,7 +261,13 @@ export default function SterilizerAutoclave() {
 						name: 'Pedia Electric 5 Function Bed',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/PEDIA%20ELECTRIC%205%20FUNCTION%20BED.png',
 						description: 'The Saikang CQ8k Electric Children Bed is a 5-function, motorized pediatric bed (1975x880mm) designed for safe, hygienic, and comfortable pediatric care with a 200kg safe working load. Key features include 0-75° back-rest, 0-35° knee-rest, 12° Trendelenburg/reverse Trendelenburg, and 465-760mm height adjustment, controlled via a handheld controller. '
-					}
+					},
+				     {
+						id: 3,
+						name: 'V8v Electric ICU Bed',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/nicu-picu-icu/V8v_Electric-ICU-Bed.png',
+						description: 'The V8V electric ICU bed is designed to enhance patient comfort and prevent complications such as pressure ulcers. Its backrest can be adjusted to a 30-degree smart-stop position, clinically recommended to reduce the risk of respiratory infections. The bed features an innovative dual retraction system, with the backrest and thigh rest retracting 67 mm and 47 mm respectively. This patented design extends the pelvic area, distributes pressure evenly, and minimizes shear forces, proactively preventing bedsores while improving overall patient well-being.'
+					},
 				]
 			}
 		];

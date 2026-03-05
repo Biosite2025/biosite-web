@@ -213,24 +213,7 @@ export default function SurgicalRehabilatation() {
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKR-MT625.png',
 						description: 'This medical trolley features a heavy-duty, powder-coated frame with stable construction and four 100 mm nylon castors (two with brakes) for smooth, secure mobility. It includes multiple drawers with ABS dividers and a central lock, stainless steel side rails on the tabletop, dual color-coded ABS trash bins, and a side-attached file box, providing organized and safe storage for medicines, medical materials, and paperwork.'
 					},
-					{
-						id: 2,
-						name: 'K3K Hospital Bed',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/K3k.png',
-						description: 'SAIKANG ensures high-quality medical furniture through strict selection of branded materials, robotic welding, automated epoxy coating, and rigorous quality control. Its modern, practical design features elegant head and footboards, durable sterilizable plastics, and robust epoxy-painted steel capable of withstanding impacts up to 50 kg.'
-					},
-					{
-						id: 3,
-						name: 'SKS02-W Examination Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKS02-W.png',
-						description: 'This medical trolley is made from 100% pure ABS plastic, ensuring a non-toxic, durable, rust- and corrosion-resistant design that is easy to clean and long-lasting. It features a sunken ABS top to prevent items from falling, a hidden towel hook, stable casters (two with brakes), and a spacious cabinet with a shelf and drawer, available in customizable colors.'
-					},
-					{
-						id: 4,
-						name: 'SKE031 Medical Equipment Cart',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE031.png',
-						description: 'This medical chair features a high-quality aluminum frame with a foldable footrest and adjustable height for patient comfort. It includes 3″ silent castors with dual brakes and a seat upholstered in PVC leather with high-density foam and wood for durability and support.'
-					},
+					
 					{
 						id: 5,
 						name: 'SKR054-ET Emergency Trolley',
@@ -238,29 +221,19 @@ export default function SurgicalRehabilatation() {
 						description: 'This medical trolley features a one-piece countertop with fully guarded and raised handles for safe and comfortable operation, along with a beveled decorative grip for better ergonomics. It offers deep, spacious drawers, a movable power socket above the CPR board, retractable oxygen bottle holder, IV pole, defibrillator placement, and color-coded trash bins, all built on a heavy-duty, stable frame with aligned wheels for secure mobility.'
 					},
 					{
-						id: 6,
-						name: 'SKE020-1D Medical Cabinet',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE020-1D.png',
-						description: 'The SKE020-1D is a hospital bed foot step with a stainless steel frame and rubber anti-slip surface for safety. It features a single-step design and measures 410 × 230 × 220 mm, providing stable and convenient access for patients.'
+						id: 3,
+						name: 'SKS02-W Examination Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKS02-W.png',
+						description: 'This medical trolley is made from 100% pure ABS plastic, ensuring a non-toxic, durable, rust- and corrosion-resistant design that is easy to clean and long-lasting. It features a sunken ABS top to prevent items from falling, a hidden towel hook, stable casters (two with brakes), and a spacious cabinet with a shelf and drawer, available in customizable colors.'
 					},
+					
 					{
 						id: 7,
 						name: 'SKB041-3 Patient Bed',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKB041-3.png',
 						description: 'This hospital stretcher features a durable Baosteel frame with robotic 360° welding, 11-step epoxy painting, and antibacterial testing, ensuring strength and impact resistance. It includes dual US hydraulic pumps for height and Trendelenburg adjustments, foldable aluminum side rails, waterproof PU mattress, 8″ double casters with brakes and center wheel for easy maneuvering, detachable bumper wheels, IV pole, and mobile drainage hooks, all designed for safe, efficient patient transport and care.'
 					},
-					{
-						id: 8,
-						name: 'SKH041 IV Pole',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKH041(1).png',
-						description: 'This stainless steel IV pole features a height-adjustable range of 1350–2250 mm and is constructed with durable inner (Φ16 mm) and outer (Φ25 mm) stainless steel tubes. It includes two stainless steel hooks, five five-pointed star plastic casters (2-inch double-sided, without brakes), and a stable base with a diameter of 520 mm.'
-					},
-					{
-						id: 9,
-						name: 'SKH042 Overbed Table',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKH042.png',
-						description: 'This movable hospital table features a multi-layer solid wood tabletop with PVC edge banding (800 × 400 mm) and a height-adjustable gas spring system for easy operation. Its metal base with spray-coated stainless steel columns, four durable 2-inch rubber castors (two with brakes), and stable center of gravity make it suitable as a bedside or dining table for hospital use.'
-					},
+					
 					{
 						id: 10,
 						name: 'SKB041-1 Patient Stretcher',
@@ -268,10 +241,10 @@ export default function SurgicalRehabilatation() {
 						description: 'This hospital stretcher features a robust Baosteel frame with robotic 360° welding, epoxy-painted bed frame and chassis, and high-quality PP bed platform and guardrails for durability and hygiene. It includes a backrest lift up to 70°, four 6-inch double-sided castors with locks, a directional center wheel, telescopic IV poles, oxygen bottle holders, stainless steel handles, safety straps, and a 2 cm thick standard mattress for safe and comfortable patient transport.'
 					},
 					{
-						id: 11,
-						name: 'SKE087 Reclining Chair',
-						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE087.png',
-						description: 'The SKE087 features a sectional backrest for strong spinal support, solid wood armrests, and a convenient cup holder, providing comfort and practicality for patients. It includes a one-touch reclining function, super-strong PU leather upholstery with flame-retardant high-density foam, a solid wood rotary table, and 3″ silent medical castors that are waterproof, anti-static, and antibacterial.'
+						id: 2,
+						name: 'K3K Hospital Bed',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/K3k.png',
+						description: 'SAIKANG ensures high-quality medical furniture through strict selection of branded materials, robotic welding, automated epoxy coating, and rigorous quality control. Its modern, practical design features elegant head and footboards, durable sterilizable plastics, and robust epoxy-painted steel capable of withstanding impacts up to 50 kg.'
 					},
 					{
 						id: 12,
@@ -302,7 +275,39 @@ export default function SurgicalRehabilatation() {
 						name: 'Manual Orthopedic Bed',
 						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/MANUAL%20ORTHOPEDIC%20BED.png',
 						description: 'The Saikang B4w (or B4W) is a 4-crank, 5-function manual medical bed designed for ICU and general ward use, featuring a sturdy metal construction with a high weight capacity. It is designed for durability and patient comfort, with adjustable positions for backrest, legrest, height, Trendelenburg, and reverse Trendelenburg. '
-					}
+					},
+					{
+						id: 11,
+						name: 'SKE087 Reclining Chair',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE087.png',
+						description: 'The SKE087 features a sectional backrest for strong spinal support, solid wood armrests, and a convenient cup holder, providing comfort and practicality for patients. It includes a one-touch reclining function, super-strong PU leather upholstery with flame-retardant high-density foam, a solid wood rotary table, and 3″ silent medical castors that are waterproof, anti-static, and antibacterial.'
+					},	
+					{
+						id: 4,
+						name: 'SKE031 Medical Equipment Cart',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE031.png',
+						description: 'This medical chair features a high-quality aluminum frame with a foldable footrest and adjustable height for patient comfort. It includes 3″ silent castors with dual brakes and a seat upholstered in PVC leather with high-density foam and wood for durability and support.'
+					},
+					
+					{
+						id: 6,
+						name: 'SKE020-1D Medical Cabinet',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKE020-1D.png',
+						description: 'The SKE020-1D is a hospital bed foot step with a stainless steel frame and rubber anti-slip surface for safety. It features a single-step design and measures 410 × 230 × 220 mm, providing stable and convenient access for patients.'
+					},
+					
+					{
+						id: 8,
+						name: 'SKH041 IV Pole',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKH041(1).png',
+						description: 'This stainless steel IV pole features a height-adjustable range of 1350–2250 mm and is constructed with durable inner (Φ16 mm) and outer (Φ25 mm) stainless steel tubes. It includes two stainless steel hooks, five five-pointed star plastic casters (2-inch double-sided, without brakes), and a stable base with a diameter of 520 mm.'
+					},
+					{
+						id: 9,
+						name: 'SKH042 Overbed Table',
+						image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/surgical-rehabilatation/SKH042.png',
+						description: 'This movable hospital table features a multi-layer solid wood tabletop with PVC edge banding (800 × 400 mm) and a height-adjustable gas spring system for easy operation. Its metal base with spray-coated stainless steel columns, four durable 2-inch rubber castors (two with brakes), and stable center of gravity make it suitable as a bedside or dining table for hospital use.'
+					},
 				]
 			}
 		];
