@@ -143,7 +143,10 @@ export default function RootLayout({
         <meta property="og:url" content="https://biositeph.com/" />
         <meta property="og:title" content="Biosite Medical Instruments, INC." />
         <meta property="og:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
-        <meta property="og:image" content="https://biositeph.com/og-image.jpg" />
+        <meta property="og:image" content="https://biositeph.com/asset/favicon/web-app-manifest-512x512.png" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:site_name" content="Biosite Philippines" />
         
         {/* Twitter */}
@@ -151,7 +154,7 @@ export default function RootLayout({
         <meta property="twitter:url" content="https://biositeph.com/" />
         <meta property="twitter:title" content="Biosite Medical Instruments, INC." />
         <meta property="twitter:description" content="Transforming healthcare through advanced diagnostic and medical supplies. Explore our comprehensive range of premium laboratory tools and diagnostic devices." />
-        <meta property="twitter:image" content="https://biositeph.com/og-image.jpg" />
+        <meta property="twitter:image" content="https://biositeph.com/asset/favicon/web-app-manifest-512x512.png" />
         
         {/* Canonical URL */}
         <link rel="canonical" href="https://biositeph.com/" />
