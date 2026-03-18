@@ -305,7 +305,7 @@ const MissionVision = () => {
                   </svg>
                 </motion.div>
                 <h3 className="text-2xl md:text-3xl font-bold text-[#2356a8]">
-                  OUR MISION
+                  OUR MISSION
                 </h3>
               </div>
               <p className="text-gray-700 text-base md:text-lg leading-relaxed">
