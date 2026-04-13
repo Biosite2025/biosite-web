@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pool } from 'pg';
+import nodemailer from 'nodemailer';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -7,6 +8,75 @@ const pool = new Pool({
     rejectUnauthorized: false
   } : false,
 });
+
+async function notifyApplicantsRecipients() {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    console.warn('[Mailer] SMTP credentials not set — skipping applicant notification.');
+    return;
+  }
+  try {
+    const { rows: recipients } = await pool.query(
+      `SELECT DISTINCT u.email
+       FROM users u
+       LEFT JOIN role_permissions rp ON rp.role_id = u.role_id AND rp.page = 'applicants'
+       WHERE u.is_active = true
+         AND u.email IS NOT NULL
+         AND u.email <> ''
+         AND (u.role = 'SUPER_ADMIN' OR rp.can_access = true)`
+    );
+
+    if (recipients.length === 0) {
+      console.log('[Mailer] No recipients for applicants notification.');
+      return;
+    }
+
+    const emailList = recipients.map((r: { email: string }) => r.email);
+    const adminUrl = process.env.ADMIN_URL || 'https://admin.biositeph.com';
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD },
+    });
+
+    await transporter.sendMail({
+      from: `"BioSite Admin" <${process.env.SMTP_USER}>`,
+      bcc: emailList,
+      subject: 'New Job Application Received — BioSite',
+      html: `
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/></head>
+<body style="margin:0;padding:0;background:#f4f6f9;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+        <tr><td style="background:linear-gradient(135deg,#2B3990,#2B7CD3);padding:32px 40px;text-align:center;">
+          <h1 style="margin:0;color:#fff;font-size:22px;font-weight:700;">BioSite Admin Portal</h1>
+        </td></tr>
+        <tr><td style="padding:36px 40px;">
+          <h2 style="margin:0 0 12px 0;color:#1a202c;font-size:20px;font-weight:700;">New Job Application Submitted</h2>
+          <p style="margin:0 0 24px 0;color:#4a5568;font-size:15px;line-height:1.7;">A new job application has been submitted on the careers portal.</p>
+          <p style="margin:0 0 32px 0;color:#4a5568;font-size:15px;line-height:1.7;">Please log in to the admin portal to review the details. For security and privacy, no further information is included in this notification.</p>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="border-radius:8px;background:#2B7CD3;">
+              <a href="${adminUrl}/applicants" style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;">View Applicants</a>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#f8fafc;padding:20px 40px;border-top:1px solid #e8ecf0;text-align:center;">
+          <p style="margin:0;color:#a0aec0;font-size:12px;line-height:1.6;">This is an automated notification from the BioSite Admin Portal.<br/>You received this because your account has access to this section.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`,
+    });
+
+    console.log(`[Mailer] ✅ Applicant notification sent to ${emailList.length} recipient(s):`, emailList);
+  } catch (err: any) {
+    console.error('[Mailer] ❌ Failed to send applicant notification:', err.message);
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,6 +112,9 @@ export async function POST(request: NextRequest) {
     );
 
     console.log('✅ Saved to database with ID:', result.rows[0].id);
+
+    // Fire-and-forget email notification
+    notifyApplicantsRecipients();
 
     return NextResponse.json(
       { success: true, data: result.rows[0] },
