@@ -9,28 +9,14 @@ const pool = new Pool({
   } : false,
 });
 
+const HR_EMAIL = 'bmi.hr@biositeph.com';
+
 async function notifyApplicantsRecipients() {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
     console.warn('[Mailer] SMTP credentials not set — skipping applicant notification.');
     return;
   }
   try {
-    const { rows: recipients } = await pool.query(
-      `SELECT DISTINCT u.email
-       FROM users u
-       LEFT JOIN role_permissions rp ON rp.role_id = u.role_id AND rp.page = 'applicants'
-       WHERE u.is_active = true
-         AND u.email IS NOT NULL
-         AND u.email <> ''
-         AND (u.role = 'SUPER_ADMIN' OR rp.can_access = true)`
-    );
-
-    if (recipients.length === 0) {
-      console.log('[Mailer] No recipients for applicants notification.');
-      return;
-    }
-
-    const emailList = recipients.map((r: { email: string }) => r.email);
     const adminUrl = process.env.ADMIN_URL || 'https://admin.biositeph.com';
 
     const transporter = nodemailer.createTransport({
@@ -42,8 +28,8 @@ async function notifyApplicantsRecipients() {
 
     await transporter.sendMail({
       from: `"BioSite Admin" <${process.env.SMTP_USER}>`,
-      bcc: emailList,
-      subject: 'New Job Application Received — BioSite',
+      to: HR_EMAIL,
+      subject: 'New Job Application Received — BioSite Careers',
       html: `
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/></head>
 <body style="margin:0;padding:0;background:#f4f6f9;font-family:Arial,sans-serif;">
@@ -64,7 +50,7 @@ async function notifyApplicantsRecipients() {
           </tr></table>
         </td></tr>
         <tr><td style="background:#f8fafc;padding:20px 40px;border-top:1px solid #e8ecf0;text-align:center;">
-          <p style="margin:0;color:#a0aec0;font-size:12px;line-height:1.6;">This is an automated notification from the BioSite Admin Portal.<br/>You received this because your account has access to this section.</p>
+          <p style="margin:0;color:#a0aec0;font-size:12px;line-height:1.6;">This is an automated notification from the BioSite Admin Portal.<br/>You received this because you are subscribed to HR notifications.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -72,7 +58,7 @@ async function notifyApplicantsRecipients() {
 </body></html>`,
     });
 
-    console.log(`[Mailer] ✅ Applicant notification sent to ${emailList.length} recipient(s):`, emailList);
+    console.log(`[Mailer] ✅ Applicant notification sent to ${HR_EMAIL}`);
   } catch (err: any) {
     console.error('[Mailer] ❌ Failed to send applicant notification:', err.message);
   }
