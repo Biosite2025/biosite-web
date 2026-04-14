@@ -27,9 +27,9 @@ async function notifyApplicantsRecipients() {
     });
 
     await transporter.sendMail({
-      from: `"BioSite Admin" <${process.env.SMTP_USER}>`,
+      from: `"Biosite Admin" <${process.env.SMTP_USER}>`,
       to: HR_EMAIL,
-      subject: 'New Job Application Received — BioSite Careers',
+      subject: 'New Job Application Received — Biosite Careers',
       html: `
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/></head>
 <body style="margin:0;padding:0;background:#f4f6f9;font-family:Arial,sans-serif;">
@@ -37,7 +37,7 @@ async function notifyApplicantsRecipients() {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
         <tr><td style="background:linear-gradient(135deg,#2B3990,#2B7CD3);padding:32px 40px;text-align:center;">
-          <h1 style="margin:0;color:#fff;font-size:22px;font-weight:700;">BioSite Admin Portal</h1>
+          <h1 style="margin:0;color:#fff;font-size:22px;font-weight:700;">Biosite Admin Portal</h1>
         </td></tr>
         <tr><td style="padding:36px 40px;">
           <h2 style="margin:0 0 12px 0;color:#1a202c;font-size:20px;font-weight:700;">New Job Application Submitted</h2>
@@ -50,7 +50,7 @@ async function notifyApplicantsRecipients() {
           </tr></table>
         </td></tr>
         <tr><td style="background:#f8fafc;padding:20px 40px;border-top:1px solid #e8ecf0;text-align:center;">
-          <p style="margin:0;color:#a0aec0;font-size:12px;line-height:1.6;">This is an automated notification from the BioSite Admin Portal.<br/>You received this because you are subscribed to HR notifications.</p>
+          <p style="margin:0;color:#a0aec0;font-size:12px;line-height:1.6;">This is an automated notification from the Biosite Admin Portal.<br/>You received this because you are subscribed to HR notifications.</p>
         </td></tr>
       </table>
     </td></tr>
