@@ -11,7 +11,7 @@ const pool = new Pool({
 
 const HR_EMAIL = 'bmi.hr@biositeph.com';
 
-async function notifyApplicantsRecipients() {
+async function notifyApplicantsRecipients(position: string) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
     console.warn('[Mailer] SMTP credentials not set — skipping applicant notification.');
     return;
@@ -41,7 +41,7 @@ async function notifyApplicantsRecipients() {
         </td></tr>
         <tr><td style="padding:36px 40px;">
           <h2 style="margin:0 0 12px 0;color:#1a202c;font-size:20px;font-weight:700;">New Job Application Submitted</h2>
-          <p style="margin:0 0 24px 0;color:#4a5568;font-size:15px;line-height:1.7;">A new job application has been submitted on the careers portal.</p>
+          <p style="margin:0 0 24px 0;color:#4a5568;font-size:15px;line-height:1.7;">A new job application has been submitted on the careers portal for the position: <strong>${position}</strong></p>
           <p style="margin:0 0 32px 0;color:#4a5568;font-size:15px;line-height:1.7;">Please log in to the admin portal to review the details. For security and privacy, no further information is included in this notification.</p>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="border-radius:8px;background:#2B7CD3;">
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
     console.log('✅ Saved to database with ID:', result.rows[0].id);
 
     // Fire-and-forget email notification
-    notifyApplicantsRecipients();
+    notifyApplicantsRecipients(position);
 
     return NextResponse.json(
       { success: true, data: result.rows[0] },
