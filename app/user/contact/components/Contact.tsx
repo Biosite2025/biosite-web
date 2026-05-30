@@ -43,9 +43,29 @@ const locations: LocationData[] = [
   }
 ];
 
+const departmentEmailMap: Record<string, Record<string, string>> = {
+  quotation: {
+    luzon: "quotation.luzon@biositeph.com",
+    vismin: "quotation.vismin@biositeph.com",
+  },
+  sales: {
+    luzon: "nsm@biositeph.com",
+    vismin: "sheereann.barnes@biositeph.com",
+  },
+  technical_service: {
+    luzon: "mnl.servicecoordinator@biositeph.com",
+    vismin: "irisclint.caro@biositeph.com",
+  },
+  marketing: {
+    luzon: "customerengagement@biositeph.com",
+    vismin: "customerengagement@biositeph.com",
+  },
+};
+
 function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
   const [deptFocused, setDeptFocused] = useState(false);
+  const [locationFocused, setLocationFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -56,7 +76,7 @@ function ContactForm() {
 
   // Reset form when activeLocation changes
   useEffect(() => {
-    setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+    setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
     setError("");
   }, [activeLocation]);
 
@@ -95,9 +115,9 @@ function ContactForm() {
         name: form.name,
         email: form.email,
         phone: form.phone,
-        subject: form.subject || 'New Inquiry',
+        subject: `${form.subject || 'New Inquiry'} - ${form.location === 'luzon' ? 'Luzon' : 'VisMin'}`,
         message: form.message,
-        recipient: form.department,
+        recipient: departmentEmailMap[form.department]?.[form.location] ?? "",
       };
       const response = await fetch("/api/send-contact-email", {
         method: "POST",
@@ -109,7 +129,7 @@ function ContactForm() {
       const data = await response.json();
       if (data.success) {
         setSubmitted(true);
-        setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "" });
+        setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
         setTimeout(() => setSubmitted(false), 3000);
       } else {
         setError(data.error || "Failed to send message. Please try again.");
@@ -313,10 +333,50 @@ function ContactForm() {
           <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-2 text-center  w-full">
             Get in Touch
           </h2>
-          {/* Department Dropdown as To: ... with floating label */}
-          <div className="mb-2 sm:mb-3 md:mb-4 relative" style={{ minHeight: '60px' }}>
-            <div className="relative w-full" style={{ minHeight: '56px' }}>
-              {/* Floating label */}
+          {/* Location + Department dropdowns side by side */}
+          <div className="mb-2 sm:mb-3 md:mb-4 flex gap-4">
+            {/* Location Dropdown */}
+            <div className="relative flex-1" style={{ minHeight: '56px' }}>
+              <label
+                htmlFor="location-select"
+                className={`absolute left-0 px-1 transition-all duration-300 ease-in-out
+                  text-[#2B3990] font-semibold pointer-events-none
+                  ${
+                    locationFocused || form.location
+                      ? 'text-xs -top-4 bg-white rounded px-1 py-0.5 shadow-sm'
+                      : 'text-base top-4 sm:top-5'
+                  }
+                `}
+                style={{
+                  transition: 'all 0.28s cubic-bezier(0.4,0,0.2,1)',
+                  background: locationFocused || form.location ? '#fff' : 'transparent',
+                  zIndex: 10,
+                }}
+              >
+                Location:
+              </label>
+              <select
+                id="location-select"
+                name="location"
+                className="appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"
+                value={form.location}
+                onChange={handleChange}
+                onFocus={() => setLocationFocused(true)}
+                onBlur={() => setLocationFocused(false)}
+                required
+                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px' }}
+              >
+                <option value="" disabled hidden></option>
+                <option value="luzon">Luzon</option>
+                <option value="vismin">VisMin</option>
+              </select>
+              <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-[#2B3990] text-lg">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+            </div>
+
+            {/* Department (To:) Dropdown */}
+            <div className="relative flex-1" style={{ minHeight: '56px' }}>
               <label
                 htmlFor="department-select"
                 className={`absolute left-0 px-1 transition-all duration-300 ease-in-out
@@ -338,32 +398,19 @@ function ContactForm() {
               <select
                 id="department-select"
                 name="department"
-                className={"appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"}
+                className="appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"
                 value={form.department}
                 onChange={handleChange}
                 onFocus={() => setDeptFocused(true)}
                 onBlur={() => setDeptFocused(false)}
                 required
-                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px'}}
+                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px' }}
               >
                 <option value="" disabled hidden></option>
-                {activeLocation === 'manila' ? (
-                  <>
-                    <option value="quotation.luzon@biositeph.com">Quotation - Luzon</option>
-                    <option value="nsm@biositeph.com">Sales - Luzon</option>
-                    <option value="mnl.servicecoordinator@biositeph.com">Technical Service - Luzon</option>
-                    <option value="customerengagement@biositeph.com">Marketing - Luzon</option>
-                    
-                  </>
-                ) : (
-                  <>
-                    <option value="quotation.vismin@biositeph.com">Quotation - VisMin</option>
-                    <option value="sheereann.barnes@biositeph.com">Sales - VisMin</option>
-                    <option value="irisclint.caro@biositeph.com">Technical Service - VisMin</option>
-                    <option value="customerengagement@biositeph.com">Marketing - VisMin</option>
-                    
-                  </>
-                )}
+                <option value="quotation">Quotation</option>
+                <option value="sales">Sales</option>
+                <option value="technical_service">Technical Service</option>
+                <option value="marketing">Marketing</option>
               </select>
               <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-[#2B3990] text-lg">
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
