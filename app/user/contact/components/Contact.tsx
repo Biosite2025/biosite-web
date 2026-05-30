@@ -109,13 +109,28 @@ function ContactForm() {
     e.preventDefault();
     setError("");
     setShowErrorPopup(false);
+
+    if (!form.location) {
+      setError("Please select a Location before sending.");
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 3500);
+      return;
+    }
+    if (!form.department) {
+      setError("Please select a Department (To:) before sending.");
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 3500);
+      return;
+    }
+
     setSubmitting(true);
     try {
+      const locationLabel = form.location === 'luzon' ? 'Luzon' : 'VisMin';
       const payload = {
         name: form.name,
         email: form.email,
         phone: form.phone,
-        subject: `${form.subject || 'New Inquiry'} - ${form.location === 'luzon' ? 'Luzon' : 'VisMin'}`,
+        subject: `${form.subject || 'New Inquiry'} - ${locationLabel}`,
         message: form.message,
         recipient: [...new Set([
           departmentEmailMap[form.department]?.luzon ?? "",
@@ -176,27 +191,39 @@ function ContactForm() {
             padding: 1rem !important;
           }
           #usermap {
-          margin-top: -2rem !important;
-            height: 460px !important;}
-
-        }
-          #userform{
             margin-top: -2rem !important;
             height: 460px !important;
           }
-        
-        @media (min-width: 810px) and (max-width: 830px) and (min-height: 1170px) and (max-height: 1190px) {
+          #userform {
+            margin-top: -2rem !important;
+            height: 460px !important;
+          }
+        }
+
+        /* Tablet responsive styles (768px - 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          #usermap {
+            height: 320px !important;
+            margin-top: 0 !important;
+          }
+          #userform {
+            height: auto !important;
+            min-height: unset !important;
+            margin-top: 0 !important;
+            padding: 24px !important;
+          }
           .contact-cards-ipad {
-            grid-template-columns: 1fr !important;
-            gap: 28px !important;
-            margin-top: 36px !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr !important;
+            gap: 16px !important;
+            margin-top: 24px !important;
           }
           .contact-card-ipad {
             width: 100% !important;
             min-width: 0 !important;
             max-width: 100% !important;
-            padding: 32px 24px !important;
-            font-size: 1.15rem !important;
+            padding: 20px 14px !important;
+            font-size: 0.95rem !important;
           }
         }
       `}</style>
@@ -327,7 +354,7 @@ function ContactForm() {
         {/* Contact Form */}
         <motion.div
           id="userform"
-          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-[420px]"
+          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-6 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:h-auto lg:h-[420px]"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
