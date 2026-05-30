@@ -13,15 +13,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, phone, subject, message, recipient } = body;
 
+    // Accept single email or array of emails
+    const recipients: string[] = Array.isArray(recipient) ? recipient : [recipient];
+    const uniqueRecipients = [...new Set(recipients)];
+
     // Validate required fields
-    if (!name || !email || !message || !recipient) {
+    if (!name || !email || !message || uniqueRecipients.length === 0) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(recipient)) {
+    if (!uniqueRecipients.every(isValidEmail)) {
       return NextResponse.json(
         { success: false, error: 'Invalid recipient email selected' },
         { status: 400 }
@@ -42,7 +46,7 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: `"biositeph.com" <${process.env.SMTP_USER}>`,
-      to: recipient,
+      to: uniqueRecipients.join(', '),
       subject: `${subject }`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

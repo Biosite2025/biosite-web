@@ -117,7 +117,10 @@ function ContactForm() {
         phone: form.phone,
         subject: `${form.subject || 'New Inquiry'} - ${form.location === 'luzon' ? 'Luzon' : 'VisMin'}`,
         message: form.message,
-        recipient: departmentEmailMap[form.department]?.[form.location] ?? "",
+        recipient: [...new Set([
+          departmentEmailMap[form.department]?.luzon ?? "",
+          departmentEmailMap[form.department]?.vismin ?? "",
+        ].filter(Boolean))],
       };
       const response = await fetch("/api/send-contact-email", {
         method: "POST",
