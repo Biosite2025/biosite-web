@@ -200,32 +200,6 @@ function ContactForm() {
           }
         }
 
-        /* Tablet responsive styles (768px - 1023px) */
-        @media (min-width: 768px) and (max-width: 1023px) {
-          #usermap {
-            height: 320px !important;
-            margin-top: 0 !important;
-          }
-          #userform {
-            height: auto !important;
-            min-height: unset !important;
-            margin-top: 0 !important;
-            padding: 24px !important;
-          }
-          .contact-cards-ipad {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr 1fr !important;
-            gap: 16px !important;
-            margin-top: 24px !important;
-          }
-          .contact-card-ipad {
-            width: 100% !important;
-            min-width: 0 !important;
-            max-width: 100% !important;
-            padding: 20px 14px !important;
-            font-size: 0.95rem !important;
-          }
-        }
       `}</style>
       <motion.section
       className="contact-section-1280 w-full min-h-[100vh] flex flex-col items-center justify-start bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-2 sm:py-4 md:py-6 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden lg:pt-12 max-[912px]:pt-2"
@@ -327,7 +301,7 @@ function ContactForm() {
         {/* Map */}
         <motion.div
           id="usermap"
-          className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] mb-6 md:mb-8 lg:mb-0"
+          className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl h-[250px] sm:h-[300px] md:h-[350px] lg:h-full lg:min-h-[420px] mb-6 md:mb-8 lg:mb-0"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
@@ -354,7 +328,7 @@ function ContactForm() {
         {/* Contact Form */}
         <motion.div
           id="userform"
-          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-6 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] md:h-auto lg:h-[420px]"
+          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] lg:min-h-[420px]"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
