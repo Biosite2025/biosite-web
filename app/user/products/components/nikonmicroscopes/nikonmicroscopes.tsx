@@ -225,13 +225,13 @@ export default function NikonMicroscopes() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background, logo, and product images
-		const productImages = Object.values(productData).flat().map((product: any) => product.image);
+		// Preload only the hero background + logos; product images load progressively
 		const heroImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530375/biosite-assets/nikon%20microscopes/nikonbackground.jpg', // Background
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png' // Logo
 		];
-		const allImages = [...heroImages, NIKON_BRAND.logo, ...productImages];
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
+		const allImages = [...heroImages, NIKON_BRAND.logo];
 		let loadedCount = 0;
 
 		const preloadImages = () => {
@@ -254,6 +254,7 @@ export default function NikonMicroscopes() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {

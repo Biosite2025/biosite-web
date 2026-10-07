@@ -19,7 +19,7 @@ const category = {
 // Every product on this page is Hiplaas, so the brand logo is applied at render
 // time rather than being duplicated onto each product record.
 const HIPLAAS_BRAND = { name: 'Hiplaas', logo: '/asset/logo/HIPLAS.png' };
-const HIPLAAS_HERO_BG = '/asset/logo/Hiplaas Background.png';
+const HIPLAAS_HERO_BG = '/asset/logo/Hiplaas Background.webp';
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -223,11 +223,11 @@ export default function Hiplaas() {
     setProducts(productData);
     setLoading(false);
 
-    // Preload all images including the hero background and brand logo
+    // Preload only the hero background + logos; product images load progressively
+    const fallback = setTimeout(() => setImagesLoaded(true), 2500);
     const allImages = [
       HIPLAAS_HERO_BG,
-      HIPLAAS_BRAND.logo,
-      ...productData.map((p: any) => p.image)
+      HIPLAAS_BRAND.logo
     ];
 
     let loadedCount = 0;
@@ -251,6 +251,7 @@ export default function Hiplaas() {
     };
 
     preloadImages();
+    return () => clearTimeout(fallback);
   }, []);
 
   const handleViewDetails = (product: any) => {

@@ -426,13 +426,14 @@ export default function ClinicalChemistry() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background and product images
+		// Preload only the hero background + logos; product images load progressively
 		const heroImages = [
-			'/asset/clinical-chemistry/clinical-chemistry-bg.png',
+			'/asset/clinical-chemistry/clinical-chemistry-bg.webp',
 			'/asset/clinical-chemistry/ilab-logo.png',
 			'/asset/clinical-chemistry/diamond-logo.png',
 		];
-		const allImages = [...heroImages, ...productData.map((p: any) => p.image)];
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
+		const allImages = [...heroImages];
 
 		let loadedCount = 0;
 		const preloadImages = () => {
@@ -455,6 +456,7 @@ export default function ClinicalChemistry() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {
@@ -485,7 +487,7 @@ export default function ClinicalChemistry() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="/asset/clinical-chemistry/clinical-chemistry-bg.png"
+						src="/asset/clinical-chemistry/clinical-chemistry-bg.webp"
 						alt="Clinical Chemistry Background"
 						fill
 						className="object-cover w-full h-full"

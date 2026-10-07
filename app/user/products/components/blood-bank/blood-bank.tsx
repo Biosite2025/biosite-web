@@ -436,7 +436,8 @@ export default function BloodBank() {
 	const [selected, setSelected] = useState<Product | null>(null);
 
 	useEffect(() => {
-		const imgs = ['/asset/logo/background.png', ...Object.values(BRANDS).map((b) => b.logo), ...tabs.flatMap((t) => t.groups.flatMap((g) => g.products.map((p) => p.image)))];
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
+		const imgs = ['/asset/logo/background.webp', ...Object.values(BRANDS).map((b) => b.logo)];
 		let n = 0;
 		imgs.forEach((src) => {
 			const im = new window.Image();
@@ -444,6 +445,7 @@ export default function BloodBank() {
 			const done = () => { n++; if (n === imgs.length) setImagesLoaded(true); };
 			im.onload = done; im.onerror = done;
 		});
+		return () => clearTimeout(fallback);
 	}, []);
 
 	if (!imagesLoaded) return <Preloader />;
@@ -459,7 +461,7 @@ export default function BloodBank() {
 			{/* Hero */}
 			<motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4">
 				<div className="absolute inset-0 w-full h-full z-0">
-					<Image src="/asset/logo/background.png" alt="Blood Bank background" fill className="object-cover w-full h-full" priority />
+					<Image src="/asset/logo/background.webp" alt="Blood Bank background" fill className="object-cover w-full h-full" priority />
 					<div className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#0b1338]/30 via-[#0b1338]/55 to-[#0b1338]/85" style={{ zIndex: 1 }} />
 				</div>
 				<div className="absolute inset-0 w-full h-full z-10">

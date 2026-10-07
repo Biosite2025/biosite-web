@@ -3,7 +3,7 @@
 /**
  * BrandedProductPage — the "Immunology page pattern" as one reusable component.
  *
- * Renders: hero (background.png + gradient overlay + title/subtitle/chevron),
+ * Renders: hero (background.webp + gradient overlay + title/subtitle/chevron),
  * brand logo sub-tabs that filter the grid, a section-level brand watermark
  * that cross-fades on tab change, the polished ProductCard grid (corner brand
  * badge + subtle 3D image tilt), a generic detail modal, and the footer CTA.
@@ -314,10 +314,10 @@ export default function BrandedProductPage({
 	const [selectedProduct, setSelectedProduct] = useState<ProductDef | null>(null);
 
 	useEffect(() => {
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
-			'/asset/logo/background.png',
+			'/asset/logo/background.webp',
 			...brands.map((b) => b.logo).filter(Boolean),
-			...products.map((p) => p.image),
 		];
 
 		let loadedCount = 0;
@@ -331,6 +331,7 @@ export default function BrandedProductPage({
 			img.onload = done;
 			img.onerror = done;
 		});
+		return () => clearTimeout(fallback);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -351,7 +352,7 @@ export default function BrandedProductPage({
 				    photo shows through, darker toward the bottom where the text sits */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="/asset/logo/background.png"
+						src="/asset/logo/background.webp"
 						alt={`${category.title} background`}
 						fill
 						className="object-cover w-full h-full"

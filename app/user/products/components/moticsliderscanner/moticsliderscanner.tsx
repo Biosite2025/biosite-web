@@ -212,11 +212,11 @@ export default function Centrifuges() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including the brand logo
+		// Preload only the hero background + logos; product images load progressively
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
 			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/motic/bg-motic.jpg',
-			MOTIC_BRAND.logo,
-			...productData.map((p: any) => p.image)
+			MOTIC_BRAND.logo
 		];
 
 		let loadedCount = 0;
@@ -240,6 +240,7 @@ export default function Centrifuges() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {

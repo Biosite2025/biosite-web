@@ -5,7 +5,6 @@ import "./globals.css";
 import Preloader from "../src/components/layout/Preloader";
 import { TopNav } from "../src/components/layout/TopNav";
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { LoadingProvider } from "./LoadingContext";
 import Script from "next/script";
 
@@ -26,15 +25,18 @@ export default function RootLayout({
 }>) {
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
 
   // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 600); // Reduced from 1000ms to 600ms
+  }, []);
+
+  // Branded splash on the first visit only. Re-showing it on every client-side
+  // navigation added a fixed 600ms blank screen to each page change.
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
-  }, [pathname]);
+  }, []);
 
   // Prevent scrolling when loading - comprehensive approach with event blocking
   useEffect(() => {

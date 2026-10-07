@@ -191,11 +191,11 @@ export default function Vitro() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including the hero background and brand logo
+		// Preload only the hero background + logos; product images load progressively
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
 			VITRO_HERO_BG,
-			VITRO_BRAND.logo,
-			...productData.map((p: any) => p.image)
+			VITRO_BRAND.logo
 		];
 		
 		let loadedCount = 0;
@@ -219,6 +219,7 @@ export default function Vitro() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {

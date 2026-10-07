@@ -636,11 +636,11 @@ export default function Immunology() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including hero background and brand logos
+		// Preload only the hero background + logos; product images load progressively
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
-			'/asset/logo/background.png',
-			...brands.map((b) => b.logo),
-			...productData.map((p: any) => p.image)
+			'/asset/logo/background.webp',
+			...brands.map((b) => b.logo)
 		];
 		
 		let loadedCount = 0;
@@ -664,6 +664,7 @@ export default function Immunology() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {
@@ -693,7 +694,7 @@ export default function Immunology() {
 				{/* Background Image (matches Clinical Chemistry hero) */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="/asset/logo/background.png"
+						src="/asset/logo/background.webp"
 						alt="Immunology Background"
 						fill
 						className="object-cover w-full h-full"

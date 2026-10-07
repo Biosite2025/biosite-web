@@ -18,7 +18,7 @@ const category = {
 // Every product on this page is BioGenex, so the brand logo is applied at render
 // time rather than being duplicated onto each product record.
 const BIOGENEX_BRAND = { name: 'Biogenex', logo: '/asset/logo/BIOGENEX2.png' };
-const BIOGENEX_HERO_BG = '/asset/logo/Main-Image-biogenex.jpg';
+const BIOGENEX_HERO_BG = '/asset/logo/Main-Image-biogenex.webp';
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -201,11 +201,11 @@ export default function Biogenex() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images including the hero background and brand logo
+		// Preload only the hero background + logos; product images load progressively
+		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
 			BIOGENEX_HERO_BG,
-			BIOGENEX_BRAND.logo,
-			...productData.map((p: any) => p.image)
+			BIOGENEX_BRAND.logo
 		];
 		
 		let loadedCount = 0;
@@ -229,6 +229,7 @@ export default function Biogenex() {
 		};
 
 		preloadImages();
+		return () => clearTimeout(fallback);
 	}, []);
 
 	const handleViewDetails = (product: any) => {
