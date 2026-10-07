@@ -78,7 +78,9 @@ const AwardsRecognitions = () => {
       ref={sectionRef}
       id="awards"
       aria-labelledby="awards-title"
-      className="border-t border-[#E5E7EB] bg-[#F8FAFC]/70"
+      // overflow-x-clip: the copy's soft bloom is deliberately wider than its
+      // column; without this it pushes the page wider than the screen.
+      className="overflow-x-clip border-t border-[#E5E7EB] bg-[#F8FAFC]/70"
     >
       {/* ============ SHOWCASE: 3D trophy left, award card right ============ */}
       {/* Deliberately no hover-pause: the cursor sits over this showcase

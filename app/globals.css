@@ -71,6 +71,15 @@ body {
   padding: 0;
 }
 
+/* Safety net at every width (mobile already had overflow-x: hidden below):
+   decorative glows/scaled backdrops that bleed past the screen edge must
+   never add a sideways scrollbar. `clip` rather than `hidden` so it doesn't
+   create a scroll container and break position: sticky. */
+html,
+body {
+  overflow-x: clip;
+}
+
 @media (max-width: 912px) {
   body {
     min-height: 100dvh; /* Dynamic viewport height for mobile */
