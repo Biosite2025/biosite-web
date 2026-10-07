@@ -22,7 +22,8 @@ const pairVariants = {
   center: { x: '0%', opacity: 1 },
   exit: (dir: 1 | -1) => ({ x: `${dir * -100}%`, opacity: 0.4 }),
 };
-const PAIR_SLIDE = { duration: 0.65, ease: [0.32, 0.72, 0, 1] as const };
+// Long, gentle ease-in-out so the slide reads as a glide, not a snap.
+const PAIR_SLIDE = { duration: 1.1, ease: [0.45, 0, 0.2, 1] as const };
 
 const EventGallery: React.FC = () => {
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
