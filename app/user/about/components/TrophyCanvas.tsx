@@ -68,19 +68,21 @@ type Props = {
   paused?: boolean;
   /** Rendered if WebGL is unavailable. */
   fallback?: ReactNode;
+  /** False while the section is off screen — stops the per-frame render loop. */
+  active?: boolean;
 };
 
-const TrophyCanvas = ({ interactive = true, paused = false, fallback = null }: Props) => {
+const TrophyCanvas = ({ interactive = true, paused = false, fallback = null, active = true }: Props) => {
   const spin = !paused;
 
   return (
     <Canvas
       dpr={CONFIG.dpr}
-      // Deliberately always-on. Gating this to 'never' while off screen saves a
-      // little GPU but renders a blank canvas if the flag is ever false at mount
-      // — not worth the failure mode for one small model. The canvas is only
-      // mounted once the section scrolls into view anyway.
-      frameloop="always"
+      // Render every frame only while on screen. Off screen we drop to
+      // 'demand' (not 'never'): the last frame stays painted and nothing is
+      // redrawn, so a second WebGL loop isn't running behind the rest of the
+      // page. The canvas mounts on first view, so it always starts 'always'.
+      frameloop={active ? 'always' : 'demand'}
       gl={{
         antialias: true,
         alpha: true,

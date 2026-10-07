@@ -103,6 +103,7 @@ const AwardsRecognitions = () => {
             <TrophyCanvas
               interactive={isDesktop && !reducedMotion}
               paused={reducedMotion}
+              active={inView}
               fallback={
                 <div className="flex h-full w-full items-center justify-center">
                   <TrophyIcon className="h-28 w-28 text-[#22409A]" />

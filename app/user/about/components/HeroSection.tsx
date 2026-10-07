@@ -9,7 +9,7 @@ import { EASE, FOCUS_RING } from './motionShared';
 // Building slideshow — three real facilities. Meaningful alt text per slide.
 const slides = [
   { src: '/asset/slides/luzonbuilding.jpg', alt: 'Biosite Luzon headquarters building' },
-  { src: '/asset/slides/slide_2.png', alt: 'Biosite office facility' },
+  { src: '/asset/slides/slide_2.webp', alt: 'Biosite office facility' },
   { src: '/asset/slides/visminbuilding.png', alt: 'Biosite Visayas–Mindanao office building' },
 ];
 
@@ -75,7 +75,7 @@ const HeroSection = () => {
             transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
           >
             <Image
-              src="/asset/biosite Bear (1).png"
+              src="/asset/biosite Bear (1).webp"
               alt="Biosite bear mascot"
               width={440}
               height={311}

@@ -199,7 +199,7 @@ export function SideNav() {
 				{/* Logo Section */}
 				<Link href="/user/about" className="flex items-center h-full touch-manipulation">
 					   <Image
-						   src="/asset/BMI_logo4.png"
+						   src="/asset/BMI_logo4.webp"
 						   alt="Biosite Medical Instruments Logo"
 						   width={140}
 						   height={40}
@@ -253,7 +253,7 @@ export function SideNav() {
 							<div className="flex items-center justify-between p-4 border-b border-gray-200/50 bg-gradient-to-r from-[#2B3990] to-[#3d4db0]">
 								<div className="flex items-center space-x-3">
 									   <Image
-										   src="/asset/BMI_logo4.png"
+										   src="/asset/BMI_logo4.webp"
 										   alt="BMI Logo"
 										   width={80}
 										   height={24}

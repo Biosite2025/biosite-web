@@ -24,7 +24,7 @@ const Community = () => {
           transition={{ duration: 0.9, ease: EASE }}
         >
           <Image
-            src="/asset/outreach.png"
+            src="/asset/outreach.webp"
             alt="Biosite Medical Instruments Cares community outreach with children and families"
             fill
             loading="lazy"
