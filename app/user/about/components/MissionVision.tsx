@@ -1,406 +1,355 @@
 'use client';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import Image from 'next/image';
-import React, { useState, useEffect, useRef } from 'react';
 
-// Core Values Data - BIOSITE
-const coreValues = [
-  { letter: 'B', title: 'Belief', description: 'We believe in our mission to save and improve lives through reliable medical solutions.', letterIndex: 0 },
-  { letter: 'I', title: 'Integrity', description: 'We conduct our business with integrity.', letterIndex: 1 },
-  { letter: 'O', title: 'Outstanding Service', description: 'We are committed to provide service that exceeds expectations.', letterIndex: 2 },
-  { letter: 'S', title: 'Stewardship', description: 'We take responsibility in managing our resources wisely.', letterIndex: 3 },
-  { letter: 'I', title: 'Innovation', description: 'We continuously introduce innovative healthcare solutions.', letterIndex: 4 },
-  { letter: 'T', title: 'Teamwork', description: 'We unite our strengths, support one another to succeed as ONE BIOSITE.', letterIndex: 5 },
-  { letter: 'E', title: 'Excellence', description: 'We strive for excellence in everything we do.', letterIndex: 6 }
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
+
+/* ============================================================================
+ * CONFIG — colors, split ratios, durations and easings in one place.
+ * ========================================================================== */
+const CONFIG = {
+  color: {
+    base: '#23409B', // resting band fill
+    hovered: '#2A4CB5', // hovered half lightens
+    dimmed: '#1B3480', // the other half darkens
+    divider: '#FF2D2D',
+    dividerGlow: '0 0 24px rgba(255, 45, 45, 0.45)',
+  },
+  /** Flex ratios for the two halves. */
+  split: { rest: 50, active: 58, inactive: 42 },
+  divider: { width: 4 },
+  /** Matches the Stats band's visual height so the two blue bands read as a pair. */
+  band: { height: 'clamp(280px, 34vh, 360px)' },
+  ease: {
+    enter: [0.16, 1, 0.3, 1] as const,
+    exit: [0.7, 0, 0.84, 0] as const,
+    enterCss: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  duration: {
+    width: 0.7,
+    labelExit: 0.3,
+    detail: 0.45,
+    depth: 0.5,
+    reduced: 0.15,
+  },
+  /** Detail sequence starts mid-exit so the half is never blank. */
+  delay: {
+    detailStart: 0.18,
+    rule: 0.12, // after the eyebrow
+    statement: 0.2, // after the eyebrow
+  },
+  /**
+   * Statement sizing. `maxWidth` is in `em` and applied to the <p> itself, so
+   * it scales with the font size — that keeps characters-per-line (~46, i.e.
+   * three lines for both statements) constant at every desktop width instead
+   * of reflowing. It also prevents reflow while the column resizes on hover.
+   */
+  statementMaxWidth: '40em',
+  statementSize: 'clamp(0.85rem, 1.2vw, 1.5rem)',
+  padX: 'clamp(2rem, 6vw, 5rem)',
+  padRight: 'clamp(1.5rem, 3vw, 2.5rem)',
+} as const;
+
+const PANELS = [
+  {
+    id: 'mission',
+    label: 'Mission',
+    eyebrow: 'Our Mission',
+    statement:
+      'To deliver innovative medical solutions and exceptional customer service that empower healthcare professionals, institutions, and partners.',
+  },
+  {
+    id: 'vision',
+    label: 'Vision',
+    eyebrow: 'Our Vision',
+    statement:
+      'To be the most trusted partner in advancing healthcare — providing innovative medical solutions that ensure every life receives the best care.',
+  },
 ];
 
-// Core Values Slideshow Component
-const CoreValuesSlideshow = ({ currentIndex }: { currentIndex: number }) => {
+/* --- motion variants ------------------------------------------------------ */
+const buildVariants = (reduced: boolean) => {
+  if (reduced) {
+    // Cross-fade only: no width shift, no blur, no drift.
+    const t = { duration: CONFIG.duration.reduced };
+    return {
+      label: { rest: { opacity: 1, transition: t }, active: { opacity: 0, transition: t } },
+      eyebrow: { rest: { opacity: 0, transition: t }, active: { opacity: 1, transition: t } },
+      rule: { rest: { opacity: 0, transition: t }, active: { opacity: 1, transition: t } },
+      statement: { rest: { opacity: 0, transition: t }, active: { opacity: 1, transition: t } },
+    } as Record<string, Variants>;
+  }
+
+  return {
+    label: {
+      rest: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        transition: { duration: CONFIG.duration.detail, ease: CONFIG.ease.enter, delay: CONFIG.delay.detailStart },
+      },
+      active: {
+        opacity: 0,
+        scale: 0.94,
+        y: -20,
+        filter: 'blur(6px)',
+        transition: { duration: CONFIG.duration.labelExit, ease: CONFIG.ease.exit },
+      },
+    },
+    eyebrow: {
+      rest: {
+        clipPath: 'inset(0 0 0 100%)', // wipes out to the right
+        y: 12,
+        opacity: 0,
+        transition: { duration: CONFIG.duration.labelExit, ease: CONFIG.ease.exit },
+      },
+      active: {
+        clipPath: 'inset(0 0 0 0)',
+        y: 0,
+        opacity: 1,
+        transition: { duration: CONFIG.duration.detail, ease: CONFIG.ease.enter, delay: CONFIG.delay.detailStart },
+      },
+    },
+    rule: {
+      rest: { scaleX: 0, transition: { duration: CONFIG.duration.labelExit, ease: CONFIG.ease.exit } },
+      active: {
+        scaleX: 1,
+        transition: {
+          duration: CONFIG.duration.detail,
+          ease: CONFIG.ease.enter,
+          delay: CONFIG.delay.detailStart + CONFIG.delay.rule,
+        },
+      },
+    },
+    statement: {
+      rest: {
+        opacity: 0,
+        y: 16,
+        filter: 'blur(8px)',
+        transition: { duration: CONFIG.duration.labelExit, ease: CONFIG.ease.exit },
+      },
+      active: {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        transition: {
+          duration: CONFIG.duration.detail,
+          ease: CONFIG.ease.enter,
+          delay: CONFIG.delay.detailStart + CONFIG.delay.statement,
+        },
+      },
+    },
+  } as Record<string, Variants>;
+};
+
+/* --- panel ----------------------------------------------------------------
+ * Declared at module scope on purpose. If this lived inside <MissionVision>,
+ * every setActive() would create a NEW component type, React would unmount and
+ * remount the subtree, and framer-motion would re-mount with initial={false} —
+ * making the detail text snap in instantly instead of animating.
+ * ------------------------------------------------------------------------- */
+type PanelProps = {
+  panel: (typeof PANELS)[number];
+  state: 'rest' | 'active';
+  isDesktop: boolean;
+  fill: string;
+  variants: Record<string, Variants>;
+  onActivate: () => void;
+  onDeactivate: () => void;
+};
+
+const Panel = ({ panel, state, isDesktop, fill, variants, onActivate, onDeactivate }: PanelProps) => {
+  const interactive = isDesktop;
+
   return (
-    <div className="relative h-72 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden px-4">
-      <AnimatePresence mode="wait">
+    <div
+      // Focusable so the reveal is reachable by keyboard, not just hover.
+      tabIndex={interactive ? 0 : -1}
+      onMouseEnter={interactive ? onActivate : undefined}
+      onMouseLeave={interactive ? onDeactivate : undefined}
+      onFocus={interactive ? onActivate : undefined}
+      onBlur={interactive ? onDeactivate : undefined}
+      className={`relative h-full w-full overflow-hidden ${
+        interactive
+          ? 'cursor-default focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset'
+          : ''
+      }`}
+      style={{
+        backgroundColor: fill,
+        transition: `background-color ${CONFIG.duration.depth}s ${CONFIG.ease.enterCss}`,
+      }}
+    >
+      {/* Resting label — desktop only; on touch the detail is always shown. */}
+      {isDesktop && (
         <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, y: 60, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -60, scale: 0.9 }}
-          transition={{ 
-            duration: 0.9, 
-            ease: [0.43, 0.13, 0.23, 0.96],
-            opacity: { duration: 0.6 },
-            scale: { duration: 0.7, ease: "easeOut" }
-          }}
-          className="absolute text-center max-w-5xl"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          variants={variants.label}
+          animate={state}
+          initial={false}
         >
-          <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 md:mb-8">
-            {coreValues[currentIndex]?.title}
-          </h3>
-          <motion.p 
-            className="text-xl md:text-2xl lg:text-3xl text-white/95 font-medium leading-relaxed px-4 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+          <span
+            className="font-extrabold uppercase leading-none text-white"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', letterSpacing: '0.02em' }}
           >
-            {coreValues[currentIndex]?.description}
-          </motion.p>
+            {panel.label}
+          </span>
         </motion.div>
-      </AnimatePresence>
+      )}
+
+      {/* Detail block — always in the DOM so AT and crawlers always get it. */}
+      <div
+        className={`flex h-full flex-col justify-center ${isDesktop ? 'absolute inset-0' : 'relative'}`}
+        style={{
+          paddingLeft: CONFIG.padX,
+          paddingRight: CONFIG.padRight,
+          paddingTop: isDesktop ? undefined : '3rem',
+          paddingBottom: isDesktop ? undefined : '3rem',
+        }}
+      >
+        <div>
+          <motion.h3
+            className="text-[1.1rem] font-bold uppercase tracking-wide text-white"
+            variants={variants.eyebrow}
+            animate={state}
+            initial={false}
+          >
+            {panel.eyebrow}
+          </motion.h3>
+
+          <motion.span
+            aria-hidden="true"
+            className="mt-2 block h-0.5 w-40 origin-left"
+            style={{ backgroundColor: CONFIG.color.divider }}
+            variants={variants.rule}
+            animate={state}
+            initial={false}
+          />
+
+          <motion.p
+            className="mt-6 font-bold uppercase text-white"
+            style={{
+              fontSize: CONFIG.statementSize,
+              lineHeight: 1.45,
+              maxWidth: CONFIG.statementMaxWidth, // em-based → scales with the font
+            }}
+            variants={variants.statement}
+            animate={state}
+            initial={false}
+          >
+            {panel.statement}
+          </motion.p>
+        </div>
+      </div>
     </div>
   );
 };
 
-// Responsive styles for various screen sizes
-const responsive1366Styles = `
-  @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
-    /* 1280x665 Display - Scale down significantly */
-    #mission-vision {
-      padding-top: 1rem !important;
-      padding-bottom: 1rem !important;
-      min-height: 665px !important;
-      max-height: 665px !important;
-      height: 665px !important;
-      overflow: hidden !important;
-    }
-    
-    #mission-vision .max-w-7xl {
-      transform: scale(1) !important;
-      margin-top: -3rem !important;
-      margin-bottom: -3rem !important;
-    }
-    
-    #mission-vision .space-y-12 {
-      gap: 1.5rem !important;
-    }
-    
-    #mission-vision .grid-cols-1 {
-      gap: 1.25rem !important;
-    }
-    
-    #mission-vision .rounded-2xl {
-      padding: 1.25rem !important;
-    }
-    
-    #mission-vision .text-2xl {
-      font-size: 1.35rem !important;
-    }
-    
-    #mission-vision .text-3xl {
-      font-size: 1.5rem !important;
-    }
-    
-    #mission-vision .text-base {
-      font-size: 0.875rem !important;
-      line-height: 1.4 !important;
-    }
-    
-    #mission-vision .text-lg {
-      font-size: 0.95rem !important;
-      line-height: 1.5 !important;
-    }
-    
-    #mission-vision .text-9xl {
-      font-size: 5rem !important;
-    }
-    
-    #mission-vision .text-8xl {
-      font-size: 4.5rem !important;
-    }
-    
-    #mission-vision .text-7xl {
-      font-size: 3.5rem !important;
-    }
-    
-    #mission-vision .text-6xl {
-      font-size: 3rem !important;
-    }
-    
-    #mission-vision .text-5xl {
-      font-size: 2rem !important;
-    }
-    
-    #mission-vision .text-xl {
-      font-size: 1rem !important;
-    }
-    
-    #mission-vision .h-72 {
-      height: 13rem !important;
-    }
-    
-    #mission-vision .mt-12 {
-      margin-top: 1.5rem !important;
-    }
-    
-    #mission-vision .mt-16 {
-      margin-top: 1.75rem !important;
-    }
-    
-    #mission-vision .mb-6 {
-      margin-bottom: 1rem !important;
-    }
-    
-    #mission-vision .mb-8 {
-      margin-bottom: 1.25rem !important;
-    }
-    
-    #mission-vision .mb-4 {
-      margin-bottom: 0.75rem !important;
-    }
-    
-    #mission-vision .p-3 {
-      padding: 0.625rem !important;
-    }
-    
-    #mission-vision .h-6 {
-      height: 1.25rem !important;
-      width: 1.25rem !important;
-    }
-  }
-  
-  @media (min-width: 1360px) and (max-width: 1370px) and (min-height: 760px) and (max-height: 775px) {
-    #mission-vision {
-      padding-top: 3rem !important;
-      padding-bottom: 3rem !important;
-      min-height: 100vh !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-    }
-    
-    #mission-vision .max-w-7xl {
-      transform: scale(1) !important;
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-    }
-    
-    #mission-vision .space-y-12 {
-      gap: 2rem !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-    }
-    
-    #mission-vision .grid-cols-1 {
-      gap: 1.5rem !important;
-    }
-    
-    #mission-vision .rounded-2xl {
-      padding: 1.5rem !important;
-    }
-    
-    #mission-vision .text-2xl {
-      font-size: 1.5rem !important;
-    }
-    
-    #mission-vision .text-base {
-      font-size: 0.95rem !important;
-      line-height: 1.5 !important;
-    }
-    
-    #mission-vision .text-6xl {
-      font-size: 3.5rem !important;
-    }
-    
-    #mission-vision .text-5xl {
-      font-size: 2.5rem !important;
-    }
-    
-    #mission-vision .text-xl {
-      font-size: 1.1rem !important;
-    }
-    
-    #mission-vision .h-72 {
-      height: 16rem !important;
-    }
-    
-    #mission-vision .mt-12 {
-      margin-top: 2rem !important;
-    }
-    
-    #mission-vision .mb-6 {
-      margin-bottom: 1.5rem !important;
-    }
-  }
-`;
-
-// 0 = BIOSITE centered, 1 = BIOSITE animating up, 2 = slideshow running
-type Phase = 0 | 1 | 2;
-
 const MissionVision = () => {
-  const [phase, setPhase] = useState<Phase>(0);
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
+  const reducedMotion = useReducedMotion() ?? false;
+  const [active, setActive] = useState<number | null>(null);
+  /**
+   * Hover behaviour is desktop-only. Below 1024px (and during SSR) the panels
+   * stack and render permanently expanded, so content is never hidden on touch.
+   */
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Trigger animations only when the section enters the viewport
-  const sectionRef = useRef<HTMLElement>(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.25 });
-
-  // Phase progression starts only after section is visible
   useEffect(() => {
-    if (!inView) return;
-    const t1 = setTimeout(() => setPhase(1), 1200);  // wait before moving up
-    const t2 = setTimeout(() => setPhase(2), 3000);  // wait before slideshow
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [inView]);
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const sync = () => setIsDesktop(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
-  // Loop slideshow once phase 2 is active
-  useEffect(() => {
-    if (phase < 2) return;
-    const timer = setInterval(() => {
-      setCurrentLetterIndex((prev) => (prev + 1) % coreValues.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [phase]);
+  // Stable identity so framer-motion isn't handed fresh variant objects on
+  // every hover tick.
+  const V = useMemo(() => buildVariants(reducedMotion), [reducedMotion]);
+  const activate = useCallback((i: number) => () => setActive(i), []);
+  const deactivate = useCallback(() => setActive(null), []);
 
-  const currentLetterPosition = phase >= 2 ? coreValues[currentLetterIndex]?.letterIndex ?? -1 : -1;
+  // Grid tracks: `<half> <divider> <half>`. Transitioning grid-template-columns
+  // moves the divider with the split without touching layout of the content.
+  const { rest, active: on, inactive: off } = CONFIG.split;
+  const cols =
+    !isDesktop || reducedMotion || active === null
+      ? `${rest}fr ${CONFIG.divider.width}px ${rest}fr`
+      : active === 0
+        ? `${on}fr ${CONFIG.divider.width}px ${off}fr`
+        : `${off}fr ${CONFIG.divider.width}px ${on}fr`;
+
+  const stateOf = (i: number) => (!isDesktop || active === i ? 'active' : 'rest');
+  const fillOf = (i: number) => {
+    if (!isDesktop || active === null) return CONFIG.color.base;
+    return active === i ? CONFIG.color.hovered : CONFIG.color.dimmed;
+  };
 
   return (
-    <>
-      <style>{responsive1366Styles}</style>
-      <motion.section
-        ref={sectionRef}
-        id="mission-vision"
-        className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 min-h-screen flex items-center justify-center bg-blue-500/90"
-        initial={{ opacity: 0, y: 40 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+    <section
+      id="mission-vision"
+      aria-labelledby="mission-vision-title"
+      className="relative"
+    >
+      {/* Keeps the section's accessible name now that the visible heading is
+          gone — `aria-labelledby` above needs a real target. */}
+      <h2 id="mission-vision-title" className="sr-only">
+        Our Mission and Vision
+      </h2>
+
+      {/* Full-bleed band — fixed height so nothing below ever shifts. */}
+      <div
+        className="w-full"
+        style={{
+          backgroundColor: CONFIG.color.base,
+          height: isDesktop ? CONFIG.band.height : undefined,
+        }}
       >
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/asset/slides/visminbuilding.png"
-          alt="Background"
-          fill
-          loading="lazy"
-          quality={60}
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-        />  
-      </div>
+        <div
+          className="grid h-full w-full"
+          style={{
+            gridTemplateColumns: isDesktop ? cols : '1fr',
+            gridTemplateRows: isDesktop ? '1fr' : 'auto auto auto',
+            transition: reducedMotion
+              ? undefined
+              : `grid-template-columns ${CONFIG.duration.width}s ${CONFIG.ease.enterCss}`,
+          }}
+        >
+          <Panel
+            panel={PANELS[0]}
+            state={stateOf(0)}
+            isDesktop={isDesktop}
+            fill={fillOf(0)}
+            variants={V}
+            onActivate={activate(0)}
+            onDeactivate={deactivate}
+          />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-blue-500/80 z-0" />
+          {/* Crimson divider: vertical between halves on desktop, horizontal
+              rule between the stacked panels on touch. */}
+          <div
+            aria-hidden="true"
+            className="w-full"
+            style={{
+              backgroundColor: CONFIG.color.divider,
+              height: isDesktop ? '100%' : `${CONFIG.divider.width}px`,
+              boxShadow: isDesktop && active !== null ? CONFIG.color.dividerGlow : 'none',
+              transition: `box-shadow ${CONFIG.duration.depth}s ${CONFIG.ease.enterCss}`,
+            }}
+          />
 
-      {/* Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto">
-        <div className="space-y-12 md:space-y-16">
-          
-          {/* Mission and Vision Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            
-            {/* Mission Card */}
-            <motion.div
-              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 border border-white/30 relative overflow-hidden"
-              initial={{ opacity: 0, x: -40 }}
-              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-center mb-4">
-                <motion.div
-                  className="bg-gradient-to-br from-[#2356a8] to-blue-700 text-white rounded-full p-3 mr-4 shadow-lg group-hover:scale-110 transition-all duration-300"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </motion.div>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#2356a8]">
-                  OUR MISSION
-                </h3>
-              </div>
-              <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                To deliver innovative medical solutions and exceptional customer service that empower healthcare professionals, institutions and partners.
-              </p>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-t-2xl" />
-            </motion.div>
-
-            {/* Vision Card */}
-            <motion.div
-              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 border border-white/30 relative overflow-hidden"
-              initial={{ opacity: 0, x: 40 }}
-              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-center mb-4">
-                <motion.div
-                  className="bg-gradient-to-br from-[#2356a8] to-blue-700 text-white rounded-full p-3 mr-4 shadow-lg group-hover:scale-110 transition-all duration-300"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                </motion.div>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#2356a8]">
-                  OUR VISION
-                </h3>
-              </div>
-              <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                To be the most trusted partner in advancing healthcare - providing innovative medical solutions that ensure every life receives the best care.
-              </p>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2356a8] to-blue-500 rounded-t-2xl" />
-            </motion.div>
-          </div>
-
-          {/* Core Values Section - BIOSITE */}
-          <div className="mt-12 md:mt-16" style={{ minHeight: '32rem' }}>
-            {/* BIOSITE Letters */}
-            <motion.div
-              className="text-center mb-6 md:mb-8"
-              initial={{ opacity: 1, y: 160 }}
-              animate={{ y: phase >= 1 ? 0 : 160 }}
-              transition={{ duration: 1.4, ease: [0.43, 0.13, 0.23, 0.96] }}
-            >
-              <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 flex-wrap">
-                {['B', 'I', 'O', 'S', 'I', 'T', 'E'].map((letter, index) => {
-                  const isActive = index === currentLetterPosition;
-                  return (
-                    <motion.span
-                      key={index}
-                      className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold"
-                      initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-                      animate={inView ? {
-                        opacity: 1,
-                        scale: isActive ? 1.15 : 1,
-                        rotateY: 0,
-                        color: isActive ? '#2356a8' : 'rgba(255, 255, 255, 0.9)',
-                        textShadow: isActive
-                          ? '0 0 20px rgba(35, 86, 168, 0.5), 0 0 40px rgba(35, 86, 168, 0.3)'
-                          : '0 0 0px rgba(255, 255, 255, 0)',
-                      } : { opacity: 0, scale: 0.5, rotateY: -180 }}
-                      transition={{
-                        opacity: { duration: 0.9, delay: 0.2 + index * 0.12 },
-                        rotateY: { duration: 1.0, delay: 0.2 + index * 0.12, type: 'spring', stiffness: 120, damping: 18 },
-                        scale: { duration: 0.6, ease: 'easeOut' },
-                        color: { duration: 0.5, ease: 'easeInOut' },
-                        textShadow: { duration: 0.5 },
-                      }}
-                      whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
-                    >
-                      {letter}
-                    </motion.span>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Core Values Slideshow — always rendered to reserve space, opacity animates in */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: phase >= 2 ? 1 : 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-            >
-              <CoreValuesSlideshow currentIndex={currentLetterIndex} />
-            </motion.div>
-          </div>
-
+          <Panel
+            panel={PANELS[1]}
+            state={stateOf(1)}
+            isDesktop={isDesktop}
+            fill={fillOf(1)}
+            variants={V}
+            onActivate={activate(1)}
+            onDeactivate={deactivate}
+          />
         </div>
       </div>
-      </motion.section>
-    </>
+    </section>
   );
-}
+};
 
 export default MissionVision;

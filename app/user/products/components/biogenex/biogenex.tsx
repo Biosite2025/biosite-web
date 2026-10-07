@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useAnimation, useInView } from 'framer-motion';
-import Link from 'next/link';
+import { motion, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
+import ProductCard from '../shared/ProductCard';
 
 // Product category
 const category = {
@@ -14,6 +14,11 @@ const category = {
 	description: 'Advanced biogenex systems and equipment for comprehensive laboratory diagnostics',
 	folder: 'biogenex',
 };
+
+// Every product on this page is BioGenex, so the brand logo is applied at render
+// time rather than being duplicated onto each product record.
+const BIOGENEX_BRAND = { name: 'Biogenex', logo: '/asset/logo/BIOGENEX2.png' };
+const BIOGENEX_HERO_BG = '/asset/logo/Main-Image-biogenex.jpg';
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -41,10 +46,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 				>
 					<button
 						onClick={product.onClose}
-						className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
+						className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100 z-10
+								 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] max-[912px]:top-1.5 max-[912px]:right-1.5"
 						aria-label="Close modal"
 					>
-						<svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+						<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
 						</svg>
 					</button>
@@ -57,6 +63,18 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
+
+						{/* Brand logo watermark, same treatment as the cards */}
+						<div className="absolute top-2 right-2 md:top-3 md:right-3 pointer-events-none">
+							<Image
+								src={BIOGENEX_BRAND.logo}
+								alt={`${BIOGENEX_BRAND.name} logo`}
+								aria-hidden="true"
+								width={160}
+								height={48}
+								className="h-[20px] sm:h-[24px] max-w-[140px] w-auto object-contain drop-shadow-md"
+							/>
+						</div>
 					</div>
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
@@ -76,79 +94,12 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 }
 
-// Product card component with animations
-function ProductCard({ product, index, onViewDetails }: { product: any; index: number; onViewDetails: (product: any) => void }) {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-	return (
-		<motion.div
-			ref={ref}
-			initial={{ opacity: 0, y: 50 }}
-			animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-			transition={{ duration: 0.5, delay: index * 0.1 }}
-			className="group relative bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden max-[912px]:rounded-lg"
-			whileHover={{ y: -8, scale: 1.02 }}
-		>
-			{/* Image Container */}
-			<div className="relative h-48 sm:h-56 md:h-64 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden max-[912px]:h-40">
-				<motion.div
-					whileHover={{ scale: 1.1 }}
-					transition={{ duration: 0.6 }}
-					className="w-full h-full relative"
-				>
-					<Image
-						src={product.image}
-						alt={product.name}
-						fill
-						className="object-contain p-2 sm:p-3 md:p-4 max-[912px]:p-2"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					/>
-				</motion.div>
-				
-				{/* Hover overlay */}
-				<div className="absolute inset-0 bg-gradient-to-t from-[#2B3990]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-			</div>
-
-			{/* Content */}
-			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
-					{product.name}
-				</h3>
-				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					{product.description || 'Professional biogenex equipment engineered for precision and reliability.'}
-				</p>
-				
-				{/* View Details Button */}
-				<motion.button
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={() => onViewDetails(product)}
-					className="w-full bg-[#2B3990] text-white py-2 sm:py-3 rounded-lg font-semibold text-sm sm:text-base
-							 hover:bg-[#1e2865] transition-all duration-300 
-							 shadow-md hover:shadow-xl relative overflow-hidden group/btn max-[912px]:py-2 max-[912px]:text-sm"
-				>
-					<span className="relative z-10">View Details</span>
-					<motion.div
-						className="absolute inset-0 bg-gradient-to-r from-[#1e2865] to-[#2B3990]"
-						initial={{ x: '-100%' }}
-						whileHover={{ x: 0 }}
-						transition={{ duration: 0.3 }}
-					/>
-				</motion.button>
-			</div>
-
-			{/* Decorative corner accent */}
-			<div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-bl from-[#2B3990]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 max-[912px]:w-12 max-[912px]:h-12" />
-		</motion.div>
-	);
-}
-
 // Category section component
 function CategorySection({ category, products, onViewDetails }: { category: any; products: any[]; onViewDetails: (product: any) => void }) {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: "-50px" });
 	const controls = useAnimation();
+	const reducedMotion = useReducedMotion();
 
 	useEffect(() => {
 		if (isInView) {
@@ -181,11 +132,43 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 				</p>
 			</motion.div>
 
-			{/* Products Grid */}
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-[912px]:grid-cols-1 max-[912px]:gap-3">
-				{products.map((product: any, idx: number) => (
-					<ProductCard key={product.id} product={product} index={idx} onViewDetails={onViewDetails} />
-				))}
+			{/* Products Grid over one large faint BioGenex watermark behind every card */}
+			<div className="relative">
+				<div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+					<motion.div
+						className="absolute inset-0"
+						style={{
+							backgroundImage: `url("${BIOGENEX_BRAND.logo}")`,
+							backgroundRepeat: 'no-repeat',
+							backgroundPosition: 'center',
+							backgroundSize: 'contain',
+						}}
+						initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+						animate={{ opacity: 0.05, scale: 1 }}
+						transition={{ duration: reducedMotion ? 0.01 : 0.4, ease: 'easeOut' }}
+					/>
+				</div>
+
+				{/* flex-wrap + justify-center so a partial final row stays centered */}
+				<div className="relative z-10 flex flex-wrap justify-center gap-6">
+					{products.map((product: any, idx: number) => (
+						<div
+							key={product.id}
+							className="w-full min-[913px]:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]"
+						>
+							<ProductCard
+								index={idx}
+								image={product.image}
+								name={product.name}
+								description={product.description}
+								brandName={BIOGENEX_BRAND.name}
+								brandLogo={BIOGENEX_BRAND.logo}
+								brandLogoClass="h-[20px] sm:h-[24px] max-w-[140px]"
+								onViewDetails={() => onViewDetails(product)}
+							/>
+						</div>
+					))}
+				</div>
 			</div>
 		</section>
 	);
@@ -218,9 +201,10 @@ export default function Biogenex() {
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images
+		// Preload all images including the hero background and brand logo
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
+			BIOGENEX_HERO_BG,
+			BIOGENEX_BRAND.logo,
 			...productData.map((p: any) => p.image)
 		];
 		
@@ -271,8 +255,21 @@ export default function Biogenex() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Gradient */}
-				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
+				{/* Background image with depth gradient: lighter at the top so the
+				    photo shows through, darker toward the bottom where the text sits */}
+				<div className="absolute inset-0 w-full h-full z-0">
+					<Image
+						src={BIOGENEX_HERO_BG}
+						alt="Biogenex Background"
+						fill
+						className="object-cover w-full h-full"
+						priority
+					/>
+					<div
+						className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#0b1338]/30 via-[#0b1338]/55 to-[#0b1338]/85"
+						style={{ zIndex: 1 }}
+					/>
+				</div>
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
@@ -286,14 +283,22 @@ export default function Biogenex() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 					>
-						<motion.h1
+						<motion.div
 							initial={{ scale: 0.9, opacity: 0, y: 40 }}
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
-							className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 md:mb-8 drop-shadow-2xl max-[912px]:text-4xl max-[912px]:mb-3"
+							className="mb-4 sm:mb-6 md:mb-8 max-[912px]:mb-3 flex justify-center"
 						>
-							Biogenex
-						</motion.h1>
+							{/* Brand logo in place of the wordmark */}
+							<Image
+								src={BIOGENEX_BRAND.logo}
+								alt="Biogenex"
+								width={640}
+								height={200}
+								priority
+								className="w-auto h-24 sm:h-32 md:h-40 lg:h-48 max-[912px]:h-20 object-contain drop-shadow-2xl"
+							/>
+						</motion.div>
 						<motion.div
 							initial={{ scaleX: 0 }}
 							animate={{ scaleX: 1 }}

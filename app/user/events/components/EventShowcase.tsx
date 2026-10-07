@@ -1,109 +1,148 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useRef, useEffect, useState, useCallback } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { EASE, FOCUS_RING } from '../../about/components/motionShared';
 
-const EventShowcase: React.FC = () => {
+/** How long the "See the highlights" scroll takes, in ms. Raise to slow it. */
+const SCROLL_DURATION = 1400;
+
+/** Slow start, slow finish — reads as a deliberate glide rather than a jump. */
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+const EventShowcase = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  /**
+   * The anchor's default behaviour is an instant jump. This tweens the scroll
+   * over a fixed duration instead, offset by the sticky nav so the section
+   * heading isn't left underneath it.
+   */
+  const scrollToHighlights = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      const target = document.getElementById('snaps');
+      if (!target) return; // let the browser handle it normally
+      e.preventDefault();
+
+      const nav = document.querySelector('[data-topnav="true"]');
+      const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+      const destination = Math.max(0, window.scrollY + target.getBoundingClientRect().top - navHeight);
+
+      if (reducedMotion) {
+        window.scrollTo({ top: destination, behavior: 'auto' });
+        return;
+      }
+
+      const start = window.scrollY;
+      const distance = destination - start;
+      let startTime: number | null = null;
+      let cancelled = false;
+
+      // Let the viewer take back control the moment they scroll themselves.
+      const cancel = () => {
+        cancelled = true;
+      };
+      window.addEventListener('wheel', cancel, { passive: true, once: true });
+      window.addEventListener('touchstart', cancel, { passive: true, once: true });
+
+      const step = (now: number) => {
+        if (cancelled) return cleanup();
+        if (startTime === null) startTime = now;
+        const progress = Math.min((now - startTime) / SCROLL_DURATION, 1);
+        window.scrollTo({ top: start + distance * easeInOutCubic(progress), behavior: 'auto' });
+        if (progress < 1) requestAnimationFrame(step);
+        else cleanup();
+      };
+
+      const cleanup = () => {
+        window.removeEventListener('wheel', cancel);
+        window.removeEventListener('touchstart', cancel);
+      };
+
+      requestAnimationFrame(step);
+    },
+    [reducedMotion]
+  );
 
   useEffect(() => {
-    console.log('[EventShowcase] Component mounted at:', new Date().toISOString());
-    
-    // Initialize video only on client side
-    if (typeof window === 'undefined') return;
-    
-    const video1 = videoRef.current;
-    
-    // Wait for next tick to ensure DOM is ready
-    const initVideo = () => {
-      console.log('[EventShowcase] Initializing video...');
-      const startTime = performance.now();
-      
-      if (video1) {
-        video1.play().then(() => {
-          const loadTime = (performance.now() - startTime).toFixed(2);
-          console.log(`[EventShowcase] Video started playing in ${loadTime}ms`);
-          setIsVideoPlaying(true);
-        }).catch((err) => {
-          console.error('[EventShowcase] Video play error:', err);
-          setIsVideoPlaying(false);
-        });
-      }
-    };
-    
-    // Small delay to prevent glitches on page load/refresh
-    const timer = setTimeout(initVideo, 100);
-    
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    const video = videoRef.current;
+    if (!video || reducedMotion) return;
+    const t = setTimeout(() => {
+      video.play().catch(() => {});
+    }, 100);
+    return () => clearTimeout(t);
+  }, [reducedMotion]);
 
   return (
-    <div className="relative overflow-hidden bg-gray-900 h-screen">
-      {/* Video Section - Simple fullscreen display without scroll effects */}
-      <div className="h-screen overflow-hidden">
-        <div className="relative w-full h-full">
-          {/* Video Container */}
-          <div className="absolute inset-0 w-full h-full">
-            <video
-              ref={videoRef}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                isVideoLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_600,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
-              onLoadedData={() => {
-                console.log('[EventShowcase] Video loaded and ready');
-                setIsVideoPlaying(true);
-                setIsVideoLoaded(true);
-              }}
-              onError={(e) => {
-                console.error('[EventShowcase] Video error:', e);
-                setIsVideoPlaying(false);
-                setIsVideoLoaded(false);
-              }}
-              onCanPlay={() => {
-                console.log('[EventShowcase] Video can play');
-                setIsVideoLoaded(true);
-              }}
-              onLoadStart={() => console.log('[EventShowcase] Video loading started')}
-            >
-              <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
-            </video>
-          </div>
-            
-          {/* Loading/Fallback Background */}
-          <div className={`absolute inset-0 w-full h-full bg-gradient-to-br from-[#2B3990] via-[#2B7CD3] to-[#1e2a68] flex items-center justify-center transition-opacity duration-1000 ${
-            isVideoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}>
-            <Image 
-              src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530500/biosite-assets/image.png" 
-              alt="Event Showcase" 
-              fill
-              className="object-cover opacity-60"
-              priority
-              onLoadingComplete={() => console.log('[EventShowcase] Fallback image loaded')}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2B3990]/80 to-[#2B7CD3]/60" />
-            
-            {/* Loading indicator */}
-            {!isVideoPlaying && !isVideoLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
-              </div>
-            )}
-          </div>
-        </div>
+    <section
+      id="events-hero"
+      aria-labelledby="events-hero-title"
+      className="relative w-full overflow-hidden lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
+    >
+      {/* Background video */}
+      <div className="absolute inset-0">
+        <video
+          ref={videoRef}
+          className={`h-full w-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onCanPlay={() => setIsVideoLoaded(true)}
+        >
+          <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
+        </video>
+        {/* Fallback gradient while the video loads */}
+        <div className={`absolute inset-0 bg-gradient-to-br from-[#22409A] via-[#2B7CD3] to-[#1A3078] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`} />
+        {/* Legibility scrim — dark brand wash */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1633]/70 via-[#0d1633]/55 to-[#0d1633]/80" />
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center text-white">
+        
+
+        <motion.h1
+          id="events-hero-title"
+          className="font-extrabold leading-[1.08] tracking-tight"
+          style={{ fontSize: 'clamp(2rem, 5.4vw, 3.6rem)' }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
+        >
+          Moments that move healthcare forward
+        </motion.h1>
+
+        <motion.p
+          className="mt-5 max-w-xl text-blue-50/90"
+          style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.15rem)' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}
+        >
+          Conferences, trainings, and community outreach capturing the energy, innovation, and
+          connections that make our events truly special.
+        </motion.p>
+
+        <motion.a
+          href="#snaps"
+          onClick={scrollToHighlights}
+          className={`mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#22409A] shadow-lg transition-all duration-300 hover:bg-blue-50 ${FOCUS_RING} focus-visible:ring-offset-transparent`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
+        >
+          See the highlights
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M12 5v14M6 13l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </motion.a>
+      </div>
+    </section>
   );
 };
 

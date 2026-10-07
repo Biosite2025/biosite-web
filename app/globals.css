@@ -104,8 +104,8 @@ body {
 
 .preloader .loader {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 107px;
+  height: 108px;
   border-radius: 50%;
   display: inline-block;
   /* Centering will be handled by inline styles */
@@ -113,58 +113,53 @@ body {
   transition: 0.5s;
 }
 
-.preloader .loader .loader-outter {
-  position: absolute;
-  border: 4px solid #ffffff;
-  border-left-color: transparent;
-  border-bottom: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  -webkit-animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-  animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-}
-
-.preloader .loader .loader-inner {
-  position: absolute;
-  border: 4px solid #ffffff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  left: calc(40% - 21px);
-  top: calc(40% - 21px);
-  border-right: 0;
-  border-top-color: transparent;
-  -webkit-animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-  animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-}
-
 .preloader .loader .indicator {
   position: absolute;
-  right: 0;
-  left: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%) scale(1.5);
-  transform: translateY(-50%) scale(1.5);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.preloader .loader .indicator svg polyline {
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+/* Reusable BMI burst loader. Used by the site preloader and by any in-page
+   loading state (e.g. the events gallery lightbox). Size via --bmi-size. */
+.bmi-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: var(--bmi-size, 30px);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: #ffffff;
 }
 
-.preloader .loader .indicator svg polyline#back {
-  stroke: #ffffff;
+/* Each letter runs the same burst; the offsets below fan them out from centre. */
+.bmi-loader .bmi-letter {
+  display: inline-block;
+  transform-origin: center;
+  will-change: transform, opacity;
+  -webkit-animation: bmi-burst 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: bmi-burst 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-.preloader .loader .indicator svg polyline#front {
-  stroke: #21409A;
-  stroke-dasharray: 12, 36;
-  stroke-dashoffset: 48;
-  -webkit-animation: dash 1s linear infinite;
-  animation: dash 1s linear infinite;
+/* B — starts right of place (toward centre), exits left. */
+.bmi-loader .bmi-letter:nth-child(1) {
+  --burst-in: 0.75em;
+  --burst-out: -0.85em;
+  animation-delay: 0.06s;
+}
+/* M — the centre letter only scales. */
+.bmi-loader .bmi-letter:nth-child(2) {
+  --burst-in: 0em;
+  --burst-out: 0em;
+  animation-delay: 0s;
+}
+/* I — starts left of place (toward centre), exits right. */
+.bmi-loader .bmi-letter:nth-child(3) {
+  --burst-in: -0.75em;
+  --burst-out: 0.85em;
+  animation-delay: 0.06s;
 }
 
 .preloader::before,
@@ -199,17 +194,38 @@ body {
   opacity: 0;
   visibility: hidden;
 }
-@keyframes loader-outter {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
+/* Canva-style "Burst": letters spring out of the centre, overshoot into
+   place, hold, then blow outward and dissolve before the loop restarts. */
+@keyframes bmi-burst {
+  0% {
+    opacity: 0;
+    transform: translateX(var(--burst-in)) scale(0.2);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(0) scale(1.14); /* overshoot */
+  }
+  42% {
+    opacity: 1;
+    transform: translateX(0) scale(1); /* settle */
+  }
+  68% {
+    opacity: 1;
+    transform: translateX(0) scale(1); /* hold, legible */
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--burst-out)) scale(1.65); /* burst apart */
+  }
 }
-@keyframes loader-inner {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(-360deg);}
-}
-@keyframes dash {
-  0% { stroke-dashoffset: 48;}
-  100% { stroke-dashoffset: 0;}
+
+/* Honour reduced-motion: hold the wordmark still. */
+@media (prefers-reduced-motion: reduce) {
+  .bmi-loader .bmi-letter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* TopNav and Preloader Integration Styles */

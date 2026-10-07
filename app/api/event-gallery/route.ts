@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
-import AWS from 'aws-sdk';
+// Import ONLY the S3 client. `import AWS from 'aws-sdk'` pulls in every AWS
+// service definition (~100MB on disk) and holds them in heap for the life of
+// the process — we use exactly one service.
+import S3 from 'aws-sdk/clients/s3';
 
 // Configure Digital Ocean Spaces
-const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
-const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
+const s3 = new S3({
+  endpoint: 'https://sgp1.digitaloceanspaces.com',
   accessKeyId: process.env.DO_SPACES_KEY,
   secretAccessKey: process.env.DO_SPACES_SECRET,
 });

@@ -6,19 +6,13 @@ let caCert = '';
 if (process.env.NODE_ENV === 'production') {
   try {
     const certPath = path.join(process.cwd(), 'cert', 'ca-certificate.crt');
-    console.log('[DEBUG] process.cwd():', process.cwd());
-    console.log('[DEBUG] certPath:', certPath);
-    const certExists = fs.existsSync(certPath);
-    console.log('[DEBUG] cert exists:', certExists);
-    if (certExists) {
+    if (fs.existsSync(certPath)) {
       caCert = fs.readFileSync(certPath, 'utf8').trim();
-      console.log('[DEBUG] CA certificate loaded from:', certPath);
-      console.log('[DEBUG] CA certificate length:', caCert.length);
     } else {
-      console.error('[ERROR] CA certificate file does not exist at:', certPath);
+      console.error('[db] CA certificate not found at:', certPath);
     }
   } catch (err) {
-    console.error('[ERROR] Failed to load CA certificate:', err);
+    console.error('[db] Failed to load CA certificate:', err);
   }
 }
 const sslConfig = process.env.NODE_ENV === 'production'
@@ -26,12 +20,15 @@ const sslConfig = process.env.NODE_ENV === 'production'
     ? { ca: caCert, rejectUnauthorized: true }
     : { rejectUnauthorized: false }
   : false;
-console.log('[DEBUG] SSL config for pg Pool:', sslConfig);
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: sslConfig,
-  max: 20,
-  idleTimeoutMillis: 30000,
+  // 20 idle sockets is far more than a single small instance needs — each one
+  // holds its own buffers, and the managed DB has its own connection ceiling.
+  max: 8,
+  // Release idle sockets sooner so memory is returned between traffic bursts.
+  idleTimeoutMillis: 10000,
   connectionTimeoutMillis: 10000,
 });
 

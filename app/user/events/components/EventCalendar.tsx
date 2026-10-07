@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import Image from 'next/image';
+import SectionHeading from '../../about/components/SectionHeading';
 // Removed invalid AutoHeightPlugin import; not needed for auto-resizing
 import type { EventClickArg, EventContentArg } from '@fullcalendar/core';
 
@@ -78,7 +78,7 @@ const EventCalendar: React.FC = () => {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'corporate':
-        return '#2B3990'; // Your primary blue
+        return '#22409A'; // Your primary blue
       case 'outreach':
         return '#10B981'; // Green for community
       case 'training':
@@ -222,7 +222,7 @@ const EventCalendar: React.FC = () => {
             bottom: 4px;
             left: 50%;
             transform: translateX(-50%);
-            background: #2B3990;
+            background: #22409A;
             color: white;
             padding: 4px 10px;
             border-radius: 12px;
@@ -238,12 +238,12 @@ const EventCalendar: React.FC = () => {
           
           // Add hover effect
           badge.addEventListener('mouseenter', () => {
-            badge.style.background = '#1e2875';
+            badge.style.background = '#1A3078';
             badge.style.transform = 'translateX(-50%) scale(1.08)';
             badge.style.boxShadow = '0 2px 8px rgba(43, 57, 144, 0.4)';
           });
           badge.addEventListener('mouseleave', () => {
-            badge.style.background = '#2B3990';
+            badge.style.background = '#22409A';
             badge.style.transform = 'translateX(-50%) scale(1)';
             badge.style.boxShadow = 'none';
           });
@@ -358,53 +358,26 @@ const EventCalendar: React.FC = () => {
   };
 
   return (
-    <div
-      className="relative w-full min-h-screen flex justify-center items-start py-10 px-2 -mt-15 lg:px-0"
+    <section
+      id="event-calendar"
+      aria-labelledby="calendar-title"
+      className="relative w-full py-16 md:py-24"
     >
-      {/* Background image with Next.js Image for optimization - Fixed positioning */}
-      <div className="fixed inset-0 z-0">
-        <Image
-          src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530480/biosite-assets/bg1.png"
-          alt="Background"
-          fill
-          priority={true}
-          quality={75}
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-        />
-      </div>
-      {/* Overlay for opacity - Fixed positioning */}
-      <div className="fixed inset-0 bg-white/80 pointer-events-none z-0" />
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-[900px] mx-auto p-2 lg:p-2 px-4 lg:px-2 mb-[150px] lg:mb-[150px] mb-16 pt-8 lg:pt-8 pt-6"
+        className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
       >
       {/* Header Section */}
-      <div className="text-center mb-6 lg:mb-8 px-2 mt-5">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-2xl lg:text-4xl font-bold text-gray-800 mb-3"
-        >
-          Event Calendar
-        </motion.h1>
-        <motion.div 
-          initial={{ width: 0 }}
-          animate={{ width: 64 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="h-1 bg-[#2B3990] mx-auto mb-4 rounded-full"
+      <div className="mb-10 flex flex-col items-center">
+        <SectionHeading
+         
+          title="Event Calendar"
+          intro="Stay updated with our upcoming activities and programs."
+          align="center"
+          titleId="calendar-title"
         />
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-gray-600 max-w-2xl mx-auto text-sm lg:text-base -mt-3 px-4 lg:px-0"
-        >
-          Stay updated with our upcoming activities and programs.
-        </motion.p>
       </div>
 
       {/* Event Statistics Cards */}
@@ -443,7 +416,7 @@ const EventCalendar: React.FC = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="bg-white rounded-t-xl shadow-lg border border-gray-200 border-b-0 mx-2 lg:mx-0"
       >
-        <div className="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-[#2B3990] to-[#1e2875] text-white rounded-t-xl">
+        <div className="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-[#22409A] to-[#1A3078] text-white rounded-t-xl">
           <div className="flex items-center space-x-2 lg:space-x-4">
             <button
               onClick={() => handleMonthChange('prev')}
@@ -499,7 +472,7 @@ const EventCalendar: React.FC = () => {
             eventDisplay="block"
             displayEventTime={false}
             moreLinkClick="none" // Completely disable FullCalendar's popover
-            dayHeaderClassNames="bg-[#f8fafc] text-[#2B3990] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
+            dayHeaderClassNames="bg-[#f8fafc] text-[#22409A] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
             dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
             buttonText={{
@@ -551,7 +524,7 @@ const EventCalendar: React.FC = () => {
                   <button
                     onClick={() => setShowEventsListModal(false)}
                     aria-label="Close"
-                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 rounded"
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#22409A]/40 rounded"
                   >
                     ×
                   </button>
@@ -650,7 +623,7 @@ const EventCalendar: React.FC = () => {
                   <button
                     onClick={closeModal}
                     aria-label="Close"
-                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 ml-2 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 rounded"
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors duration-200 ml-2 focus:outline-none focus:ring-2 focus:ring-[#22409A]/40 rounded"
                     type="button"
                   >
                     ×
@@ -661,7 +634,7 @@ const EventCalendar: React.FC = () => {
                 <div className="space-y-3 lg:space-y-4">
                   <div className="bg-gray-50 rounded-lg p-3 lg:p-4">
                     <div className="flex items-center text-gray-600 mb-2">
-                      <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#22409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <span className="font-medium text-sm lg:text-base">
@@ -676,7 +649,7 @@ const EventCalendar: React.FC = () => {
 
                     {selectedEvent.time && (
                       <div className="flex items-center text-gray-600 mb-2">
-                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#22409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span className="text-sm lg:text-base">{selectedEvent.time}</span>
@@ -685,7 +658,7 @@ const EventCalendar: React.FC = () => {
 
                     {selectedEvent.location && (
                       <div className="flex items-center text-gray-600">
-                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#2B3990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 lg:mr-3 text-[#22409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -793,8 +766,8 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-button-primary {
-          background-color: #2B3990 !important;
-          border-color: #2B3990 !important;
+          background-color: #22409A !important;
+          border-color: #22409A !important;
           color: white !important;
           font-weight: 500 !important;
           border-radius: 0.5rem !important;
@@ -803,8 +776,8 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-button-primary:hover {
-          background-color: #1e2875 !important;
-          border-color: #1e2875 !important;
+          background-color: #1A3078 !important;
+          border-color: #1A3078 !important;
           transform: translateY(-1px) !important;
         }
         
@@ -830,7 +803,7 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-day-today .fc-daygrid-day-number {
-          background-color: #2B3990 !important;
+          background-color: #22409A !important;
           color: white !important;
           border-radius: 100% !important;
           width: 1.5rem !important;
@@ -858,7 +831,7 @@ const EventCalendar: React.FC = () => {
         
         .fc-col-header-cell {
           background-color: #f8fafc !important;
-          color: #2B3990 !important;
+          color: #22409A !important;
           font-weight: 600 !important;
           text-transform: uppercase !important;
           font-size: 0.625rem !important;
@@ -899,7 +872,7 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-day-today .fc-daygrid-day-number {
-          background: linear-gradient(135deg, #2B3990, #1e2875) !important;
+          background: linear-gradient(135deg, #22409A, #1A3078) !important;
           color: white !important;
           border-radius: 50% !important;
           width: 1.5rem !important;
@@ -921,7 +894,7 @@ const EventCalendar: React.FC = () => {
         }
         
         .fc-more-link {
-          color: #2B3990 !important;
+          color: #22409A !important;
           font-weight: 500 !important;
           font-size: 0.75rem !important;
           padding: 0.25rem 0.5rem !important;
@@ -933,7 +906,7 @@ const EventCalendar: React.FC = () => {
         
         .fc-more-link:hover {
           color: white !important;
-          background-color: #2B3990 !important;
+          background-color: #22409A !important;
           transform: scale(1.05) !important;
         }
         
@@ -956,46 +929,9 @@ const EventCalendar: React.FC = () => {
             padding: 0.25rem 0.5rem !important;
           }
         }
-
-        /* Optimized for 1280x665 dimension */
-        @media (min-width: 1279px) and (max-width: 1281px) and (min-height: 664px) and (max-height: 666px) {
-          .fc-daygrid-day-frame {
-            height: 4.5rem !important;
-            min-height: 4.5rem !important;
-            max-height: 4.5rem !important;
-            padding: 0.35rem !important;
-          }
-          
-          .fc-daygrid-day-number {
-            font-size: 0.8rem !important;
-            padding: 0.35rem !important;
-          }
-          
-          .fc-day-today .fc-daygrid-day-number {
-            width: 1.75rem !important;
-            height: 1.75rem !important;
-            font-size: 0.8rem !important;
-          }
-          
-          .fc-event,
-          .fc-h-event {
-            font-size: 0.7rem !important;
-            padding: 0.2rem 0.4rem !important;
-          }
-          
-          .fc-col-header-cell {
-            font-size: 0.7rem !important;
-            padding: 0.6rem !important;
-          }
-          
-          .fc-daygrid-day,
-          .fc-col-header-cell {
-            min-width: 90px !important;
-          }
-        }
       `}</style>
       </motion.div>
-    </div>
+    </section>
   );
 };
 

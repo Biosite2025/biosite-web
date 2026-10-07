@@ -1,10 +1,10 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import AWS from 'aws-sdk';
+// S3-only import — see note in app/api/event-gallery/route.ts.
+import S3 from 'aws-sdk/clients/s3';
 
-const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com'); // Change region if needed
-const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
+const s3 = new S3({
+  endpoint: 'https://sgp1.digitaloceanspaces.com',
   accessKeyId: process.env.DO_SPACES_KEY,
   secretAccessKey: process.env.DO_SPACES_SECRET,
 });

@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useAnimation, useInView } from 'framer-motion';
-import Link from 'next/link';
+import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
+import ProductCard from '../shared/ProductCard';
 
 // Product category
 const category = {
@@ -14,6 +14,15 @@ const category = {
 	description: 'Advanced immunology systems and equipment for comprehensive laboratory diagnostics',
 	folder: 'immunology',
 };
+
+// Brand sub-tabs — logo tabs above the grid (same pattern as Rapid Test Kits).
+// logoClass compensates for artwork whitespace so all logos read the same size:
+// liason.png has heavy internal padding, so it gets a taller box + scale boost.
+const brands = [
+	{ id: 'tosoh', name: 'Tosoh', logo: '/asset/logo/TOSOH.png', logoClass: 'max-h-12 sm:max-h-14' },
+	{ id: 'liaison', name: 'DiaSorin', logo: '/asset/logo/DIASORIN.png' },
+	{ id: 'werfen', name: 'Werfen', logo: '/asset/logo/WERFEN.png', logoClass: 'max-h-12 sm:max-h-14' },
+];
 
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
@@ -28,7 +37,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	const isBioFlash = product.name === 'Werfen BIO-FLASH';
 
 	const liaisonTestMenu = (
-		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
+		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
 			<div>
 				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
 					<span className="text-sm md:text-lg">🦴</span>Bone and Mineral
@@ -158,7 +167,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 
 	const tosohTestMenu = (
-		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
+		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
 			<div>
 				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Tumor Markers</h4>
 				<div className="ml-3 md:ml-5 text-gray-700">
@@ -261,7 +270,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 
 	const bioflashTestMenu = (
-		<div className="space-y-2 text-[9px] md:text-xs max-h-[222px] md:max-h-[300px] overflow-y-auto pr-1 md:pr-2">
+		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[300px] overflow-y-auto pr-1 md:pr-2">
 			<div>
 				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
 					<span className="text-sm md:text-lg">🔬</span>ToRCH
@@ -317,10 +326,11 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 				>
 					<button
 						onClick={product.onClose}
-						className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 rounded-full hover:bg-gray-100 z-10 max-[912px]:top-2 max-[912px]:right-2"
+						className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100 z-10
+								 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] max-[912px]:top-1.5 max-[912px]:right-1.5"
 						aria-label="Close modal"
 					>
-						<svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+						<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
 						</svg>
 					</button>
@@ -357,6 +367,20 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 									className="object-contain p-1 md:p-6"
 									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
+
+								{/* Brand logo badge (same treatment as the product cards) */}
+								{product.brandLogo && (
+									<div className="absolute top-2 right-2 md:top-3 md:right-3 pointer-events-none">
+										<Image
+											src={product.brandLogo}
+											alt={`${product.brandName ?? 'Brand'} logo`}
+											aria-hidden="true"
+											width={460}
+											height={48}
+											className="h-[20px] md:h-[40px] lg:h-[48px] w-auto object-contain drop-shadow-md"
+										/>
+									</div>
+								)}
 							</div>
 
 							<div className="space-y-1 md:space-y-4">
@@ -378,85 +402,67 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	);
 }
 
-// Product card component with animations
-function ProductCard({ product, index, onViewDetails }: { product: any; index: number; onViewDetails: (product: any) => void }) {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: "-100px" });
-
+// Brand logo tabs — same tab pattern/styling as Rapid Test Kits, with logos
+// in a consistent fixed bounding box so wide and square logos don't jump.
+function BrandTabs({ activeBrand, onBrandChange }: { activeBrand: string; onBrandChange: (id: string) => void }) {
 	return (
-		<motion.div
-			ref={ref}
-			initial={{ opacity: 0, y: 50 }}
-			animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-			transition={{ duration: 0.5, delay: index * 0.1 }}
-			className="group relative bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden max-[912px]:rounded-lg"
-			whileHover={{ y: -8, scale: 1.02 }}
-		>
-			{/* Image Container */}
-			<div className="relative h-48 sm:h-56 md:h-64 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden max-[912px]:h-40">
-				<motion.div
-					whileHover={{ scale: 1.1 }}
-					transition={{ duration: 0.6 }}
-					className="w-full h-full relative"
-				>
-					<Image
-						src={product.image}
-						alt={product.name}
-						fill
-						className="object-contain p-2 sm:p-3 md:p-4 max-[912px]:p-2"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					/>
-				</motion.div>
-				
-				{/* Hover overlay */}
-				<div className="absolute inset-0 bg-gradient-to-t from-[#2B3990]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+		<div className="mb-8 sm:mb-12 max-[912px]:mb-6">
+			<div className="border-b border-gray-200">
+				<nav className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4 -mb-px" aria-label="Brand tabs">
+					{brands.map((brand) => {
+						const isActive = activeBrand === brand.id;
+						return (
+							<button
+								key={brand.id}
+								type="button"
+								onClick={() => onBrandChange(brand.id)}
+								aria-pressed={isActive}
+								aria-label={`Show ${brand.name} products`}
+								className={`group whitespace-nowrap pt-2 pb-3 px-2 sm:px-4 border-b-2 transition-all duration-300 touch-manipulation
+										 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] ${
+									isActive
+										? 'border-[#2B3990]'
+										: 'border-transparent hover:border-gray-300'
+								}`}
+							>
+								{/* Rounded chip anchors logos that are on white */}
+								<span
+									className={`flex items-center justify-center h-16 w-36 sm:h-20 sm:w-48 px-2 rounded-lg bg-gray-50 border border-gray-200/80 transition-all duration-300 ${
+										isActive ? 'opacity-100 shadow-sm' : 'opacity-50 group-hover:opacity-80'
+									}`}
+								>
+									<Image
+										src={brand.logo}
+										alt={`${brand.name} logo`}
+										width={160}
+										height={56}
+										className={`${brand.logoClass} w-auto object-contain`}
+									/>
+								</span>
+							</button>
+						);
+					})}
+				</nav>
 			</div>
-
-			{/* Content */}
-			<div className="p-4 sm:p-5 md:p-6 max-[912px]:p-3">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-[#2B3990] transition-colors duration-300 max-[912px]:text-base">
-					{product.name}
-				</h3>
-				<p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 max-[912px]:text-xs max-[912px]:mb-2">
-					{product.description ? product.description : 'Professional immunology equipment engineered for precision and reliability.'}
-				</p>
-				
-				{/* View Details Button */}
-				<motion.button
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={() => onViewDetails(product)}
-					className="w-full bg-[#2B3990] text-white py-2 sm:py-3 rounded-lg font-semibold text-sm sm:text-base
-							 hover:bg-[#1e2865] transition-all duration-300 
-							 shadow-md hover:shadow-xl relative overflow-hidden group/btn max-[912px]:py-2 max-[912px]:text-sm"
-				>
-					<span className="relative z-10">View Details</span>
-					<motion.div
-						className="absolute inset-0 bg-gradient-to-r from-[#1e2865] to-[#2B3990]"
-						initial={{ x: '-100%' }}
-						whileHover={{ x: 0 }}
-						transition={{ duration: 0.3 }}
-					/>
-				</motion.button>
-			</div>
-
-			{/* Decorative corner accent */}
-			<div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-bl from-[#2B3990]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 max-[912px]:w-12 max-[912px]:h-12" />
-		</motion.div>
+		</div>
 	);
 }
 
 // Category section component
-function CategorySection({ category, products, onViewDetails }: { category: any; products: any[]; onViewDetails: (product: any) => void }) {
+function CategorySection({ category, products, activeBrand, onBrandChange, onViewDetails }: { category: any; products: any[]; activeBrand: string; onBrandChange: (id: string) => void; onViewDetails: (product: any) => void }) {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: "-50px" });
 	const controls = useAnimation();
+	const reducedMotion = useReducedMotion();
 
 	useEffect(() => {
 		if (isInView) {
 			controls.start("visible");
 		}
 	}, [isInView, controls]);
+
+	const filteredProducts = products.filter((p: any) => p.brand === activeBrand);
+	const activeBrandLogo = brands.find((b) => b.id === activeBrand)?.logo;
 
 	return (
 		<section ref={ref} className="mb-12 sm:mb-16 md:mb-20 max-[912px]:mb-8">
@@ -483,11 +489,64 @@ function CategorySection({ category, products, onViewDetails }: { category: any;
 				</p>
 			</motion.div>
 
-			{/* Products Grid */}
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-[912px]:grid-cols-1 max-[912px]:gap-3">
-				{products.map((product: any, idx: number) => (
-					<ProductCard key={product.id} product={product} index={idx} onViewDetails={onViewDetails} />
-				))}
+			{/* Tabs + grid wrapper — carries ONE large brand logo as a section-wide
+			    background sitting behind all the cards, synced to the active tab */}
+			<div className="relative">
+				{/* Section background logo: cross-fades (with a gentle settle from
+				    scale 1.02) when the tab changes; instant swap for reduced motion */}
+				<div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+					<AnimatePresence initial={false}>
+						{activeBrandLogo && (
+							<motion.div
+								key={activeBrand}
+								className="absolute inset-0"
+								style={{
+									backgroundImage: `url("${activeBrandLogo}")`,
+									backgroundRepeat: 'no-repeat',
+									backgroundPosition: 'center',
+									backgroundSize: 'contain',
+								}}
+								initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+								animate={{ opacity: 0.50, scale: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: reducedMotion ? 0.01 : 0.4, ease: 'easeOut' }}
+							/>
+						)}
+					</AnimatePresence>
+				</div>
+
+				{/* Brand Sub-Tabs */}
+				<div className="relative z-10">
+					<BrandTabs activeBrand={activeBrand} onBrandChange={onBrandChange} />
+				</div>
+
+				{/* Products Grid — flex-wrap + justify-center so trailing/orphaned
+				    cards on partial rows sit centered instead of hugging the left */}
+				<motion.div
+					key={activeBrand}
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.3 }}
+					className="relative z-10 flex flex-wrap justify-center gap-6"
+				>
+					{filteredProducts.map((product: any, idx: number) => (
+						<div
+							key={product.id}
+							className="w-full min-[913px]:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]"
+						>
+							<ProductCard
+								index={idx}
+								image={product.image}
+								name={product.name}
+								description={product.description}
+								brandLogo={product.brandLogo}
+								brandName={product.brandName}
+								brandLogoClass={product.brandLogoClass}
+								onViewDetails={() => onViewDetails(product)}
+							/>
+						</div>
+					))}
+				</motion.div>
 			</div>
 		</section>
 	);
@@ -499,6 +558,7 @@ export default function Immunology() {
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [activeBrand, setActiveBrand] = useState('tosoh'); // default tab: Tosoh
 
 	useEffect(() => {
 		// Product data based on CSV
@@ -506,55 +566,80 @@ export default function Immunology() {
 			{
 				id: 4,
 				name: 'Tosoh AIA-360',
+				brand: 'tosoh',
+				brandName: 'Tosoh',
+				brandLogo: '/asset/logo/TOSOH.png',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-360.png',
 				description: "The Tosoh AIA-360's size and affordability make it an excellent fit for POLs and small hospitals, as well as for specialty testing or for use as a back-up analyzer."
 			},
 			{
 				id: 5,
 				name: 'Tosoh AIA-900',
+				brand: 'tosoh',
+				brandName: 'Tosoh',
+				brandLogo: '/asset/logo/TOSOH.png',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-900.png',
 				description: "Tosoh Bioscience's AIA-900 is the new generation stand alone, flexible and fully scalable high throughput immunoassay analyzer."
 			},
 			{
 				id: 6,
 				name: 'Tosoh AIA-2000',
+				brand: 'tosoh',
+				brandName: 'Tosoh',
+				brandLogo: '/asset/logo/TOSOH.png',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-2000.png',
 				description: "AIA-2000 is a fully automated immunoassay analyzer has become the new global standard for speed and reliability amongst fully featured immunoassay analyzers. Equipped with a complete line of test menu, the user can load up to 960 tests (48 trays x 20 tests) in a new, easy-to-load hybrid sort; increasing walkaway time to approximately 4 hours."
 			},
 			{
 				id: 7,
 				name: 'Tosoh AIA-CL300',
+				brand: 'tosoh',
+				brandName: 'Tosoh',
+				brandLogo: '/asset/logo/TOSOH.png',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-CL300.png',
 				description: "AIA-CL300 utilises the unique CL-AIA Pack twin cup format. With a throughput of up to 30 results per hour, first result within 15 minutes for most assays, this innovative desktop automated analyzer meets the needs from small to large laboratories, to perform routine analysis, esoteric assays, and up to 30 results per hour. Users who experience the unique technology of the AIA-CL series which have already made their proof in terms of ease of use, reliability, and analytical performance."
 			},
 			{
 				id: 8,
 				name: 'LIAISON® XS',
+				brand: 'liaison',
+				brandName: 'DiaSorin',
+				brandLogo: '/asset/logo/DIASORIN.png',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XS.png',
 				description: "A fully automated, easy-to-use benchtop analyzer. Maximize productivity with optimal cost management, no daily maintenance, straightforward integration, and the same capabilities as Diasorin’s high-throughput analyzers."
 			},
 			{
 				id: 9,
 				name: 'LIAISON® XL',
+				brand: 'liaison',
+				brandName: 'DiaSorin',
+				brandLogo: '/asset/logo/DIASORIN.png',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XL.png',
 				description: "Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation."
 			},
 			{
 				id: 10,
 				name: 'Werfen BIO-FLASH',
+				brand: 'werfen',
+				brandName: 'Werfen',
+				brandLogo: '/asset/logo/WERFEN.png',
+				brandLogoClass: 'h-[24px] sm:h-[28px] max-w-[90px]',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/werfen%20bioflash.png',
 				description: "BIO-FLASH is a fully automated, random access chemiluminescent analyzer for any autoimmune laboratory. It delivers enhanced workflow efficiencies, market leading ease-of-use and improved assay performance compared with existing enzyme-based systems. With on-board reagents and stored calibration curves, BIO-FLASH makes even the most specialized autoimmune tests efficient to perform."
 			},
-			
+
 		];
-		
+
 
 		setProducts(productData);
 		setLoading(false);
 
-		// Preload all images
+		// Preload all images including hero background and brand logos
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
+			'/asset/logo/background.png',
+			...brands.map((b) => b.logo),
 			...productData.map((p: any) => p.image)
 		];
 		
@@ -605,8 +690,22 @@ export default function Immunology() {
 				transition={{ duration: 1 }}
 				className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
 			>
-				{/* Background Gradient */}
-				<div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-[#1a2c65] via-[#2B3990] to-[#4a5ab8]" />
+				{/* Background Image (matches Clinical Chemistry hero) */}
+				<div className="absolute inset-0 w-full h-full z-0">
+					<Image
+						src="/asset/logo/background.png"
+						alt="Immunology Background"
+						fill
+						className="object-cover w-full h-full"
+						priority
+					/>
+					{/* Gradient overlay: lighter at the top so the lab photo shows
+					    through, darker toward the bottom where the text sits */}
+					<div
+						className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#0b1338]/30 via-[#0b1338]/55 to-[#0b1338]/85"
+						style={{ zIndex: 1 }}
+					/>
+				</div>
 
 				{/* Particles Background Animation */}
 				<div className="absolute inset-0 w-full h-full z-10">
@@ -628,12 +727,7 @@ export default function Immunology() {
 						>
 							Immunology
 						</motion.h1>
-						<motion.div
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
-							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
-						/>
+						{/* Horizontal band removed — subtitle sits directly on the gradient */}
 						<motion.p
 							initial={{ opacity: 0, y: 30 }}
 							animate={{ opacity: 1, y: 0 }}
@@ -678,6 +772,8 @@ export default function Immunology() {
 					<CategorySection
 						category={category}
 						products={products}
+						activeBrand={activeBrand}
+						onBrandChange={setActiveBrand}
 						onViewDetails={handleViewDetails}
 					/>
 				)}
@@ -702,8 +798,9 @@ export default function Immunology() {
 						href="/user/contact"
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
-						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
-									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg
+									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm
+									focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 					>
 						Contact Our Experts
 					</motion.a>
