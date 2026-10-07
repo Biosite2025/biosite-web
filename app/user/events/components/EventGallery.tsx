@@ -161,6 +161,21 @@ const EventGallery: React.FC = () => {
     if (v.paused) v.play();
     else v.pause();
   };
+  // Videos sit behind a branded cover until played; keyed by src so each
+  // video gets its cover back when it ends or the carousel moves on.
+  const [startedVideos, setStartedVideos] = useState<Record<string, boolean>>({});
+  const setStarted = (src: string, started: boolean) => setStartedVideos((s) => ({ ...s, [src]: started }));
+  const playFromCover = (i: number, src: string) => {
+    const v = videoRefs[i].current;
+    if (!v) return;
+    setStarted(src, true);
+    v.muted = false; // the visitor chose to play it — let them hear it
+    v.play().catch(() => {
+      // Some browsers refuse unmuted playback; fall back to muted.
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+  };
 
   const renderRow = (images: string[], x: MotionValue<number>, loopWidth: number, keyPrefix: string) => (
     <div
@@ -328,7 +343,7 @@ const EventGallery: React.FC = () => {
                     return (
                       <div
                         key={videoSources[idx] + idx}
-                        className="group relative aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-lg ring-1 ring-black/5"
+                        className="group relative isolate aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-lg ring-1 ring-black/5"
                       >
                         <video
                           ref={videoRefs[offset]}
@@ -338,7 +353,37 @@ const EventGallery: React.FC = () => {
                           playsInline
                           className="absolute inset-0 h-full w-full cursor-pointer object-cover"
                           onClick={() => toggleVideo(offset)}
+                          onPlay={() => setStarted(videoSources[idx], true)}
+                          onEnded={() => setStarted(videoSources[idx], false)}
                         />
+
+                        {/* Branded cover — white with the Biosite logo until the visitor plays it */}
+                        <AnimatePresence>
+                          {!startedVideos[videoSources[idx]] && (
+                            <motion.button
+                              type="button"
+                              onClick={() => playFromCover(offset, videoSources[idx])}
+                              aria-label="Play event highlight video"
+                              className={`group/cover absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 bg-white ${FOCUS_RING}`}
+                              initial={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.35 }}
+                            >
+                              <Image
+                                src="/asset/BMI_logo4.webp"
+                                alt=""
+                                width={720}
+                                height={262}
+                                className="h-auto w-[55%] max-w-[300px] transition-transform duration-300 group-hover/cover:scale-105"
+                              />
+                              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#22409A] text-white shadow-lg transition-all duration-300 group-hover/cover:scale-110 group-hover/cover:bg-[#1A3078] lg:h-16 lg:w-16">
+                                <svg className="ml-1 h-6 w-6 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
+                                </svg>
+                              </span>
+                            </motion.button>
+                          )}
+                        </AnimatePresence>
                       </div>
                     );
                   })}
