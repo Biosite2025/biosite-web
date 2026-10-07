@@ -13,6 +13,17 @@ const BLUR =
 const CARD_W_MOBILE = 208; // 192 card + 16 gap
 const CARD_W_DESKTOP = 344; // 320 card + 24 gap
 
+/**
+ * Highlight-video carousel: both pairs move together — the new pair slides
+ * in from one side while the old one slides out the other, on one eased curve.
+ */
+const pairVariants = {
+  enter: (dir: 1 | -1) => ({ x: `${dir * 100}%`, opacity: 0.4 }),
+  center: { x: '0%', opacity: 1 },
+  exit: (dir: 1 | -1) => ({ x: `${dir * -100}%`, opacity: 0.4 }),
+};
+const PAIR_SLIDE = { duration: 0.65, ease: [0.32, 0.72, 0, 1] as const };
+
 const EventGallery: React.FC = () => {
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
   const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
@@ -153,8 +164,15 @@ const EventGallery: React.FC = () => {
   const [videoPairIndex, setVideoPairIndex] = useState(0);
   const totalPairs = Math.ceil(videoSources.length / 2);
   const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
-  const prevPair = () => setVideoPairIndex((p) => (p === 0 ? totalPairs - 1 : p - 1));
-  const nextPair = () => setVideoPairIndex((p) => (p === totalPairs - 1 ? 0 : p + 1));
+  const [pairDir, setPairDir] = useState<1 | -1>(1);
+  const prevPair = () => {
+    setPairDir(-1);
+    setVideoPairIndex((p) => (p === 0 ? totalPairs - 1 : p - 1));
+  };
+  const nextPair = () => {
+    setPairDir(1);
+    setVideoPairIndex((p) => (p === totalPairs - 1 ? 0 : p + 1));
+  };
   const toggleVideo = (i: number) => {
     const v = videoRefs[i].current;
     if (!v) return;
@@ -336,7 +354,19 @@ const EventGallery: React.FC = () => {
                   </>
                 )}
 
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                {/* Clip the slide; the padding/negative margin keeps card shadows visible. */}
+                <div className="relative -m-4 overflow-hidden p-4">
+                <AnimatePresence mode="popLayout" initial={false} custom={pairDir}>
+                <motion.div
+                  key={videoPairIndex}
+                  custom={pairDir}
+                  variants={pairVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={PAIR_SLIDE}
+                  className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+                >
                   {[0, 1].map((offset) => {
                     const idx = videoPairIndex * 2 + offset;
                     if (idx >= videoSources.length) return null;
@@ -390,7 +420,38 @@ const EventGallery: React.FC = () => {
                       </div>
                     );
                   })}
+                </motion.div>
+                </AnimatePresence>
                 </div>
+
+                {/* Which pair is showing — every cover is the same poster, so this is
+                    what tells the visitor they've moved to different videos. */}
+                {totalPairs > 1 && (
+                  <div className="mt-6 flex items-center justify-center gap-2" role="group" aria-label="Video pages">
+                    {Array.from({ length: totalPairs }).map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          if (i === videoPairIndex) return;
+                          setPairDir(i > videoPairIndex ? 1 : -1);
+                          setVideoPairIndex(i);
+                        }}
+                        aria-label={`Show videos ${i * 2 + 1}–${Math.min(i * 2 + 2, videoSources.length)}`}
+                        aria-current={i === videoPairIndex}
+                        className={`relative h-2.5 w-2.5 rounded-full bg-[#22409A]/25 transition-colors hover:bg-[#22409A]/50 ${FOCUS_RING}`}
+                      >
+                        {i === videoPairIndex && (
+                          <motion.span
+                            layoutId="video-pair-dot"
+                            className="absolute inset-y-0 -left-1.5 -right-1.5 rounded-full bg-[#EE232E]"
+                            transition={PAIR_SLIDE}
+                          />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
