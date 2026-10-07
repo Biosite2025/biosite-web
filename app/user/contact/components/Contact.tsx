@@ -256,7 +256,10 @@ function ContactForm() {
                 {activeLocation === location.id && (
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-[#2B3990] to-blue-600 rounded-xl"
-                    layoutId="activeTab"
+                    // Must differ from the mobile tabs' layoutId: both tab sets are
+                    // mounted at once (one is just CSS-hidden), and a shared id
+                    // makes framer-motion move this pill into the hidden set.
+                    layoutId="activeTab-desktop"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -286,7 +289,7 @@ function ContactForm() {
                 {activeLocation === location.id && (
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-[#2B3990] to-blue-600 rounded-lg"
-                    layoutId="activeTab"
+                    layoutId="activeTab-mobile"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
