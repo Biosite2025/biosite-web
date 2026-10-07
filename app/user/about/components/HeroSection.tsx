@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { EASE, FOCUS_RING } from './motionShared';
 
@@ -15,14 +14,15 @@ const slides = [
 
 const SLIDE_DURATION = 5000;
 
+const PARTNER_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScR4HEaBgpTHZUr85wM3j-y5vB3TblbZ7BUTt6zjkhahUlYFA/viewform';
+
 const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const reducedMotion = useReducedMotion();
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const go = useCallback((idx: number) => setCurrent(((idx % slides.length) + slides.length) % slides.length), []);
-
-  // Autoplay — paused for reduced-motion users, who navigate via the dots.
+  // Autoplay — paused for reduced-motion users, who stay on the first photo.
   useEffect(() => {
     if (reducedMotion) return;
     timer.current = setInterval(() => setCurrent((c) => (c + 1) % slides.length), SLIDE_DURATION);
@@ -97,22 +97,21 @@ const HeroSection = () => {
           <br className="hidden sm:block" /> Deserves the Best Care
         </motion.h1>
 
-      </div>
-
-      {/* Slide controls — real buttons, keyboard-focusable, labelled */}
-      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2.5" role="group" aria-label="Choose building photo">
-        {slides.map((s, i) => (
-          <button
-            key={s.src}
-            type="button"
-            onClick={() => go(i)}
-            aria-label={`Show ${s.alt}`}
-            aria-current={i === current}
-            className={`h-2.5 rounded-full transition-all duration-300 ${FOCUS_RING} ${
-              i === current ? 'w-7 bg-[#EE232E]' : 'w-2.5 bg-[#22409A]/40 hover:bg-[#22409A]/70'
-            }`}
-          />
-        ))}
+        <motion.a
+          href={PARTNER_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`mt-8 inline-flex items-center gap-2 rounded-full bg-[#22409A] px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1A3078] hover:shadow-xl sm:text-base ${FOCUS_RING}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
+        >
+          Be Our Partner
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="sr-only">(opens in a new tab)</span>
+        </motion.a>
       </div>
     </section>
   );
