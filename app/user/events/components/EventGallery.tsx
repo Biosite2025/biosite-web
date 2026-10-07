@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useAnimationFrame, AnimatePresence, type MotionValue } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useAnimationFrame, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
@@ -12,6 +12,13 @@ const BLUR =
 
 const CARD_W_MOBILE = 208; // 192 card + 16 gap
 const CARD_W_DESKTOP = 344; // 320 card + 24 gap
+
+/** Swipe threshold: a short flick or a deliberate drag both count. 1 = next, -1 = prev, 0 = neither. */
+const swipeDirection = (info: PanInfo): 1 | -1 | 0 => {
+  if (info.offset.x < -50 || info.velocity.x < -400) return 1;
+  if (info.offset.x > 50 || info.velocity.x > 400) return -1;
+  return 0;
+};
 
 /**
  * Highlight-video carousel: both pairs move together — the new pair slides
@@ -35,6 +42,22 @@ const EventGallery: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);
+
+  // Swipe navigation is for touch devices only (iOS/Android phones & tablets);
+  // mouse users keep the arrow buttons.
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const sync = () => setIsTouch(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+  // Video carousel swipe uses plain touch events rather than framer drag: the
+  // outgoing and incoming pairs are briefly mounted together, and a shared drag
+  // controller could leave framer's global drag lock held, which then blocked
+  // the photo lightbox's swipe.
+  const videoTouch = useRef<{ x: number; y: number } | null>(null);
 
   // ---- data ----
   useEffect(() => {
@@ -332,7 +355,7 @@ const EventGallery: React.FC = () => {
               </div>
             ) : (
               <div className="relative mt-12">
-                {totalPairs > 1 && (
+                {totalPairs > 1 && !isTouch && (
                   <>
                     <button
                       type="button"
@@ -369,6 +392,26 @@ const EventGallery: React.FC = () => {
                   exit="exit"
                   transition={PAIR_SLIDE}
                   className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+                  style={isTouch ? { touchAction: 'pan-y' } : undefined}
+                  // Touch: a mostly-horizontal swipe of 50px+ changes pair. Swipes
+                  // that start on a playing video are ignored so scrubbing its
+                  // timeline doesn't flip the page.
+                  onTouchStart={(e) => {
+                    const t = e.touches[0];
+                    videoTouch.current =
+                      isTouch && totalPairs > 1 && !(e.target as HTMLElement).closest('video') ? { x: t.clientX, y: t.clientY } : null;
+                  }}
+                  onTouchEnd={(e) => {
+                    const start = videoTouch.current;
+                    videoTouch.current = null;
+                    if (!start) return;
+                    const t = e.changedTouches[0];
+                    const dx = t.clientX - start.x;
+                    const dy = t.clientY - start.y;
+                    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return; // a tap or a vertical scroll
+                    if (dx < 0) nextPair();
+                    else prevPair();
+                  }}
                 >
                   {[0, 1].map((offset) => {
                     const idx = videoPairIndex * 2 + offset;
@@ -428,8 +471,11 @@ const EventGallery: React.FC = () => {
 
                 {/* Which pair is showing — every cover is the same poster, so this is
                     what tells the visitor they've moved to different videos. */}
+                {totalPairs > 1 && isTouch && (
+                  <p className="mt-5 text-center text-xs font-medium text-[#6B7280]">Swipe for more videos</p>
+                )}
                 {totalPairs > 1 && (
-                  <div className="mt-6 flex items-center justify-center gap-2" role="group" aria-label="Video pages">
+                  <div className={`${isTouch ? 'mt-3' : 'mt-6'} flex items-center justify-center gap-2`} role="group" aria-label="Video pages">
                     {Array.from({ length: totalPairs }).map((_, i) => (
                       <button
                         key={i}
@@ -522,6 +568,14 @@ const EventGallery: React.FC = () => {
               animate={{ opacity: imgLoading ? 0 : 1, scale: 1 }}
               transition={{ duration: 0.25 }}
               onClick={(e) => e.stopPropagation()}
+              // Touch: swipe left/right for the next/previous photo.
+              drag={isTouch && allImages.length > 1 ? 'x' : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.6}
+              onDragEnd={(_, info) => {
+                const d = swipeDirection(info);
+                if (d !== 0) step(d);
+              }}
             >
               <Image
                 src={largeOf[selectedImage] || selectedImage}
