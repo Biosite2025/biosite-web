@@ -357,27 +357,30 @@ const EventGallery: React.FC = () => {
                           onEnded={() => setStarted(videoSources[idx], false)}
                         />
 
-                        {/* Branded cover — white with the Biosite logo until the visitor plays it */}
+                        {/* Branded cover — the Biosite bear poster until the visitor plays it */}
                         <AnimatePresence>
                           {!startedVideos[videoSources[idx]] && (
                             <motion.button
                               type="button"
                               onClick={() => playFromCover(offset, videoSources[idx])}
                               aria-label="Play event highlight video"
-                              className={`group/cover absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 bg-white ${FOCUS_RING}`}
+                              className={`group/cover absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-[#0B5CE0] ${FOCUS_RING}`}
                               initial={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.35 }}
                             >
                               <Image
-                                src="/asset/BMI_logo4.webp"
+                                src="/asset/playbuttonbackground.webp"
                                 alt=""
-                                width={720}
-                                height={262}
-                                className="h-auto w-[55%] max-w-[300px] transition-transform duration-300 group-hover/cover:scale-105"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-cover object-center transition-transform duration-500 group-hover/cover:scale-105"
                               />
-                              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#22409A] text-white shadow-lg transition-all duration-300 group-hover/cover:scale-110 group-hover/cover:bg-[#1A3078] lg:h-16 lg:w-16">
-                                <svg className="ml-1 h-6 w-6 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              {/* Play icon appears on hover (and keyboard focus); the poster's
+                                  own red button already invites a tap on touch screens. */}
+                              <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/cover:bg-black/25 group-focus-visible/cover:bg-black/25" />
+                              <span className="relative flex h-16 w-16 scale-75 items-center justify-center rounded-full bg-white/95 text-[#22409A] opacity-0 shadow-xl transition-all duration-300 group-hover/cover:scale-100 group-hover/cover:opacity-100 group-focus-visible/cover:scale-100 group-focus-visible/cover:opacity-100 lg:h-20 lg:w-20">
+                                <svg className="ml-1 h-7 w-7 lg:h-9 lg:w-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                   <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
                                 </svg>
                               </span>
