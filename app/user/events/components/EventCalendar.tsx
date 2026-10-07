@@ -713,6 +713,10 @@ const EventCalendar: React.FC = () => {
         .fc-scrollgrid {
           width: 100% !important;
         }
+        /* FullCalendar sets an inline px width on both the header and body
+           tables (measured mid entry-animation), so force both to 100% or
+           the weekday header ends up narrower than the day grid. */
+        .fc-col-header,
         .fc-scrollgrid-sync-table {
           width: 100% !important;
           table-layout: fixed !important;
