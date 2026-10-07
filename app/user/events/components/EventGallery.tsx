@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useAnimationFrame, AnimatePresence, type MotionValue } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '../../about/components/SectionHeading';
@@ -164,19 +164,21 @@ const EventGallery: React.FC = () => {
   // ---- videos ----
   const [videoPairIndex, setVideoPairIndex] = useState(0);
   const totalPairs = Math.ceil(videoSources.length / 2);
-  const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
   const [pairDir, setPairDir] = useState<1 | -1>(1);
-  const prevPair = () => {
-    setPairDir(-1);
-    setVideoPairIndex((p) => (p === 0 ? totalPairs - 1 : p - 1));
+  // Every page change remounts the videos (paused, at 0:00), so bring every
+  // cover back too — otherwise a previously played video returns as a bare,
+  // paused black frame.
+  const goToPair = (next: number, dir: 1 | -1) => {
+    setPairDir(dir);
+    setVideoPairIndex(next);
+    setStartedVideos({});
   };
-  const nextPair = () => {
-    setPairDir(1);
-    setVideoPairIndex((p) => (p === totalPairs - 1 ? 0 : p + 1));
-  };
-  const toggleVideo = (i: number) => {
-    const v = videoRefs[i].current;
-    if (!v) return;
+  const prevPair = () => goToPair(videoPairIndex === 0 ? totalPairs - 1 : videoPairIndex - 1, -1);
+  const nextPair = () => goToPair(videoPairIndex === totalPairs - 1 ? 0 : videoPairIndex + 1, 1);
+  // Videos are looked up from the clicked element, not shared refs: during the
+  // pair slide the outgoing and incoming pairs are mounted together, and the
+  // outgoing pair unmounting would null a shared ref the new pair relies on.
+  const toggleVideo = (v: HTMLVideoElement) => {
     if (v.paused) v.play();
     else v.pause();
   };
@@ -184,8 +186,8 @@ const EventGallery: React.FC = () => {
   // video gets its cover back when it ends or the carousel moves on.
   const [startedVideos, setStartedVideos] = useState<Record<string, boolean>>({});
   const setStarted = (src: string, started: boolean) => setStartedVideos((s) => ({ ...s, [src]: started }));
-  const playFromCover = (i: number, src: string) => {
-    const v = videoRefs[i].current;
+  const playFromCover = (cover: HTMLElement, src: string) => {
+    const v = cover.parentElement?.querySelector('video');
     if (!v) return;
     setStarted(src, true);
     v.muted = false; // the visitor chose to play it — let them hear it
@@ -377,13 +379,12 @@ const EventGallery: React.FC = () => {
                         className="group relative isolate aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-lg ring-1 ring-black/5"
                       >
                         <video
-                          ref={videoRefs[offset]}
                           src={videoSources[idx]}
                           controls
                           muted
                           playsInline
                           className="absolute inset-0 h-full w-full cursor-pointer object-cover"
-                          onClick={() => toggleVideo(offset)}
+                          onClick={(e) => toggleVideo(e.currentTarget)}
                           onPlay={() => setStarted(videoSources[idx], true)}
                           onEnded={() => setStarted(videoSources[idx], false)}
                         />
@@ -393,7 +394,7 @@ const EventGallery: React.FC = () => {
                           {!startedVideos[videoSources[idx]] && (
                             <motion.button
                               type="button"
-                              onClick={() => playFromCover(offset, videoSources[idx])}
+                              onClick={(e) => playFromCover(e.currentTarget, videoSources[idx])}
                               aria-label="Play event highlight video"
                               className={`group/cover absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-[#0B5CE0] ${FOCUS_RING}`}
                               initial={{ opacity: 1 }}
@@ -434,9 +435,7 @@ const EventGallery: React.FC = () => {
                         key={i}
                         type="button"
                         onClick={() => {
-                          if (i === videoPairIndex) return;
-                          setPairDir(i > videoPairIndex ? 1 : -1);
-                          setVideoPairIndex(i);
+                          if (i !== videoPairIndex) goToPair(i, i > videoPairIndex ? 1 : -1);
                         }}
                         aria-label={`Show videos ${i * 2 + 1}–${Math.min(i * 2 + 2, videoSources.length)}`}
                         aria-current={i === videoPairIndex}
