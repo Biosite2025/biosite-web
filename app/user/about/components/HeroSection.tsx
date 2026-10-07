@@ -101,13 +101,45 @@ const HeroSection = () => {
           href={PARTNER_FORM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className={`mt-8 inline-flex items-center gap-2 rounded-full bg-[#22409A] px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1A3078] hover:shadow-xl sm:text-base ${FOCUS_RING}`}
+          className={`group relative isolate mt-8 inline-flex items-center gap-2 rounded-full bg-[#22409A] px-7 py-3 text-sm font-semibold text-white shadow-lg transition-[background-color,box-shadow] duration-300 hover:bg-[#1A3078] hover:shadow-[0_12px_32px_rgba(34,64,154,0.45)] sm:text-base ${FOCUS_RING}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
+          whileHover={reducedMotion ? undefined : { y: -3, scale: 1.05 }}
+          whileTap={reducedMotion ? undefined : { scale: 0.96 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.45, y: { type: 'spring', stiffness: 400, damping: 22 }, scale: { type: 'spring', stiffness: 400, damping: 22 } }}
         >
-          Be Our Partner
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+          {/* Attention cues — a soft ring that radiates out, and a light
+              sweep across the face. Both off for reduced-motion users. */}
+          {!reducedMotion && (
+            <>
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-[#22409A]"
+                initial={{ scale: 1, opacity: 0 }}
+                animate={{ scale: [1, 1.35], opacity: [0.45, 0] }}
+                transition={{ duration: 1.8, ease: 'easeOut', repeat: Infinity, repeatDelay: 0.8, delay: 1.3 }}
+              />
+              <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+                <motion.span
+                  className="absolute inset-y-0 -left-1/2 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent"
+                  initial={{ x: '0%' }}
+                  animate={{ x: '450%' }}
+                  transition={{ duration: 1.1, ease: 'easeInOut', repeat: Infinity, repeatDelay: 2.6, delay: 1.6 }}
+                />
+              </span>
+            </>
+          )}
+          <span className="relative">Be Our Partner</span>
+          <svg
+            className="relative transition-transform duration-300 group-hover:translate-x-1"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            aria-hidden="true"
+          >
             <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <span className="sr-only">(opens in a new tab)</span>
