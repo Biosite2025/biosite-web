@@ -19,7 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'dialysis-renal-equipments',
     'dry-bath',
     'gastro-endo',
-    'hamamatsusliderscanner',
     'hba1c-hplc',
     'hematology',
     'hiplaas',

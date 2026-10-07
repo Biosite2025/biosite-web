@@ -1,14 +1,8 @@
-'use client';
+import { notFound } from 'next/navigation';
 
-import HamamatsuSlideScanner from './hamamatsusliderscanner';
-import Footer from './Footer';
-
-
+// Hamamatsu Slide Scanners page is disabled — visitors get a 404.
+// To restore, render <HamamatsuSlideScanner /> and <Footer /> again
+// (see ./hamamatsusliderscanner.tsx) and re-add the nav/sitemap entries.
 export default function ProductPage() {
-  return (
-    <div className="min-h-screen pt-16 lg:pt-0">
-      <HamamatsuSlideScanner />
-      <Footer />
-    </div>
-  );
+  notFound();
 }

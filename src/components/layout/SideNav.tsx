@@ -134,7 +134,7 @@ export function SideNav() {
 				{ name: "Biogenex", href: "/user/products/components/biogenex" },
 				{ name: "Nikon Microscopes", href: "/user/products/components/nikonmicroscopes" },
 				{ name: "Motic Slide Scanners", href: "/user/products/components/moticsliderscanner" },
-				{ name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
+				// { name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
 				// { name: "Fuji Synapse PACS for Digital Pathology", href: "#" }
 			]
 		},
