@@ -16,6 +16,7 @@ const CARD_W_DESKTOP = 344; // 320 card + 24 gap
 const EventGallery: React.FC = () => {
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
   const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
+  const [largeOf, setLargeOf] = useState<Record<string, string>>({});
   const [imagesLoading, setImagesLoading] = useState(true);
   const [videoSources, setVideoSources] = useState<string[]>([]);
   const [videosLoading, setVideosLoading] = useState(true);
@@ -29,8 +30,15 @@ const EventGallery: React.FC = () => {
       try {
         const res = await fetch('/api/event-gallery');
         const data = await res.json();
-        if (data.folders?.[0]?.length) setTopRowImages(data.folders[0].map((i: { url: string }) => i.url));
-        if (data.folders?.[1]?.length) setBottomRowImages(data.folders[1].map((i: { url: string }) => i.url));
+        // Rows show the small web copy; the lightbox swaps in the large one.
+        // Both fall back to the original if no web copy has been generated.
+        type GalleryItem = { url: string; thumbUrl?: string; largeUrl?: string };
+        const thumb = (i: GalleryItem) => i.thumbUrl || i.url;
+        const large: Record<string, string> = {};
+        (data.folders || []).flat().forEach((i: GalleryItem) => (large[thumb(i)] = i.largeUrl || i.url));
+        setLargeOf(large);
+        if (data.folders?.[0]?.length) setTopRowImages(data.folders[0].map(thumb));
+        if (data.folders?.[1]?.length) setBottomRowImages(data.folders[1].map(thumb));
       } catch (err) {
         console.error('[EventGallery] gallery fetch failed:', err);
       } finally {
@@ -104,7 +112,7 @@ const EventGallery: React.FC = () => {
       setImgLoading(false);
     };
     img.onerror = () => setImgLoading(false); // never strand the viewer on a spinner
-    img.src = src;
+    img.src = largeOf[src] || src;
   };
   const openModal = (image: string) => {
     loadDims(image);
@@ -407,7 +415,7 @@ const EventGallery: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={selectedImage}
+                src={largeOf[selectedImage] || selectedImage}
                 alt="Event photo"
                 width={dims?.width || 1200}
                 height={dims?.height || 800}

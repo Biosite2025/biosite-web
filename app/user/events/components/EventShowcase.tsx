@@ -94,7 +94,7 @@ const EventShowcase = () => {
           onLoadedData={() => setIsVideoLoaded(true)}
           onCanPlay={() => setIsVideoLoaded(true)}
         >
-          <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/w_1280,q_auto:eco/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
         </video>
         {/* Fallback gradient while the video loads */}
         <div className={`absolute inset-0 bg-gradient-to-br from-[#22409A] via-[#2B7CD3] to-[#1A3078] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`} />
