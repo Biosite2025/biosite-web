@@ -60,6 +60,17 @@ const AwardsRecognitions = () => {
     return () => mq.removeEventListener('change', sync);
   }, []);
 
+  /** Touch devices (iOS/Android) swipe between awards instead of using arrows. */
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const sync = () => setIsTouch(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
   // Auto-advance — halted while off screen, focused, or reduced-motion.
   // `active` is a dependency on purpose: the timer restarts after every slide,
   // so a manual jump still gets a full CYCLE_MS before the next auto-advance
@@ -91,6 +102,23 @@ const AwardsRecognitions = () => {
         className="grid grid-cols-1 items-center gap-0 lg:grid-cols-2"
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={() => setPaused(false)}
+        // Touch: a mostly-horizontal swipe of 50px+ anywhere on the showcase
+        // (trophy included) moves to the next/previous award. Vertical
+        // movement stays a normal page scroll.
+        onTouchStart={(e) => {
+          const t = e.touches[0];
+          touchStart.current = isTouch ? { x: t.clientX, y: t.clientY } : null;
+        }}
+        onTouchEnd={(e) => {
+          const start = touchStart.current;
+          touchStart.current = null;
+          if (!start) return;
+          const t = e.changedTouches[0];
+          const dx = t.clientX - start.x;
+          const dy = t.clientY - start.y;
+          if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+          go(dx < 0 ? active + 1 : active - 1);
+        }}
       >
         {/* Trophy — bleeds to the left edge */}
         <div
@@ -127,7 +155,7 @@ const AwardsRecognitions = () => {
             <span className="absolute left-1/2 top-1/2 block h-[115%] w-[112%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-white/75 blur-[70px]" />
           </span>
 
-          <div className="relative">
+          <div className="relative text-center lg:text-left">
             <h2
               id="awards-title"
               className="font-extrabold uppercase tracking-wide text-[#111827]"
@@ -173,7 +201,7 @@ const AwardsRecognitions = () => {
                   {current.partner}
                 </motion.p>
                 <motion.p
-                  className="mt-3 max-w-xl leading-relaxed text-[#374151]"
+                  className="mx-auto mt-3 max-w-xl leading-relaxed text-[#374151] lg:mx-0"
                   style={{ fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' }}
                   initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -195,8 +223,12 @@ const AwardsRecognitions = () => {
               </motion.div>
             </AnimatePresence>
 
-            {/* Controls */}
-            <div className="mt-10 flex items-center gap-5">
+            {/* Controls — arrows for mouse users; touch devices swipe instead */}
+            {isTouch && (
+              <p className="mt-8 text-xs font-medium text-[#6B7280]">Swipe to see more awards</p>
+            )}
+            <div className={`${isTouch ? 'mt-3' : 'mt-10'} flex items-center justify-center gap-5 lg:justify-start`}>
+              {!isTouch && (
               <button
                 type="button"
                 onClick={() => go(active - 1)}
@@ -207,6 +239,7 @@ const AwardsRecognitions = () => {
                   <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
+              )}
 
               <div className="flex items-center gap-2" role="group" aria-label="Choose an award">
                 {awards.map((a, i) => (
@@ -226,6 +259,7 @@ const AwardsRecognitions = () => {
                 ))}
               </div>
 
+              {!isTouch && (
               <button
                 type="button"
                 onClick={() => go(active + 1)}
@@ -236,6 +270,7 @@ const AwardsRecognitions = () => {
                   <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
+              )}
             </div>
           </div>
         </div>
