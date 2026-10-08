@@ -227,8 +227,8 @@ export default function NikonMicroscopes() {
 
 		// Preload only the hero background + logos; product images load progressively
 		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530375/biosite-assets/nikon%20microscopes/nikonbackground.jpg', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png' // Logo
+			'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/nikon%20microscopes/nikonbackground.webp', // Background
+			'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/nikon%20microscopes/Nikon-Logo.webp' // Logo
 		];
 		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [...heroImages, NIKON_BRAND.logo];
@@ -312,7 +312,7 @@ export default function NikonMicroscopes() {
 						className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
 						>
 						<Image
-							src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530376/biosite-assets/nikon%20microscopes/Nikon-Logo.png"
+							src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/nikon%20microscopes/Nikon-Logo.webp"
 							alt="Nikon Logo"
 							width={500}
 							height={320}

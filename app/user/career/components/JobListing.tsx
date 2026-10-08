@@ -173,7 +173,7 @@ export default function JobListing() {
       let resumeUrl = null;
       let resumeFileName = null;
 
-      // Upload resume to Cloudinary if present
+      // Upload resume to DigitalOcean Spaces if present
       if (formData.resume) {
         resumeFileName = formData.resume.name;
         
@@ -185,7 +185,7 @@ export default function JobListing() {
           reader.readAsDataURL(formData.resume!);
         });
 
-        // Upload to Cloudinary
+        // Upload to Spaces (via /api/upload-resume)
         const uploadResponse = await fetch('/api/upload-resume', {
           method: 'POST',
           headers: {
@@ -205,7 +205,7 @@ export default function JobListing() {
           return;
         }
         
-        console.log('✅ Resume uploaded to Cloudinary:', uploadData.url);
+        console.log('✅ Resume uploaded to Spaces:', uploadData.url);
         resumeUrl = uploadData.url;
       }
 
@@ -383,7 +383,7 @@ export default function JobListing() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
               <div className="relative z-10 w-full h-full flex items-center justify-center">
                 <Image
-                  src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530574/biosite-assets/Screenshot_2025-10-03_102205.png"
+                  src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Screenshot_2025-10-03_102205.webp"
                   alt="Biosite Job Listing"
                   width={900}
                   height={520}

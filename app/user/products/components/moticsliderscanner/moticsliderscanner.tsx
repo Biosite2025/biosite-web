@@ -215,7 +215,7 @@ export default function Centrifuges() {
 		// Preload only the hero background + logos; product images load progressively
 		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/motic/bg-motic.jpg',
+			'/asset/motic/motic-bg.png',
 			MOTIC_BRAND.logo
 		];
 

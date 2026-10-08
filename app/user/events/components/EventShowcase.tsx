@@ -90,11 +90,11 @@ const EventShowcase = () => {
           loop
           playsInline
           preload="auto"
-          poster="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1200,q_auto:low,f_auto/v1763530500/biosite-assets/image.png"
+          poster="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/image.webp"
           onLoadedData={() => setIsVideoLoaded(true)}
           onCanPlay={() => setIsVideoLoaded(true)}
         >
-          <source src="https://res.cloudinary.com/dmvyhrewy/video/upload/w_1280,q_auto:eco/v1763530530/biosite-assets/My_Video10.mp4" type="video/mp4" />
+          <source src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/My_Video10.mp4" type="video/mp4" />
         </video>
         {/* Fallback gradient while the video loads */}
         <div className={`absolute inset-0 bg-gradient-to-br from-[#22409A] via-[#2B7CD3] to-[#1A3078] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`} />

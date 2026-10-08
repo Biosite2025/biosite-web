@@ -169,8 +169,8 @@ export default function NikonMicroscopes() {
 
     // Preload only the hero background + logos; product images load progressively
     const heroImages = [
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530388/biosite-assets/Sakura/backgroundforsakura.jpg', // Background (using Cloudinary for hero)
-      'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530561/biosite-assets/Sakura/Asset_67_300x.png' // Logo (using Cloudinary for hero)
+      'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Sakura/backgroundforsakura.webp', // Background
+      'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Sakura/Asset_67_300x.webp' // Logo
     ];
     const fallback = setTimeout(() => setImagesLoaded(true), 2500);
     const allImages = [...heroImages, SAKURA_BRAND.logo];
@@ -264,7 +264,7 @@ export default function NikonMicroscopes() {
 									  className="mb-4 sm:mb-6 md:mb-8 flex justify-center pb-4 max-[912px]:mb-3 max-[912px]:pb-2"
 								>
 									<Image
-										src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530561/biosite-assets/Sakura/Asset_67_300x.png"
+										src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Sakura/Asset_67_300x.webp"
 										alt="Sakura Logo"
 										width={300}
 										height={120}

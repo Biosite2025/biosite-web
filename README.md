@@ -46,7 +46,7 @@ This project includes comprehensive memory monitoring for Render's free tier (51
 - **Framework:** Next.js 15.5.4 (App Router)
 - **UI:** React 19.2.0, Tailwind CSS, Framer Motion
 - **Database:** PostgreSQL (Neon)
-- **Storage:** Cloudinary CDN (images & videos)
+- **Storage:** DigitalOcean Spaces CDN (images, videos, resumes)
 - **Deployment:** Render.com (Free Tier)
 - **Forms:** Web3Forms
 - **Type Safety:** TypeScript
@@ -96,16 +96,15 @@ Required in Render:
 ```env
 NODE_ENV=production
 DATABASE_URL=your_postgres_url
-CLOUDINARY_CLOUD_NAME=dmvyhrewy
-CLOUDINARY_API_KEY=your_key
-CLOUDINARY_API_SECRET=your_secret
+DO_SPACES_KEY=your_spaces_key
+DO_SPACES_SECRET=your_spaces_secret
 NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_key
 ```
 
 ## 📊 Performance Optimizations
 
 ### Image Optimization (Implemented)
-- ✅ Cloudinary transformations: `w_800,q_auto:low,f_auto`
+- ✅ Assets pre-optimised to WebP on the Spaces CDN (served as-is, no server-side re-encoding)
 - ✅ Lazy loading on all non-critical images
 - ✅ Reduced quality to 60-75 (imperceptible difference)
 - ✅ ~70-80% bandwidth reduction

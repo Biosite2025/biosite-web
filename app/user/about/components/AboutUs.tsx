@@ -62,7 +62,7 @@ const AboutUs = () => {
           transition={{ duration: 0.9, ease: EASE }}
         >
           <Image
-            src="https://res.cloudinary.com/dmvyhrewy/image/upload/w_1400,q_auto,f_auto/v1763530574/biosite-assets/Screenshot_2025-10-03_102205.png"
+            src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Screenshot_2025-10-03_102205.webp"
             alt="Biosite Medical Instruments headquarters"
             fill
             loading="lazy"

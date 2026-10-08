@@ -196,7 +196,7 @@ export default function Dakewe() {
 		// Preload only the hero background + logos; product images load progressively
 		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg',
+			'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/dakewe/bg-dakewe.webp',
 			DAKEWE_BRAND.logo
 		];
 		
@@ -251,7 +251,7 @@ export default function Dakewe() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530316/biosite-assets/dakewe/bg-dakewe.jpg"
+						src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/dakewe/bg-dakewe.webp"
 						alt="Dakewe Background"
 						fill
 						className="object-cover w-full h-full"

@@ -237,8 +237,8 @@ export default function HamamatsuSlideScanner() {
 
 		// Preload only the hero background + logos; product images load progressively
 		const heroImages = [
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_800,q_auto:low,f_auto/v1763530321/biosite-assets/Hamamatsu/hamamatsu-bg.jpg', // Background
-			'https://res.cloudinary.com/dmvyhrewy/image/upload/w_400,q_auto:low,f_auto/v1763530321/biosite-assets/Hamamatsu/hamamatsu-logo.png' // Logo
+			'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Hamamatsu/hamamatsu-bg.webp', // Background
+			'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Hamamatsu/hamamatsu-logo.webp' // Logo
 		];
 		const fallback = setTimeout(() => setImagesLoaded(true), 2500);
 		const allImages = [...heroImages, HAMAMATSU_BRAND.logo];
@@ -294,7 +294,7 @@ export default function HamamatsuSlideScanner() {
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image
-						src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-bg.jpg"
+						src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Hamamatsu/hamamatsu-bg.webp"
 						alt="Hamamatsu Background"
 						fill
 						className="object-cover w-full h-full"
@@ -322,7 +322,7 @@ export default function HamamatsuSlideScanner() {
 							className="mb-4 sm:mb-6 md:mb-8 flex justify-center max-[912px]:mb-3"
 						>
 							<Image
-								src="https://res.cloudinary.com/dmvyhrewy/image/upload/v1763530321/biosite-assets/Hamamatsu/hamamatsu-logo.png"
+								src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/Hamamatsu/hamamatsu-logo.webp"
 								alt="Hamamatsu Logo"
 								width={600}
 								height={350}

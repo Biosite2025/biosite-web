@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     // Custom loader → the app server NEVER downloads/decodes/re-encodes images.
-    // Cloudinary resizes via URL transforms; Spaces CDN and /public are served
+    // Every image is already web-sized (Spaces CDN and /public) and is served
     // as-is. This removes sharp from the request path entirely, which was the
     // single largest source of RAM growth. See ./image-loader.ts.
     loader: 'custom',
