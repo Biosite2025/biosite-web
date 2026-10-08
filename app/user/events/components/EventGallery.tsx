@@ -248,7 +248,11 @@ const EventGallery: React.FC = () => {
           setTimeout(() => setIsDragging(false), 100);
         }}
       >
-        {Array.from({ length: images.length * 3 }).map((_, index) => {
+        {/* Copies of the set needed for a seamless loop: one extra screen-width
+            past the wrap point. That's 2 for any real gallery (one set is far
+            wider than a screen); 3+ only for very short rows. Rendering a fixed
+            3 copies meant ~100 extra photo cards to lay out on load. */}
+        {Array.from({ length: images.length * Math.max(2, Math.ceil(2560 / Math.max(1, loopWidth)) + 1) }).map((_, index) => {
           const image = images[index % images.length];
           return (
             <button
