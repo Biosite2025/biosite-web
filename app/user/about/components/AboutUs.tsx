@@ -17,7 +17,10 @@ const AboutUs = () => {
       <div className="grid grid-cols-1 items-stretch lg:grid-cols-[minmax(0,45%)_minmax(0,55%)]">
         {/* Copy */}
         <div className="order-2 flex items-center px-5 py-14 sm:px-8 lg:order-1 lg:px-12 lg:py-20 xl:px-16">
-          <div className="max-w-xl lg:ml-auto">
+          {/* Centred in its column so the space either side is even on wide screens
+              (ml-auto pushed it against the photo, leaving a large empty gap on
+              the left). Text inside stays left-aligned. */}
+          <div className="mx-auto w-full max-w-xl">
             <SectionHeading
               title="A trusted partner in Philippine healthcare since 2005"
               titleId="who-we-are-title"

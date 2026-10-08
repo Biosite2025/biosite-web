@@ -26,8 +26,11 @@ const Stats = () => {
         >
           {stats.map((s) => (
             <motion.li key={s.label} variants={fadeUp} className="flex flex-col items-center text-center">
+              {/* Bottom-aligned in a fixed-height box so every figure sits on the
+                  same baseline — a value that wraps (ISO 9001:2015) grows upward
+                  instead of floating out of line with the single-line numbers. */}
               <span
-                className="flex items-center justify-center text-center font-extrabold leading-tight text-white"
+                className="flex items-end justify-center text-center font-extrabold leading-tight text-white"
                 style={{ fontSize: 'clamp(1.5rem, 3.2vw, 2.4rem)', minHeight: '2.5em' }}
               >
                 {s.value}
