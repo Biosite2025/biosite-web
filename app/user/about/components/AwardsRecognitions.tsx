@@ -26,6 +26,22 @@ const awards = [
 ];
 
 const LAST = awards.length - 1;
+
+// Shared by the visible award copy and the invisible height sizers below, so
+// the two can never drift apart.
+const COPY = {
+  counter: 'font-mono text-sm tracking-[0.25em] text-[#6B7280]',
+  year: 'mt-2 font-extrabold leading-none tracking-tight text-[#22409A]',
+  partner: 'mt-4 font-extrabold text-[#111827]',
+  title: 'mx-auto mt-3 max-w-xl leading-relaxed text-[#374151] lg:mx-0',
+  detail: 'mt-4 italic text-[#6B7280]',
+};
+const COPY_SIZE = {
+  year: { fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' },
+  partner: { fontSize: 'clamp(1.4rem, 2.2vw, 2rem)' },
+  title: { fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' },
+  detail: { fontSize: 'clamp(0.9rem, 1.2vw, 1.15rem)' },
+};
 const pad = (n: number) => String(n + 1).padStart(2, '0');
 
 /** Fallback mark when WebGL is unavailable. */
@@ -165,7 +181,20 @@ const AwardsRecognitions = () => {
             </h2>
 
           {/* Cycling award detail — decorative; the <ol> below is the real content. */}
-          <div aria-hidden="true" className="relative mt-8 min-h-[280px] sm:min-h-[260px]">
+          {/* Every award is laid out invisibly in the same grid cell, so the
+              cell is always as tall as the longest award at this screen width
+              and the dots below never shift as the text changes. */}
+          <div aria-hidden="true" className="relative mt-8 grid">
+            {awards.map((a, i) => (
+              <div key={i} className="invisible col-start-1 row-start-1">
+                <p className={COPY.counter}>{pad(i)} / {pad(LAST)}</p>
+                <p className={COPY.year} style={COPY_SIZE.year}>{a.year}</p>
+                <p className={COPY.partner} style={COPY_SIZE.partner}>{a.partner}</p>
+                <p className={COPY.title} style={COPY_SIZE.title}>{a.title}</p>
+                {a.detail && <p className={COPY.detail} style={COPY_SIZE.detail}>{a.detail}</p>}
+              </div>
+            ))}
+            <div className="col-start-1 row-start-1">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -175,7 +204,7 @@ const AwardsRecognitions = () => {
                 transition={{ duration: reducedMotion ? 0.15 : 0.42, ease: EASE }}
               >
                 <motion.p
-                  className="font-mono text-sm tracking-[0.25em] text-[#6B7280]"
+                  className={COPY.counter}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.05 }}
@@ -183,8 +212,8 @@ const AwardsRecognitions = () => {
                   {pad(active)} <span className="text-[#6B7280]/50">/ {pad(LAST)}</span>
                 </motion.p>
                 <motion.p
-                  className="mt-2 font-extrabold leading-none tracking-tight text-[#22409A]"
-                  style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
+                  className={COPY.year}
+                  style={COPY_SIZE.year}
                   initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12, ease: EASE }}
@@ -192,8 +221,8 @@ const AwardsRecognitions = () => {
                   {current.year}
                 </motion.p>
                 <motion.p
-                  className="mt-4 font-extrabold text-[#111827]"
-                  style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2rem)' }}
+                  className={COPY.partner}
+                  style={COPY_SIZE.partner}
                   initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.19, ease: EASE }}
@@ -201,8 +230,8 @@ const AwardsRecognitions = () => {
                   {current.partner}
                 </motion.p>
                 <motion.p
-                  className="mx-auto mt-3 max-w-xl leading-relaxed text-[#374151] lg:mx-0"
-                  style={{ fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' }}
+                  className={COPY.title}
+                  style={COPY_SIZE.title}
                   initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.26, ease: EASE }}
@@ -211,8 +240,8 @@ const AwardsRecognitions = () => {
                 </motion.p>
                 {current.detail && (
                   <motion.p
-                    className="mt-4 italic text-[#6B7280]"
-                    style={{ fontSize: 'clamp(0.9rem, 1.2vw, 1.15rem)' }}
+                    className={COPY.detail}
+                    style={COPY_SIZE.detail}
                     initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.33, ease: EASE }}
@@ -222,7 +251,10 @@ const AwardsRecognitions = () => {
                 )}
               </motion.div>
             </AnimatePresence>
+            </div>
+          </div>
 
+          <div>
             {/* Controls — arrows for mouse users; touch devices swipe instead */}
             {isTouch && (
               <p className="mt-8 text-xs font-medium text-[#6B7280]">Swipe to see more awards</p>
