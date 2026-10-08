@@ -66,6 +66,19 @@ const EventShowcase = () => {
     [reducedMotion]
   );
 
+  // Pause the background video while the hero is scrolled out of view (and
+  // resume when it's back), so it isn't decoding frames nobody can see.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reducedMotion) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+    io.observe(video);
+    return () => io.disconnect();
+  }, [reducedMotion]);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reducedMotion) return;

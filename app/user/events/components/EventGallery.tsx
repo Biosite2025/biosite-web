@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useAnimationFrame, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
+import { motion, useMotionValue, useAnimationFrame, useInView, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
@@ -111,8 +111,13 @@ const EventGallery: React.FC = () => {
     if (bottomLoopWidth > 0) bottomRowX.set(-bottomLoopWidth);
   }, [bottomLoopWidth, bottomRowX]);
 
+  // The rows only move while the gallery is on screen — no point animating
+  // dozens of photo cards nobody can see.
+  const snapsRef = useRef<HTMLElement>(null);
+  const snapsInView = useInView(snapsRef, { margin: '200px 0px' });
+
   useAnimationFrame((_, delta) => {
-    if (paused || !isClient) return;
+    if (paused || !isClient || !snapsInView) return;
     const speed = 40;
     if (topLoopWidth > 0) {
       let next = topRowX.get() - speed * (delta / 1000);
@@ -287,7 +292,7 @@ const EventGallery: React.FC = () => {
   return (
     <>
       {/* ============ SNAPS GALLERY ============ */}
-      <section id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
+      <section ref={snapsRef} id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
         <div className="mx-auto mb-12 max-w-6xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
       

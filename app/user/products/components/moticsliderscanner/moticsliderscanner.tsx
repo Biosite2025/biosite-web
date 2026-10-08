@@ -332,9 +332,7 @@ export default function Centrifuges() {
 						className="mt-2 max-[912px]:mt-1"
 					>
 						<motion.div
-							animate={{ y: [0, 18, 0] }}
-							transition={{ duration: 1.8, repeat: Infinity }}
-							className="text-white"
+							className="scroll-cue text-white"
 						>
 							<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />

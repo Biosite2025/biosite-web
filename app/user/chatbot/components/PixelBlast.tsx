@@ -169,6 +169,8 @@ interface ThreeState {
   uniforms: any;
   resizeObserver: ResizeObserver;
   raf: number;
+  /** Cancels the live animation frame and removes window listeners. `raf` above is only the first frame's id. */
+  stop: () => void;
   quad: THREE.Mesh;
   timeOffset: number;
   composer?: EffectComposer;
@@ -393,7 +395,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       if (threeRef.current) {
         const t = threeRef.current;
         t.resizeObserver?.disconnect();
-        cancelAnimationFrame(t.raf);
+        t.stop();
         t.quad?.geometry.dispose();
         t.material.dispose();
         t.composer?.dispose();
@@ -420,7 +422,9 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       renderer.domElement.style.width = '100%';
       renderer.domElement.style.height = '100%';
       renderer.domElement.style.display = 'block';
-      renderer.domElement.style.touchAction = 'none';
+      // pan-y: a swipe that starts on the background must still scroll the page
+      // (on tablets the background is visible around the chat card).
+      renderer.domElement.style.touchAction = 'pan-y';
       // Reduce pixel ratio on mobile for better performance
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       const pixelRatio = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : Math.min(window.devicePixelRatio || 1, 2);
@@ -570,8 +574,11 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       };
       // Add both pointer and touch events for better mobile compatibility
       renderer.domElement.addEventListener('pointerdown', onPointerDown, { passive: true });
+      // Fallback for browsers without pointer events only — elsewhere pointerdown
+      // already fires for touch. Passive and no preventDefault, so it never
+      // blocks scrolling.
       renderer.domElement.addEventListener('touchstart', (e: TouchEvent) => {
-        e.preventDefault();
+        if (window.PointerEvent) return;
         if (e.touches.length > 0) {
           const touch = e.touches[0];
           const pointerEvent = new PointerEvent('pointerdown', {
@@ -580,13 +587,27 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
           });
           onPointerDown(pointerEvent);
         }
-      }, { passive: false });
+      }, { passive: true });
+      // Full frame rate only while the visitor is interacting (ripples/liquid
+      // need it); otherwise 30fps, which looks the same for the slow drift.
+      const IDLE_FRAME_MS = 1000 / 30;
+      const ACTIVE_FOR_MS = 1500;
+      let lastInteraction = -Infinity;
+      let lastDraw = -Infinity;
+      const markInteraction = () => { lastInteraction = performance.now(); };
+      window.addEventListener('pointermove', markInteraction, { passive: true });
+      window.addEventListener('pointerdown', markInteraction, { passive: true });
       let raf = 0;
-      const animate = () => {
+      const animate = (now: number) => {
         if (autoPauseOffscreen && !visibilityRef.current.visible) {
           raf = requestAnimationFrame(animate);
           return;
         }
+        if (now - lastInteraction > ACTIVE_FOR_MS && now - lastDraw < IDLE_FRAME_MS - 1) {
+          raf = requestAnimationFrame(animate);
+          return;
+        }
+        lastDraw = now;
         uniforms.uTime.value = timeOffset + clock.getElapsedTime() * speedRef.current;
         if (liquidEffect && liquidEffect.uniforms) {
           const uTime = liquidEffect.uniforms.get('uTime');
@@ -617,6 +638,11 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
         uniforms,
         resizeObserver: ro,
         raf,
+        stop: () => {
+          cancelAnimationFrame(raf);
+          window.removeEventListener('pointermove', markInteraction);
+          window.removeEventListener('pointerdown', markInteraction);
+        },
         quad,
         timeOffset,
         composer,
@@ -656,7 +682,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       const t = threeRef.current;
       t.resizeObserver?.disconnect();
       t.intersectionObserver?.disconnect();
-      cancelAnimationFrame(t.raf);
+      t.stop();
       t.quad?.geometry.dispose();
       t.material.dispose();
       t.composer?.dispose();
@@ -686,6 +712,27 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
     color,
     speed
   ]);
+
+  // Unmount teardown. The effect above skips cleanup whenever its run created
+  // the renderer (mustReinit), which includes the very first run — so without
+  // this, leaving the page left the WebGL loop running in the background on
+  // every page visited afterwards.
+  useEffect(() => {
+    const container = containerRef.current;
+    return () => {
+      const t = threeRef.current;
+      if (!t) return;
+      t.resizeObserver?.disconnect();
+      t.intersectionObserver?.disconnect();
+      t.stop();
+      t.quad?.geometry.dispose();
+      t.material.dispose();
+      t.composer?.dispose();
+      t.renderer.dispose();
+      if (container && t.renderer.domElement.parentElement === container) container.removeChild(t.renderer.domElement);
+      threeRef.current = null;
+    };
+  }, []);
 
   return (
     <div

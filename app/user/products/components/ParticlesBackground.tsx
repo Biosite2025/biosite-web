@@ -15,6 +15,39 @@ interface ParticlesBackgroundProps {
 }
 
 export default function ParticlesBackground({ containerId = 'particles-js' }: ParticlesBackgroundProps) {
+  // particles.js has no pause API and otherwise animates forever, even after
+  // the hero scrolls away. Its loop only re-queues itself while
+  // particles.move.enable is true, so toggling that flag (and re-kicking
+  // vendors.draw on resume) pauses and resumes it exactly where it was.
+  useEffect(() => {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    let onScreen = true;
+    const instance = () => window.pJSDom?.find((p) => p?.pJS?.canvas?.el?.parentElement === el || p?.pJS?.canvas?.el?.id === containerId)?.pJS;
+    const sync = () => {
+      const pJS = instance();
+      if (!pJS) return;
+      const shouldRun = onScreen && !document.hidden;
+      const running = pJS.particles.move.enable;
+      if (shouldRun && !running) {
+        pJS.particles.move.enable = true;
+        pJS.fn.vendors.draw();
+      } else if (!shouldRun && running) {
+        pJS.particles.move.enable = false;
+      }
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      sync();
+    });
+    io.observe(el);
+    document.addEventListener('visibilitychange', sync);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+    };
+  }, [containerId]);
+
   useEffect(() => {
     // Initialize particles if script is already loaded
     if (window.particlesJS) {

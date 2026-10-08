@@ -431,3 +431,38 @@ nav[data-topnav="true"] {
     font-size: 0.95rem !important;
   }
 }
+
+/* ------------------------------------------------------------------------
+   Looping decorative animations as CSS (compositor-driven, zero JS per
+   frame). These replaced framer-motion `repeat: Infinity` loops, which ran
+   a JavaScript animation frame forever — even off screen — on every page.
+   ------------------------------------------------------------------------ */
+@keyframes scroll-cue {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(18px); }
+}
+.scroll-cue { animation: scroll-cue 1.8s ease-in-out infinite; }
+
+@keyframes bear-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.bear-float { animation: bear-float 4.5s ease-in-out infinite; }
+
+/* "Be Our Partner": ring grows/fades over 1.8s, rests 0.8s (2.6s cycle). */
+@keyframes partner-ring {
+  0% { transform: scale(1); opacity: 0.45; }
+  69.23%, 100% { transform: scale(1.35); opacity: 0; }
+}
+.partner-ring { opacity: 0; animation: partner-ring 2.6s ease-out 1.3s infinite; }
+
+/* Light sweep: crosses in 1.1s, rests 2.6s (3.7s cycle). */
+@keyframes partner-shine {
+  0% { transform: translateX(0); }
+  29.73%, 100% { transform: translateX(450%); }
+}
+.partner-shine { animation: partner-shine 3.7s ease-in-out 1.6s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue, .bear-float, .partner-ring, .partner-shine { animation: none; }
+}

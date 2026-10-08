@@ -16,7 +16,7 @@ export default function Page() {
       <div className="relative">
         {/* Fixed animated backdrop behind every non-hero section. */}
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 bg-white">
-          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} />
+          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} pauseWhileCoveredBy="#events-hero" />
         </div>
 
         <main className="relative z-10 min-h-screen pt-16 lg:pt-0">

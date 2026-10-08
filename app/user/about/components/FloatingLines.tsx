@@ -137,6 +137,11 @@ void main() {
 type WaveType = 'top' | 'middle' | 'bottom';
 
 type FloatingLinesProps = {
+  /**
+   * CSS selector of an opaque section (e.g. the page hero). While it covers the
+   * whole viewport the backdrop is invisible, so drawing is skipped.
+   */
+  pauseWhileCoveredBy?: string;
   /** Main / "big" line color (middle wave) — defaults to soft brand blue. */
   lineColor?: string;
   /** Secondary line color (top + bottom waves). */
@@ -173,6 +178,7 @@ export default function FloatingLines({
   lineCount = 7,
   lineDistance = 7,
   className = '',
+  pauseWhileCoveredBy,
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
@@ -255,11 +261,29 @@ export default function FloatingLines({
       renderer.render(scene, camera);
     };
 
+    // The lines drift slowly, so 30fps looks the same as 60 but halves the
+    // work of a full-screen WebGL backdrop that otherwise never stops.
+    const FRAME_MS = 1000 / 30;
     let raf = 0;
-    const loop = () => {
+    let lastDraw = -Infinity;
+    // Skip drawing while an opaque section fully covers the screen (checked on
+    // scroll/resize, not per frame, so it costs nothing while idle).
+    const coverEl = pauseWhileCoveredBy ? document.querySelector(pauseWhileCoveredBy) : null;
+    let covered = false;
+    const checkCovered = () => {
+      if (!coverEl) return;
+      const r = coverEl.getBoundingClientRect();
+      covered = r.top <= 0 && r.bottom >= window.innerHeight;
+    };
+    checkCovered();
+    window.addEventListener('scroll', checkCovered, { passive: true });
+    window.addEventListener('resize', checkCovered);
+    const loop = (now: number) => {
       if (!active) return;
-      drawFrame();
       raf = requestAnimationFrame(loop);
+      if (covered || now - lastDraw < FRAME_MS - 1) return;
+      lastDraw = now;
+      drawFrame();
     };
 
     const onVisibility = () => {
@@ -267,14 +291,14 @@ export default function FloatingLines({
         cancelAnimationFrame(raf);
         raf = 0;
       } else if (!reducedMotion && raf === 0) {
-        loop();
+        raf = requestAnimationFrame(loop);
       }
     };
 
     if (reducedMotion) {
       drawFrame(); // one static frame, no animation
     } else {
-      loop();
+      raf = requestAnimationFrame(loop);
       document.addEventListener('visibilitychange', onVisibility);
     }
 
@@ -282,6 +306,8 @@ export default function FloatingLines({
       active = false;
       cancelAnimationFrame(raf);
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('scroll', checkCovered);
+      window.removeEventListener('resize', checkCovered);
       ro?.disconnect();
       geometry.dispose();
       material.dispose();
@@ -290,7 +316,7 @@ export default function FloatingLines({
       renderer.domElement.parentElement?.removeChild(renderer.domElement);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lineColor, altColor, opacity, altOpacity, animationSpeed, reducedMotion]);
+  }, [lineColor, altColor, opacity, altOpacity, animationSpeed, reducedMotion, pauseWhileCoveredBy]);
 
   return <div ref={containerRef} aria-hidden="true" className={`h-full w-full overflow-hidden ${className}`} />;
 }

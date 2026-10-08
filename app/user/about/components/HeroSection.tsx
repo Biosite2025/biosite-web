@@ -70,10 +70,8 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
         >
-          <motion.div
-            animate={reducedMotion ? {} : { y: [0, -10, 0] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          {/* Gentle float is a CSS loop (globals.css) — no per-frame JS. */}
+          <motion.div className="bear-float">
             <Image
               src="/asset/biosite Bear (1).webp"
               alt="Biosite bear mascot"
@@ -112,20 +110,14 @@ const HeroSection = () => {
               sweep across the face. Both off for reduced-motion users. */}
           {!reducedMotion && (
             <>
-              <motion.span
+              {/* Both loops are CSS (globals.css: partner-ring / partner-shine) —
+                  same timing as before, but no per-frame JS. */}
+              <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-[#22409A]"
-                initial={{ scale: 1, opacity: 0 }}
-                animate={{ scale: [1, 1.35], opacity: [0.45, 0] }}
-                transition={{ duration: 1.8, ease: 'easeOut', repeat: Infinity, repeatDelay: 0.8, delay: 1.3 }}
+                className="partner-ring pointer-events-none absolute inset-0 -z-10 rounded-full bg-[#22409A]"
               />
               <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
-                <motion.span
-                  className="absolute inset-y-0 -left-1/2 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent"
-                  initial={{ x: '0%' }}
-                  animate={{ x: '450%' }}
-                  transition={{ duration: 1.1, ease: 'easeInOut', repeat: Infinity, repeatDelay: 2.6, delay: 1.6 }}
-                />
+                <span className="partner-shine absolute inset-y-0 -left-1/2 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent" />
               </span>
             </>
           )}

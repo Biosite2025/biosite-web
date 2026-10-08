@@ -29,7 +29,7 @@ export default function AboutPage() {
             sections are translucent so the lines read across the whole page.
             Single WebGL context = performant; honors prefers-reduced-motion. */}
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 bg-white">
-          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} />
+          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} pauseWhileCoveredBy="#hero" />
         </div>
 
         <main className="relative z-10 min-h-screen pt-16 lg:pt-0">
