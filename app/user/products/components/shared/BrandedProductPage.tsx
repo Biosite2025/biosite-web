@@ -95,16 +95,19 @@ function ProductModal({ product, onClose }: { product: any; onClose: () => void 
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
 
-						{/* Brand logo badge (same treatment as the product cards) */}
+						{/* Brand logo badge. The default caps width as well as height so
+						    wide wordmarks (e.g. Bruner, 3.7:1) can't cover the product
+						    photo on phones. Pages that pass brandLogoClass size it themselves.
+						    Top-left, because the modal's close button owns the top-right corner. */}
 						{product.brandLogo && (
-							<div className="absolute top-2 right-2 md:top-3 md:right-3 pointer-events-none">
+							<div className="absolute top-2 left-2 md:top-3 md:left-3 pointer-events-none">
 								<Image
 									src={product.brandLogo}
 									alt={`${product.brandName ?? 'Brand'} logo`}
 									aria-hidden="true"
 									width={460}
 									height={48}
-									className={`${product.brandLogoClass ?? 'h-[44px] md:h-[60px] lg:h-[68px]'} w-auto object-contain drop-shadow-md`}
+									className={`${product.brandLogoClass ?? 'h-[28px] max-w-[95px] sm:h-[40px] sm:max-w-[130px] md:h-[56px] md:max-w-[190px] lg:h-[64px] lg:max-w-[220px]'} w-auto object-contain drop-shadow-md`}
 								/>
 							</div>
 						)}
