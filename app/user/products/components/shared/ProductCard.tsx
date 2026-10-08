@@ -56,7 +56,7 @@ export default function ProductCard({
 			type="button"
 			whileTap={{ scale: 0.97 }}
 			onClick={onViewDetails}
-			className="w-full border-2 border-[#2B3990] text-[#2B3990] bg-transparent py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base
+			className="w-full border-2 border-[#2B3990] text-[#2B3990] bg-transparent py-1.5 sm:py-3 rounded-lg font-semibold text-xs sm:text-base
 					 hover:bg-[#2B3990] hover:text-white transition-colors duration-200
 					 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
 		>
@@ -70,8 +70,8 @@ export default function ProductCard({
 				src={image}
 				alt={name}
 				fill
-				className="object-contain p-6 transition-transform duration-[220ms] ease-out group-hover:scale-105"
-				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+				className="object-contain p-3 sm:p-6 transition-transform duration-[220ms] ease-out group-hover:scale-105"
+				sizes="(max-width: 912px) 50vw, (max-width: 1200px) 33vw, 25vw"
 			/>
 		</div>
 	);
@@ -110,8 +110,9 @@ export default function ProductCard({
 				)}
 
 				{/* Brand logo badge (kept outside the tilt so it stays anchored) */}
+				{/* Badge is scaled down on phones (cards are two-up) — works with any brandLogoClass a page passes. */}
 				{brandLogo && (
-					<div className="absolute top-3 right-3 opacity-90 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+					<div className="absolute top-2 right-2 sm:top-3 sm:right-3 origin-top-right scale-[0.6] sm:scale-100 opacity-90 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
 						{/* Default sizing caps BOTH height and width, so wide wordmarks
 						    stay readable without ever spanning the card. When a page
 						    passes brandLogoClass it owns sizing outright — keeping the
@@ -131,11 +132,12 @@ export default function ProductCard({
 			</div>
 
 			{/* Content — title, description, and button read as one unit */}
-			<div className="relative z-10 flex flex-col flex-1 px-4 sm:px-5 md:px-6 pt-5 pb-4 sm:pb-5">
-				<h3 className="text-lg sm:text-xl font-bold text-gray-900 leading-snug mb-1.5 group-hover:text-[#2B3990] transition-colors duration-200">
+			<div className="relative z-10 flex flex-col flex-1 px-3 sm:px-5 md:px-6 pt-3 sm:pt-5 pb-3 sm:pb-5">
+				<h3 className="text-sm sm:text-xl font-bold text-gray-900 leading-snug mb-2 sm:mb-1.5 line-clamp-2 group-hover:text-[#2B3990] transition-colors duration-200">
 					{name}
 				</h3>
-				<p className="text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
+				{/* Hidden on phones to keep two-up cards compact; it's in View Details. */}
+				<p className="max-sm:hidden text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
 					{description}
 				</p>
 
