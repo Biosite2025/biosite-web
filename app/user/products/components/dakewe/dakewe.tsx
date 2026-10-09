@@ -35,13 +35,13 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 				onClick={product.onClose}
 				style={{ cursor: 'pointer' }}
 			></div>
-			<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full px-2 sm:px-4 pointer-events-none max-[912px]:px-3">
+			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-3">
 				<motion.div
 					initial={{ opacity: 0, scale: 0.9, y: 20 }}
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.9, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4"
+					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
 					onClick={handleModalContentClick}
 				>
 					<button
