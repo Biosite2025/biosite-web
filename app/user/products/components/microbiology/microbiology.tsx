@@ -147,7 +147,7 @@ function Modal({ product, brand, onClose }: { product: Product; brand: Brand | n
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.95, y: 20 }}
 					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
+					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl xl:max-w-5xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<button
@@ -173,7 +173,7 @@ function Modal({ product, brand, onClose }: { product: Product; brand: Brand | n
 
 					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
 						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<div className="max-h-48 overflow-y-auto pr-2 max-[912px]:max-h-32">
+						<div className="max-h-48 overflow-y-auto pr-2 max-[912px]:max-h-32 lg:max-h-none lg:overflow-visible lg:pr-0">
 							<p className="text-sm sm:text-base text-gray-700 leading-relaxed max-[912px]:text-xs">
 								{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance.'}
 							</p>
