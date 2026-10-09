@@ -1,51 +1,58 @@
 'use client';
 
-import { useRef, type PointerEvent, type ReactNode } from 'react';
-
-/** How far the photo magnifies while hovered. */
-const ZOOM = 2;
+import { useEffect, useState, type ReactNode } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 
 /**
- * Hover-to-zoom for product photos in the details modal.
+ * Hover effect for the product photo in the details modal — the same
+ * treatment as the product cards (see ProductCard): a subtle mouse-driven 3D
+ * tilt, a gentle 5% grow, and a soft brand-blue tint from the bottom.
  *
- * Wrap a `fill` <Image> (its parent must be positioned). While a mouse is over
- * it, the photo scales up from the cursor position and pans as the cursor
- * moves, so details can be inspected; it eases back out on leave.
- *
- * Mouse only: touch "hover" is a tap, which would leave the photo stuck
- * zoomed, so phones and tablets keep the plain photo. The transform is set
- * directly on the element (no React state), so tracking the cursor never
- * re-renders the modal.
+ * Wrap a `fill` <Image> (its parent must be positioned). Tilt is off on touch
+ * devices (no hover) and for reduced motion, exactly like the cards.
  */
 export default function HoverZoom({ children }: { children: ReactNode }) {
-	const layer = useRef<HTMLDivElement>(null);
+	const reducedMotion = useReducedMotion();
+	const [isTouch, setIsTouch] = useState(false);
+	useEffect(() => {
+		const mq = window.matchMedia('(hover: none)');
+		setIsTouch(mq.matches);
+		const onChange = (e: MediaQueryListEvent) => setIsTouch(e.matches);
+		mq.addEventListener('change', onChange);
+		return () => mq.removeEventListener('change', onChange);
+	}, []);
+	const tiltEnabled = !isTouch && !reducedMotion;
 
-	const track = (e: PointerEvent<HTMLDivElement>) => {
-		if (e.pointerType !== 'mouse' || !layer.current) return;
-		const r = e.currentTarget.getBoundingClientRect();
-		const x = ((e.clientX - r.left) / r.width) * 100;
-		const y = ((e.clientY - r.top) / r.height) * 100;
-		layer.current.style.transformOrigin = `${x}% ${y}%`;
-		layer.current.style.transform = `scale(${ZOOM})`;
-	};
-
-	const reset = () => {
-		if (layer.current) layer.current.style.transform = 'scale(1)';
-	};
+	// Same timing as the card image: 220ms ease-out grow on hover.
+	const photo = (
+		<div
+			className="absolute inset-0 transition-transform duration-[220ms] ease-out group-hover/photo:scale-105"
+			style={{ transformStyle: 'preserve-3d' }}
+		>
+			{children}
+		</div>
+	);
 
 	return (
-		<div
-			className="absolute inset-0 overflow-hidden rounded-[inherit] [@media(hover:hover)]:cursor-zoom-in"
-			onPointerEnter={track}
-			onPointerMove={track}
-			onPointerLeave={reset}
-		>
-			<div
-				ref={layer}
-				className="absolute inset-0 transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none"
-			>
-				{children}
-			</div>
+		<div className="group/photo absolute inset-0 overflow-hidden rounded-[inherit]">
+			{tiltEnabled ? (
+				// Same tilt settings as the cards — kept small (5°) for a B2B medical brand.
+				<Tilt
+					tiltMaxAngleX={5}
+					tiltMaxAngleY={5}
+					scale={1.03}
+					transitionSpeed={900}
+					glareEnable={false}
+					className="absolute inset-0"
+					style={{ transformStyle: 'preserve-3d' }}
+				>
+					{photo}
+				</Tilt>
+			) : (
+				photo
+			)}
+			<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2B3990]/10 to-transparent opacity-0 transition-opacity duration-200 group-hover/photo:opacity-100" />
 		</div>
 	);
 }
