@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
@@ -167,13 +168,15 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 					<div className="overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:max-h-[60vh]">
 						<div className="relative h-56 sm:h-64 md:h-72 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<Image
+						<HoverZoom>
+<Image
 							src={product.image}
 							alt={product.name}
 							fill
 							className="object-contain p-4 sm:p-6 max-[912px]:p-2"
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
+</HoverZoom>
 
 						{product.brandLogo && (
 							<div className="absolute top-3 right-3">

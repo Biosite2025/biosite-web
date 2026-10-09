@@ -21,6 +21,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import HoverZoom from './HoverZoom';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
@@ -87,13 +88,15 @@ function ProductModal({ product, onClose }: { product: any; onClose: () => void 
 					</button>
 
 					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<Image
+						<HoverZoom>
+<Image
 							src={product.image}
 							alt={product.name}
 							fill
 							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
+</HoverZoom>
 
 						{/* Brand logo badge. The default caps width as well as height so
 						    wide wordmarks (e.g. Bruner, 3.7:1) can't cover the product

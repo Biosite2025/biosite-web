@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ParticlesBackground from '../ParticlesBackground';
 import Image from 'next/image';
+import HoverZoom from '../shared/HoverZoom';
 import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import Preloader from '@/src/components/layout/Preloader';
@@ -93,13 +94,15 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						</button>
 						<div className="relative w-full h-48 sm:h-60 md:h-80 mb-3 sm:mb-4 md:mb-6 flex items-center justify-center max-[912px]:h-40">
 							<div className="relative w-full h-full">
-								<Image
+								<HoverZoom>
+<Image
 									src={product.image}
 									alt={product.name}
 									fill
 									className="object-contain drop-shadow-2xl"
 									style={{ background: 'none' }}
 								/>
+</HoverZoom>
 							</div>
 
 							{/* Brand logo watermark, same treatment as the cards */}

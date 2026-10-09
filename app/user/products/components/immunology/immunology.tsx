@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
@@ -363,13 +364,15 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 						<div>
 							<div className="relative h-20 md:h-64 lg:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 md:mb-6 overflow-hidden">
-								<Image
+								<HoverZoom>
+<Image
 									src={product.image}
 									alt={product.name}
 									fill
 									className="object-contain p-1 md:p-6"
 									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
+</HoverZoom>
 
 								{/* Brand logo badge (same treatment as the product cards) */}
 								{product.brandLogo && (
