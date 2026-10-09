@@ -22,6 +22,9 @@ const brands = [
 	{ id: 'tosoh', name: 'Tosoh', logo: '/asset/logo/TOSOH.png', logoClass: 'max-h-12 sm:max-h-14' },
 	{ id: 'liaison', name: 'DiaSorin', logo: '/asset/logo/DIASORIN.png' },
 	{ id: 'werfen', name: 'Werfen', logo: '/asset/logo/WERFEN.png', logoClass: 'max-h-12 sm:max-h-14' },
+	// madx-logo.webp is a light-background version of MADx's artwork (their
+	// supplied logo has white "MAD" lettering, invisible on these light tabs).
+	{ id: 'madx', name: 'MADx', logo: '/asset/madx/madx-logo.webp', logoClass: 'max-h-10 sm:max-h-12 max-w-full' },
 ];
 
 // Modal component
@@ -628,6 +631,46 @@ export default function Immunology() {
 				brandLogoClass: 'h-[24px] sm:h-[28px] max-w-[90px]',
 				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/werfen%20bioflash.png',
 				description: "BIO-FLASH is a fully automated, random access chemiluminescent analyzer for any autoimmune laboratory. It delivers enhanced workflow efficiencies, market leading ease-of-use and improved assay performance compared with existing enzyme-based systems. With on-board reagents and stored calibration curves, BIO-FLASH makes even the most specialized autoimmune tests efficient to perform."
+			},
+			{
+				id: 11,
+				name: "MAX 9k",
+				brand: 'madx',
+				brandName: 'MADx',
+				brandLogo: '/asset/madx/madx-logo.webp',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
+				image: '/asset/madx/max-9k.webp',
+				description: "The MADx MAX 9k is a fully automated benchtop analyzer that streamlines small to medium throughput allergy and food intolerance testing by requiring minimal user intervention for consistent, precise results."
+			},
+			{
+				id: 12,
+				name: "MAX 45k",
+				brand: 'madx',
+				brandName: 'MADx',
+				brandLogo: '/asset/madx/madx-logo.webp',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
+				image: '/asset/madx/max-45k.webp',
+				description: "The MADx MAX 45k high capacity benchtop analyzer that optimizes laboratory productivity by processing up to 50 samples every 4 hours for rapid, high-throughput allergy and food intolerance testing."
+			},
+			{
+				id: 13,
+				name: "ImageXplorer",
+				brand: 'madx',
+				brandName: 'MADx',
+				brandLogo: '/asset/madx/madx-logo.webp',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
+				image: '/asset/madx/imagexplorer.webp',
+				description: "With ImageXplorer, you gain true independence from external labs. Designed for small spaces and easy handling, it lets you process samples directly on site – reliably and on your own schedule."
+			},
+			{
+				id: 14,
+				name: "ALEX³",
+				brand: 'madx',
+				brandName: 'MADx',
+				brandLogo: '/asset/madx/madx-logo.webp',
+				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
+				image: '/asset/madx/alex3.webp',
+				description: "ALEX (Allergy Xplorer) was the first ELISA based in-vitro multiplex allergy test allowing simultaneous measurements of quantitative total IgE (tIgE) and specific IgE (sIgE) against a large number of allergen extracts and molecular allergens. ALEX³ is the third iteration of the test and comes with a panel of 300 allergens, including high-relevance allergen sources and 85 allergen families. It contains 218 molecular allergens, 107 of which are unique to the test - it is the widest range of molecular allergens on the market. ALEX³ improves the quality of diagnosis and makes individualised and evidence-based therapy possible for every patient."
 			},
 
 		];
