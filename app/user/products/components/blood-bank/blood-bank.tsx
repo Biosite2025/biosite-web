@@ -267,73 +267,73 @@ const tabs: Tab[] = [
 					{
 						"id": 22,
 						"name": "Eryclone Anti-D (Rho) (IgG)",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Ereclone-Anti-D-(Rho)-(IgG).jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/ereclone-anti-d-rho-igg.webp",
 						"description": "ANTI-D is a Rho(D) typing reagent used for slide and modified tube tests, formulated as a monoclonal IgG antibody derived from an EBV-transformed human B cell line with a titre of ≥1:32 and 100% specificity to the Rho(D) antigen. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C. "
 					},
 					{
 						"id": 23,
 						"name": "Eryclone Anti-B",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-B.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-b.webp",
 						"description": "ANTI-B is an ABO blood grouping reagent used for slide and tube tests, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to B antigens, without reacting to acquired B characteristics. It complies with AABB and FDA standards and is available in multiple pack sizes, with a shelf life of 24 months when stored at 2–8 °C."
 					},
 					{
 						"id": 24,
 						"name": "Eryclone Anti-AB",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-AB.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-ab.webp",
 						"description": "ANTI-A,B is an ABO blood grouping reagent used for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256. It provides 100% specificity to A and B antigens, complies with AABB and FDA guidelines, and is supplied in various pack sizes with a shelf life of 24 months when stored at 2–8 °C."
 					},
 					{
 						"id": 25,
 						"name": "Eryclone Anti-A",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-A.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-a.webp",
 						"description": "ANTI-A is an ABO blood grouping reagent for slide and tube testing, formulated as a murine monoclonal IgM antibody with a high titre of ≥1:256 and 100% specificity to A1, A2, and Ax antigens. It complies with AABB and FDA guidelines and is supplied in multiple pack sizes with a 24-month shelf life when stored at 2–8 °C."
 					},
 					{
 						"id": 26,
 						"name": "Eryclone Anti-C+D+E",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-C+D+E.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-c-d-e.webp",
 						"description": "ANTI-C+D+E is a Rh genotyping reagent for slide and tube testing, detecting C, D, and E antigens with a titre of ~1:32 across common Rh phenotypes. It contains IgM for C and E antigens and IgM + IgG for D antigen, is produced from a human cell line, follows AABB and FDA standards, and is stable for 24 months at 2–8 °C. It is available in a 5 ml pack."
 					},
 					{
 						"id": 27,
 						"name": "Eryclone Anti-e (hr)",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-e_hr.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-e-hr.webp",
 						"description": "ANTI-e is an IgM monoclonal Rh genotyping reagent for slide and tube testing, specifically detecting the e antigen across common Rh phenotypes with a titre of approximately 1:32. It is produced from a human cell line, complies with AABB and FDA standards, stable for 24 months at 2–8 °C, and is available in 2 ml and 5 ml pack sizes."
 					},
 					{
 						"id": 28,
 						"name": "Eryclone Anti-E (rh)",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-E_rh.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-e-rh.webp",
 						"description": "ANTI-E is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the E antigen across common Rh phenotypes with an approximate titre of 1:32. Produced from a human cell line, it meets AABB and FDA standards, offers 24-month stability at 2–8 °C, and is available in 2 ml and 5 ml pack sizes."
 					},
 					{
 						"id": 29,
 						"name": "Eryclone Anti-c (hr)",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-c_hr.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-c-hr.webp",
 						"description": "ANTI-c is an IgM monoclonal Rh genotyping reagent designed for slide and tube testing, ensuring accurate identification of the c antigen across common Rh phenotypes. Derived from a human cell line, it offers high specificity with an approximate titre of 1:32, complies with AABB and FDA standards, and remains stable for 24 months when stored at 2–8 °C, with availability in 2 ml and 5 ml pack sizes."
 					},
 					{
 						"id": 30,
 						"name": "Eryclone Anti-C (rh)",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti-C_rh.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-c-rh.webp",
 						"description": "ANTI-C is an IgM monoclonal Rh genotyping reagent intended for slide and tube testing, providing reliable detection of the C antigen across common Rh phenotypes. Produced from a human cell line, it offers high specificity with a titre of approximately 1:32, complies with AABB and FDA guidelines, and maintains stability for 24 months when stored at 2–8 °C. The reagent is available in 2 ml and 5 ml pack sizes for routine laboratory use."
 					},
 					{
 						"id": 31,
 						"name": "Eryclone MONOSPECIFIC COOMBS SERA (Anti-C3d) ",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-Human-C3d.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-human-c3d.webp",
 						"description": "MONOSPECIFIC COOMBS SERA (Anti-C3d) is a monoclonal IgM reagent specifically designed for Direct and Indirect Antiglobulin Tests (DAT and IAT), enabling accurate detection of the complement component C3d. It complies with AABB and FDA guidelines, offers stable performance with a 24-month shelf life when stored at 2–8 °C, and is available in multiple pack sizes to suit laboratory needs."
 					},
 					{
 						"id": 32,
 						"name": "Eryclone Anti-Human Globulin",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone_Anti_Human_Globulin.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-human-globulin.webp",
 						"description": "ANTI HUMAN GLOBULIN is a polyspecific AHG reagent used for Direct and Indirect Coombs’ tests, providing reliable detection of human IgG and complement components C3b and C3d. It combines purified goat anti-IgG antibodies with murine monoclonal anti-C3d, complies with AABB and FDA standards, and offers a 24-month shelf life when stored at 2–8 °C, with multiple pack size options available."
 					},
 					{
 						"id": 33,
 						"name": "Eryclone Anti-D IgM",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/Eryclone-Anti-D-IgM.jpg",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/eryclone%20item/transparent/eryclone-anti-d-igm.webp",
 						"description": "ANTI-D is a saline-reacting Rho(D) typing reagent for slide and tube tests, formulated as a monoclonal IgM antibody derived from an EBV-transformed human B cell line with a high titre of ≥1:256 and 100% specificity to the Rho(D) antigen. It meets AABB and FDA standardization requirements and offers a 24-month shelf life when stored at 2–8 °C, with availability in multiple pack sizes."
 					}
 				]
