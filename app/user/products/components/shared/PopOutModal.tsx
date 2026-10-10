@@ -55,6 +55,11 @@ export default function PopOutModal({
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
 	}, [onClose]);
+	// Lets background animations pause while the modal covers the page.
+	useEffect(() => {
+		document.documentElement.setAttribute('data-modal-open', '');
+		return () => document.documentElement.removeAttribute('data-modal-open');
+	}, []);
 
 	const stop = (e: React.MouseEvent) => e.stopPropagation();
 	const rise = (delay: number) =>

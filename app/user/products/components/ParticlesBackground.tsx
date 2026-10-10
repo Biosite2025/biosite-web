@@ -27,7 +27,7 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
     const sync = () => {
       const pJS = instance();
       if (!pJS) return;
-      const shouldRun = onScreen && !document.hidden;
+      const shouldRun = onScreen && !document.hidden && !document.documentElement.hasAttribute('data-modal-open');
       const running = pJS.particles.move.enable;
       if (shouldRun && !running) {
         pJS.particles.move.enable = true;
@@ -42,7 +42,12 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
     });
     io.observe(el);
     document.addEventListener('visibilitychange', sync);
+    // Pause behind product modals: the page is hidden under a blur anyway, and
+    // animating it forces the blur to be recomputed every frame.
+    const mo = new MutationObserver(sync);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-modal-open'] });
     return () => {
+      mo.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
@@ -81,10 +86,11 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
       window.particlesJS(containerId, {
         "particles": {
           "number": {
-            "value": 80,
+            // Fewer particles on small screens: linking is O(n²) per frame.
+            "value": typeof window !== 'undefined' && window.innerWidth < 768 ? 35 : 60,
             "density": {
               "enable": true,
-              "value_area": 800
+              "value_area": 1000 // a little sparser: line-linking cost grows with n²
             }
           },
           "color": {
@@ -134,7 +140,7 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
           },
           "move": {
             "enable": true,
-            "speed": 2,
+            "speed": 4, // per-frame; doubled because we draw at half rate (see below)
             "direction": "none",
             "random": false,
             "straight": false,
@@ -185,7 +191,8 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
             }
           }
         },
-        "retina_detect": true,
+        // Off: on a 3x phone this rendered 9x the pixels for soft dots that look the same at 1x.
+        "retina_detect": false,
         "config_demo": {
           "hide_card": false,
           "background_color": "#b61924",
@@ -195,6 +202,25 @@ export default function ParticlesBackground({ containerId = 'particles-js' }: Pa
           "background_size": "cover"
         }
       });
+
+      // Draw every other frame (~30fps). particles.js movement is per frame, so
+      // with speed doubled above this looks the same at half the CPU cost. The
+      // wrapper stores each frame id in drawAnimFrame, so pause/destroy still work.
+      const pJS = window.pJSDom?.find((d) => d?.pJS?.canvas?.el?.parentElement?.id === containerId)?.pJS;
+      if (pJS && !pJS.__halfRate) {
+        const draw = pJS.fn.vendors.draw;
+        let skip = false;
+        pJS.fn.vendors.draw = function () {
+          if (skip) {
+            skip = false;
+            if (pJS.particles.move.enable) pJS.fn.drawAnimFrame = requestAnimationFrame(pJS.fn.vendors.draw);
+            return;
+          }
+          skip = true;
+          draw();
+        };
+        pJS.__halfRate = true;
+      }
     }
   };
 

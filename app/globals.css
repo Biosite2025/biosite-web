@@ -474,3 +474,9 @@ nav[data-topnav="true"] {
 }
 .nikon-stage-float { animation: stage-float 5s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .nikon-stage-float { animation: none; } }
+
+/* Background loops pause while a product modal covers the page. */
+html[data-modal-open] .scroll-cue,
+html[data-modal-open] .bear-float,
+html[data-modal-open] .partner-ring,
+html[data-modal-open] .partner-shine { animation-play-state: paused; }
