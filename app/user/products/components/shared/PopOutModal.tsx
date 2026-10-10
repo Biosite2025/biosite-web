@@ -6,6 +6,24 @@ import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import HoverZoom from './HoverZoom';
 
+// Logos whose files carry lots of empty canvas render tiny at the modal's
+// logo size. These trimmed copies are used ONLY here; tabs and card badges
+// keep the original files and sizing.
+const POPUP_LOGOS: Record<string, string> = {
+	"/asset/logo/ozelle (1).png": "/asset/logo/popup/ozelle-1-.png",
+	"/asset/logo/northern.png": "/asset/logo/popup/northern.png",
+	"/asset/logo/hamiltonlogo.png": "/asset/logo/popup/hamiltonlogo.png",
+	"/asset/logo/nihon.png": "/asset/logo/popup/nihon.png",
+	"/asset/logo/drager.png": "/asset/logo/popup/drager.png",
+	"/asset/logo/Penlon (1).png": "/asset/logo/popup/penlon-1-.png",
+	"/asset/logo/GE-Healthcare-Logo-2004–2023.png": "/asset/logo/popup/ge-healthcare-logo-2004-2023.png",
+	"/asset/logo/comen.png": "/asset/logo/popup/comen.png",
+	"/asset/logo/byond.png": "/asset/logo/popup/byond.png",
+	"/asset/logo/uzumcu.png": "/asset/logo/popup/uzumcu.png",
+	"/asset/logo/HFMED.png": "/asset/logo/popup/hfmed.png",
+	"/asset/clinical-chemistry/diamond-logo.png": "/asset/logo/popup/diamond-logo.png"
+};
+
 /**
  * Product details modal — "pop-out" design used by every product page:
  * the brand logo floats above a white card and the product photo breaks out
@@ -67,7 +85,7 @@ export default function PopOutModal({
 					>
 						{logo && (
 							<Image
-								src={logo}
+								src={POPUP_LOGOS[logo] ?? logo}
 								alt={`${brandName ?? 'Brand'} logo`}
 								width={240}
 								height={240}
