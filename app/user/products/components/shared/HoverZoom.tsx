@@ -12,7 +12,7 @@ import Tilt from 'react-parallax-tilt';
  * Wrap a `fill` <Image> (its parent must be positioned). Tilt is off on touch
  * devices (no hover) and for reduced motion, exactly like the cards.
  */
-export default function HoverZoom({ children }: { children: ReactNode }) {
+export default function HoverZoom({ children, stage = false }: { children: ReactNode; /** On an open "stage" (no card box): no clipping and no tint rectangle. */ stage?: boolean }) {
 	const reducedMotion = useReducedMotion();
 	const [isTouch, setIsTouch] = useState(false);
 	useEffect(() => {
@@ -35,7 +35,7 @@ export default function HoverZoom({ children }: { children: ReactNode }) {
 	);
 
 	return (
-		<div className="group/photo absolute inset-0 overflow-hidden rounded-[inherit]">
+		<div className={`group/photo absolute inset-0 ${stage ? '' : 'overflow-hidden rounded-[inherit]'}`}>
 			{tiltEnabled ? (
 				// Same tilt settings as the cards — kept small (5°) for a B2B medical brand.
 				<Tilt
@@ -52,7 +52,9 @@ export default function HoverZoom({ children }: { children: ReactNode }) {
 			) : (
 				photo
 			)}
-			<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2B3990]/10 to-transparent opacity-0 transition-opacity duration-200 group-hover/photo:opacity-100" />
+			{!stage && (
+				<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2B3990]/10 to-transparent opacity-0 transition-opacity duration-200 group-hover/photo:opacity-100" />
+			)}
 		</div>
 	);
 }

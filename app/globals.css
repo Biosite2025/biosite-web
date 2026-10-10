@@ -466,3 +466,11 @@ nav[data-topnav="true"] {
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue, .bear-float, .partner-ring, .partner-shine { animation: none; }
 }
+
+/* Product modal "stage": gentle idle float for the product photo. */
+@keyframes stage-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.nikon-stage-float { animation: stage-float 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .nikon-stage-float { animation: none; } }

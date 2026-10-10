@@ -27,77 +27,145 @@ const NIKON_BRAND = {
   cardLogoClass: 'h-[44px] sm:h-[52px] max-w-[80px]',
 };
 
-// Modal component
+// Modal component — "product stage" design (trial on Nikon before rolling out):
+// tinted blurred overlay, a spotlit 3D stage for the photo (entrance swing,
+// idle float, floor shadow, hover tilt), and a content column with a CTA.
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
+	const reducedMotion = useReducedMotion();
 	if (!isOpen || !product) return null;
 
-		// Prevent modal close when clicking inside modal content
-		const handleModalContentClick = (e: React.MouseEvent) => {
-			e.stopPropagation();
-		};
+	// Prevent modal close when clicking inside modal content
+	const handleModalContentClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+	};
 
-		return (
-			<>
-				{/* Blurry overlay to prevent background clicks, frosted glass effect */}
-				<div
-					className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-					onClick={product.onClose}
-					style={{ cursor: 'pointer' }}
-				></div>
-				<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-3">
-					<motion.div
-						initial={{ opacity: 0, scale: 0.9, y: 20 }}
-						animate={{ opacity: 1, scale: 1, y: 0 }}
-						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						transition={{ duration: 0.3 }}
-						className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl xl:max-w-5xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
-						onClick={handleModalContentClick}
+	return (
+		<>
+			{/* Overlay — deep brand-navy tint over a blur, so the panel reads as a lit object */}
+			<motion.div
+				className="fixed inset-0 z-40 bg-[#0b1430]/55 backdrop-blur-md"
+				onClick={product.onClose}
+				style={{ cursor: 'pointer' }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.25 }}
+			/>
+			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-3 sm:px-4 py-3 sm:py-4 pointer-events-none [perspective:1600px]">
+				<motion.div
+					role="dialog"
+					aria-modal="true"
+					aria-labelledby="nikon-modal-title"
+					initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 28, rotateX: 8, scale: 0.96 }}
+					animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+					exit={{ opacity: 0, y: 20, scale: 0.97 }}
+					transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+					className="relative grid w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-[0_30px_80px_-20px_rgba(11,20,48,0.55)] ring-1 ring-white/60 pointer-events-auto sm:max-w-xl lg:max-w-5xl lg:grid-cols-[1.1fr_1fr] max-h-full overflow-y-auto overscroll-contain"
+					onClick={handleModalContentClick}
+				>
+					{/* Close */}
+					<button
+						onClick={product.onClose}
+						className="absolute right-3 top-3 z-20 rounded-full bg-white/80 p-2.5 text-gray-600 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:bg-white hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+						aria-label="Close modal"
+						type="button"
 					>
-						{/* X Button — enlarged hit target with a clear hover state */}
-						<button
-							onClick={product.onClose}
-							className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100
-									 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
-							aria-label="Close modal"
-							type="button"
-						>
-							<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						</button>
-						<div className="relative w-full h-48 sm:h-60 md:h-80 mb-3 sm:mb-4 md:mb-6 flex items-center justify-center max-[912px]:h-40">
-							<div className="relative w-full h-full">
-								<HoverZoom>
-<Image
-									src={product.image}
-									alt={product.name}
-									fill
-									className="object-contain drop-shadow-2xl"
-									style={{ background: 'none' }}
-								/>
-</HoverZoom>
-							</div>
+						<svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					</button>
 
-							{/* Brand logo watermark, same treatment as the cards */}
-							<div className="absolute top-0 right-0 pointer-events-none">
-								<Image
-									src={NIKON_BRAND.logo}
-									alt={`${NIKON_BRAND.name} logo`}
-									aria-hidden="true"
-									width={160}
-									height={48}
-									className="h-[44px] sm:h-[52px] max-w-[80px] w-auto object-contain drop-shadow-md"
-								/>
+					{/* ===== Stage ===== */}
+					<div className="relative h-64 overflow-hidden bg-[radial-gradient(120%_90%_at_50%_35%,#ffffff_0%,#eef1f8_45%,#d9dfee_100%)] sm:h-80 lg:h-auto lg:min-h-[min(30rem,62vh)]">
+						{/* faint dot grid for depth */}
+						<div
+							aria-hidden="true"
+							className="absolute inset-0 opacity-[0.35] [background-image:radial-gradient(#2B3990_0.8px,transparent_0.8px)] [background-size:18px_18px] [mask-image:radial-gradient(70%_60%_at_50%_45%,black,transparent)]"
+						/>
+						{/* brand glow behind the product */}
+						<div aria-hidden="true" className="absolute left-1/2 top-[42%] h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2B3990]/10 blur-3xl" />
+						{/* floor shadow */}
+						<div aria-hidden="true" className="absolute bottom-[9%] left-1/2 h-6 w-[58%] -translate-x-1/2 rounded-[50%] bg-[#0b1430]/25 blur-xl" />
+
+						{/* product — swings in, then floats; HoverZoom adds the card-style tilt on hover.
+						    multiply blends the photo's own pale backdrop into the stage so no box edge shows. */}
+						<motion.div
+							className="absolute inset-[8%_10%_12%] mix-blend-multiply"
+							initial={reducedMotion ? { opacity: 0 } : { opacity: 0, rotateY: -18, x: -30 }}
+							animate={{ opacity: 1, rotateY: 0, x: 0 }}
+							transition={{ type: 'spring', stiffness: 120, damping: 18, delay: 0.08 }}
+						>
+							<div className="nikon-stage-float absolute inset-0">
+								<HoverZoom stage>
+									<Image
+										src={product.image}
+										alt={product.name}
+										fill
+										className="object-contain drop-shadow-[0_24px_28px_rgba(11,20,48,0.28)]"
+										sizes="(max-width: 1024px) 90vw, 520px"
+										priority
+									/>
+								</HoverZoom>
 							</div>
+						</motion.div>
+
+						{/* brand chip — frosted glass */}
+						<div className="pointer-events-none absolute left-4 top-4 z-10 rounded-xl bg-white/70 p-1.5 shadow-sm ring-1 ring-black/5 backdrop-blur-md">
+							<Image
+								src={NIKON_BRAND.logo}
+								alt={`${NIKON_BRAND.name} logo`}
+								aria-hidden="true"
+								width={160}
+								height={48}
+								className="h-9 w-auto object-contain sm:h-11"
+							/>
 						</div>
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-gray-700 text-sm sm:text-base max-[912px]:text-sm">
+					</div>
+
+					{/* ===== Content ===== */}
+					<motion.div
+						className="flex flex-col justify-center gap-4 p-6 sm:p-8 lg:p-10"
+						initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 16 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.4, delay: 0.15 }}
+					>
+						<p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2B3990]/80">
+							Nikon · {categories[0].title.replace(/s$/, '')}
+						</p>
+						<div>
+							<h3 id="nikon-modal-title" className="text-2xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">
+								{product.name}
+							</h3>
+							<span aria-hidden="true" className="mt-3 block h-1 w-14 rounded-full bg-[#FFE100] shadow-[0_0_0_1px_rgba(0,0,0,0.04)]" />
+						</div>
+						<p className="text-sm leading-relaxed text-gray-600 sm:text-base">
 							{product.description || 'High-performance imaging solution engineered for precision and advanced laboratory research applications.'}
 						</p>
+						<div className="mt-2 flex flex-wrap items-center gap-3">
+							<Link
+								href="/user/contact"
+								className="inline-flex items-center gap-2 rounded-full bg-[#2B3990] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#2B3990]/25 transition hover:-translate-y-0.5 hover:bg-[#1f2a6b] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+							>
+								Request a Quote
+								<svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+								</svg>
+							</Link>
+							<button
+								type="button"
+								onClick={product.onClose}
+								className="rounded-full px-5 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+							>
+								Back to products
+							</button>
+						</div>
+						<p className="border-t border-gray-100 pt-4 text-xs text-gray-400">
+							For detailed specifications and pricing, our sales team will get back to you.
+						</p>
 					</motion.div>
-				</div>
-			</>
-		);
+				</motion.div>
+			</div>
+		</>
+	);
 }
 
 // Category section component
