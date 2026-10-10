@@ -10,6 +10,7 @@ import HoverZoom from './HoverZoom';
 // logo size. These trimmed copies are used ONLY here; tabs and card badges
 // keep the original files and sizing.
 const POPUP_LOGOS: Record<string, string> = {
+	"/asset/logo/FUJIFILM.png": "/asset/logo/popup/fujifilm.png",
 	"/asset/logo/ozelle (1).png": "/asset/logo/popup/ozelle-1-.png",
 	"/asset/logo/northern.png": "/asset/logo/popup/northern.png",
 	"/asset/logo/hamiltonlogo.png": "/asset/logo/popup/hamiltonlogo.png",
