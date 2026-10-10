@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import PopOutModal from '../shared/PopOutModal';
 import HoverZoom from '../shared/HoverZoom';
 import { motion, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
@@ -31,82 +32,7 @@ const HAMAMATSU_BRAND = {
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
-
-	// Prevent modal close when clicking inside modal content
-	const handleModalContentClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-	};
-
-	return (
-		<>
-			{/* Blurry overlay to prevent background clicks, frosted glass effect */}
-			<div
-				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-				onClick={product.onClose}
-				style={{ cursor: 'pointer' }}
-			></div>
-			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-3">
-				<motion.div
-					initial={{ opacity: 0, scale: 0.9, y: 20 }}
-					animate={{ opacity: 1, scale: 1, y: 0 }}
-					exit={{ opacity: 0, scale: 0.9, y: 20 }}
-					transition={{ duration: 0.3 }}
-					className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl xl:max-w-5xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
-					onClick={handleModalContentClick}
-				>
-					{/* Close button */}
-					<button
-						onClick={product.onClose}
-						className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100 z-10
-								 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] max-[912px]:top-1.5 max-[912px]:right-1.5"
-						aria-label="Close modal"
-					>
-						<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
-					</button>
-
-					{/* Product image */}
-					<div className="relative h-48 sm:h-64 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<HoverZoom>
-<Image
-							src={product.image}
-							alt={product.name}
-							fill
-							className="object-contain p-2 sm:p-4 md:p-6 max-[912px]:p-2"
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-						/>
-</HoverZoom>
-
-						{/* Brand logo watermark, same treatment as the cards */}
-						<div className="absolute top-2 right-2 md:top-3 md:right-3 pointer-events-none">
-							<Image
-								src={HAMAMATSU_BRAND.logo}
-								alt={`${HAMAMATSU_BRAND.name} logo`}
-								aria-hidden="true"
-								width={160}
-								height={48}
-								className="h-[10px] md:h-[20px] w-auto object-contain drop-shadow-md"
-							/>
-						</div>
-					</div>
-
-					{/* Product details */}
-					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-						{product.description}
-						</p>
-						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
-								For detailed specifications and pricing information, please contact our sales team.
-							</p>
-						</div>
-					</div>
-				</motion.div>
-			</div>
-		</>
-	);
+	return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo ?? HAMAMATSU_BRAND.logo} brandName={product.brandName ?? HAMAMATSU_BRAND.name} onClose={product.onClose} />;
 }
 
 // Category section component

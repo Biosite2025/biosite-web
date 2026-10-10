@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import PopOutModal from '../shared/PopOutModal';
 import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
@@ -47,6 +48,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	};
 
 	const isILabProduct = product.name?.includes('ILab');
+	// Products without a test menu use the shared pop-out modal.
+	if (!isILabProduct) {
+		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
+	}
 
 	const ilabAriesTestMenu = (
 		<div className="space-y-1.5 sm:space-y-2 text-[9px] sm:text-sm pr-1 sm:pr-2 max-[912px]:space-y-1">

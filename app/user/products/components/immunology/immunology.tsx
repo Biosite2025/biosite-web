@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import PopOutModal from '../shared/PopOutModal';
 import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
@@ -39,6 +40,10 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	const isLiaisonXL = product.name === 'LIAISON® XL';
 	const isTosoh = product.name?.includes('Tosoh AIA');
 	const isBioFlash = product.name === 'Werfen BIO-FLASH';
+	// Products without a test menu use the shared pop-out modal.
+	if (!isLiaisonXL && !isTosoh && !isBioFlash) {
+		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
+	}
 
 	const liaisonTestMenu = (
 		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">

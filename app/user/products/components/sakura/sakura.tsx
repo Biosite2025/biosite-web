@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ParticlesBackground from '../ParticlesBackground';
 import Image from 'next/image';
+import PopOutModal from '../shared/PopOutModal';
 import HoverZoom from '../shared/HoverZoom';
 import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
@@ -56,75 +57,7 @@ const categories = [
 // Modal component
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
-
-		// Prevent modal close when clicking inside modal content
-		const handleModalContentClick = (e: React.MouseEvent) => {
-			e.stopPropagation();
-		};
-
-		return (
-			<>
-				{/* Blurry overlay to prevent background clicks, frosted glass effect */}
-				<div
-					className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-					onClick={product.onClose}
-					style={{ cursor: 'pointer' }}
-				></div>
-				<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-3">
-					<motion.div
-						initial={{ opacity: 0, scale: 0.9, y: 20 }}
-						animate={{ opacity: 1, scale: 1, y: 0 }}
-						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						transition={{ duration: 0.3 }}
-						className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 max-w-sm sm:max-w-md md:max-w-2xl w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[90vw] max-[912px]:p-4 lg:max-w-4xl xl:max-w-5xl lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div:first-of-type]:row-span-3 lg:[&>div:first-of-type]:mb-0 lg:[&>div:first-of-type]:h-[min(22rem,55vh)] max-h-full overflow-y-auto overscroll-contain"
-						onClick={handleModalContentClick}
-					>
-						{/* X Button — enlarged hit target with a clear hover state */}
-						<button
-							onClick={product.onClose}
-							className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100
-									 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
-							aria-label="Close modal"
-							type="button"
-							style={{ zIndex: 100 }}
-						>
-							<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						</button>
-						<div className="relative w-full h-48 sm:h-60 md:h-80 mb-3 sm:mb-4 md:mb-6 flex items-center justify-center max-[912px]:h-40">
-							<div className="relative w-full h-full">
-								<HoverZoom>
-<Image
-									src={product.image}
-									alt={product.name}
-									fill
-									className="object-contain drop-shadow-2xl"
-									style={{ background: 'none' }}
-								/>
-</HoverZoom>
-							</div>
-
-							{/* Brand logo watermark, same treatment as the cards */}
-							<div className="absolute top-0 left-0 pointer-events-none">
-								<Image
-									src={SAKURA_BRAND.logo}
-									alt={`${SAKURA_BRAND.name} logo`}
-									aria-hidden="true"
-									width={160}
-									height={48}
-									className="h-[44px] md:h-[60px] w-auto object-contain drop-shadow-md"
-								/>
-							</div>
-						</div>
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 max-[912px]:text-lg">{product.name}</h3>
-						<p className="text-gray-700 text-sm sm:text-base max-[912px]:text-sm">
-							{product.description || 'High-performance histopathology equipment engineered for precision and advanced laboratory applications.'}
-						</p>
-					</motion.div>
-				</div>
-			</>
-		);
+	return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo ?? SAKURA_BRAND.logo} brandName={product.brandName ?? SAKURA_BRAND.name} accent="#E8336D" onClose={product.onClose} />;
 }
 
 
