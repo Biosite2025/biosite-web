@@ -139,7 +139,7 @@ export default function PopOutModal({
 								animate={{ width: 56 }}
 								transition={{ duration: 0.5, delay: 0.45, ease: 'easeOut' }}
 							/>
-							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm">
+							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm max-lg:h-[min(8.5rem,20dvh)] max-lg:overflow-y-auto max-lg:overscroll-contain max-lg:pr-1 max-lg:pb-3 max-lg:[mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
 								{description}
 							</motion.p>
 							<motion.div {...rise(0.5)} className="mt-6 flex flex-wrap items-center gap-3 [@media(max-height:760px)]:lg:mt-4">
