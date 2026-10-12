@@ -12,7 +12,7 @@ import HoverZoom from './HoverZoom';
 // Near-square logos read small at the default wordmark height; give them a
 // taller box in the modal (width cap unchanged, so wide logos aren't affected).
 const POPUP_LOGO_SIZE: Record<string, string> = {
-	"/asset/logo/BECKMAN-COULTER.png": "h-20 sm:h-24 lg:h-32",
+	"/asset/logo/BECKMAN-COULTER.png": "h-16 sm:h-24 lg:h-32",
 };
 
 const POPUP_LOGOS: Record<string, string> = {
@@ -101,7 +101,7 @@ export default function PopOutModal({
 			/>
 
 			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center overflow-y-auto px-4 py-6 pointer-events-none [perspective:1600px]">
-				<div className="relative w-full max-w-[22rem] pt-36 sm:max-w-xl sm:pt-40 lg:max-w-4xl lg:pt-[min(11rem,24vh)]">
+				<div className="relative w-full max-w-[22rem] pt-28 sm:max-w-xl sm:pt-40 lg:max-w-4xl lg:pt-[min(11rem,24vh)]">
 					{/* Brand logo — floats above the card */}
 					<motion.div
 						className="pointer-events-none absolute left-1 top-0 z-10 sm:left-2 lg:top-2"
@@ -115,7 +115,7 @@ export default function PopOutModal({
 								alt={`${brandName ?? 'Brand'} logo`}
 								width={240}
 								height={240}
-								className={`${POPUP_LOGO_SIZE[logo] ?? 'h-14 sm:h-16 lg:h-20'} w-auto max-w-[200px] object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.18)] sm:max-w-[240px] lg:max-w-[280px]`}
+								className={`${POPUP_LOGO_SIZE[logo] ?? 'h-12 sm:h-16 lg:h-20'} w-auto max-w-[200px] object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.18)] sm:max-w-[240px] lg:max-w-[280px]`}
 							/>
 						)}
 					</motion.div>
@@ -146,7 +146,7 @@ export default function PopOutModal({
 
 
 						{/* Product — breaks out of the card's top-right corner */}
-						<div className="absolute -top-32 right-2 z-20 h-52 w-44 sm:-top-36 sm:right-4 sm:h-60 sm:w-52 lg:-top-[min(11rem,24vh)] lg:-right-10 lg:h-[min(22rem,48vh)] lg:w-[min(20rem,44vh)]">
+						<div className="absolute -top-28 right-2 z-20 h-44 w-40 sm:-top-36 sm:right-4 sm:h-60 sm:w-52 lg:-top-[min(11rem,24vh)] lg:-right-10 lg:h-[min(22rem,48vh)] lg:w-[min(20rem,44vh)]">
 							{/* brand glow + contact shadow on the card */}
 							<div aria-hidden="true" className="absolute -inset-[10%]" style={{ background: `radial-gradient(closest-side, ${accent}4d, ${accent}1a 55%, transparent)` }} />
 							<div aria-hidden="true" className="absolute -bottom-2 left-1/2 h-6 w-3/4 -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(15,23,42,0.28),transparent)]" />
@@ -209,7 +209,7 @@ export default function PopOutModal({
 						</div>
 
 						{/* Copy — kept clear of the product on desktop */}
-						<div className="relative px-6 pb-6 pt-24 sm:px-8 sm:pb-8 sm:pt-28 lg:pr-[21rem] lg:pt-10 [@media(max-height:760px)]:lg:pt-7 [@media(max-height:760px)]:lg:pb-6">
+						<div className="relative px-5 pb-5 pt-[4.5rem] sm:px-8 sm:pb-8 sm:pt-28 lg:pr-[21rem] lg:pt-10 [@media(max-height:760px)]:lg:pt-7 [@media(max-height:760px)]:lg:pb-6">
 							<motion.h3 {...rise(0.25)} id="popout-modal-title" className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-3xl">
 								{name}
 							</motion.h3>
@@ -223,10 +223,10 @@ export default function PopOutModal({
 							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm h-[min(8.5rem,20dvh)] lg:h-[min(9.5rem,22vh)] overflow-y-auto overscroll-contain pr-1 pb-3 [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
 								{description}
 							</motion.p>
-							<motion.div {...rise(0.5)} className="mt-6 flex flex-wrap items-center gap-3 [@media(max-height:760px)]:lg:mt-4">
+							<motion.div {...rise(0.5)} className="mt-5 flex flex-nowrap items-center gap-2 sm:mt-6 sm:gap-3 [@media(max-height:760px)]:lg:mt-4">
 								<Link
 									href="/user/contact"
-									className="group inline-flex items-center gap-2 rounded-full bg-[#2B3990] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#2B3990]/25 transition hover:-translate-y-0.5 hover:bg-[#1f2a6b] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+									className="group inline-flex items-center gap-2 shrink-0 rounded-full bg-[#2B3990] px-5 py-2.5 text-sm sm:px-6 sm:py-3 font-semibold text-white shadow-lg shadow-[#2B3990]/25 transition hover:-translate-y-0.5 hover:bg-[#1f2a6b] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
 								>
 									Request a Quote
 									<svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
@@ -236,7 +236,7 @@ export default function PopOutModal({
 								<button
 									type="button"
 									onClick={onClose}
-									className="rounded-full px-5 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+									className="shrink-0 rounded-full px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3 transition hover:bg-gray-100 hover:text-gray-900"
 								>
 									Back to products
 								</button>
