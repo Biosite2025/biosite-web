@@ -40,6 +40,8 @@ export interface ProductDef {
 	id: number | string;
 	name: string;
 	image: string;
+	/** Optional extra photos shown as a slideshow in the details modal. */
+	images?: string[];
 	description?: string;
 	/** BrandDef.id this product belongs to; omit if brand unresolved */
 	brand?: string;
@@ -59,7 +61,7 @@ const OTHERS_TAB: BrandDef = { id: '__others', name: 'Others', logo: '' };
 
 // ---------- Generic product detail modal ----------
 function ProductModal({ product, onClose }: { product: any; onClose: () => void }) {
-	return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={onClose} />;
+	return <PopOutModal name={product.name} description={product.description} image={product.image} images={product.images} logo={product.brandLogo} brandName={product.brandName} onClose={onClose} />;
 }
 
 // ---------- Brand logo tabs (same pattern as Rapid Test Kits / Immunology) ----------

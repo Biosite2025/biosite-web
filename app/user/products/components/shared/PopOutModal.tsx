@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import HoverZoom from './HoverZoom';
 
 // Logos whose files carry lots of empty canvas render tiny at the modal's
@@ -36,6 +36,7 @@ export default function PopOutModal({
 	name,
 	description,
 	image,
+	images,
 	logo,
 	brandName,
 	accent = '#2B3990',
@@ -44,6 +45,8 @@ export default function PopOutModal({
 	name: string;
 	description?: string;
 	image: string;
+	/** Extra photos: when given, the product image becomes a slideshow. */
+	images?: string[];
 	logo?: string;
 	brandName?: string;
 	/** Brand colour for the glow, edge highlight and title bar. */
@@ -51,6 +54,17 @@ export default function PopOutModal({
 	onClose: () => void;
 }) {
 	const reducedMotion = useReducedMotion();
+	const slides = images && images.length ? [image, ...images.filter((u) => u !== image)] : [image];
+	const [slide, setSlide] = useState(0);
+	const [hovering, setHovering] = useState(false);
+	const touchX = useRef<number | null>(null);
+	const go = (n: number) => setSlide((n + slides.length) % slides.length);
+	// Auto-advance; paused while hovered (so the tilt/inspect isn't interrupted) and for reduced motion.
+	useEffect(() => {
+		if (slides.length < 2 || hovering || reducedMotion) return;
+		const t = setTimeout(() => setSlide((i) => (i + 1) % slides.length), 3500);
+		return () => clearTimeout(t);
+	}, [slide, hovering, reducedMotion, slides.length]);
 	useEffect(() => {
 		const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
 		window.addEventListener('keydown', onKey);
@@ -136,18 +150,55 @@ export default function PopOutModal({
 								animate={{ opacity: 1, y: 0, rotateY: 0, scale: 1 }}
 								transition={{ type: 'spring', stiffness: 120, damping: 16, delay: 0.15 }}
 							>
-								<div className="nikon-stage-float absolute inset-0">
+								<div
+									className="nikon-stage-float absolute inset-0"
+									onMouseEnter={() => setHovering(true)}
+									onMouseLeave={() => setHovering(false)}
+									onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+									onTouchEnd={(e) => {
+										const s = touchX.current; touchX.current = null;
+										if (s == null || slides.length < 2) return;
+										const dx = e.changedTouches[0].clientX - s;
+										if (Math.abs(dx) > 40) go(slide + (dx < 0 ? 1 : -1));
+									}}
+								>
 									<HoverZoom stage>
-										<Image
-											src={image}
-											alt={name}
-											fill
-											priority
-											sizes="(max-width: 1024px) 220px, 320px"
-											className="object-contain drop-shadow-[0_28px_30px_rgba(15,23,42,0.35)]"
-										/>
+										<AnimatePresence initial={false}>
+											<motion.div
+												key={slides[slide]}
+												className="absolute inset-0"
+												initial={{ opacity: 0, scale: reducedMotion ? 1 : 0.96 }}
+												animate={{ opacity: 1, scale: 1 }}
+												exit={{ opacity: 0 }}
+												transition={{ duration: 0.6, ease: 'easeOut' }}
+											>
+												<Image
+													src={slides[slide]}
+													alt={slides.length > 1 ? `${name} — photo ${slide + 1} of ${slides.length}` : name}
+													fill
+													priority
+													sizes="(max-width: 1024px) 220px, 320px"
+													className="object-contain drop-shadow-[0_28px_30px_rgba(15,23,42,0.35)]"
+												/>
+											</motion.div>
+										</AnimatePresence>
 									</HoverZoom>
 								</div>
+								{slides.length > 1 && (
+									<div className="absolute -bottom-7 left-1/2 z-10 flex -translate-x-1/2 gap-1.5" role="group" aria-label="Product photos">
+										{slides.map((src, i) => (
+											<button
+												key={src}
+												type="button"
+												onClick={() => go(i)}
+												aria-label={`Show photo ${i + 1} of ${slides.length}`}
+												aria-current={i === slide}
+												className={`h-2 rounded-full transition-all duration-300 ${i === slide ? 'w-6' : 'w-2 bg-slate-400/70 hover:bg-slate-500'}`}
+												style={i === slide ? { backgroundColor: accent } : undefined}
+											/>
+										))}
+									</div>
+								)}
 							</motion.div>
 						</div>
 
