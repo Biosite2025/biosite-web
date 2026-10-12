@@ -261,12 +261,14 @@ const FAQ_DATA = [
 function BiomiAvatar({ size = 44, animationState = "idle" }) {
 		// Animation variants
 				const headVariants = {
-					idle: { rotate: [0, 2, -2, 0], y: [0, 2, 0], transition: { duration: 3, repeat: Infinity, ease: easeInOut } },
+					// idle sway is a CSS loop (.biomi-sway in globals.css), not a JS animation
+					idle: { rotate: 0, y: 0 },
 					thinking: { rotate: 0, y: 0 },
 					reply: { rotate: [0, 10, 0], y: [0, 2, 0], transition: { duration: 0.6 } },
 				};
 				const eyeVariants = {
-					idle: { scaleY: [1, 1, 0.1, 1], transition: { duration: 3.5, times: [0, 0.85, 0.87, 1], repeat: Infinity, ease: easeInOut } },
+					// idle blink is a CSS loop (.biomi-blink)
+					idle: { scaleY: 1 },
 					thinking: { scaleY: [1, 0.1, 1], transition: { duration: 0.4 } },
 					reply: { scaleY: 1 },
 				};
@@ -286,7 +288,7 @@ function BiomiAvatar({ size = 44, animationState = "idle" }) {
 							xmlns="http://www.w3.org/2000/svg"
 							style={{ display: "block" }}
 						>
-							<motion.g variants={headVariants} animate={animationState}>
+							<motion.g variants={headVariants} animate={animationState} className={animationState === 'idle' ? 'biomi-sway' : undefined}>
 								{/* Outer head shape */}
 								<ellipse cx="50" cy="60" rx="38" ry="35" fill="#e6f4fa" stroke="#3a6b7c" strokeWidth="3" />
 								{/* Faceplate */}
@@ -305,6 +307,7 @@ function BiomiAvatar({ size = 44, animationState = "idle" }) {
 									fill="#3a6b7c"
 									variants={eyeVariants}
 									animate={animationState}
+									className={animationState === 'idle' ? 'biomi-blink' : undefined}
 								/>
 								<motion.circle
 									cx="60"
@@ -313,6 +316,7 @@ function BiomiAvatar({ size = 44, animationState = "idle" }) {
 									fill="#3a6b7c"
 									variants={eyeVariants}
 									animate={animationState}
+									className={animationState === 'idle' ? 'biomi-blink' : undefined}
 								/>
 								{/* Smile */}
 								<path d="M43 70 Q50 75 57 70" stroke="#3a6b7c" strokeWidth="2.2" fill="none" strokeLinecap="round" />

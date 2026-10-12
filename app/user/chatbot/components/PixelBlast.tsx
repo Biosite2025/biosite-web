@@ -69,7 +69,14 @@ const createTouchTexture = () => {
     last = { x: norm.x, y: norm.y };
     trail.push({ x: norm.x, y: norm.y, age: 0, force, vx, vy });
   };
+  let wasEmpty = false;
   const update = () => {
+    // Nothing to draw and already cleared: skip the per-frame clear and the
+    // GPU texture re-upload (texSubImage2D) while nobody is interacting.
+    if (trail.length === 0) {
+      if (wasEmpty) return;
+      wasEmpty = true;
+    } else wasEmpty = false;
     clear();
     for (let i = trail.length - 1; i >= 0; i--) {
       const point = trail[i];

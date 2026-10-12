@@ -207,7 +207,9 @@ export default function FloatingLines({
     const renderer = new WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: true });
     // Full-screen and redrawn every frame — 1.5x keeps the soft lines crisp
     // while drawing ~44% fewer pixels than 2x on phones/retina screens.
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    // Phones/tablets: 1x is indistinguishable for soft lines and draws ~55%
+    // fewer pixels per frame than 1.5x; desktops keep 1.5x for crispness.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 1024 ? 1 : 1.5));
     renderer.setClearColor(0x000000, 0);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';

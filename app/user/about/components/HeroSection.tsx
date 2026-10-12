@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { EASE, FOCUS_RING } from './motionShared';
 
 // Building slideshow — three real facilities. Meaningful alt text per slide.
@@ -21,18 +21,22 @@ const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const reducedMotion = useReducedMotion();
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef);
 
-  // Autoplay — paused for reduced-motion users, who stay on the first photo.
+  // Autoplay — paused for reduced-motion users, and while the hero is
+  // scrolled out of view (each slide runs a crossfade + zoom animation).
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || !inView) return;
     timer.current = setInterval(() => setCurrent((c) => (c + 1) % slides.length), SLIDE_DURATION);
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, inView]);
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       aria-labelledby="hero-title"
       className="relative w-full overflow-hidden lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"

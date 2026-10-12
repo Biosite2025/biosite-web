@@ -477,3 +477,10 @@ html[data-modal-open] .scroll-cue,
 html[data-modal-open] .bear-float,
 html[data-modal-open] .partner-ring,
 html[data-modal-open] .partner-shine { animation-play-state: paused; }
+
+/* Biomi avatar idle loops (CSS so they don't run a JS frame loop). */
+@keyframes biomi-sway { 0%,100% { transform: rotate(0deg) translateY(0); } 33% { transform: rotate(2deg) translateY(2px); } 66% { transform: rotate(-2deg) translateY(1px); } }
+.biomi-sway { animation: biomi-sway 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes biomi-blink { 0%,85%,89%,100% { transform: scaleY(1); } 87% { transform: scaleY(0.1); } }
+.biomi-blink { animation: biomi-blink 3.5s infinite; transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: reduce) { .biomi-sway, .biomi-blink { animation: none; } }
