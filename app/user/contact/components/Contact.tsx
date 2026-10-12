@@ -1,6 +1,7 @@
 "use client";
       import React, { useState, useEffect, useRef } from "react";
   import { motion, AnimatePresence } from "framer-motion";
+import Image from 'next/image';
 
 
 interface LocationData {
@@ -212,6 +213,30 @@ function ContactForm() {
         <div className="absolute top-4 sm:top-6 md:top-8 lg:top-10 left-4 sm:left-6 md:left-8 lg:left-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-[#2B7CD3] rounded-full blur-2xl sm:blur-3xl opacity-10" />
         <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 right-4 sm:right-6 md:right-8 lg:right-10 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-[#2B3990] rounded-full blur-2xl sm:blur-3xl opacity-10" />
       </div>
+
+      {/* Mascot: the Biosite bear "on a call", in the empty left gutter beside
+          the content on wide screens. Sized from the gutter width so it never
+          sits on the form; it tucks slightly behind the map card. Hidden where
+          there's no room (below 1440px). */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 z-0 hidden min-[1440px]:block"
+        style={{ width: 'min(440px, calc((100vw - 72rem) / 2 + 5rem))' }}
+        initial={{ opacity: 0, x: -40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
+      >
+        <div className="bear-float">
+          <Image
+            src="/asset/callingbear.webp"
+            alt=""
+            width={900}
+            height={1013}
+            priority={false}
+            className="h-auto w-full drop-shadow-[0_24px_40px_rgba(43,57,144,0.22)]"
+          />
+        </div>
+      </motion.div>
 
   {/* Always visible Contact Us title for mobile/tablet */}
   <div className="block lg:hidden w-full z-20 pt-4 pb-2">
