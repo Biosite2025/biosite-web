@@ -258,6 +258,30 @@ export default function JobListing() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+          {/* Mascot: the Biosite bear waving with a résumé, in the empty right
+              gutter beside the form on wide screens (Contact has the calling
+              bear on the left). Sized from the gutter, sunk below the section
+              edge so its cropped waist is always hidden at the footer line.
+              The content is 80rem wide, so the bear only fits beside the form
+              (never behind it — the message box is see-through) from 1760px up. */}
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-16 right-0 z-0 hidden min-[1760px]:block"
+            style={{ width: 'min(440px, calc((100vw - 80rem) / 2 - 1rem))' }}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
+          >
+            <div className="bear-float">
+              <Image
+                src="/asset/careerbear.webp"
+                alt=""
+                width={900}
+                height={906}
+                className="h-auto w-full drop-shadow-[0_24px_40px_rgba(43,57,144,0.22)]"
+              />
+            </div>
+          </motion.div>
           {/* Custom style for 1280x665 to reduce top/bottom margin */}
           <style jsx global>{`
             @media (width: 1280px) and (height: 665px) {
