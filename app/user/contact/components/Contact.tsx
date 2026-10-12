@@ -220,8 +220,11 @@ function ContactForm() {
           there's no room (below 1440px). */}
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 z-0 hidden min-[1440px]:block"
-        style={{ width: 'min(440px, calc((100vw - 72rem) / 2 + 5rem))' }}
+        className="pointer-events-none absolute -bottom-16 left-0 z-0 hidden min-[1440px]:block"
+        // Larger, and sunk 4rem below the section edge: the photo's cropped
+        // bottom is always clipped at the footer line, even at the top of the
+        // float, so the body reads as continuing behind the footer.
+        style={{ width: 'min(560px, calc((100vw - 72rem) / 2 + 9rem))' }}
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
