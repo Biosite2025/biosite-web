@@ -9,6 +9,12 @@ import HoverZoom from './HoverZoom';
 // Logos whose files carry lots of empty canvas render tiny at the modal's
 // logo size. These trimmed copies are used ONLY here; tabs and card badges
 // keep the original files and sizing.
+// Near-square logos read small at the default wordmark height; give them a
+// taller box in the modal (width cap unchanged, so wide logos aren't affected).
+const POPUP_LOGO_SIZE: Record<string, string> = {
+	"/asset/logo/BECKMAN-COULTER.png": "h-20 sm:h-24 lg:h-32",
+};
+
 const POPUP_LOGOS: Record<string, string> = {
 	"/asset/logo/FUJIFILM.png": "/asset/logo/popup/fujifilm.png",
 	"/asset/logo/ozelle (1).png": "/asset/logo/popup/ozelle-1-.png",
@@ -109,7 +115,7 @@ export default function PopOutModal({
 								alt={`${brandName ?? 'Brand'} logo`}
 								width={240}
 								height={240}
-								className="h-14 w-auto max-w-[200px] object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.18)] sm:h-16 sm:max-w-[240px] lg:h-20 lg:max-w-[280px]"
+								className={`${POPUP_LOGO_SIZE[logo] ?? 'h-14 sm:h-16 lg:h-20'} w-auto max-w-[200px] object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.18)] sm:max-w-[240px] lg:max-w-[280px]`}
 							/>
 						)}
 					</motion.div>
