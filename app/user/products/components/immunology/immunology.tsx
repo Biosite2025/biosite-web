@@ -27,6 +27,7 @@ const brands = [
 	// madx-logo.webp is a light-background version of MADx's artwork (their
 	// supplied logo has white "MAD" lettering, invisible on these light tabs).
 	{ id: 'madx', name: 'MADx', logo: '/asset/madx/madx-logo.webp', logoClass: 'max-h-10 sm:max-h-12 max-w-full' },
+	{ id: 'beckman', name: 'Beckman Coulter', logo: '/asset/logo/BECKMAN-COULTER.png', logoClass: 'max-h-10 sm:max-h-12 max-w-full' },
 ];
 
 // Modal component
@@ -682,6 +683,10 @@ export default function Immunology() {
 				description: "ALEX (Allergy Xplorer) was the first ELISA based in-vitro multiplex allergy test allowing simultaneous measurements of quantitative total IgE (tIgE) and specific IgE (sIgE) against a large number of allergen extracts and molecular allergens. ALEX³ is the third iteration of the test and comes with a panel of 300 allergens, including high-relevance allergen sources and 85 allergen families. It contains 218 molecular allergens, 107 of which are unique to the test - it is the widest range of molecular allergens on the market. ALEX³ improves the quality of diagnosis and makes individualised and evidence-based therapy possible for every patient."
 			},
 
+			{"id":15,"name":"Beckman Coulter Access 2","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/beckman-coulter/access-2.webp","brand":"beckman","brandName":"Beckman Coulter","brandLogo":"/asset/logo/BECKMAN-COULTER.png","description":"Compact and reliable immunoassay solutions for low-workload labs. Up to 100 tests per hour with up to 60 samples loaded at once, random access with automatic reflex testing, and priority STAT processing with assay times from 13 minutes. Proven chemiluminescent technology, full-range calibrations stable for up to 63 days, a comprehensive on-board QC package and PROService Remote Diagnostics. Broad menu covering anaemia, thyroid, cardiac, tumour markers, fertility, skeletal, specialty and infectious disease assays."},
+			{"id":16,"name":"Beckman Coulter DxI 600","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/beckman-coulter/dxi-600.webp","brand":"beckman","brandName":"Beckman Coulter","brandLogo":"/asset/logo/BECKMAN-COULTER.png","description":"Immunoassay analyzer for moderate-workload labs: up to 200 tests per hour with 60-sample loading."},
+			{"id":17,"name":"Beckman Coulter DxI 800","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/beckman-coulter/dxi-800.webp","brand":"beckman","brandName":"Beckman Coulter","brandLogo":"/asset/logo/BECKMAN-COULTER.png","description":"High-workload immunoassay analyzer: up to 400 tests per hour with 120-sample loading."},
+			{"id":18,"name":"Beckman Coulter DxI 9000","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/beckman-coulter/dxi-9000.webp","brand":"beckman","brandName":"Beckman Coulter","brandLogo":"/asset/logo/BECKMAN-COULTER.png","description":"High-workload immunoassay analyzer: up to 450 tests per hour with 140-sample loading."},
 		];
 
 
