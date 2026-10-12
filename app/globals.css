@@ -55,12 +55,9 @@ img {
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* The site is light-only. (The create-next-app dark-mode variables were
+   removed: in OS dark mode they turned uncovered page background black.) */
+html { background: #ffffff; color-scheme: light; }
 
 body {
   background: var(--background);

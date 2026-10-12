@@ -204,10 +204,13 @@ export default function RootLayout({
               {children}
             </main>
             
-            {/* Full screen preloader overlay - completely blocks interaction */}
+            {/* Full screen preloader overlay - completely blocks interaction.
+                Covers the whole window (navbar area included): on a fresh
+                reload the navbar isn't painted yet, so leaving its strip open
+                showed the bare page background as a dark band. */}
             {isLoading && (
               <div 
-                className="fixed inset-0 top-16 lg:top-24 z-[99999] bg-white" 
+                className="fixed inset-0 z-[99999] bg-white" 
                 style={{ 
                   position: 'fixed',
                   left: '0',
