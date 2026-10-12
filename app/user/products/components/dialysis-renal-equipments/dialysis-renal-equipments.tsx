@@ -14,7 +14,7 @@ const brands: BrandDef[] = [
 ];
 
 const products: ProductDef[] = [
-	{"id":1,"name":"Biolight D800","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png","description":"The Biolight D800 Series is a hemodialysis system designed for HD, HF, and HDF treatments, featuring a modern multifunctional design with a 15-inch touchscreen and reliable extracorporeal circuit. It supports multiple therapy options, automatic heparin pump, high-capacity battery, and ultrapurified dialysis for enhanced patient safety. Its cost-efficient design helps reduce dialysate waste and ensures continuous operation during power outages.","brand":"biolight","brandName":"Biolight","brandLogo":"/asset/logo/BIOLIGHT.png"},
+	{"id":1,"name":"D800","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/arterial-blood-gas-electrolytes-co-oximetry/biolight-d800.png","description":"The Biolight D800 Series is a hemodialysis system designed for HD, HF, and HDF treatments, featuring a modern multifunctional design with a 15-inch touchscreen and reliable extracorporeal circuit. It supports multiple therapy options, automatic heparin pump, high-capacity battery, and ultrapurified dialysis for enhanced patient safety. Its cost-efficient design helps reduce dialysate waste and ensures continuous operation during power outages.","brand":"biolight","brandName":"Biolight","brandLogo":"/asset/logo/BIOLIGHT.png"},
 ];
 
 export default function DialysisRenalEquipments() {
