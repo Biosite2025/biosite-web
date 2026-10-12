@@ -253,7 +253,7 @@ export default function JobListing() {
   return (
     <>
       <motion.section
-        className="w-full min-h-screen flex items-start justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white pt-3 sm:height-[640px] md:pt-4 lg:pt-5 xl:pt-8 pb-6 md:pb-8 lg:pb-10 xl:pb-16 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
+        className="w-full min-h-[calc(100svh-4rem)] lg:min-h-[calc(100svh-6rem)] flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 md:py-8 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -375,7 +375,7 @@ export default function JobListing() {
         )}
       </AnimatePresence>
 
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-6 xl:gap-8 2xl:gap-16 items-center z-10 relative origin-top scale-[0.85] md:scale-90 lg:scale-[0.78] xl:scale-[0.82] 2xl:scale-100 transition-transform duration-300">
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-6 xl:gap-8 2xl:gap-16 items-center z-10 relative [zoom:0.85] md:[zoom:0.9] lg:[zoom:0.78] xl:[zoom:0.82] 2xl:[zoom:1]">
         {/* Left Side - Headline and Image */}
         <motion.div
           className="flex flex-col items-center justify-center relative h-full"
