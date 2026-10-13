@@ -228,6 +228,18 @@ if (fs.existsSync(RESEARCH)) {
   }
 }
 
+// ---------- social media (site footer) ----------
+const social = [];
+try {
+  const footerSrc = fs.readFileSync(path.join(ROOT, 'app/user/chatbot/components/Footer.tsx'), 'utf8');
+  const NAMES = { facebook: 'Facebook', linkedin: 'LinkedIn', instagram: 'Instagram', youtube: 'YouTube', tiktok: 'TikTok', twitter: 'X (Twitter)', x: 'X (Twitter)' };
+  for (const m of footerSrc.matchAll(/https?:\/\/(?:www\.)?(facebook|linkedin|instagram|youtube|tiktok|twitter|x)\.com\/[^"'\s)]+/g)) {
+    if (!social.some((s) => s.url === m[0])) social.push({ name: NAMES[m[1]], url: m[0] });
+  }
+} catch {
+  // Footer moved — Biomi just won't answer social-media questions.
+}
+
 // ---------- company facts (About page stats: founded, years, ISO, awards…) ----------
 const facts = [];
 try {
@@ -242,6 +254,6 @@ if (products.length < 50 || faqs.length < 20 || offices.length < 1) {
   console.error(`[biomi-index] Extraction looks broken: ${products.length} products, ${faqs.length} FAQs, ${offices.length} offices.`);
   process.exit(1);
 }
-fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts }));
+fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts, social }));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
-console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts, ${researched} researched -> public/biomi-index.json (${kb} KB)`);
+console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts, ${social.length} social links, ${researched} researched -> public/biomi-index.json (${kb} KB)`);

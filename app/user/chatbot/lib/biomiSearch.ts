@@ -17,7 +17,7 @@ export type Product = { name: string; brand: string; category: string; descripti
 };
 export type Faq = { category: string; q: string; a: string };
 export type Office = { name: string; address: string; phone: string; email: string; hours: string };
-type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[] };
+type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[]; social?: { name: string; url: string }[] };
 
 export type Answer = {
 	text: string[];
@@ -495,6 +495,23 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 			text: ["That's outside what I can help with. I answer questions about Biosite's medical and laboratory products, services, offices and careers."],
 			suggestions: STARTER_QUESTIONS.slice(0, 3),
 			links: [{ label: 'Contact us', href: '/user/contact' }],
+		};
+	}
+
+	// ---- social media (site footer) ----
+	const SOCIAL = /\b(facebook|fb|linkedin|instagram|ig|youtube|yt|tiktok|twitter|socials?|social media|social links?|follow (?:you|biosite)|fb page)\b/;
+	if (SOCIAL.test(q) && data.social?.length) {
+		const asked = data.social.find((s) => new RegExp(`\\b${s.name.split(' ')[0].toLowerCase()}\\b`).test(q) || (s.name === 'Facebook' && /\bfb\b/.test(q)));
+		const named = /\b(instagram|ig|youtube|yt|tiktok|twitter)\b/.exec(q)?.[1];
+		const list = asked ? [asked] : data.social;
+		const links = list.map((s) => ({ label: s.name, href: s.url }));
+		if (!asked && named) {
+			const label = ({ instagram: 'an Instagram', ig: 'an Instagram', youtube: 'a YouTube', yt: 'a YouTube', tiktok: 'a TikTok', twitter: 'an X (Twitter)' } as Record<string, string>)[named];
+			return { text: [`Our website doesn't list ${label} account. You can follow Biosite on ${data.social.map((s) => s.name).join(' and ')}:`], links };
+		}
+		return {
+			text: [asked ? `Here's Biosite on ${asked.name}:` : `You can follow Biosite on ${data.social.map((s) => s.name).join(' and ')} for updates on medical training, innovations and events:`],
+			links,
 		};
 	}
 
