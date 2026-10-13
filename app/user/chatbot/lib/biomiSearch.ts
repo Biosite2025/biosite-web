@@ -126,15 +126,19 @@ export function loadBiomi() {
 
 const has = (q: string, re: RegExp) => re.test(q);
 
-async function jobOpenings(): Promise<string[]> {
+/** Live open positions (same list as the Careers page); null when it can't be loaded. */
+async function jobOpenings(): Promise<string[] | null> {
 	try {
 		const r = await fetch('/api/job-positions');
 		const j = await r.json();
-		return Array.isArray(j?.data) ? j.data.map((p: { title: string }) => p.title) : [];
+		return j?.success && Array.isArray(j.data) ? j.data.map((p: { title: string }) => p.title) : null;
 	} catch {
-		return [];
+		return null;
 	}
 }
+
+// Words that only say "jobs" — anything else in a careers question is the job they want.
+const CAREER_WORDS = new Set(['job', 'jobs', 'hiring', 'hire', 'career', 'careers', 'vacancy', 'vacancies', 'opening', 'openings', 'position', 'positions', 'posisyon', 'apply', 'application', 'trabaho', 'work', 'employment', 'list', 'available', 'open', 'current', 'currently', 'still', 'any', 'all', 'naghahanap', 'bakante', 'for', 'as']);
 
 const faqAnswer = (data: Index, re: RegExp) => data.faqs.find((f) => re.test(f.q))?.a;
 
@@ -558,16 +562,40 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 	}
 
 	// ---- careers ----
-	if (has(q, /\b(job|jobs|hiring|career|careers|vacanc|opening|openings|apply|trabaho|work with|employment|hire)\w*/)) {
+	if (has(q, /\b(job|jobs|hiring|career|careers|vacanc|opening|openings|apply|trabaho|work with|employment|hire|positions?|posisyon|naghahanap|bakante)\w*/) && !/\b(position(?:ing)?|positioner) (?:of|for) (?:the )?(?:patient|sample)/.test(q)) {
+		const links = [{ label: 'Go to Careers', href: '/user/career' }];
 		const jobs = await jobOpenings();
+		if (jobs === null) {
+			return { text: ["I couldn't load the current openings just now. You can see them, and apply by sending your résumé, on our Careers page."], links };
+		}
+		if (!jobs.length) {
+			return { text: ["There are no open positions listed right now. Please check our Careers page again soon."], links };
+		}
+		// "are you hiring accountants?" -> the matching positions
+		const want = words.filter((w) => !CAREER_WORDS.has(w) && w.length > 2);
+		// Titles with every word first ("sales engineer"), else any word ("accountants").
+		const hasWord = (t: string, w: string) => norm(t).includes(stem(w));
+		const allWords = jobs.filter((t) => want.every((w) => hasWord(t, w)));
+		const matching = !want.length ? [] : allWords.length ? allWords : jobs.filter((t) => want.some((w) => hasWord(t, w)));
+		if (want.length && matching.length) {
+			const n = matching.length === 1 ? 'this position' : `these ${matching.length} positions`;
+			return {
+				text: [
+					allWords.length || want.length === 1
+						? `Yes — we're hiring for ${n}. Apply on our Careers page by sending your résumé.`
+						: `I don't see a “${want.join(' ')}” opening right now, but we're hiring for ${matching.length === 1 ? 'this related position' : `these ${matching.length} related positions`}:`,
+				],
+				jobs: matching,
+				links,
+			};
+		}
 		return {
 			text: [
-				jobs.length
-					? `We're currently hiring for ${jobs.length} position${jobs.length === 1 ? '' : 's'}. You can apply on our Careers page by sending your résumé.`
-					: 'You can apply on our Careers page by sending your résumé.',
+				...(want.length ? [`I don't see a “${want.join(' ')}” opening right now.`] : []),
+				`We're currently hiring for ${jobs.length} position${jobs.length === 1 ? '' : 's'}. You can apply on our Careers page by sending your résumé.`,
 			],
-			jobs: jobs.slice(0, 10),
-			links: [{ label: 'Go to Careers', href: '/user/career' }],
+			jobs,
+			links,
 		};
 	}
 

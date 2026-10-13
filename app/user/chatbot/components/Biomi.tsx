@@ -245,8 +245,8 @@ export default function BiomiFAQ() {
 										)}
 										{m.answer!.jobs && m.answer!.jobs.length > 0 && (
 											<div className="rounded-xl border border-[#e3eaf7] bg-white p-3 text-xs text-[#1f3b63] shadow-sm sm:text-sm">
-												<div className="mb-1 font-semibold text-[#0b2a5c]">Open positions</div>
-												<ul className="list-disc space-y-0.5 pl-4">{m.answer!.jobs.map((j) => <li key={j}>{j}</li>)}</ul>
+												<div className="mb-1 font-semibold text-[#0b2a5c]">Open positions ({m.answer!.jobs.length})</div>
+												<ul className="max-h-56 list-disc space-y-0.5 overflow-y-auto overscroll-contain pl-4 pr-1">{m.answer!.jobs.map((j) => <li key={j}>{j}</li>)}</ul>
 											</div>
 										)}
 										{(m.answer!.links?.length || m.answer!.suggestions?.length) ? (
