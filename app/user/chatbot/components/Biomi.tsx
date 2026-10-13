@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, easeInOut } from "framer-motion";
-import { askBiomi, loadBiomi, STARTER_QUESTIONS, type Answer } from "../lib/biomiSearch";
+import { motion, easeInOut, AnimatePresence } from "framer-motion";
+import { askBiomi, loadBiomi, STARTER_QUESTIONS, type Answer, type Product } from "../lib/biomiSearch";
+import PopOutModal from '../../products/components/shared/PopOutModal';
 import PixelBlast from './PixelBlast';
 
 
@@ -85,6 +86,8 @@ export default function BiomiFAQ() {
 	const [input, setInput] = useState('');
 	const [typing, setTyping] = useState(false);
 	const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'reply'>('idle');
+	const [openProduct, setOpenProduct] = useState<Product | null>(null);
+	const closeProduct = useCallback(() => setOpenProduct(null), []);
 	const listRef = useRef<HTMLDivElement>(null);
 	const nextId = useRef(1);
 
@@ -200,7 +203,7 @@ export default function BiomiFAQ() {
 										{m.answer!.products && (
 											<div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
 												{m.answer!.products.map((p) => (
-													<Link key={p.url + p.name} href={p.url} prefetch={false} className="group flex min-w-0 gap-3 rounded-xl border border-[#e3eaf7] bg-white p-2.5 shadow-sm transition hover:border-[#0056D2]/40 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
+													<button key={p.url + p.name} type="button" onClick={() => setOpenProduct(p)} aria-haspopup="dialog" className="group flex min-w-0 gap-3 rounded-xl border border-[#e3eaf7] bg-white p-2.5 text-left shadow-sm transition hover:border-[#0056D2]/40 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
 														{/* eslint-disable-next-line @next/next/no-img-element */}
 														<img src={p.image} alt="" loading="lazy" className="h-14 w-14 flex-shrink-0 rounded-lg bg-[#f3f6fb] object-contain p-1" />
 														<span className="min-w-0">
@@ -208,7 +211,7 @@ export default function BiomiFAQ() {
 															<span className="block truncate text-xs text-[#5b7290]">{[p.brand, p.category].filter(Boolean).join(' · ')}</span>
 															<span className="mt-0.5 line-clamp-2 text-xs text-gray-500">{p.description}</span>
 														</span>
-													</Link>
+													</button>
 												))}
 											</div>
 										)}
@@ -288,6 +291,23 @@ export default function BiomiFAQ() {
 					</div>
 				</motion.div>
 			</div>
+
+			{/* Product details open over the chat (same modal as the product pages),
+			    so closing it brings the visitor straight back to the conversation. */}
+			<AnimatePresence>
+				{openProduct && (
+					<PopOutModal
+						key={openProduct.url + openProduct.name}
+						name={openProduct.name}
+						description={openProduct.description}
+						image={openProduct.image}
+						logo={openProduct.logo || undefined}
+						brandName={openProduct.brand || undefined}
+						backLabel="Back to chat"
+						onClose={closeProduct}
+					/>
+				)}
+			</AnimatePresence>
 		</>
 	);
 }

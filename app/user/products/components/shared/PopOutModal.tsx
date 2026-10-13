@@ -46,6 +46,7 @@ export default function PopOutModal({
 	logo,
 	brandName,
 	accent = '#2B3990',
+	backLabel = 'Back to products',
 	onClose,
 }: {
 	name: string;
@@ -57,6 +58,8 @@ export default function PopOutModal({
 	brandName?: string;
 	/** Brand colour for the glow, edge highlight and title bar. */
 	accent?: string;
+	/** Text of the close button (e.g. "Back to chat" when opened from Biomi). */
+	backLabel?: string;
 	onClose: () => void;
 }) {
 	const reducedMotion = useReducedMotion();
@@ -238,7 +241,7 @@ export default function PopOutModal({
 									onClick={onClose}
 									className="shrink-0 rounded-full px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3 transition hover:bg-gray-100 hover:text-gray-900"
 								>
-									Back to products
+									{backLabel}
 								</button>
 							</motion.div>
 							<motion.p {...rise(0.58)} className="mt-6 border-t border-gray-100 pt-4 text-xs text-gray-400 [@media(max-height:760px)]:hidden">
