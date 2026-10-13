@@ -7,7 +7,7 @@ import MiniSearch from 'minisearch';
  * information that is on the website, and says so when it can't find an answer.
  */
 
-export type Product = { name: string; brand: string; category: string; description: string; image: string; logo: string; url: string };
+export type Product = { name: string; brand: string; category: string; description: string; image: string; logo: string; url: string; /** Other categories it is also listed under. */ alsoIn?: string };
 export type Faq = { category: string; q: string; a: string };
 export type Office = { name: string; address: string; phone: string; email: string; hours: string };
 type Index = { products: Product[]; faqs: Faq[]; offices: Office[] };
@@ -93,9 +93,9 @@ export function loadBiomi() {
 			.then((r) => r.json() as Promise<Index>)
 			.then((data) => {
 				const products = new MiniSearch<Product & { id: number }>({
-					fields: ['name', 'brand', 'category', 'description'],
+					fields: ['name', 'brand', 'category', 'alsoIn', 'description'],
 					storeFields: ['name'],
-					searchOptions: { boost: { name: 4, brand: 3, category: 2, description: 0.6 }, fuzzy: 0.2, prefix: true, combineWith: 'OR' },
+					searchOptions: { boost: { name: 4, brand: 3, category: 2, alsoIn: 2, description: 0.6 }, fuzzy: 0.2, prefix: true, combineWith: 'OR' },
 				});
 				products.addAll(data.products.map((p, id) => ({ ...p, id })));
 				const faqs = new MiniSearch<Faq & { id: number }>({

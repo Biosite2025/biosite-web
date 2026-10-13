@@ -144,6 +144,24 @@ for (const folder of fs.readdirSync(PRODUCTS_DIR)) {
   }
 }
 
+// Some products appear on two pages (e.g. Nikon ECLIPSE on Microscopes and
+// Nikon Microscopes, Fujifilm on Imaging and Radiology). Keep one entry —
+// the one with the fuller description — and remember the other categories
+// so searching either one still finds it.
+const byKey = new Map();
+for (const p of products) {
+  const key = `${p.brand}|${p.name}`.toLowerCase();
+  const prev = byKey.get(key);
+  if (!prev) { byKey.set(key, { ...p, alsoIn: [] }); continue; }
+  const keep = p.description.length > prev.description.length ? { ...p, alsoIn: prev.alsoIn } : prev;
+  const other = keep === prev ? p : prev;
+  if (other.category !== keep.category && !keep.alsoIn.includes(other.category)) keep.alsoIn.push(other.category);
+  byKey.set(key, keep);
+}
+const dupes = products.length - byKey.size;
+products.length = 0;
+for (const p of byKey.values()) products.push({ ...p, alsoIn: p.alsoIn.join(', ') });
+
 // ---------- FAQs ----------
 const faqSrc = fs.readFileSync(path.join(ROOT, 'app/user/chatbot/faqData.ts'), 'utf8');
 const faqs = [];
@@ -174,4 +192,4 @@ if (products.length < 50 || faqs.length < 20 || offices.length < 1) {
 }
 fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices }));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
-console.log(`[biomi-index] ${products.length} products, ${faqs.length} FAQs, ${offices.length} offices -> public/biomi-index.json (${kb} KB)`);
+console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices -> public/biomi-index.json (${kb} KB)`);
