@@ -1,260 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { motion, easeInOut } from "framer-motion";
+import { askBiomi, loadBiomi, STARTER_QUESTIONS, type Answer } from "../lib/biomiSearch";
 import PixelBlast from './PixelBlast';
 
-// Comprehensive FAQ data structure covering all website content
-const FAQ_DATA = [
-	{
-		category: "About Biosite",
-		questions: [
-			{
-				q: "What is Biosite Medical Instruments?",
-				a: "Biosite Medical Instruments focuses on the importation and distribution of medical and diagnostic instruments, as well as medical and laboratory consumables. We are committed to saving and improving lives through reliable medical solutions.",
-			},
-			{
-				q: "What are your core values?",
-				a: "Our values spell BIOSITE: Belief (in our mission), Integrity (in business conduct), Outstanding Service (exceeding expectations), Stewardship (responsible resource management), Innovation (healthcare solutions), Teamwork (unite as ONE BIOSITE), and Excellence (striving in everything we do).",
-			},
-			{
-				q: "Where are your offices located?",
-				a: "We have three locations: Manila (305 Col. Bonny Serrano Ave, San Juan City), Cebu (Block 2 Lot 2 Guadalupe Heights Village, Guadalupe), and Davao (555 Manga St., Juna Subd, Matina). Contact: +63 917 111 5008.",
-			},
-			{
-				q: "What are your business hours?",
-				a: "Manila and Cebu: Mon-Sat 8:30am-5:30pm. Davao: Mon-Sat 8am-5pm. We serve healthcare professionals nationwide.",
-			},
-		],
-	},
-	{
-		category: "Products Overview",
-		questions: [
-			{
-				q: "What product categories do you offer?",
-				a: "We offer 5 main categories: I. Clinical (Chemistry, Hematology, Microbiology), II. Histopathology (Sakura, Dakewe, Microscopes), III. General Lab Equipment (Centrifuges, Biosafety Cabinets), IV. Medical & Hospital Equipment (Radiology, ICU, Surgical), V. Disposables & Consumables.",
-			},
-			{
-				q: "How do I browse products on the website?",
-				a: "Click 'PRODUCTS' in the navigation menu to see all categories. Each category is organized by department (Clinical, Histopathology, General Lab, Medical, Disposables). Browse by clicking the category that matches your needs.",
-			},
-			{
-				q: "Can I view product details and specifications?",
-				a: "Yes! Each product page shows detailed specifications, images, and descriptions. Click 'View Details' on any product card to see complete information including features and technical specs.",
-			},
-			{
-				q: "Do you have ISO certified products?",
-				a: "Yes, many of our products meet international ISO certification standards. Check specific product details for compliance information.",
-			},
-		],
-	},
-	{
-		category: "Clinical Products",
-		questions: [
-			{
-				q: "What clinical products do you offer?",
-				a: "Clinical category includes: Clinical Chemistry analyzers, HBA1C-HPLC, Immunology equipment, Coagulation analyzers, Blood Bank equipment, Arterial Blood Gas & Electrolytes, POCT (Point of Care Testing), Microbiology, Clinical Microscopy (Urinalysis/Fecalysis), Hematology analyzers, Molecular Diagnostics, and Rapid Test Kits.",
-			},
-			{
-				q: "What is POCT?",
-				a: "POCT stands for Point of Care Testing - medical diagnostic testing performed at or near the site of patient care, providing rapid results for immediate clinical decision-making.",
-			},
-			{
-				q: "Do you offer hematology analyzers?",
-				a: "Yes, we offer complete hematology solutions including automated blood cell counters, CBC analyzers, and related laboratory equipment for blood testing.",
-			},
-			{
-				q: "What molecular diagnostic equipment do you have?",
-				a: "We provide molecular diagnostics equipment including PCR systems, genetic analyzers, and nucleic acid testing platforms for advanced laboratory diagnostics.",
-			},
-		],
-	},
-	{
-		category: "Histopathology & Imaging",
-		questions: [
-			{
-				q: "What histopathology equipment do you offer?",
-				a: "We offer complete histopathology solutions from leading brands: Sakura (tissue processing, embedding, microtomy, staining), Dakewe, Hiplaas, Vitro tissue processors, Biogenex IHC equipment, Nikon Microscopes, Motic Slide Scanners, and Hamamatsu Slide Scanners.",
-			},
-			{
-				q: "What imaging equipment is available?",
-				a: "Our Radiology Department section includes medical diagnostic imaging equipment, X-ray systems, and digital pathology solutions including slide scanners for high-resolution tissue imaging.",
-			},
-			{
-				q: "Do you offer digital pathology solutions?",
-				a: "Yes, we offer advanced slide scanning systems from Motic, Hamamatsu, and Nikon for digital pathology workflows.",
-			},
-		],
-	},
-	{
-		category: "General Lab Equipment",
-		questions: [
-			{
-				q: "What general lab equipment do you provide?",
-				a: "We offer: Microscopes (various types), Centrifuges, Pipettors, Biorefrigerators, Biomedical Freezers (Ultra Low, Cryo, Liquid Nitrogen Storage), Biosafety Cabinets & Laminar Flow, Lab Ovens & Incubators (including CO₂), Sterilizers & Autoclaves, Dry Baths, Vortex Mixers, Rotators, Pipette Shakers, Passboxes, and Eye Wash Stations.",
-			},
-			{
-				q: "What types of biosafety cabinets do you have?",
-				a: "We provide Class I, Class II, and Class III Biosafety Cabinets, as well as Laminar Flow Cabinets for sterile work environments in laboratories.",
-			},
-			{
-				q: "Do you offer ultra-low temperature freezers?",
-				a: "Yes, we provide Biomedical Freezers including Ultra Low Freezers (-80°C), Cryo Freezers, and Liquid Nitrogen Storage systems for biological sample preservation.",
-			},
-		],
-	},
-	{
-		category: "Medical & Hospital Equipment",
-		questions: [
-			{
-				q: "What hospital equipment do you offer?",
-				a: "We provide: Radiology Department equipment, Pulmonary Department (respiratory care), Emergency and Outpatient equipment, Medical Surgical and Rehabilitation Ward equipment, Operating and Delivery Room equipment, and NICU/PICU/ICU specialized equipment.",
-			},
-			{
-				q: "Do you have ICU equipment?",
-				a: "Yes, we offer complete NICU, PICU, and ICU equipment including patient monitors, ventilators, infusion systems, and life support devices.",
-			},
-			{
-				q: "What surgical equipment is available?",
-				a: "We provide Operating and Delivery Room equipment, Medical Surgical Ward equipment, and surgical instruments for various medical procedures.",
-			},
-			{
-				q: "Do you offer pulmonary care equipment?",
-				a: "Yes, our Pulmonary Department section includes respiratory care equipment, ventilators, and pulmonary function testing devices.",
-			},
-		],
-	},
-	{
-		category: "Disposables & Consumables",
-		questions: [
-			{
-				q: "What disposables and consumables do you offer?",
-				a: "We provide five categories: Laboratory Equipment consumables, Laboratory Disposables (tubes, tips, slides), Hospital Disposables (patient care items), Histopathology Chemicals & Consumables (reagents, stains), and Surgical Disposables.",
-			},
-			{
-				q: "Do you supply laboratory chemicals?",
-				a: "Yes, we offer comprehensive histopathology chemicals, reagents, and staining solutions for laboratory use.",
-			},
-			{
-				q: "Can I order hospital disposables in bulk?",
-				a: "Yes, we offer bulk ordering for hospital disposables. Contact our sales team for volume pricing and customized quotes.",
-			},
-		],
-	},
-	{
-		category: "Ordering & Quotations",
-		questions: [
-			{
-				q: "How do I request a quotation?",
-				a: "Visit the 'Contact' page on our website and select 'Request Quotation' as your inquiry type. Fill out the form with product details, and our team will respond promptly with pricing and availability.",
-			},
-			{
-				q: "How do I place an order?",
-				a: "Orders can be placed through the 'Contact' page by selecting 'Sales - VisMin or Luzon' or by contacting our sales team directly at +63 917 111 5008 or customerservice@biosite.com.ph.",
-			},
-			{
-				q: "What payment methods do you accept?",
-				a: "We accept bank transfers, credit cards, and other secure payment options. Contact our sales team for detailed payment information and terms.",
-			},
-			{
-				q: "Are there discounts for bulk purchases?",
-				a: "Yes, we offer competitive pricing for bulk orders. Contact our sales team for volume discounts and customized quotes.",
-			},
-			{
-				q: "Is there a minimum order quantity?",
-				a: "Minimum order quantities vary by product. This will be specified in product details or during the quotation process.",
-			},
-		],
-	},
-	 {
-	   category: "Shipping & Delivery",
-	   questions: [
-	     {
-	       q: "How long does delivery take?",
-	       a: "Delivery times vary based on your location and the availability of the product. Standard delivery typically takes 5–7 business days.",
-	     },
-	     {
-	       q: "Do you ship internationally?",
-	       a: "Yes, we offer international shipping to select countries. Please contact us for more details on rates and delivery times.",
-	     },
-	     {
-	       q: "What should I do if my order is damaged during shipping?",
-	       a: "If your order arrives damaged, please contact our support team within 48 hours. Provide photos of the damaged item and the packaging for a prompt resolution.",
-	     },
-	   ],
-	 },
-	{
-		category: "Services & Support",
-		questions: [
-			{
-				q: "Do you provide installation services?",
-				a: "Yes, we provide professional installation services for medical equipment. Our trained technicians ensure proper setup and configuration.",
-			},
-			{
-				q: "Do you offer maintenance and repair services?",
-				a: "Yes, we offer comprehensive maintenance, calibration, and repair services for most products. Contact us to schedule service or request technical support.",
-			},
-			{
-				q: "Can I request a product demonstration?",
-				a: "Yes! Request a product demo through the 'Contact' page or call our sales team directly. We provide on-site demonstrations for healthcare facilities.",
-			},
-			{
-				q: "Do you offer training for equipment?",
-				a: "Yes, we provide training sessions and workshops for medical equipment operation. Check our 'Events' page for upcoming training schedules or request customized training.",
-			},
-			{
-				q: "What kind of technical support do you provide?",
-				a: "We offer comprehensive technical support including phone support, on-site service, troubleshooting, calibration, and preventive maintenance programs.",
-			},
-		],
-	},
-	{
-		category: "Career Opportunities",
-		questions: [
-			{
-				q: "How do I apply for a position at Biosite?",
-				a: "Visit the 'Career' page on our website. You'll find available positions across our Manila, Cebu, and Davao offices. Fill out the application form and upload your resume (PDF format, max 5MB).",
-			},
-			{
-				q: "What positions are currently available?",
-				a: "Current openings are listed on our 'Career' page. Positions vary by location (Manila, Cebu, Davao) and department. Check the page regularly for updates.",
-			},
-			{
-				q: "What information do I need to apply?",
-				a: "You'll need: Your full name, email, phone number (11 digits), position you're applying for, preferred location, and resume (PDF format). You can also include a cover letter.",
-			},
-			{
-				q: "What is the application process?",
-				a: "Submit your application through our website. Our HR team will review applications and contact qualified candidates for interviews. You'll receive confirmation after submission.",
-			},
-		],
-	},
-	{
-		category: "Contact & Locations",
-		questions: [
-			{
-				q: "How do I contact Biosite?",
-				a: "Email: customerservice@biosite.com.ph | Phone: +63 917 111 5008 | Visit our 'Contact' page for location-specific details and an interactive contact form with department selection.",
-			},
-			{
-				q: "What departments can I contact?",
-				a: "Using our contact form, you can reach: Sales Team (product inquiries), Technical Support (equipment service), Quotation Request (pricing), Purchase Order (place orders), or General Inquiry (other questions).",
-			},
-			{
-				q: "What are the Manila office details?",
-				a: "Address: 305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8:30am-5:30pm",
-			},
-			{
-				q: "What are the Cebu office details?",
-				a: "Address: Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu City | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8:30am-5:30pm",
-			},
-			{
-				q: "What are the Davao office details?",
-				a: "Address: 555 Manga St., Juna Subd, Matina, 8000 Davao City | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8am-5pm",
-			},
-		],
-	},
-];
 
 
 // Animated 3D Biomi Avatar with Framer Motion
@@ -326,189 +77,217 @@ function BiomiAvatar({ size = 44, animationState = "idle" }) {
 				);
 }
 
+type ChatMessage = { id: number; from: 'user' | 'biomi'; text?: string; answer?: Answer };
+
+// Chat-style FAQ: answers come only from the website's own content (see ../lib/biomiSearch).
 export default function BiomiFAQ() {
-	const [view, setView] = useState<'categories' | 'questions' | 'answer'>('categories');
-	const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-	const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
+	const [messages, setMessages] = useState<ChatMessage[]>([]);
+	const [input, setInput] = useState('');
+	const [typing, setTyping] = useState(false);
 	const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'reply'>('idle');
+	const listRef = useRef<HTMLDivElement>(null);
+	const nextId = useRef(1);
 
-	// Animation variants
-	const cardVariants = {
-		hidden: { opacity: 0, y: 30 },
-		visible: { opacity: 1, y: 0 },
-		exit: { opacity: 0, y: -30 },
-	};
+	// Fetch the knowledge index in the background once the page is up, so the
+	// first answer is instant (it's small and cached by the browser).
+	useEffect(() => {
+		const t = setTimeout(() => { loadBiomi().catch(() => {}); }, 800);
+		return () => clearTimeout(t);
+	}, []);
 
-	// Handlers
-	const handleCategoryClick = (idx: number) => {
-		setSelectedCategory(idx);
-		setView('questions');
-		setSelectedQuestion(null);
-		setAvatarState('idle');
-	};
-	const handleQuestionClick = (idx: number) => {
+	useEffect(() => {
+		const el = listRef.current;
+		if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+	}, [messages, typing]);
+
+	const ask = async (raw: string) => {
+		const question = raw.trim().slice(0, 300);
+		if (!question || typing) return;
+		setInput('');
+		setMessages((m) => [...m, { id: nextId.current++, from: 'user', text: question }]);
+		setTyping(true);
+		setAvatarState('thinking');
+		const started = Date.now();
+		let answer: Answer;
+		try {
+			answer = await askBiomi(question);
+		} catch {
+			answer = { text: ["Sorry, I couldn't load our information just now. Please check your connection and try again."] };
+		}
+		// A short pause so the reply reads as a response, not a flash.
+		await new Promise((r) => setTimeout(r, Math.max(0, 450 - (Date.now() - started))));
+		setTyping(false);
+		setMessages((m) => [...m, { id: nextId.current++, from: 'biomi', answer }]);
 		setAvatarState('reply');
-		setSelectedQuestion(idx);
-		setView('answer');
 		setTimeout(() => setAvatarState('idle'), 700);
 	};
-	const handleBack = () => {
-		if (view === 'answer') {
-			setView('questions');
-			setSelectedQuestion(null);
-			setAvatarState('idle');
-		} else {
-			setView('categories');
-			setSelectedCategory(null);
-			setAvatarState('idle');
-		}
-	};
-	
-	// Main container styles
-			return (
-				<>
-					<div id="bg" className="relative mb-6 sm:mb-10 flex justify-center items-center min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-96px)] py-3 sm:py-5 md:py-6 lg:py-8 [@media(max-height:760px)]:lg:py-3 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 pt-8 mt-8 lg:mt-0 lg:pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
-			{/* PixelBlast Animated Background */}
-			<PixelBlast
-			    
-				variant="circle"
-				pixelSize={6}
-				color="#2B3990"
-				className="z-0"
-				patternScale={3}
-				patternDensity={1.2}
-				pixelSizeJitter={0.5}
-				enableRipples
-				rippleSpeed={0.4}
-				rippleThickness={0.12}
-				rippleIntensityScale={1.5}
-				liquid
-				liquidStrength={0.12}
-				liquidRadius={1.2}
-				liquidWobbleSpeed={5}
-				speed={0.6}
-				edgeFade={0.25}
-				transparent
-			/>
-			<motion.div
-			    id="userchatbot"
-				className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl md:shadow-2xl p-0 overflow-hidden border border-gray-100 flex flex-col sm:flex-row max-[912px]:min-h-0 max-[912px]:mt-0 max-[912px]:mb-0"
-				initial={{ opacity: 0, scale: 0.96 }}
-				animate={{ opacity: 1, scale: 1 }}
-				transition={{ duration: 0.5, ease: 'easeOut' }}
-				style={{ marginTop: 0, marginBottom: 0 }}
-			>
-				{/* Left: Header and categories/questions/answers */}
-				<div className="flex-1 flex flex-col justify-between">
+
+	const chip = 'rounded-full border border-[#cfe0f7] bg-white px-3 py-1.5 text-xs sm:text-sm font-medium text-[#0056D2] shadow-sm transition hover:bg-[#eaf2fd] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40';
+
+	return (
+		<>
+			<div id="bg" className="relative mb-6 sm:mb-10 flex justify-center items-center min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-96px)] py-3 sm:py-5 md:py-6 lg:py-8 [@media(max-height:760px)]:lg:py-3 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 pt-8 mt-8 lg:mt-0 lg:pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
+				{/* PixelBlast Animated Background */}
+				<PixelBlast
+					variant="circle"
+					pixelSize={6}
+					color="#2B3990"
+					className="z-0"
+					patternScale={3}
+					patternDensity={1.2}
+					pixelSizeJitter={0.5}
+					enableRipples
+					rippleSpeed={0.4}
+					rippleThickness={0.12}
+					rippleIntensityScale={1.5}
+					liquid
+					liquidStrength={0.12}
+					liquidRadius={1.2}
+					liquidWobbleSpeed={5}
+					speed={0.6}
+					edgeFade={0.25}
+					transparent
+				/>
+				<motion.div
+					id="userchatbot"
+					className="relative z-10 flex w-full max-w-sm flex-col overflow-hidden rounded-xl border border-gray-100 bg-white p-0 shadow-lg sm:max-w-md sm:rounded-2xl sm:shadow-xl md:max-w-xl md:shadow-2xl lg:max-w-2xl"
+					initial={{ opacity: 0, scale: 0.96 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.5, ease: 'easeOut' }}
+				>
 					{/* Header */}
-					<div className="bg-[#0056D2] px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 flex items-center gap-3 sm:gap-4 rounded-t-xl sm:rounded-t-2xl rounded-bl-xl sm:rounded-bl-2xl relative min-h-[64px] sm:min-h-[72px] md:min-h-[84px] max-[912px]:py-2 max-[912px]:min-h-0">
-						<div className="absolute left-4 sm:left-6 md:left-8 top-1/2 -translate-y-1/2">
-							<BiomiAvatar size={view === 'categories' ? 32 : 28} animationState={avatarState} />
-						</div>
-						<div className="flex flex-col justify-center items-start ml-10 sm:ml-12 md:ml-16">
-							<h2 className="text-white text-lg sm:text-xl font-bold leading-tight">Hi there! <span className="align-middle text-base sm:text-lg md:text-xl">👋</span></h2>
-							<p className="text-white text-xs sm:text-sm opacity-90 mt-0.5 sm:mt-1">I'm Biomi, your guide to medical equipment & services!</p>
+					<div className="relative flex min-h-[64px] items-center gap-3 rounded-t-xl bg-[#0056D2] px-4 py-3 sm:min-h-[72px] sm:rounded-t-2xl sm:px-6 sm:py-4 md:min-h-[84px] md:px-8">
+						<BiomiAvatar size={32} animationState={avatarState} />
+						<div className="flex flex-col">
+							<h2 className="text-lg font-bold leading-tight text-white sm:text-xl">Hi there! <span className="align-middle text-base sm:text-lg">👋</span></h2>
+							<p className="mt-0.5 text-xs text-white opacity-90 sm:text-sm">I&apos;m Biomi. Ask me about our products, brands, offices, or careers.</p>
 						</div>
 					</div>
-					{/* Main Content */}
-					<div className="px-4 sm:px-6 md:px-7 py-4 sm:py-5 [@media(max-height:760px)]:sm:py-3 bg-[#f7fafd] flex-1 flex flex-col gap-3 sm:gap-4 justify-start min-h-[300px] sm:min-h-[320px] max-[912px]:py-2 max-[912px]:min-h-0">
-						<AnimatePresence mode="wait">
-							{view === "categories" && (
-								<motion.div
-									key="categories"
-									variants={cardVariants}
-									initial="hidden"
-									animate="visible"
-									exit="exit"
-									className="flex flex-col gap-3 sm:gap-4"
-								>
-									<div className="text-base sm:text-lg font-semibold text-[#0056D2]">What would you like to know about?</div>
-									<div className="grid grid-cols-2 gap-2 sm:gap-3">
-										{FAQ_DATA.map((cat, idx) => (
-											<button
-												key={cat.category}
-												className="w-full flex items-center gap-2 sm:gap-3 min-h-[44px] px-3 sm:px-4 py-2 sm:py-3 [@media(max-height:760px)]:sm:py-2 rounded-lg sm:rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 text-[#0056D2] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
-												onClick={() => handleCategoryClick(idx)}
-											>
-												<span className="text-[13px] leading-snug sm:text-[15px] font-semibold text-left">{cat.category}</span>
-											</button>
-										))}
-									</div>
-								</motion.div>
-							)}
 
-							{view === "questions" && selectedCategory !== null && (
-								<motion.div
-									key="questions"
-									variants={cardVariants}
-									initial="hidden"
-									animate="visible"
-									exit="exit"
-									className="flex flex-col gap-3 sm:gap-4"
-								>
-									<button
-										className="mb-1 sm:mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-3 sm:px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
-										onClick={handleBack}
-									>
-										← Back to Categories
-									</button>
-									<div className="text-base sm:text-lg font-semibold text-[#0056D2]">{FAQ_DATA[selectedCategory].category}</div>
-									<div className="flex flex-col gap-2 sm:gap-3">
-										{FAQ_DATA[selectedCategory].questions.map((q, idx) => (
-											<button
-												key={q.q}
-												className="text-left px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white border border-[#e3eaf7] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 text-[#0056D2] font-medium focus:outline-none focus:ring-2 focus:ring-[#0056D2]/30"
-												onClick={() => handleQuestionClick(idx)}
-											>
-												<span className="text-sm sm:text-[15px]">{q.q}</span>
-											</button>
-										))}
-									</div>
-								</motion.div>
-							)}
+					{/* Conversation */}
+					<div
+						ref={listRef}
+						className="flex h-[min(26rem,58dvh)] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,52dvh)]"
+						aria-live="polite"
+						aria-label="Conversation with Biomi"
+					>
+						<div className="flex items-start gap-2">
+							<BiomiAvatar size={26} />
+							<div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-[#e3eaf7] bg-white px-4 py-2.5 text-sm text-[#1f3b63] shadow-sm sm:text-[15px]">
+								Ask me anything about Biosite — for example a product, a brand, or where our offices are.
+							</div>
+						</div>
+						{messages.length === 0 && (
+							<div className="ml-9 flex flex-wrap gap-2">
+								{STARTER_QUESTIONS.map((q) => (
+									<button key={q} type="button" className={chip} onClick={() => ask(q)}>{q}</button>
+								))}
+							</div>
+						)}
 
-							{view === "answer" && selectedCategory !== null && selectedQuestion !== null && (
-								<motion.div
-									key="answer"
-									variants={cardVariants}
-									initial="hidden"
-									animate="visible"
-									exit="exit"
-									className="flex flex-col gap-3 sm:gap-4"
-								>
-									<button
-										className="mb-1 sm:mb-2 text-xs text-[#0056D2] bg-[#e3eaf7] rounded-full px-3 sm:px-4 py-1 w-fit font-medium hover:bg-[#d0e0fa] transition-all"
-										onClick={handleBack}
-									>
-										← Back to Questions
-									</button>
-									{/* User question bubble */}
-									<div className="flex items-end gap-1 sm:gap-2 justify-end max-[912px]:justify-end">
-										<div className="rounded-xl sm:rounded-2xl bg-[#0056D2] text-white px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md max-[912px]:max-w-[80%]">
-											{FAQ_DATA[selectedCategory].questions[selectedQuestion].q}
-										</div>
+						{messages.map((m) =>
+							m.from === 'user' ? (
+								<div key={m.id} className="flex justify-end">
+									<div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-[#0056D2] px-4 py-2.5 text-sm text-white shadow sm:text-[15px]">{m.text}</div>
+								</div>
+							) : (
+								<div key={m.id} className="flex items-start gap-2">
+									<BiomiAvatar size={26} />
+									<div className="flex min-w-0 flex-1 max-w-[88%] flex-col gap-2">
+										{m.answer!.text.map((t, i) => (
+											<div key={i} className="rounded-2xl rounded-tl-sm border border-[#e3eaf7] bg-white px-4 py-2.5 text-sm leading-relaxed text-[#1f3b63] shadow-sm sm:text-[15px]">{t}</div>
+										))}
+										{m.answer!.products && (
+											<div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
+												{m.answer!.products.map((p) => (
+													<Link key={p.url + p.name} href={p.url} prefetch={false} className="group flex min-w-0 gap-3 rounded-xl border border-[#e3eaf7] bg-white p-2.5 shadow-sm transition hover:border-[#0056D2]/40 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
+														{/* eslint-disable-next-line @next/next/no-img-element */}
+														<img src={p.image} alt="" loading="lazy" className="h-14 w-14 flex-shrink-0 rounded-lg bg-[#f3f6fb] object-contain p-1" />
+														<span className="min-w-0">
+															<span className="block truncate text-sm font-semibold text-[#0b2a5c] group-hover:text-[#0056D2]">{p.name}</span>
+															<span className="block truncate text-xs text-[#5b7290]">{[p.brand, p.category].filter(Boolean).join(' · ')}</span>
+															<span className="mt-0.5 line-clamp-2 text-xs text-gray-500">{p.description}</span>
+														</span>
+													</Link>
+												))}
+											</div>
+										)}
+										{m.answer!.offices && (
+											<div className="grid gap-2">
+												{m.answer!.offices.map((o) => (
+													<div key={o.name} className="rounded-xl border border-[#e3eaf7] bg-white p-3 text-xs text-[#1f3b63] shadow-sm sm:text-sm">
+														<div className="font-semibold text-[#0b2a5c]">{o.name}</div>
+														<div className="mt-1">{o.address}</div>
+														<div className="mt-1 text-[#5b7290]">{o.phone} · {o.email}</div>
+														<div className="text-[#5b7290]">{o.hours}</div>
+													</div>
+												))}
+											</div>
+										)}
+										{m.answer!.jobs && m.answer!.jobs.length > 0 && (
+											<div className="rounded-xl border border-[#e3eaf7] bg-white p-3 text-xs text-[#1f3b63] shadow-sm sm:text-sm">
+												<div className="mb-1 font-semibold text-[#0b2a5c]">Open positions</div>
+												<ul className="list-disc space-y-0.5 pl-4">{m.answer!.jobs.map((j) => <li key={j}>{j}</li>)}</ul>
+											</div>
+										)}
+										{(m.answer!.links?.length || m.answer!.suggestions?.length) ? (
+											<div className="flex flex-wrap gap-2">
+												{m.answer!.links?.map((l) => (
+													<Link key={l.href + l.label} href={l.href} prefetch={false} className="rounded-full bg-[#0056D2] px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#0045a8] sm:text-sm">{l.label} →</Link>
+												))}
+												{m.answer!.suggestions?.map((q) => (
+													<button key={q} type="button" className={chip} onClick={() => ask(q)}>{q}</button>
+												))}
+											</div>
+										) : null}
 									</div>
-									{/* Biomi answer bubble */}
-									<div className="flex items-start gap-1 sm:gap-2 justify-start max-[912px]:justify-start">
-										<BiomiAvatar size={24} />
-										<div className="rounded-xl sm:rounded-2xl bg-white border border-[#e3eaf7] text-[#0056D2] px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium max-w-[85%] sm:max-w-[80%] shadow-md max-[912px]:max-w-[75%]">
-											{FAQ_DATA[selectedCategory].questions[selectedQuestion].a}
-										</div>
-									</div>
-								</motion.div>
-							)}
-						</AnimatePresence>
+								</div>
+							),
+						)}
+
+						{typing && (
+							<div className="flex items-center gap-2" aria-label="Biomi is typing">
+								<BiomiAvatar size={26} animationState="thinking" />
+								<div className="flex gap-1 rounded-2xl rounded-tl-sm border border-[#e3eaf7] bg-white px-4 py-3 shadow-sm">
+									{[0, 1, 2].map((d) => (
+										<span key={d} className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#0056D2]/60" style={{ animationDelay: `${d * 0.15}s` }} />
+									))}
+								</div>
+							</div>
+						)}
 					</div>
+
+					{/* Input */}
+					<form
+						className="flex items-center gap-2 border-t border-[#e3eaf7] bg-white px-3 py-3 sm:px-5"
+						onSubmit={(e) => { e.preventDefault(); ask(input); }}
+					>
+						<label htmlFor="biomi-input" className="sr-only">Ask Biomi a question</label>
+						<input
+							id="biomi-input"
+							value={input}
+							onChange={(e) => setInput(e.target.value)}
+							maxLength={300}
+							placeholder="Ask about a product, brand, or office…"
+							autoComplete="off"
+							className="min-w-0 flex-1 rounded-full border border-[#d6e3f5] bg-[#f7fafd] px-4 py-2.5 text-sm text-[#0b2a5c] placeholder:text-[#8aa0bd] focus:border-[#0056D2] focus:outline-none focus:ring-2 focus:ring-[#0056D2]/20 sm:text-[15px]"
+						/>
+						<button
+							type="submit"
+							disabled={!input.trim() || typing}
+							className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0056D2] text-white shadow transition hover:bg-[#0045a8] disabled:opacity-40"
+							aria-label="Send"
+						>
+							<svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
+						</button>
+					</form>
 
 					{/* Footer */}
-					<div className="px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-[#f7fafd] rounded-b-xl sm:rounded-b-2xl text-center max-[912px]:py-2">
-						<span className="text-xs text-gray-400">Powered by Biomi – Your Biosite AI Assistant.</span>
+					<div className="bg-white px-4 pb-2.5 text-center">
+						<span className="text-[11px] text-gray-400">Biomi answers from the Biosite website only. For anything else, please contact our team.</span>
 					</div>
-				</div>
-
-			
-			</motion.div>
-		</div>
+				</motion.div>
+			</div>
 		</>
 	);
 }

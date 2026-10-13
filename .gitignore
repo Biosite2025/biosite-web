@@ -45,3 +45,6 @@ cert/ca-certificate.crt
 
 # Original/source design files (not served by the site; web copies live on Spaces)
 /design-sources/
+
+# Generated at build time by scripts/build-biomi-index.js
+/public/biomi-index.json
