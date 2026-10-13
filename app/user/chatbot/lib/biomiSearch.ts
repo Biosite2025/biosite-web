@@ -1,5 +1,5 @@
 import MiniSearch from 'minisearch';
-import { bestAnswer, compareAnswer, entryLevel, mentionedProducts, nameTokens, NEED_HIGH, NEED_MID, NEED_SMALL, specAnswer, type Workload } from './biomiReason';
+import { bestAnswer, compareAnswer, entryLevel, info, mentionedProducts, nameTokens, researchText, NEED_HIGH, NEED_MID, NEED_SMALL, specAnswer, type Workload } from './biomiReason';
 
 /**
  * Biomi's "brain": free, in-browser search over the website's own content
@@ -8,7 +8,13 @@ import { bestAnswer, compareAnswer, entryLevel, mentionedProducts, nameTokens, N
  * information that is on the website, and says so when it can't find an answer.
  */
 
-export type Product = { name: string; brand: string; category: string; description: string; image: string; logo: string; url: string; /** Other categories it is also listed under. */ alsoIn?: string };
+export type Product = { name: string; brand: string; category: string; description: string; image: string; logo: string; url: string; /** Other categories it is also listed under. */ alsoIn?: string;
+	/** Verified specs from content/product-research.md (chatbot only, not shown in modals). */
+	research?: { label: string; value: string }[];
+	sources?: string[];
+	/** e.g. "Not published by Tulip: throughput, size" */
+	notPublished?: string;
+};
 export type Faq = { category: string; q: string; a: string };
 export type Office = { name: string; address: string; phone: string; email: string; hours: string };
 type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[] };
@@ -89,7 +95,7 @@ const STOP = new Set(
 const norm = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '');
 const tokens = (s: string) => norm(s).replace(/[^a-z0-9+\- ]/g, ' ').split(/\s+/).filter((t) => t && !STOP.has(t));
 
-let loaded: Promise<{ data: Index; products: MiniSearch<Product & { id: number }>; faqs: MiniSearch<Faq & { id: number }> }> | null = null;
+let loaded: Promise<{ data: Index; products: MiniSearch<Product & { id: number; researchText?: string }>; faqs: MiniSearch<Faq & { id: number }> }> | null = null;
 
 /** Load the index once (cached by the browser too). */
 export function loadBiomi() {
@@ -97,12 +103,12 @@ export function loadBiomi() {
 		loaded = fetch('/biomi-index.json')
 			.then((r) => r.json() as Promise<Index>)
 			.then((data) => {
-				const products = new MiniSearch<Product & { id: number }>({
-					fields: ['name', 'brand', 'category', 'alsoIn', 'description'],
+				const products = new MiniSearch<Product & { id: number; researchText?: string }>({
+					fields: ['name', 'brand', 'category', 'alsoIn', 'description', 'researchText'],
 					storeFields: ['name'],
-					searchOptions: { boost: { name: 4, brand: 3, category: 2, alsoIn: 2, description: 0.6 }, fuzzy: 0.2, prefix: true, combineWith: 'OR' },
+					searchOptions: { boost: { name: 4, brand: 3, category: 2, alsoIn: 2, description: 0.6, researchText: 0.8 }, fuzzy: 0.2, prefix: true, combineWith: 'OR' },
 				});
-				products.addAll(data.products.map((p, id) => ({ ...p, id })));
+				products.addAll(data.products.map((p, id) => ({ ...p, id, researchText: researchText(p) })));
 				const faqs = new MiniSearch<Faq & { id: number }>({
 					fields: ['q', 'a', 'category'],
 					storeFields: ['q'],
@@ -133,7 +139,7 @@ async function jobOpenings(): Promise<string[]> {
 
 const faqAnswer = (data: Index, re: RegExp) => data.faqs.find((f) => re.test(f.q))?.a;
 
-type ProductSearch = MiniSearch<Product & { id: number }>;
+type ProductSearch = MiniSearch<Product & { id: number; researchText?: string }>;
 
 /** Question words plus synonym expansions, ready for MiniSearch. */
 function expand(question: string) {
@@ -344,9 +350,16 @@ function aboutProduct(p: Product, q: string, ctx: BiomiContext): Answer {
 		};
 	}
 	return {
-		text: [`${p.name}${p.brand ? ` by ${p.brand}` : ''} (${p.category}):`, p.description],
+		text: [
+			`${p.name}${p.brand ? ` by ${p.brand}` : ''} (${p.category}):`,
+			p.description,
+			...(p.research?.length ? ['Key specifications:', ...p.research.map((f) => `• ${f.label}: ${f.value}`)] : []),
+		],
 		products: [p],
-		links: [{ label: `View ${p.category}`, href: p.url }],
+		links: [
+			{ label: `View ${p.category}`, href: p.url },
+			...(p.sources?.length ? [{ label: 'Manufacturer source', href: p.sources[0] }] : []),
+		],
 		suggestions: ['How much is it?', 'Other brands?'],
 		context,
 	};
@@ -585,7 +598,7 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 		const own = new Set([...nameTokens(specTarget.name), ...tokens(specTarget.brand)]);
 		const terms = words.filter((w) => !own.has(w) && !GENERIC.has(w) && !SPEC_VERBS.has(w) && !/^\d+$/.test(w) && w.length > 1);
 		if (terms.length) {
-			const ans = specAnswer(specTarget, terms, inCategory(specTarget.category));
+			const ans = specAnswer(specTarget, terms, inCategory(specTarget.category), /^(does|do|can|is|are|has|have|will|kaya|meron|may)\b/.test(q));
 			ans.context = { ...ctx, focus: specTarget, products: ans.products ?? [], category: specTarget.category };
 			return ans;
 		}
@@ -612,7 +625,7 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 		let pool = inCategory(bestCat);
 		if (brand) pool = pool.filter((p) => p.brand === brand);
 		const kw = CATEGORY_KEYWORDS[bestCat];
-		const relevant = kw ? pool.filter((p) => kw.test(p.description + ' ' + p.name)) : pool;
+		const relevant = kw ? pool.filter((p) => kw.test(info(p) + ' ' + p.name)) : pool;
 		const ans = bestAnswer(relevant.length ? relevant : pool, bestCat, need);
 		ans.context = { products: ans.products ?? [], list: ans.products ?? [], shown: ans.products?.length ?? 0, category: bestCat };
 		return ans;
@@ -647,7 +660,7 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	if (cat && cat.leftover.length) {
 		const inCat = inCategory(cat.name);
 		const hit = (p: Product, w: string) => {
-			const text = norm(p.name + ' ' + p.description);
+			const text = norm(p.name + ' ' + info(p));
 			const num = w.replace(/^[-−]/, '');
 			if (/^\d+$/.test(num)) return new RegExp(`(^|[^0-9])${num}([^0-9]|$)`).test(text);
 			return text.includes(stem(w));

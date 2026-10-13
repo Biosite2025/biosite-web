@@ -185,6 +185,49 @@ while ((om = offRe.exec(contactSrc))) {
   offices.push({ name: om[1], address: om[2], phone: om[3], email: om[4], hours: om[5] });
 }
 
+// ---------- researched specs (content/product-research.md) ----------
+// Verified facts gathered from manufacturers' pages. Biomi answers from them;
+// the product modals are NOT changed. Format per product:
+//   - [x] 🔴 **Name** — Brand
+//     - **Verified info:**
+//       - Label: value
+//       - Not published by …: …
+//       - Source: https://…
+let researched = 0;
+const RESEARCH = path.join(ROOT, 'content/product-research.md');
+if (fs.existsSync(RESEARCH)) {
+  const lines = fs.readFileSync(RESEARCH, 'utf8').split(/\r?\n/);
+  let cur = null;
+  let inInfo = false;
+  const blocks = [];
+  for (const line of lines) {
+    const it = line.match(/^- \[[xX]\] \S+ \*\*(.+?)\*\*(?: — (.+))?\s*$/);
+    if (it) { cur = { name: it[1].trim(), brand: (it[2] || '').trim(), facts: [], sources: [], notPublished: '' }; blocks.push(cur); inInfo = false; continue; }
+    if (/^- \[ \]|^#/.test(line)) { cur = null; continue; }
+    if (!cur) continue;
+    if (/\*\*Verified info:\*\*/.test(line)) { inInfo = true; continue; }
+    const kv = inInfo && line.match(/^\s{4,}- (.+)$/);
+    if (!kv) continue;
+    const text = kv[1].trim();
+    const src = text.match(/^Sources?:\s*(.+)$/i);
+    if (src) { cur.sources.push(...src[1].split(/\s*[;,]\s*|\s+/).filter((u) => /^https?:\/\//.test(u))); continue; }
+    if (/^Not published/i.test(text)) { cur.notPublished = text; continue; }
+    if (/^(Not verified|Unverified|To check)\b/i.test(text)) continue; // research notes, not facts
+    const m = text.match(/^([^:]{1,40}):\s*(.+)$/);
+    cur.facts.push(m ? { label: m[1].trim(), value: m[2].trim() } : { label: 'Note', value: text });
+  }
+  for (const b of blocks) {
+    if (!b.facts.length) continue;
+    const matches = products.filter((p) => p.name.toLowerCase() === b.name.toLowerCase());
+    const p = matches.find((x) => !b.brand || x.brand.toLowerCase() === b.brand.toLowerCase()) || matches[0];
+    if (!p) { console.warn(`[biomi-index] research: no product named "${b.name}" — check the spelling`); continue; }
+    p.research = b.facts;
+    if (b.sources.length) p.sources = [...new Set(b.sources)];
+    if (b.notPublished) p.notPublished = b.notPublished;
+    researched++;
+  }
+}
+
 // ---------- company facts (About page stats: founded, years, ISO, awards…) ----------
 const facts = [];
 try {
@@ -201,4 +244,4 @@ if (products.length < 50 || faqs.length < 20 || offices.length < 1) {
 }
 fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts }));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
-console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts -> public/biomi-index.json (${kb} KB)`);
+console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts, ${researched} researched -> public/biomi-index.json (${kb} KB)`);

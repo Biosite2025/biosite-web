@@ -276,7 +276,11 @@ export default function BiomiFAQ() {
 										{(m.answer!.links?.length || m.answer!.suggestions?.length) ? (
 											<div className="flex flex-wrap gap-2">
 												{m.answer!.links?.map((l) => (
-													<Link key={l.href + l.label} href={l.href} prefetch={false} className="rounded-full bg-[#0056D2] px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#0045a8] sm:text-sm">{l.label} →</Link>
+													/^https?:/.test(l.href) ? (
+														<a key={l.href + l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#0056D2] bg-white px-3 py-1.5 text-xs font-semibold text-[#0056D2] shadow-sm transition hover:bg-[#eaf2fd] sm:text-sm">{l.label} ↗<span className="sr-only"> (opens in a new tab)</span></a>
+													) : (
+														<Link key={l.href + l.label} href={l.href} prefetch={false} className="rounded-full bg-[#0056D2] px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#0045a8] sm:text-sm">{l.label} →</Link>
+													)
 												))}
 												{m.answer!.suggestions?.map((q) => (
 													<button key={q} type="button" className={chip} onClick={() => ask(q)}>{q}</button>

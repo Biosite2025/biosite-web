@@ -20,9 +20,24 @@ const HIGH = /high[- ]volume|high[- ]workload|ultra[- ]high|large[- ]scale|refer
 
 const count = (s: string, re: RegExp) => (s.match(re) ?? []).length;
 
-/** Who the product is aimed at, according to its description. */
+/** Researched specs as one searchable string ("Throughput: 60 samples per hour. …"). */
+export const researchText = (p: Product) => (p.research ?? []).map((f) => `${f.label}: ${f.value}`).join('. ');
+/** Everything Biomi knows about a product: website description + researched specs. */
+export const info = (p: Product) => (p.research?.length ? `${p.description} ${researchText(p)}` : p.description);
+/** A researched spec by label ("Throughput", "Best for"…). */
+export const fact = (p: Product, label: RegExp) => p.research?.find((f) => label.test(f.label))?.value;
+
+const SMALL_EXTRA = /physician office|low[- ]volume|point[- ]of[- ]care|\bPOC\b|near-patient|satellite|small/gi;
+const HIGH_EXTRA = /high[- ]volume|large|reference|core lab|central lab|hospital lab/gi;
+
+/** Who the product is aimed at: the researched "Best for" first, else the description. */
 export function workload(p: Product): Workload | undefined {
-	const d = p.description;
+	const best = fact(p, /^best for/i);
+	if (best) {
+		const s = count(best, SMALL) + count(best, SMALL_EXTRA), m = count(best, MID), h = count(best, HIGH) + count(best, HIGH_EXTRA);
+		if (s || m || h) return h > s && h >= m ? 'high' : m > s && m >= h ? 'mid' : s >= h ? 'small' : 'high';
+	}
+	const d = info(p);
 	const s = count(d, SMALL), m = count(d, MID), h = count(d, HIGH);
 	if (!s && !m && !h) return undefined;
 	if (h > s && h >= m) return 'high';
@@ -35,14 +50,26 @@ const all = (d: string, re: RegExp) => uniq([...d.matchAll(re)].map((m) => m[0])
 
 /** Facts stated in the description, as short display strings. */
 export function specs(p: Product) {
-	const d = p.description;
+	const d = info(p);
+	const r = (re: RegExp) => fact(p, re);
 	return {
-		speed: all(d, /(?:up to |over |exceeding |about |~)?\d[\d,]*\+?\s*(?:tests?|CBCs?|samples?|slides?|photometric tests)(?:\/hr?\b|\s*(?:per|an|each)\s*hour)/gi).join('; '),
-		sample: all(d, /\d+(?:\.\d+)?\s*(?:µL|μL|uL)\b/gi).join(', '),
-		size: all(d, /(?:\d+(?:\.\d+)?\s*(?:cm|m)\b[^.;,]{0,25}?(?:footprint|counter (?:width|space)|wide|of counter space)|(?:footprint|counter width)[^.;,]{0,12}?\d+(?:\.\d+)?\s*(?:cm|m)\b|minimum footprint|compact[^.;,]{0,20}footprint)/gi).join('; '),
-		loading: all(d, /\d+-tube autoloader|autoloader|manual loading|continuous loading|load(?:ed)? up to \d+ (?:routine )?samples|up to \d+ samples(?: loaded)?/gi).join('; '),
-		temperature: all(d, /[-−–]?\s?\d+\s?°C(?:\s*to\s*[-−–]?\s?\d+\s?°C)?/g).join(', '),
-		time: all(d, /(?:in |within |~|about )?\d+(?:\.\d+)?\s*(?:seconds|minutes|mins?)\b/gi).join('; '),
+		type: r(/^type$/i) ?? '',
+		bestFor: r(/^best for/i) ?? '',
+		menu: r(/param|menu|targets?|assays?|tests?$|panel/i) ?? '',
+		method: r(/method|technolog|principle/i) ?? '',
+		connectivity: r(/connect|interface|lis/i) ?? '',
+		...derived(d, r),
+	};
+}
+
+function derived(d: string, r: (re: RegExp) => string | undefined) {
+	return {
+		speed: r(/throughput|speed/i) ?? all(d, /(?:up to |over |exceeding |about |~)?\d[\d,]*\+?\s*(?:tests?|CBCs?|samples?|slides?|photometric tests)(?:\/hr?\b|\s*(?:per|an|each)\s*hour)/gi).join('; '),
+		sample: r(/^samples?$|sample (?:type|volume)/i) ?? all(d, /\d+(?:\.\d+)?\s*(?:µL|μL|uL)\b/gi).join(', '),
+		size: r(/^size|dimension|footprint/i) ?? all(d, /(?:\d+(?:\.\d+)?\s*(?:cm|m)\b[^.;,]{0,25}?(?:footprint|counter (?:width|space)|wide|of counter space)|(?:footprint|counter width)[^.;,]{0,12}?\d+(?:\.\d+)?\s*(?:cm|m)\b|minimum footprint|compact[^.;,]{0,20}footprint)/gi).join('; '),
+		loading: r(/load|capacity/i) ?? all(d, /\d+-tube autoloader|autoloader|manual loading|continuous loading|load(?:ed)? up to \d+ (?:routine )?samples|up to \d+ samples(?: loaded)?/gi).join('; '),
+		temperature: r(/temp/i) ?? all(d, /[-−–]?\s?\d+\s?°C(?:\s*to\s*[-−–]?\s?\d+\s?°C)?/g).join(', '),
+		time: r(/^time|turnaround|result/i) ?? all(d, /(?:in |within |~|about )?\d+(?:\.\d+)?\s*(?:seconds|minutes|mins?)\b/gi).join('; '),
 	};
 }
 
@@ -58,11 +85,15 @@ export function compareAnswer(ps: Product[]): Answer {
 	const rows: { label: string; values: string[] }[] = [
 		{ label: 'Brand', values: ps.map((p) => p.brand || '—') },
 		{ label: 'Category', values: ps.map((p) => p.category) },
-		{ label: 'Designed for', values: wl.map((w) => (w ? WORKLOAD_LABEL[w] : '—')) },
+		{ label: 'Type', values: sp.map((s) => s.type || '—') },
+		{ label: 'Designed for', values: ps.map((p, i) => sp[i].bestFor || (wl[i] ? WORKLOAD_LABEL[wl[i]!] : '—')) },
 		{ label: 'Speed', values: sp.map((s) => s.speed || '—') },
-		{ label: 'Sample volume', values: sp.map((s) => s.sample || '—') },
+		{ label: 'Tests / parameters', values: sp.map((s) => s.menu || '—') },
+		{ label: 'Method', values: sp.map((s) => s.method || '—') },
+		{ label: 'Sample', values: sp.map((s) => s.sample || '—') },
 		{ label: 'Size', values: sp.map((s) => s.size || '—') },
 		{ label: 'Loading', values: sp.map((s) => s.loading || '—') },
+		{ label: 'Connectivity', values: sp.map((s) => s.connectivity || '—') },
 		{ label: 'Temperature', values: sp.map((s) => s.temperature || '—') },
 		{ label: 'Turnaround', values: sp.map((s) => s.time || '—') },
 		{ label: 'Highlights', values: ps.map((p) => firstSentence(p.description)) },
@@ -81,7 +112,7 @@ export function compareAnswer(ps: Product[]): Answer {
 	} else {
 		text.push(`Here’s how the ${ps.map((p) => p.name).join(' and ')} compare, based on our website:`);
 	}
-	text.push('Comparison is based on the descriptions on our website. For full spec sheets, our team can send you the brochures.');
+	text.push('Based on our website and the manufacturers’ published specifications. For full spec sheets, our team can send you the brochures.');
 	return {
 		text,
 		compare: { products: ps, rows },
@@ -123,20 +154,26 @@ export function mentionedProducts(products: Product[], q: string): Product[] {
 }
 
 /** "Does the GEM 5000 measure lactate?" — answered only from the description. */
-export function specAnswer(p: Product, terms: string[], peers: Product[]): Answer {
-	const d = p.description;
-	const sentences = d.split(/(?<=[.!?])\s+/);
+export function specAnswer(p: Product, terms: string[], peers: Product[], yesNo = true): Answer {
+	const d = info(p);
+	// Researched facts read as their own "sentences" ("Throughput: 60 samples per hour").
+	const sentences = [...p.description.split(/(?<=[.!?])\s+/), ...(p.research ?? []).map((f) => `${f.label}: ${f.value}.`)];
 	const has = (t: string) => new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/s$/, '')}`, 'i');
 	const found = terms.filter((t) => has(t).test(d));
 	const missing = terms.filter((t) => !found.includes(t));
 	const text: string[] = [];
 	if (found.length) {
-		const quote = sentences.filter((s) => found.some((t) => has(t).test(s))).join(' ');
-		text.push(`Yes — according to our website, the ${p.name} covers ${found.join(', ')}: “${quote}”`);
+		const quote = sentences.filter((s) => found.some((t) => has(t).test(s))).slice(0, 3).join(' ');
+		text.push(yesNo ? `Yes — the ${p.name} covers ${found.join(', ')}: “${quote}”` : `Here’s what we have for the ${p.name}: “${quote}”`);
 	}
 	if (missing.length) {
-		text.push(`Our website’s description of the ${p.name} doesn’t mention ${missing.join(' or ')}, so I can’t confirm it. Our team can check the full specifications for you.`);
-		const others = peers.filter((o) => o !== p && missing.every((t) => has(t).test(o.description)));
+		const unpublished = p.notPublished && missing.some((t) => has(t).test(p.notPublished!));
+		text.push(
+			unpublished
+				? `The manufacturer doesn’t publish the ${missing.join(' or ')} for the ${p.name}, so I can’t confirm it. Our team can check for you.`
+				: `I couldn’t find ${missing.join(' or ')} in the information we have for the ${p.name}, so I can’t confirm it. Our team can check the full specifications for you.`,
+		);
+		const others = peers.filter((o) => o !== p && missing.every((t) => has(t).test(info(o))));
 		if (others.length) {
 			text.push(`These ${p.category} products do mention ${missing.join(' and ')} on our website:`);
 			return { text, products: others.slice(0, 3), links: [{ label: 'Ask our team', href: '/user/contact' }] };
@@ -165,13 +202,15 @@ export function bestAnswer(list: Product[], category: string, need: Workload): A
 		};
 	}
 	const reason = (p: Product) => {
+		const bf = fact(p, /^best for/i);
+		if (bf) return `best for ${bf}${fact(p, /throughput/i) ? ` · ${fact(p, /throughput/i)}` : ''}`;
 		const re = need === 'small' ? SMALL : need === 'mid' ? MID : HIGH;
 		const s = p.description.split(/(?<=[.!?])\s+/).find((x) => new RegExp(re.source, 'i').test(x));
 		return s ? `“${s.length > 150 ? s.slice(0, 147) + '…' : s}”` : firstSentence(p.description);
 	};
 	return {
 		text: [
-			`For ${setting}, these ${category} models fit best based on our website:`,
+			`For ${setting}, these ${category} models fit best based on our product information:`,
 			...picks.map((r) => `• ${r.p.name}${r.p.brand ? ` (${r.p.brand})` : ''} — ${reason(r.p)}`),
 			'The right choice also depends on your test menu and daily sample count — our team can help you decide.',
 		],
