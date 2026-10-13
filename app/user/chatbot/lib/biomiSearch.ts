@@ -17,6 +17,8 @@ export type Answer = {
 	products?: Product[];
 	offices?: Office[];
 	jobs?: string[];
+	/** Product categories to pick from (catalogue overview). */
+	categories?: { name: string; count: number }[];
 	links?: { label: string; href: string }[];
 	suggestions?: string[];
 	/** Updated conversation memory; when absent the previous memory is kept. */
@@ -143,6 +145,42 @@ function searchProducts(ms: ProductSearch, data: Index, text: string, only?: (p:
 	const hits = ms.search(expand(text)).filter((h) => !only || only(data.products[h.id as number]));
 	const top = hits[0]?.score ?? 0;
 	return hits.filter((h) => h.score >= Math.max(top * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
+}
+
+// Words that say "products" without naming a topic.
+const GENERIC = new Set(['product', 'products', 'brand', 'brands', 'carry', 'sell', 'offer', 'items', 'item', 'equipment', 'equipments', 'machines', 'machine', 'analyzer', 'analyzers', 'show', 'list', 'available', 'see', 'type', 'types', 'kind', 'kinds']);
+const OVERVIEW = new Set([...GENERIC, 'all', 'catalog', 'catalogue', 'categories', 'category', 'range', 'lines', 'line', 'lahat', 'everything', 'full', 'complete', 'whole', 'give', 'list']);
+
+/** Every category with how many products are listed under it (A–Z). */
+function categoryCounts(data: Index) {
+	const n = new Map<string, number>();
+	for (const p of data.products) for (const c of [p.category, ...(p.alsoIn ? p.alsoIn.split(', ') : [])]) n.set(c, (n.get(c) ?? 0) + 1);
+	return [...n.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// Rough stem so "microscope"/"microscopes" and "processor"/"processing" match.
+const stem = (w: string) => w.replace(/(es|s)$/, '').slice(0, 7);
+const catTokens = (c: string) => tokens(c.replace(/&/g, ' ')).filter((t) => t !== 'and' && t.length > 1);
+
+/**
+ * The product category the question names, if any. `leftover` = topic words
+ * the category doesn't explain (then a specific search is better).
+ */
+function findCategory(data: Index, content: string[]) {
+	if (!content.length) return null;
+	let best: { name: string; leftover: string[]; score: number } | null = null;
+	for (const { name } of categoryCounts(data)) {
+		const ct = catTokens(name).map(stem);
+		if (!ct.length) continue;
+		const used = content.filter((w) => ct.includes(stem(w)));
+		if (!used.length) continue;
+		const all = ct.every((t) => content.some((w) => stem(w) === t));
+		// Partial names count only via their first word ("coagulation" -> Coagulation & Hemostasis).
+		if (!all && !content.some((w) => stem(w) === ct[0])) continue;
+		const score = used.length * 10 + (all ? 5 : 0) - ct.length;
+		if (!best || score > best.score) best = { name, leftover: content.filter((w) => !used.includes(w)), score };
+	}
+	return best;
 }
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -387,14 +425,61 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 		};
 	}
 
-	// ---- brand asked directly ----
+	// ---- brand / category asked directly ----
 	const brand = findBrand(data, q);
-	// Brand-only questions ("Hermle", "do you carry Sakura products?") list the brand;
-	// anything more specific ("sakura tissue processor") goes to the search below.
-	const GENERIC = new Set(['product', 'products', 'brand', 'brands', 'carry', 'sell', 'offer', 'items', 'equipment', 'machines', 'machine']);
 	const brandTokens = brand ? new Set(tokens(brand)) : new Set<string>();
-	const leftover = words.filter((w) => !brandTokens.has(w) && !GENERIC.has(w) && !(brand && norm(brand).startsWith(w)));
-	if (brand && leftover.length === 0) {
+	const content = words.filter((w) => !brandTokens.has(w) && !GENERIC.has(w) && !(brand && norm(brand).startsWith(w)));
+	const cat = findCategory(data, content);
+
+	// "list of products", "what do you offer?" -> the catalogue by category
+	if (!brand && !cat && words.length && words.every((w) => OVERVIEW.has(w)) && words.some((w) => /product|catalog|categor|offer|sell|carry|item|list|range|lahat/.test(w))) {
+		const cats = categoryCounts(data);
+		return {
+			text: [`We carry ${data.products.length} products across ${cats.length} categories. Tap a category to see its products, or ask me about a specific product or brand.`],
+			categories: cats,
+			context: { ...EMPTY_CONTEXT },
+		};
+	}
+
+	// "hematology", "show blood bank", "beckman hematology", "sakura tissue processor"
+	// Extra words the website never mentions ("mindray hematology") -> say so, then show the category.
+	const unknown = cat ? cat.leftover.filter((w) => !products.search(w, { fuzzy: 0.1, prefix: false }).length && !faqs.search(w, { fuzzy: 0.1, prefix: false }).length) : [];
+	if (cat && cat.leftover.length && unknown.length === cat.leftover.length) {
+		const ans = await askBiomi(`show ${cat.name}`, ctx);
+		ans.text.unshift(`I couldn't find “${unknown.join(' ')}” on our website.`);
+		ans.text[1] = ans.text[1].replace(/^Yes — w/, 'W').replace(/^Yes — in/, 'In');
+		return ans;
+	}
+	if (cat && cat.leftover.length === 0) {
+		const inCat = data.products.filter((p) => p.category === cat.name || (p.alsoIn ?? '').split(', ').includes(cat.name));
+		const list = brand ? inCat.filter((p) => p.brand === brand) : inCat;
+		const href = (inCat.find((p) => p.category === cat.name) ?? inCat[0]).url;
+		if (list.length) {
+			const brands = [...new Set(list.map((p) => p.brand).filter(Boolean))];
+			return withList(
+				{
+					text: [
+						brand
+							? `Yes — in ${cat.name}, we carry ${list.length} ${brand} product${list.length === 1 ? '' : 's'}:`
+							: `Yes — we have ${list.length} product${list.length === 1 ? '' : 's'} in ${cat.name}${brands.length ? ` from ${brands.slice(0, 5).join(', ')}${brands.length > 5 ? ' and more' : ''}` : ''}.`,
+					],
+					links: [{ label: `View ${cat.name}`, href }],
+				},
+				list, 4, { brand, category: cat.name },
+			);
+		}
+		if (brand) {
+			return {
+				text: [`Our website doesn't list ${brand} products in ${cat.name}. Here are the ${cat.name} brands we carry instead: ${[...new Set(inCat.map((p) => p.brand).filter(Boolean))].join(', ') || 'see the page below'}.`],
+				links: [{ label: `View ${cat.name}`, href }],
+				suggestions: [`Show ${cat.name}`, `What does ${brand} offer?`],
+			};
+		}
+	}
+
+	// Brand-only questions ("Hermle", "do you carry Sakura products?") list the brand;
+	// anything more specific goes to the search below.
+	if (brand && content.length === 0) {
 		const list = data.products.filter((p) => p.brand === brand);
 		const cats = [...new Set(list.map((p) => p.category))];
 		return withList(
@@ -419,7 +504,9 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 
 	// "What do you offer / products overview" style questions are best answered by the FAQ.
 	const wantsOverview = /\b(products?|offer|sell|carry|categories|catalog|items)\b/.test(q) && words.length <= 4 && !brand;
-	const useFaq = topF > 0 && (wantsOverview || topF >= topP * 0.6) && topF > 6;
+	// Only trust an FAQ that matched a real topic word, not just "products"/"list".
+	const faqOnTopic = topF > 0 && Object.keys(fHits[0].match).some((t) => !GENERIC.has(t) && !OVERVIEW.has(t));
+	const useFaq = faqOnTopic && (wantsOverview || topF >= topP * 0.6) && topF > 6;
 	const productsAll = pHits.filter((h) => h.score >= Math.max(topP * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
 	const productsRelevant = productsAll.slice(0, 4);
 

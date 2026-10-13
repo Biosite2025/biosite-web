@@ -234,6 +234,15 @@ export default function BiomiFAQ() {
 												))}
 											</div>
 										)}
+										{m.answer!.categories && (
+											<div className="flex max-h-56 flex-wrap gap-1.5 overflow-y-auto overscroll-contain rounded-xl border border-[#e3eaf7] bg-white p-2.5 shadow-sm">
+												{m.answer!.categories.map((c) => (
+													<button key={c.name} type="button" onClick={() => ask(`Show ${c.name}`)} className="rounded-full border border-[#d6e3f5] bg-[#f7fafd] px-2.5 py-1 text-xs text-[#0b2a5c] transition hover:border-[#0056D2]/40 hover:bg-[#eaf2fd] hover:text-[#0056D2] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
+														{c.name} <span className="text-[#8aa0bd]">{c.count}</span>
+													</button>
+												))}
+											</div>
+										)}
 										{m.answer!.jobs && m.answer!.jobs.length > 0 && (
 											<div className="rounded-xl border border-[#e3eaf7] bg-white p-3 text-xs text-[#1f3b63] shadow-sm sm:text-sm">
 												<div className="mb-1 font-semibold text-[#0b2a5c]">Open positions</div>
