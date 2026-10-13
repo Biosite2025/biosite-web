@@ -1,4 +1,5 @@
 import MiniSearch from 'minisearch';
+import { bestAnswer, compareAnswer, entryLevel, mentionedProducts, nameTokens, NEED_HIGH, NEED_MID, NEED_SMALL, specAnswer, type Workload } from './biomiReason';
 
 /**
  * Biomi's "brain": free, in-browser search over the website's own content
@@ -10,7 +11,7 @@ import MiniSearch from 'minisearch';
 export type Product = { name: string; brand: string; category: string; description: string; image: string; logo: string; url: string; /** Other categories it is also listed under. */ alsoIn?: string };
 export type Faq = { category: string; q: string; a: string };
 export type Office = { name: string; address: string; phone: string; email: string; hours: string };
-type Index = { products: Product[]; faqs: Faq[]; offices: Office[] };
+type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[] };
 
 export type Answer = {
 	text: string[];
@@ -19,6 +20,8 @@ export type Answer = {
 	jobs?: string[];
 	/** Product categories to pick from (catalogue overview). */
 	categories?: { name: string; count: number }[];
+	/** Side-by-side comparison table (rows x products). */
+	compare?: { products: Product[]; rows: { label: string; values: string[] }[] };
 	links?: { label: string; href: string }[];
 	suggestions?: string[];
 	/** Updated conversation memory; when absent the previous memory is kept. */
@@ -148,7 +151,27 @@ function searchProducts(ms: ProductSearch, data: Index, text: string, only?: (p:
 }
 
 // Words that say "products" without naming a topic.
-const GENERIC = new Set(['product', 'products', 'brand', 'brands', 'carry', 'sell', 'offer', 'items', 'item', 'equipment', 'equipments', 'machines', 'machine', 'analyzer', 'analyzers', 'show', 'list', 'available', 'see', 'type', 'types', 'kind', 'kinds']);
+const GENERIC = new Set(['product', 'products', 'brand', 'brands', 'carry', 'sell', 'offer', 'items', 'item', 'equipment', 'equipments', 'machines', 'machine', 'analyzer', 'analyzers', 'analyser', 'analysers', 'show', 'list', 'available', 'see', 'type', 'types', 'kind', 'kinds', 'stock', 'need', 'test', 'tests', 'testing', 'unit', 'units', 'model', 'models', 'instrument', 'instruments', 'device', 'devices', 'buy', 'get', 'use']);
+// Words that only add tone to a category question ("-86 freezer for our lab").
+const FILLER = new Set(['lab', 'labs', 'laboratory', 'our', 'hospital', 'clinic', 'meron', 'ba', 'kayo', 'po', 'please', 'new', 'good', 'quality', 'kit', 'kits', 'system', 'systems']);
+// Places — not product words (we deliver nationwide).
+const PLACES = new Set(['mindanao', 'visayas', 'luzon', 'philippines', 'province', 'provinces', 'nationwide', 'metro', 'region', 'city', 'manila', 'cebu', 'davao']);
+// Questions about choosing / ranking (handled by the reasoning helpers).
+const REASON_WORDS = new Set(['best', 'better', 'recommend', 'recommended', 'suitable', 'ideal', 'good', 'right', 'cheapest', 'cheap', 'cheaper', 'affordable', 'budget', 'mura', 'pinakamura', 'expensive', 'difference', 'compare', 'versus', 'vs', 'which', 'one', 'should', 'choose', 'pick']);
+const COMPARE = /\b(difference|differences|differ|compare|comparison|vs\.?|versus|better than|pinagkaiba|which is better|mas maganda)\b/;
+const BEST = /\b(best|recommend|recommended|suitable|ideal|good for|right for|which (?:one|model|analyzer|machine|unit|brand) (?:should|for|is)|what should i (?:get|buy|choose)|should i (?:buy|get|choose)|which\b.*\b(?:should|best|better)|bagay|swak|maganda para)\b/;
+const CHEAP = /\b(cheap|cheapest|cheaper|affordable|budget|low[- ]cost|lowest price|mura|pinakamura|most expensive|expensive)\b/;
+const SPEC_Q = /\b(does|do|can|is|has|have|support|supports|measure|measures|include|includes|test for|detect|kaya|meron|may)\b/;
+const SPEC_VERBS = new Set(['does', 'can', 'support', 'supports', 'measure', 'measures', 'include', 'includes', 'detect', 'detects', 'kaya', 'meron', 'run', 'runs', 'perform', 'performs', 'handle', 'handles', 'parameter', 'parameters', 'test', 'tests', 'it', 'its', 'also']);
+const OFF_TOPIC = /\b(weather|panahon|news|joke|recipe|lottery|bitcoin|crypto|stock market|politic\w*|election|basketball|nba|movie|song|lyrics|homework|translate|write (?:me )?(?:a |an )?(?:code|essay|poem|story)|who is the president)\b|\b(fix|repair|ayusin)\b.*\b(printer|computer|laptop|phone|cellphone|car|aircon|tv|wifi|internet)\b/;
+const INJECTION = /\b(ignore|disregard|forget)\b.*\b(instructions?|rules|prompt|previous)\b|system prompt|reveal (?:your|the) (?:prompt|instructions)|jailbreak|developer mode|\bact as\b|pretend (?:to be|you are)|you are now\b/;
+// What a category's "real" products say about themselves (filters out mis-filed items when ranking).
+const CATEGORY_KEYWORDS: Record<string, RegExp> = {
+	Hematology: /hematolog|haematolog|\bcbc\b|blood cell|5-part|3-part|\bdiff\b|cbc-diff/i,
+	Centrifuges: /centrifug/i,
+	'Clinical Chemistry': /chemistry|biochem/i,
+	Microscopes: /microscop/i,
+};
 const OVERVIEW = new Set([...GENERIC, 'all', 'catalog', 'catalogue', 'categories', 'category', 'range', 'lines', 'line', 'lahat', 'everything', 'full', 'complete', 'whole', 'give', 'list']);
 
 /** Every category with how many products are listed under it (A–Z). */
@@ -156,6 +179,21 @@ function categoryCounts(data: Index) {
 	const n = new Map<string, number>();
 	for (const p of data.products) for (const c of [p.category, ...(p.alsoIn ? p.alsoIn.split(', ') : [])]) n.set(c, (n.get(c) ?? 0) + 1);
 	return [...n.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Same word, allowing one typo in longer words ("hemotology" ~ "hematology"). */
+function near(a: string, b: string) {
+	if (a === b) return true;
+	if (a.length < 6 || Math.abs(a.length - b.length) > 1) return false;
+	let i = 0, j = 0, edits = 0;
+	while (i < a.length && j < b.length) {
+		if (a[i] === b[j]) { i++; j++; continue; }
+		if (++edits > 1) return false;
+		if (a.length > b.length) i++;
+		else if (b.length > a.length) j++;
+		else { i++; j++; }
+	}
+	return edits + (a.length - i) + (b.length - j) <= 1;
 }
 
 // Rough stem so "microscope"/"microscopes" and "processor"/"processing" match.
@@ -166,17 +204,48 @@ const catTokens = (c: string) => tokens(c.replace(/&/g, ' ')).filter((t) => t !=
  * The product category the question names, if any. `leftover` = topic words
  * the category doesn't explain (then a specific search is better).
  */
+// Everyday words for a category ("urine" -> Clinical Microscopy). A list is a
+// group of categories ("histopathology" spans several pages).
+const HISTO = ['Tissue Processing', 'Embedding', 'Microtomy', 'Cryotomy', 'Coverslipping', 'Cytology', 'Hiplaas Grossing & Autopsy Solutions', 'Biogenex', 'Dakewe', 'Motic Slide Scanners', 'Histopathology Chemicals & Consumables'];
+const ABG = 'Arterial Blood Gas, Electrolytes & Co-Oximetry';
+const CATEGORY_ALIASES: Record<string, string | string[]> = {
+	urine: 'Clinical Microscopy', urinalysis: 'Clinical Microscopy', fecalysis: 'Clinical Microscopy', stool: 'Clinical Microscopy',
+	cbc: 'Hematology', hema: 'Hematology', haematology: 'Hematology',
+	abg: ABG, gas: ABG, electrolyte: ABG, electrolytes: ABG,
+	hba1c: 'HBA1C - HPLC', a1c: 'HBA1C - HPLC', hplc: 'HBA1C - HPLC', glycated: 'HBA1C - HPLC',
+	freezer: 'Biomedical Freezers', freezers: 'Biomedical Freezers', refrigerator: 'Biorefrigerators', refrigerators: 'Biorefrigerators', fridge: 'Biorefrigerators',
+	autoclave: 'Sterilizer & Autoclave', autoclaves: 'Sterilizer & Autoclave', sterilizer: 'Sterilizer & Autoclave', sterilizers: 'Sterilizer & Autoclave',
+	xray: 'Radiology', 'x-ray': 'Radiology', ultrasound: 'Medical / Diagnostic Imaging',
+	pcr: 'Molecular Diagnostics', molecular: 'Molecular Diagnostics',
+	pipette: 'Pipettors', pipettes: 'Pipettors', incubator: 'Lab Oven & Incubator', incubators: 'Lab Oven & Incubator', oven: 'Lab Oven & Incubator',
+	vortex: 'Dry Bath / Vortex Mixer', dialysis: 'Dialysis / Renal Equipments', endoscopy: 'Gastro / Endo Equipments', endoscope: 'Gastro / Endo Equipments',
+	histopathology: HISTO, histology: HISTO, pathology: HISTO,
+};
+
 function findCategory(data: Index, content: string[]) {
 	if (!content.length) return null;
-	let best: { name: string; leftover: string[]; score: number } | null = null;
+	let best: { name: string; leftover: string[]; score: number; group?: string[] } | null = null;
+	const known = new Set(categoryCounts(data).map((c) => c.name));
+	for (const w of content) {
+		const a = CATEGORY_ALIASES[w];
+		if (!a) continue;
+		const names = (Array.isArray(a) ? a : [a]).filter((n) => known.has(n));
+		if (!names.length) continue;
+		// "blood gas" -> the alias wins over Blood Bank, and "blood" is part of it.
+		const catOwn = new Set(names.flatMap((n) => catTokens(n).map(stem)));
+		const leftover = content.filter((x) => x !== w && !(w === 'gas' && x === 'blood') && !catOwn.has(stem(x)));
+		best = { name: names[0], leftover, score: 30, group: Array.isArray(a) ? names : undefined };
+		break;
+	}
+	if (best) return best;
 	for (const { name } of categoryCounts(data)) {
 		const ct = catTokens(name).map(stem);
 		if (!ct.length) continue;
-		const used = content.filter((w) => ct.includes(stem(w)));
+		const used = content.filter((w) => ct.some((t) => near(t, stem(w))));
 		if (!used.length) continue;
-		const all = ct.every((t) => content.some((w) => stem(w) === t));
+		const all = ct.every((t) => content.some((w) => near(t, stem(w))));
 		// Partial names count only via their first word ("coagulation" -> Coagulation & Hemostasis).
-		if (!all && !content.some((w) => stem(w) === ct[0])) continue;
+		if (!all && !content.some((w) => near(ct[0], stem(w)))) continue;
 		const score = used.length * 10 + (all ? 5 : 0) - ct.length;
 		if (!best || score > best.score) best = { name, leftover: content.filter((w) => !used.includes(w)), score };
 	}
@@ -359,6 +428,11 @@ async function followUp(q: string, words: string[], data: Index, ms: ProductSear
 		}
 		const target = ctx.focus ?? (ctx.products.length === 1 ? ctx.products[0] : undefined);
 		if (target) return aboutProduct(target, q, ctx);
+		// "who makes it?" when every product shown is the same brand
+		const brands = new Set(ctx.products.map((p) => p.brand));
+		if (BRAND_Q.test(q) && ctx.products.length > 1 && brands.size === 1 && ctx.products[0].brand) {
+			return { text: [`They're all made by ${ctx.products[0].brand}.`], suggestions: ['Other brands?'] };
+		}
 		if (ctx.products.length > 1) {
 			return { text: ['Which one do you mean?'], suggestions: ctx.products.map((p) => p.name) };
 		}
@@ -391,14 +465,70 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	const fu = await followUp(q, words, data, products, ctx);
 	if (fu) return fu;
 
+	// ---- off-topic / trying to change Biomi's job ----
+	if (INJECTION.test(q)) {
+		return { text: ["I can only help with questions about Biosite — our products, brands, services, offices and careers — using what's on our website."], suggestions: STARTER_QUESTIONS.slice(0, 3) };
+	}
+	if (OFF_TOPIC.test(q)) {
+		return {
+			text: ["That's outside what I can help with. I answer questions about Biosite's medical and laboratory products, services, offices and careers."],
+			suggestions: STARTER_QUESTIONS.slice(0, 3),
+			links: [{ label: 'Contact us', href: '/user/contact' }],
+		};
+	}
+
+	// ---- company facts (About page) ----
+	const fact = (label: RegExp) => data.facts?.find((f) => label.test(f.label))?.value;
+	if (/\b(how long|since when|founded|established|history|how old|kailan|years? (?:in|of) (?:business|service|operation))\b/.test(q)) {
+		const founded = fact(/founded/i);
+		const years = fact(/years/i);
+		if (founded || years) {
+			return {
+				text: [`Biosite has been a trusted partner in Philippine healthcare since ${founded ?? 'its founding'}${years ? ` — ${years} years of service` : ''}.`],
+				links: [{ label: 'About us', href: '/user/about' }],
+				suggestions: ['What are your core values?', 'Where are your offices?'],
+			};
+		}
+	}
+	if (/\b(iso|certified|certification|accredited)\b/.test(q) && !mentionedProducts(data.products, q).length && fact(/quality/i)) {
+		return {
+			text: [`Yes — Biosite is ${fact(/quality/i)} quality certified.`, faqAnswer(data, /iso/i) ?? ''].filter(Boolean),
+			links: [{ label: 'About us', href: '/user/about' }],
+		};
+	}
+	if (/\bawards?\b|\brecogni[sz]/.test(q) && fact(/award/i)) {
+		return { text: [`Biosite has received ${fact(/award/i)} industry awards.`], links: [{ label: 'About us', href: '/user/about' }] };
+	}
+	if (/\b(authori[sz]ed|official|exclusive)\b.*\b(distributor|dealer|partner|reseller)\b|\bdistributor\b/.test(q)) {
+		return {
+			text: [
+				`${faqAnswer(data, /what is biosite/i) ?? 'Biosite imports and distributes medical and diagnostic instruments.'}${fact(/partner/i) ? ` We work with ${fact(/partner/i)} global partner brands.` : ''}`,
+				'To confirm our authorization for a specific brand, please contact our team.',
+			],
+			links: [{ label: 'Contact us', href: '/user/contact' }],
+		};
+	}
+
 	// ---- offices / contact ----
 	const cityOffice = data.offices.find((o) => q.includes(norm(o.name)) || (o.name === 'Manila' && /\b(san juan|metro manila|luzon|ncr)\b/.test(q)));
 	if (has(q, /\b(contact|phone|number|call|tawag|email|e-mail|address|location|locations|office|offices|branch|where|saan|visit|hours|open|oras|bukas)\b/) || (cityOffice && words.length <= 3)) {
 		const offices = cityOffice ? [cityOffice] : data.offices;
+		const links = [{ label: 'Contact us', href: '/user/contact' }];
+		// Answer exactly what was asked when it's one detail.
+		const asks = [
+			/\b(phone|number|call|tawag|telephone|landline|mobile|hotline)\b/.test(q) && 'phone',
+			/\b(email|e-mail|mail)\b/.test(q) && 'email',
+			/\b(hours|open|oras|bukas|schedule|time)\b/.test(q) && 'hours',
+		].filter(Boolean) as ('phone' | 'email' | 'hours')[];
+		if (asks.length === 1 && !/\b(address|where|saan|location)\b/.test(q)) {
+			const k = asks[0];
+			const label = { phone: 'Phone', email: 'Email', hours: 'Office hours' }[k];
+			return { text: [`${label}${offices.length > 1 ? ':' : ` (${offices[0].name}):`}`, ...offices.map((o) => (offices.length > 1 ? `• ${o.name}: ${o[k]}` : o[k]))], links };
+		}
 		return {
 			text: [cityOffice ? `Here are the details for our ${cityOffice.name} office:` : 'We have offices in Manila, Cebu and Davao:'],
 			offices,
-			links: [{ label: 'Contact us', href: '/user/contact' }],
+			links,
 		};
 	}
 
@@ -429,7 +559,108 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	const brand = findBrand(data, q);
 	const brandTokens = brand ? new Set(tokens(brand)) : new Set<string>();
 	const content = words.filter((w) => !brandTokens.has(w) && !GENERIC.has(w) && !(brand && norm(brand).startsWith(w)));
-	const cat = findCategory(data, content);
+	const named = mentionedProducts(data.products, q);
+	const needWords = (w: string) => NEED_SMALL.test(w) || NEED_MID.test(w) || NEED_HIGH.test(w) || REASON_WORDS.has(w);
+	const cat = findCategory(data, content.filter((w) => !needWords(w)));
+	const inCategory = (name: string) => data.products.filter((p) => p.category === name || (p.alsoIn ?? '').split(', ').includes(name));
+
+	// ---- compare: "DxH 500 vs DxH 900", "difference between …", "compare it with …" ----
+	if (COMPARE.test(q) || (named.length >= 2 && /\bor\b/.test(q))) {
+		let ps = named.slice(0, 3);
+		if (ps.length === 1 && ctx.focus && ctx.focus.name !== ps[0].name) ps = [ctx.focus, ps[0]];
+		if (ps.length < 2 && /\b(them|these|those|both|the two|dalawa)\b/.test(q) && ctx.products.length >= 2) ps = ctx.products.slice(0, 3);
+		if (ps.length >= 2) {
+			const ans = compareAnswer(ps);
+			ans.context = { products: ps, list: ps, shown: ps.length, category: ps[0].category, brand: ps.every((p) => p.brand === ps[0].brand) ? ps[0].brand : undefined };
+			return ans;
+		}
+		if (ps.length === 1) {
+			return { text: [`What would you like to compare the ${ps[0].name} with? Tell me the other model's name.`], suggestions: [`Other brands?`], context: { ...ctx, focus: ps[0], products: [ps[0]] } };
+		}
+	}
+
+	// ---- "does the GEM 5000 measure lactate?" ----
+	const specTarget = named.length === 1 ? named[0] : PRONOUN.test(q) ? ctx.focus : undefined;
+	if (specTarget && SPEC_Q.test(q)) {
+		const own = new Set([...nameTokens(specTarget.name), ...tokens(specTarget.brand)]);
+		const terms = words.filter((w) => !own.has(w) && !GENERIC.has(w) && !SPEC_VERBS.has(w) && !/^\d+$/.test(w) && w.length > 1);
+		if (terms.length) {
+			const ans = specAnswer(specTarget, terms, inCategory(specTarget.category));
+			ans.context = { ...ctx, focus: specTarget, products: ans.products ?? [], category: specTarget.category };
+			return ans;
+		}
+	}
+
+	// ---- "which … is best for a small clinic?" / "what do you recommend?" ----
+	const bestCat = cat?.name ?? (BEST.test(q) ? ctx.focus?.category ?? ctx.category : undefined);
+	if (BEST.test(q)) {
+		if (!bestCat) {
+			return {
+				text: ['Happy to help you choose! What kind of equipment are you looking for, and for what setting (small clinic, mid-size lab, or busy hospital lab)?'],
+				suggestions: ['Best hematology analyzer for a small clinic', 'Best centrifuge for a hospital lab', 'What products do you offer?'],
+			};
+		}
+		const need: Workload | undefined = NEED_SMALL.test(q) ? 'small' : NEED_HIGH.test(q) ? 'high' : NEED_MID.test(q) ? 'mid' : undefined;
+		if (!need) {
+			const short = bestCat.replace(/ - .*| &.*|,.*/, '');
+			return {
+				text: [`The best ${bestCat} model depends on your workload. Which fits your setting?`],
+				suggestions: [`Best ${short} for a small clinic`, `Best ${short} for a mid-size lab`, `Best ${short} for a busy hospital`],
+				context: { ...ctx, category: bestCat },
+			};
+		}
+		let pool = inCategory(bestCat);
+		if (brand) pool = pool.filter((p) => p.brand === brand);
+		const kw = CATEGORY_KEYWORDS[bestCat];
+		const relevant = kw ? pool.filter((p) => kw.test(p.description + ' ' + p.name)) : pool;
+		const ans = bestAnswer(relevant.length ? relevant : pool, bestCat, need);
+		ans.context = { products: ans.products ?? [], list: ans.products ?? [], shown: ans.products?.length ?? 0, category: bestCat };
+		return ans;
+	}
+
+	// ---- "cheapest centrifuge" — prices aren't published ----
+	if (CHEAP.test(q)) {
+		const pool = bestCat ? inCategory(bestCat) : [];
+		const entry = entryLevel(pool);
+		return {
+			text: [
+				"Our website doesn't publish prices, so I can't rank models by cost. Our sales team can send you a quotation.",
+				...(entry.length ? [`As a general rule, compact, low-workload models cost less than high-volume systems. In ${bestCat}, these are described as compact or for smaller labs:`] : []),
+			],
+			products: entry.slice(0, 4),
+			links: [{ label: 'Request a Quote', href: '/user/contact' }],
+			context: entry.length ? { products: entry.slice(0, 4), list: entry, shown: Math.min(4, entry.length), category: bestCat } : undefined,
+		};
+	}
+
+	// A group of categories ("histopathology") -> let them pick
+	if (cat?.group && cat.leftover.length === 0) {
+		const counts = categoryCounts(data).filter((c) => cat.group!.includes(c.name));
+		return {
+			text: [`For that, we carry products across ${counts.length} categories. Tap one to see its products:`],
+			categories: counts,
+			context: { ...EMPTY_CONTEXT },
+		};
+	}
+
+	// Category + something specific ("rapid test kits for dengue", "-86 freezer") -> search inside the category
+	if (cat && cat.leftover.length) {
+		const inCat = inCategory(cat.name);
+		const hit = (p: Product, w: string) => {
+			const text = norm(p.name + ' ' + p.description);
+			const num = w.replace(/^[-−]/, '');
+			if (/^\d+$/.test(num)) return new RegExp(`(^|[^0-9])${num}([^0-9]|$)`).test(text);
+			return text.includes(stem(w));
+		};
+		const filler = cat.leftover.filter((w) => !inCat.some((p) => hit(p, w)) && FILLER.has(w));
+		const terms = cat.leftover.filter((w) => !filler.includes(w));
+		const matches = terms.length ? inCat.filter((p) => terms.every((w) => hit(p, w))) : [];
+		if (matches.length && (!brand || matches.some((p) => p.brand === brand))) {
+			const list = brand ? matches.filter((p) => p.brand === brand) : matches;
+			return withList({ text: [`In ${cat.name}, here’s what matches “${terms.join(' ')}”:`], links: [{ label: `View ${cat.name}`, href: list[0].url }] }, list, 4, { brand, category: cat.name });
+		}
+		if (!terms.length) cat.leftover = [];
+	}
 
 	// "list of products", "what do you offer?" -> the catalogue by category
 	if (!brand && !cat && words.length && words.every((w) => OVERVIEW.has(w)) && words.some((w) => /product|catalog|categor|offer|sell|carry|item|list|range|lahat/.test(w))) {
@@ -448,10 +679,19 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 		const ans = await askBiomi(`show ${cat.name}`, ctx);
 		ans.text.unshift(`I couldn't find “${unknown.join(' ')}” on our website.`);
 		ans.text[1] = ans.text[1].replace(/^Yes — w/, 'W').replace(/^Yes — in/, 'In');
+		// "-86 freezer": say what temperatures the website does list.
+		if (unknown.some((w) => /\d/.test(w))) {
+			const temps = [...new Set(inCategory(cat.name).flatMap((p) => p.description.match(/[-−–]\s?\d+\s?°C/g) ?? []))]
+				.map((t) => ({ t: t.replace(/\s/g, ' '), n: Number(t.replace(/[^\d]/g, '')) * (/[-−–]/.test(t) ? -1 : 1) }))
+				.sort((a, b) => a.n - b.n);
+			if (temps.length) ans.text.splice(1, 0, `The coldest ${cat.name} listed on our website go down to ${temps[0].t}.`);
+		}
 		return ans;
 	}
 	if (cat && cat.leftover.length === 0) {
-		const inCat = data.products.filter((p) => p.category === cat.name || (p.alsoIn ?? '').split(', ').includes(cat.name));
+		// Products that really belong to the category first (some pages list a few extras).
+		const kw = CATEGORY_KEYWORDS[cat.name];
+		const inCat = inCategory(cat.name).sort((a, b) => (kw ? Number(kw.test(b.description + b.name)) - Number(kw.test(a.description + a.name)) : 0));
 		const list = brand ? inCat.filter((p) => p.brand === brand) : inCat;
 		const href = (inCat.find((p) => p.category === cat.name) ?? inCat[0]).url;
 		if (list.length) {
@@ -497,17 +737,45 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 		return { text: ["Could you tell me a bit more about what you're looking for?"], suggestions: STARTER_QUESTIONS };
 	}
 
+	// Words the website never mentions ("Siemens", "Roche") -> say so instead of guessing.
+	const topicWords = content.filter((w) => !REASON_WORDS.has(w) && !FILLER.has(w) && !PLACES.has(w) && w.length > 2 && !/^\d+$/.test(w));
+	const unknownWords = topicWords.filter(
+		(w) => !products.search(w, { fuzzy: 0.15, prefix: false }).length && !faqs.search(w, { fuzzy: 0.15, prefix: false }).length,
+	);
+	const shown = (w: string) => question.match(new RegExp(`\\b${esc(w)}\\b`, 'i'))?.[0] ?? w;
+	const notFound = unknownWords.length ? `I couldn't find ${unknownWords.map((w) => `“${shown(w)}”`).join(' or ')} on our website.` : '';
+	if (unknownWords.length && unknownWords.length === topicWords.length) {
+		const topBrands = [...new Map(data.products.filter((p) => p.brand).map((p) => [p.brand, 0])).keys()];
+		const counts = new Map(topBrands.map((b) => [b, data.products.filter((p) => p.brand === b).length]));
+		const brandsLine = /\b(brand|brands|analy[sz]ers?|machines?|equipment|have|carry|sell)\b/.test(q)
+			? [`Brands we carry include ${[...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([b]) => b).join(', ')}.`]
+			: [];
+		return {
+			text: [notFound, ...brandsLine, 'Try a product name, brand, or category — or contact our team and they’ll be happy to help.'],
+			suggestions: ['What products do you offer?', ...STARTER_QUESTIONS.slice(1, 3)],
+			links: [{ label: 'Contact us', href: '/user/contact' }],
+		};
+	}
+
 	const pHits = products.search(expanded);
 	const fHits = faqs.search(expanded);
-	const topP = pHits[0]?.score ?? 0;
 	const topF = fHits[0]?.score ?? 0;
+	// A match only in long descriptions ("printer", "today") is weak; trust it only when
+	// several topic words agree or the word is rare.
+	const STRONG = ['name', 'brand', 'category', 'alsoIn'];
+	const topical = (t: string) => !GENERIC.has(t) && !REASON_WORDS.has(t) && !FILLER.has(t);
+	const trusted = pHits.filter((h) => {
+		const m = Object.entries(h.match).filter(([t]) => topical(t));
+		return m.some(([, fields]) => fields.some((f) => STRONG.includes(f))) || m.length >= 2 || pHits.length <= 8;
+	});
+	const topP = trusted[0]?.score ?? 0;
 
 	// "What do you offer / products overview" style questions are best answered by the FAQ.
 	const wantsOverview = /\b(products?|offer|sell|carry|categories|catalog|items)\b/.test(q) && words.length <= 4 && !brand;
 	// Only trust an FAQ that matched a real topic word, not just "products"/"list".
-	const faqOnTopic = topF > 0 && Object.keys(fHits[0].match).some((t) => !GENERIC.has(t) && !OVERVIEW.has(t));
+	const faqOnTopic = topF > 0 && Object.keys(fHits[0].match).some((t) => topical(t) && !OVERVIEW.has(t));
 	const useFaq = faqOnTopic && (wantsOverview || topF >= topP * 0.6) && topF > 6;
-	const productsAll = pHits.filter((h) => h.score >= Math.max(topP * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
+	const productsAll = trusted.filter((h) => h.score >= Math.max(topP * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
 	const productsRelevant = productsAll.slice(0, 4);
 
 	// Company/service FAQs (about us, delivery, service...) shouldn't drag in product cards.
@@ -515,9 +783,9 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	const nonProductFaq = /about|ordering|shipping|delivery|service|support|career|contact|location/i.test(faqCat);
 
 	if (useFaq || productsRelevant.length) {
-		const ans: Answer = { text: [] };
+		const ans: Answer = { text: notFound ? [notFound] : [] };
 		if (useFaq) ans.text.push(data.faqs[fHits[0].id as number].a);
-		if (productsRelevant.length && !wantsOverview && !(useFaq && nonProductFaq)) {
+		if (productsRelevant.length && !(wantsOverview && useFaq) && !(useFaq && nonProductFaq)) {
 			ans.text.push(useFaq ? 'Related products:' : 'Here’s what I found on our website:');
 			ans.links = [...new Map(productsRelevant.map((p) => [p.url, { label: `View ${p.category}`, href: p.url }])).values()].slice(0, 2);
 			// A product named outright ("DxH 900") is what "it" means next.
@@ -533,7 +801,7 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	// ---- nothing found: be honest ----
 	return {
 		text: [
-			"Sorry, I couldn't find that on our website. Try a product name, brand, or category — or contact our team and they'll be happy to help.",
+			"Sorry, I couldn't find that on our website. I can help with Biosite's products, brands, services, offices and careers — try a product name, brand, or category, or contact our team.",
 		],
 		suggestions: STARTER_QUESTIONS.slice(0, 3),
 		links: [{ label: 'Contact us', href: '/user/contact' }],

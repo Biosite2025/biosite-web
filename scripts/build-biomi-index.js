@@ -185,11 +185,20 @@ while ((om = offRe.exec(contactSrc))) {
   offices.push({ name: om[1], address: om[2], phone: om[3], email: om[4], hours: om[5] });
 }
 
+// ---------- company facts (About page stats: founded, years, ISO, awards…) ----------
+const facts = [];
+try {
+  const statsSrc = fs.readFileSync(path.join(ROOT, 'app/user/about/components/Stats.tsx'), 'utf8');
+  for (const s of statsSrc.matchAll(/\{\s*value:\s*'([^']+)',\s*label:\s*'([^']+)'\s*\}/g)) facts.push({ value: s[1], label: s[2] });
+} catch {
+  // About page moved — Biomi just won't answer company-fact questions.
+}
+
 // ---------- write ----------
 if (products.length < 50 || faqs.length < 20 || offices.length < 1) {
   console.error(`[biomi-index] Extraction looks broken: ${products.length} products, ${faqs.length} FAQs, ${offices.length} offices.`);
   process.exit(1);
 }
-fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices }));
+fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts }));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
-console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices -> public/biomi-index.json (${kb} KB)`);
+console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts -> public/biomi-index.json (${kb} KB)`);
