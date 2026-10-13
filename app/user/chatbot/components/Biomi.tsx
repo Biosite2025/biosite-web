@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, easeInOut, AnimatePresence } from "framer-motion";
-import { askBiomi, loadBiomi, STARTER_QUESTIONS, type Answer, type Product } from "../lib/biomiSearch";
+import { askBiomi, loadBiomi, EMPTY_CONTEXT, STARTER_QUESTIONS, type Answer, type BiomiContext, type Product } from "../lib/biomiSearch";
 import PopOutModal from '../../products/components/shared/PopOutModal';
 import PixelBlast from './PixelBlast';
 
@@ -90,6 +90,12 @@ export default function BiomiFAQ() {
 	const closeProduct = useCallback(() => setOpenProduct(null), []);
 	const listRef = useRef<HTMLDivElement>(null);
 	const nextId = useRef(1);
+	// What Biomi remembers from earlier answers, so follow-ups ("how much is it?") make sense.
+	const context = useRef<BiomiContext>(EMPTY_CONTEXT);
+	const openCard = (p: Product) => {
+		context.current = { ...context.current, focus: p };
+		setOpenProduct(p);
+	};
 
 	// Fetch the knowledge index in the background once the page is up, so the
 	// first answer is instant (it's small and cached by the browser).
@@ -113,7 +119,8 @@ export default function BiomiFAQ() {
 		const started = Date.now();
 		let answer: Answer;
 		try {
-			answer = await askBiomi(question);
+			answer = await askBiomi(question, context.current);
+			if (answer.context) context.current = answer.context;
 		} catch {
 			answer = { text: ["Sorry, I couldn't load our information just now. Please check your connection and try again."] };
 		}
@@ -203,7 +210,7 @@ export default function BiomiFAQ() {
 										{m.answer!.products && (
 											<div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
 												{m.answer!.products.map((p) => (
-													<button key={p.url + p.name} type="button" onClick={() => setOpenProduct(p)} aria-haspopup="dialog" className="group flex min-w-0 gap-3 rounded-xl border border-[#e3eaf7] bg-white p-2.5 text-left shadow-sm transition hover:border-[#0056D2]/40 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
+													<button key={p.url + p.name} type="button" onClick={() => openCard(p)} aria-haspopup="dialog" className="group flex min-w-0 gap-3 rounded-xl border border-[#e3eaf7] bg-white p-2.5 text-left shadow-sm transition hover:border-[#0056D2]/40 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/40">
 														{/* eslint-disable-next-line @next/next/no-img-element */}
 														<img src={p.image} alt="" loading="lazy" className="h-14 w-14 flex-shrink-0 rounded-lg bg-[#f3f6fb] object-contain p-1" />
 														<span className="min-w-0">

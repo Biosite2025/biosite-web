@@ -19,7 +19,31 @@ export type Answer = {
 	jobs?: string[];
 	links?: { label: string; href: string }[];
 	suggestions?: string[];
+	/** Updated conversation memory; when absent the previous memory is kept. */
+	context?: BiomiContext;
 };
+
+/**
+ * What Biomi remembers between messages, so follow-ups like "tell me more
+ * about it", "the second one", "show more", "other brands?" or
+ * "what about Mindray?" refer back to the previous answer.
+ */
+export type BiomiContext = {
+	/** Product cards in the last answer, in display order. */
+	products: Product[];
+	/** Every result for the last search (for "show more"). */
+	list: Product[];
+	/** How many of `list` have been shown so far. */
+	shown: number;
+	/** The single product being talked about (last referenced or opened). */
+	focus?: Product;
+	brand?: string;
+	category?: string;
+	/** The last answer was a company FAQ, not products. */
+	faq?: boolean;
+};
+
+export const EMPTY_CONTEXT: BiomiContext = { products: [], list: [], shown: 0 };
 
 export const STARTER_QUESTIONS = [
 	'What products do you offer?',
@@ -104,8 +128,215 @@ async function jobOpenings(): Promise<string[]> {
 
 const faqAnswer = (data: Index, re: RegExp) => data.faqs.find((f) => re.test(f.q))?.a;
 
-/** Answer a visitor's question using only website content. */
-export async function askBiomi(question: string): Promise<Answer> {
+type ProductSearch = MiniSearch<Product & { id: number }>;
+
+/** Question words plus synonym expansions, ready for MiniSearch. */
+function expand(question: string) {
+	const q = norm(question);
+	let out = tokens(question).join(' ');
+	for (const [re, extra] of SYNONYMS) if (re.test(q)) out += ' ' + extra;
+	return out;
+}
+
+/** Products matching `text`, best first (weak matches dropped). */
+function searchProducts(ms: ProductSearch, data: Index, text: string, only?: (p: Product) => boolean) {
+	const hits = ms.search(expand(text)).filter((h) => !only || only(data.products[h.id as number]));
+	const top = hits[0]?.score ?? 0;
+	return hits.filter((h) => h.score >= Math.max(top * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
+}
+
+const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** Brand named in the question: full name, or its first word when distinctive ("beckman" -> Beckman Coulter). */
+function findBrand(data: Index, q: string) {
+	const brandNames = [...new Set(data.products.map((p) => p.brand).filter(Boolean))];
+	return brandNames.find((b) => {
+		const nb = norm(b);
+		const first = nb.split(' ')[0];
+		return new RegExp(`\\b${esc(nb)}\\b`).test(q) || (first.length >= 5 && new RegExp(`\\b${esc(first)}\\b`).test(q));
+	});
+}
+
+const mostCommon = (xs: string[]) => {
+	const n = new Map<string, number>();
+	for (const x of xs) if (x) n.set(x, (n.get(x) ?? 0) + 1);
+	return [...n.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+};
+
+/** Attach a product list to an answer (first `n` shown) and remember it for follow-ups. */
+function withList(ans: Answer, list: Product[], n: number, extra: Partial<BiomiContext> = {}): Answer {
+	const shown = list.slice(0, n);
+	const brands = new Set(shown.map((p) => p.brand));
+	ans.products = shown;
+	ans.context = {
+		products: shown,
+		list,
+		shown: shown.length,
+		focus: extra.focus ?? (shown.length === 1 ? shown[0] : undefined),
+		brand: extra.brand ?? (brands.size === 1 ? shown[0]?.brand || undefined : undefined),
+		category: extra.category ?? mostCommon(shown.map((p) => p.category)),
+	};
+	if (list.length > n) ans.suggestions = [...(ans.suggestions ?? []), 'Show more'];
+	return ans;
+}
+
+// ---- follow-up understanding ----
+const PRICE = /\b(price|prices|pricing|cost|how much|magkano|presyo|quotation|quote|rfq|discount|buy|order|purchase|bilhin|bili)\b/;
+const BRAND_Q = /\b(brand|who makes|who made|made by|manufacturer|gawa ng|sino gumawa)\b/;
+const DETAIL = /\b(more|details?|describe|explain|tell me|info|information|specs?|specifications?|features?|what is|what does|ano ba|ano yan|ano yun|ano ito)\b/;
+const LINK = /\b(link|page|see it|view it|picture|photo|image)\b/;
+const PRONOUN = /\b(it|its|that|this|them|those|these|yan|yun|iyan|iyon|ito|nito|niyan)\b/;
+const MORE = /^(?:show |see |any |may )?(?:more|others?|other ones|iba pa|next|meron pa|marami pa)(?: (?:please|po|products?|options?|results?|pa))*[?.!]*$/;
+const ABOUT = /^(?:what about|how about|and|eh|e|paano (?:yung|naman)|ano naman|what of)\s+(.+)$/;
+const OTHER_BRANDS = /\b(other|another|different|iba(?:ng)?)\b.*\bbrands?\b|\balternatives?\b/;
+// Words that only express *what* is asked about the thing ("tell me more", "how much").
+const INTENT_WORDS = new Set(
+	('more details detail describe explain tell info information specs spec specifications specification features feature ' +
+		'much price prices pricing cost magkano presyo quotation quote order buy purchase brand manufacturer makes made ' +
+		'link page see view picture photo image pa naman else').split(' '),
+);
+const ORDINALS: [RegExp, number][] = [
+	[/\b(first|1st|una|unang|pinakauna)\b/, 0],
+	[/\b(second|2nd|pangalawa|ikalawa)\b/, 1],
+	[/\b(third|3rd|pangatlo|ikatlo)\b/, 2],
+	[/\b(fourth|4th|pang-?apat|ikaapat)\b/, 3],
+	[/\b(fifth|5th|panglima|ikalima)\b/, 4],
+	[/\b(sixth|6th|pang-?anim|ikaanim)\b/, 5],
+	[/\b(last|huli|huling)\b/, -1],
+];
+function ordinal(q: string): number | null {
+	for (const [re, i] of ORDINALS) if (re.test(q)) return i;
+	const m = q.match(/(?:^|\s)(?:number|no\.?|#)\s*([1-6])\b/);
+	return m ? Number(m[1]) - 1 : null;
+}
+
+/** Answer a question about one specific product the visitor referred to. */
+function aboutProduct(p: Product, q: string, ctx: BiomiContext): Answer {
+	const context = { ...ctx, focus: p, brand: p.brand || ctx.brand, category: p.category };
+	if (PRICE.test(q)) {
+		return {
+			text: [`Pricing for the ${p.name} depends on the configuration you need, so our sales team prepares a quotation for you. Send a request and they'll get back to you.`],
+			links: [{ label: 'Request a Quote', href: '/user/contact' }],
+			suggestions: ['Tell me more about it', 'Other brands?'],
+			context,
+		};
+	}
+	if (BRAND_Q.test(q)) {
+		return {
+			text: [p.brand ? `The ${p.name} is made by ${p.brand}.` : `Our website doesn't list a brand for the ${p.name}.`],
+			suggestions: ['Tell me more about it', 'Other brands?'],
+			context,
+		};
+	}
+	if (LINK.test(q)) {
+		return {
+			text: [`You can tap the card below to see the ${p.name}, or browse the full ${p.category} page.`],
+			products: [p],
+			links: [{ label: `View ${p.category}`, href: p.url }],
+			context,
+		};
+	}
+	return {
+		text: [`${p.name}${p.brand ? ` by ${p.brand}` : ''} (${p.category}):`, p.description],
+		products: [p],
+		links: [{ label: `View ${p.category}`, href: p.url }],
+		suggestions: ['How much is it?', 'Other brands?'],
+		context,
+	};
+}
+
+/** Handle replies that only make sense with the previous answer; null = treat as a new question. */
+async function followUp(q: string, words: string[], data: Index, ms: ProductSearch, ctx: BiomiContext): Promise<Answer | null> {
+	// "show more" -> next results of the last search
+	if (MORE.test(q)) {
+		if (ctx.list.length > ctx.shown) {
+			const next = ctx.list.slice(ctx.shown, ctx.shown + 4);
+			const shown = ctx.shown + next.length;
+			return {
+				text: [`Here ${next.length === 1 ? 'is 1 more' : `are ${next.length} more`}:`],
+				products: next,
+				suggestions: shown < ctx.list.length ? ['Show more'] : undefined,
+				context: { ...ctx, products: next, shown, focus: next.length === 1 ? next[0] : undefined },
+			};
+		}
+		if (ctx.list.length) return { text: ["That's everything I found for that on our website."], suggestions: STARTER_QUESTIONS.slice(0, 3) };
+		return null;
+	}
+
+	// "what about Mindray?" / "how about Cebu?" -> same topic, new subject
+	const about = q.match(ABOUT);
+	if (about) {
+		const rest = about[1].replace(/[?.!]+$/, '').trim();
+		// A product named outright ("how about the DxH 500?")
+		const named = data.products.find((p) => new RegExp(`\\b${esc(norm(p.name))}\\b`).test(rest));
+		if (named) return aboutProduct(named, rest, ctx);
+		const brand = findBrand(data, rest);
+		const cat = ctx.focus?.category ?? ctx.category;
+		if (brand && cat) {
+			const list = data.products.filter((p) => p.brand === brand && p.category === cat);
+			if (list.length) {
+				return withList({ text: [`In ${cat}, we carry ${list.length === 1 ? 'this' : 'these'} ${brand} product${list.length === 1 ? '' : 's'}:`], links: [{ label: `View ${cat}`, href: list[0].url }] }, list, 4, { brand, category: cat });
+			}
+		}
+		// Talking about a brand ("Sakura" -> "what about microtomes?"): look within that brand first.
+		if (!brand && ctx.brand) {
+			const list = searchProducts(ms, data, rest, (p) => p.brand === ctx.brand);
+			if (list.length) {
+				return withList({ text: [`Here’s what ${ctx.brand} has for that:`], links: [{ label: `View ${list[0].category}`, href: list[0].url }] }, list, 4, { brand: ctx.brand });
+			}
+		}
+		return askBiomi(rest, ctx);
+	}
+
+	// "other brands?" -> same category, different brand
+	if (OTHER_BRANDS.test(q)) {
+		const cat = ctx.focus?.category ?? ctx.category;
+		const brand = ctx.focus?.brand ?? ctx.brand;
+		if (!cat) return null;
+		const list = data.products.filter((p) => p.category === cat && p.brand && p.brand !== brand);
+		const url = data.products.find((p) => p.category === cat)?.url ?? '/user/products';
+		if (!list.length) {
+			return { text: [`On our website, ${cat} only lists ${brand || 'one brand'}.`], links: [{ label: `View ${cat}`, href: url }] };
+		}
+		const brands = [...new Set(list.map((p) => p.brand))];
+		return withList(
+			{ text: [`${brand ? `Besides ${brand}, our` : 'Our'} ${cat} range includes ${brands.join(', ')}.`], links: [{ label: `View ${cat}`, href: url }] },
+			list, 4, { category: cat, brand: brands.length === 1 ? brands[0] : undefined },
+		);
+	}
+
+	// "the second one" -> a product card from the last answer
+	const ord = ctx.products.length && words.length <= 6 ? ordinal(q) : null;
+	if (ord != null) {
+		const p = ord < 0 ? ctx.products[ctx.products.length - 1] : ctx.products[ord];
+		if (p) return aboutProduct(p, q, ctx);
+	}
+
+	// "how much is it?", "tell me more", "who makes that?"
+	const intent = PRICE.test(q) || BRAND_Q.test(q) || DETAIL.test(q) || LINK.test(q);
+	const onlyIntent = words.filter((w) => !INTENT_WORDS.has(w)).length === 0;
+	if (intent && (PRONOUN.test(q) || onlyIntent) && !findBrand(data, q)) {
+		if (ctx.faq && !PRONOUN.test(q) && DETAIL.test(q)) {
+			return { text: ["That's everything our website says about that. For more details, our team will be happy to help."], links: [{ label: 'Contact us', href: '/user/contact' }] };
+		}
+		const target = ctx.focus ?? (ctx.products.length === 1 ? ctx.products[0] : undefined);
+		if (target) return aboutProduct(target, q, ctx);
+		if (ctx.products.length > 1) {
+			return { text: ['Which one do you mean?'], suggestions: ctx.products.map((p) => p.name) };
+		}
+		// Nothing to refer to: general pricing questions still get the pricing answer below.
+		if (!PRICE.test(q)) {
+			return { text: ['Which product do you mean? Tell me its name, brand, or category and I\'ll look it up.'], suggestions: STARTER_QUESTIONS.slice(0, 3) };
+		}
+	}
+	return null;
+}
+
+/**
+ * Answer a visitor's question using only website content. Pass the
+ * `context` from the previous answer so follow-up questions make sense.
+ */
+export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTEXT): Promise<Answer> {
 	const { data, products, faqs } = await loadBiomi();
 	const q = norm(question).trim();
 	const words = tokens(question);
@@ -117,6 +348,10 @@ export async function askBiomi(question: string): Promise<Answer> {
 	if (/\b(thank|thanks|salamat|ty)\b/.test(q) && words.length <= 4) {
 		return { text: ["You're welcome! Anything else I can help you find?"] };
 	}
+
+	// ---- follow-ups on the previous answer ----
+	const fu = await followUp(q, words, data, products, ctx);
+	if (fu) return fu;
 
 	// ---- offices / contact ----
 	const cityOffice = data.offices.find((o) => q.includes(norm(o.name)) || (o.name === 'Manila' && /\b(san juan|metro manila|luzon|ncr)\b/.test(q)));
@@ -153,14 +388,7 @@ export async function askBiomi(question: string): Promise<Answer> {
 	}
 
 	// ---- brand asked directly ----
-	const brandNames = [...new Set(data.products.map((p) => p.brand).filter(Boolean))];
-	const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	const brand = brandNames.find((b) => {
-		const nb = norm(b);
-		const first = nb.split(' ')[0];
-		// full brand name, or its first word when distinctive ("beckman" -> Beckman Coulter)
-		return new RegExp(`\\b${esc(nb)}\\b`).test(q) || (first.length >= 5 && new RegExp(`\\b${esc(first)}\\b`).test(q));
-	});
+	const brand = findBrand(data, q);
 	// Brand-only questions ("Hermle", "do you carry Sakura products?") list the brand;
 	// anything more specific ("sakura tissue processor") goes to the search below.
 	const GENERIC = new Set(['product', 'products', 'brand', 'brands', 'carry', 'sell', 'offer', 'items', 'equipment', 'machines', 'machine']);
@@ -169,16 +397,17 @@ export async function askBiomi(question: string): Promise<Answer> {
 	if (brand && leftover.length === 0) {
 		const list = data.products.filter((p) => p.brand === brand);
 		const cats = [...new Set(list.map((p) => p.category))];
-		return {
-			text: [`Yes — we carry ${brand}. ${list.length} product${list.length === 1 ? '' : 's'} in ${cats.join(', ')}.`],
-			products: list.slice(0, 6),
-			links: [...new Map(list.map((p) => [p.url, { label: `View ${p.category}`, href: p.url }])).values()].slice(0, 3),
-		};
+		return withList(
+			{
+				text: [`Yes — we carry ${brand}. ${list.length} product${list.length === 1 ? '' : 's'} in ${cats.join(', ')}.`],
+				links: [...new Map(list.map((p) => [p.url, { label: `View ${p.category}`, href: p.url }])).values()].slice(0, 3),
+			},
+			list, 6, { brand },
+		);
 	}
 
 	// ---- general search ----
-	let expanded = words.join(' ');
-	for (const [re, extra] of SYNONYMS) if (re.test(q)) expanded += ' ' + extra;
+	const expanded = expand(question);
 	if (!expanded.trim()) {
 		return { text: ["Could you tell me a bit more about what you're looking for?"], suggestions: STARTER_QUESTIONS };
 	}
@@ -191,7 +420,8 @@ export async function askBiomi(question: string): Promise<Answer> {
 	// "What do you offer / products overview" style questions are best answered by the FAQ.
 	const wantsOverview = /\b(products?|offer|sell|carry|categories|catalog|items)\b/.test(q) && words.length <= 4 && !brand;
 	const useFaq = topF > 0 && (wantsOverview || topF >= topP * 0.6) && topF > 6;
-	const productsRelevant = pHits.filter((h) => h.score >= Math.max(topP * 0.45, 3)).slice(0, 4).map((h) => data.products[h.id as number]);
+	const productsAll = pHits.filter((h) => h.score >= Math.max(topP * 0.45, 3)).slice(0, 24).map((h) => data.products[h.id as number]);
+	const productsRelevant = productsAll.slice(0, 4);
 
 	// Company/service FAQs (about us, delivery, service...) shouldn't drag in product cards.
 	const faqCat = useFaq ? data.faqs[fHits[0].id as number].category : '';
@@ -202,10 +432,14 @@ export async function askBiomi(question: string): Promise<Answer> {
 		if (useFaq) ans.text.push(data.faqs[fHits[0].id as number].a);
 		if (productsRelevant.length && !wantsOverview && !(useFaq && nonProductFaq)) {
 			ans.text.push(useFaq ? 'Related products:' : 'Here’s what I found on our website:');
-			ans.products = productsRelevant;
 			ans.links = [...new Map(productsRelevant.map((p) => [p.url, { label: `View ${p.category}`, href: p.url }])).values()].slice(0, 2);
+			// A product named outright ("DxH 900") is what "it" means next.
+			const named = productsRelevant.find((p) => new RegExp(`\\b${esc(norm(p.name))}\\b`).test(q));
+			return withList(ans, productsAll, 4, { focus: named });
 		}
 		if (!ans.text.length) ans.text.push('Here’s what I found on our website:');
+		// A company answer: "it" / "tell me more" no longer mean the last products.
+		ans.context = { ...ctx, products: [], focus: undefined, faq: true };
 		return ans;
 	}
 
