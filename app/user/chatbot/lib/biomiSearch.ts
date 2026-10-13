@@ -1,5 +1,5 @@
 import MiniSearch from 'minisearch';
-import { bestAnswer, compareAnswer, entryLevel, info, mentionedProducts, nameTokens, researchText, NEED_HIGH, NEED_MID, NEED_SMALL, specAnswer, type Workload } from './biomiReason';
+import { directSpec, info, mentionedProducts, nameTokens, researchText, salesAnswer } from './biomiReason';
 
 /**
  * Biomi's "brain": free, in-browser search over the website's own content
@@ -26,8 +26,6 @@ export type Answer = {
 	jobs?: string[];
 	/** Product categories to pick from (catalogue overview). */
 	categories?: { name: string; count: number }[];
-	/** Side-by-side comparison table (rows x products). */
-	compare?: { products: Product[]; rows: { label: string; values: string[] }[] };
 	links?: { label: string; href: string }[];
 	suggestions?: string[];
 	/** Updated conversation memory; when absent the previous memory is kept. */
@@ -167,7 +165,9 @@ const REASON_WORDS = new Set(['best', 'better', 'recommend', 'recommended', 'sui
 const COMPARE = /\b(difference|differences|differ|compare|comparison|vs\.?|versus|better than|pinagkaiba|which is better|mas maganda)\b/;
 const BEST = /\b(best|recommend|recommended|suitable|ideal|good for|right for|which (?:one|model|analyzer|machine|unit|brand) (?:should|for|is)|what should i (?:get|buy|choose)|should i (?:buy|get|choose)|which\b.*\b(?:should|best|better)|bagay|swak|maganda para)\b/;
 const CHEAP = /\b(cheap|cheapest|cheaper|affordable|budget|low[- ]cost|lowest price|mura|pinakamura|most expensive|expensive)\b/;
-const SPEC_Q = /\b(does|do|can|is|has|have|support|supports|measure|measures|include|includes|test for|detect|kaya|meron|may)\b/;
+// Questions that need a salesperson, not a lookup.
+const DIFFICULT = /\b(in stock|on stock|available now|availability|lead time|how (?:soon|fast) can (?:you|it) (?:deliver|arrive)|compatib\w*|work with (?:our|my)|integrate with|warranty|how (?:many|long) (?:years? )?(?:of )?warranty|lifespan|life span|how long (?:does it|will it) last|cost per test|running cost|operating cost|maintenance cost|reagent (?:cost|price)|install(?:ation)? (?:cost|fee)|trade[- ]in|second[- ]hand|refurbished|financing|installment|hulugan|lease|rent(?:al)?|alternative to|replace(?:ment)? for|equivalent (?:to|of)|which (?:one|model|unit|brand)|should (?:i|we) (?:buy|get|choose|pick)|advantages?|disadvantages?|pros and cons|is it worth|good enough)\b/;
+const SPEC_Q =/\b(does|do|can|is|has|have|support|supports|measure|measures|include|includes|test for|detect|kaya|meron|may)\b/;
 const SPEC_VERBS = new Set(['does', 'can', 'support', 'supports', 'measure', 'measures', 'include', 'includes', 'detect', 'detects', 'kaya', 'meron', 'run', 'runs', 'perform', 'performs', 'handle', 'handles', 'parameter', 'parameters', 'test', 'tests', 'it', 'its', 'also']);
 const OFF_TOPIC = /\b(weather|panahon|news|joke|recipe|lottery|bitcoin|crypto|stock market|politic\w*|election|basketball|nba|movie|song|lyrics|homework|translate|write (?:me )?(?:a |an )?(?:code|essay|poem|story)|who is the president)\b|\b(fix|repair|ayusin)\b.*\b(printer|computer|laptop|phone|cellphone|car|aircon|tv|wifi|internet)\b/;
 const INJECTION = /\b(ignore|disregard|forget)\b.*\b(instructions?|rules|prompt|previous)\b|system prompt|reveal (?:your|the) (?:prompt|instructions)|jailbreak|developer mode|\bact as\b|pretend (?:to be|you are)|you are now\b/;
@@ -573,77 +573,29 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	const brandTokens = brand ? new Set(tokens(brand)) : new Set<string>();
 	const content = words.filter((w) => !brandTokens.has(w) && !GENERIC.has(w) && !(brand && norm(brand).startsWith(w)));
 	const named = mentionedProducts(data.products, q);
-	const needWords = (w: string) => NEED_SMALL.test(w) || NEED_MID.test(w) || NEED_HIGH.test(w) || REASON_WORDS.has(w);
+	const needWords = (w: string) => REASON_WORDS.has(w);
 	const cat = findCategory(data, content.filter((w) => !needWords(w)));
 	const inCategory = (name: string) => data.products.filter((p) => p.category === name || (p.alsoIn ?? '').split(', ').includes(name));
 
-	// ---- compare: "DxH 500 vs DxH 900", "difference between …", "compare it with …" ----
-	if (COMPARE.test(q) || (named.length >= 2 && /\bor\b/.test(q))) {
-		let ps = named.slice(0, 3);
-		if (ps.length === 1 && ctx.focus && ctx.focus.name !== ps[0].name) ps = [ctx.focus, ps[0]];
-		if (ps.length < 2 && /\b(them|these|those|both|the two|dalawa)\b/.test(q) && ctx.products.length >= 2) ps = ctx.products.slice(0, 3);
-		if (ps.length >= 2) {
-			const ans = compareAnswer(ps);
-			ans.context = { products: ps, list: ps, shown: ps.length, category: ps[0].category, brand: ps.every((p) => p.brand === ps[0].brand) ? ps[0].brand : undefined };
-			return ans;
-		}
-		if (ps.length === 1) {
-			return { text: [`What would you like to compare the ${ps[0].name} with? Tell me the other model's name.`], suggestions: [`Other brands?`], context: { ...ctx, focus: ps[0], products: [ps[0]] } };
-		}
-	}
+	// ---- difficult questions -> sales team ----
+	// Comparing models, "which is best / should I buy", cheapest, stock, lead
+	// time, compatibility, running costs: these need a person who knows the
+	// customer's lab, so Biomi doesn't guess.
+	const withFocus = named.length === 1 && ctx.focus && ctx.focus.name !== named[0].name && (COMPARE.test(q) || PRONOUN.test(q)) ? [ctx.focus, ...named] : named;
+	const asked = withFocus.length ? withFocus : ctx.focus && PRONOUN.test(q) ? [ctx.focus] : /\b(them|these|those|both|the two|dalawa)\b/.test(q) ? ctx.products : [];
+	const toSales = (): Answer => ({ ...salesAnswer(asked), context: asked.length ? { ...ctx, products: asked.slice(0, 3), focus: asked.length === 1 ? asked[0] : ctx.focus } : undefined });
+	if (COMPARE.test(q) || (named.length >= 2 && /\bor\b/.test(q)) || BEST.test(q) || CHEAP.test(q) || DIFFICULT.test(q)) return toSales();
 
-	// ---- "does the GEM 5000 measure lactate?" ----
+	// ---- "what is the throughput of the DxH 520?" -> only if our information states it ----
 	const specTarget = named.length === 1 ? named[0] : PRONOUN.test(q) ? ctx.focus : undefined;
-	if (specTarget && SPEC_Q.test(q)) {
+	if (specTarget && (SPEC_Q.test(q) || /\b(what|how|ano|ilan)\b/.test(q))) {
 		const own = new Set([...nameTokens(specTarget.name), ...tokens(specTarget.brand)]);
 		const terms = words.filter((w) => !own.has(w) && !GENERIC.has(w) && !SPEC_VERBS.has(w) && !/^\d+$/.test(w) && w.length > 1);
 		if (terms.length) {
-			const ans = specAnswer(specTarget, terms, inCategory(specTarget.category), /^(does|do|can|is|are|has|have|will|kaya|meron|may)\b/.test(q));
-			ans.context = { ...ctx, focus: specTarget, products: ans.products ?? [], category: specTarget.category };
+			const ans = directSpec(specTarget, terms, /^(does|do|can|is|are|has|have|will|kaya|meron|may)\b/.test(q)) ?? salesAnswer([specTarget]);
+			ans.context = { ...ctx, focus: specTarget, products: [specTarget], category: specTarget.category };
 			return ans;
 		}
-	}
-
-	// ---- "which … is best for a small clinic?" / "what do you recommend?" ----
-	const bestCat = cat?.name ?? (BEST.test(q) ? ctx.focus?.category ?? ctx.category : undefined);
-	if (BEST.test(q)) {
-		if (!bestCat) {
-			return {
-				text: ['Happy to help you choose! What kind of equipment are you looking for, and for what setting (small clinic, mid-size lab, or busy hospital lab)?'],
-				suggestions: ['Best hematology analyzer for a small clinic', 'Best centrifuge for a hospital lab', 'What products do you offer?'],
-			};
-		}
-		const need: Workload | undefined = NEED_SMALL.test(q) ? 'small' : NEED_HIGH.test(q) ? 'high' : NEED_MID.test(q) ? 'mid' : undefined;
-		if (!need) {
-			const short = bestCat.replace(/ - .*| &.*|,.*/, '');
-			return {
-				text: [`The best ${bestCat} model depends on your workload. Which fits your setting?`],
-				suggestions: [`Best ${short} for a small clinic`, `Best ${short} for a mid-size lab`, `Best ${short} for a busy hospital`],
-				context: { ...ctx, category: bestCat },
-			};
-		}
-		let pool = inCategory(bestCat);
-		if (brand) pool = pool.filter((p) => p.brand === brand);
-		const kw = CATEGORY_KEYWORDS[bestCat];
-		const relevant = kw ? pool.filter((p) => kw.test(info(p) + ' ' + p.name)) : pool;
-		const ans = bestAnswer(relevant.length ? relevant : pool, bestCat, need);
-		ans.context = { products: ans.products ?? [], list: ans.products ?? [], shown: ans.products?.length ?? 0, category: bestCat };
-		return ans;
-	}
-
-	// ---- "cheapest centrifuge" — prices aren't published ----
-	if (CHEAP.test(q)) {
-		const pool = bestCat ? inCategory(bestCat) : [];
-		const entry = entryLevel(pool);
-		return {
-			text: [
-				"Our website doesn't publish prices, so I can't rank models by cost. Our sales team can send you a quotation.",
-				...(entry.length ? [`As a general rule, compact, low-workload models cost less than high-volume systems. In ${bestCat}, these are described as compact or for smaller labs:`] : []),
-			],
-			products: entry.slice(0, 4),
-			links: [{ label: 'Request a Quote', href: '/user/contact' }],
-			context: entry.length ? { products: entry.slice(0, 4), list: entry, shown: Math.min(4, entry.length), category: bestCat } : undefined,
-		};
 	}
 
 	// A group of categories ("histopathology") -> let them pick

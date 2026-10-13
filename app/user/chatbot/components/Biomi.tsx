@@ -207,30 +207,6 @@ export default function BiomiFAQ() {
 										{m.answer!.text.map((t, i) => (
 											<div key={i} className="rounded-2xl rounded-tl-sm border border-[#e3eaf7] bg-white px-4 py-2.5 text-sm leading-relaxed text-[#1f3b63] shadow-sm sm:text-[15px]">{t}</div>
 										))}
-										{m.answer!.compare && (
-											<div className="overflow-x-auto overscroll-x-contain rounded-xl border border-[#e3eaf7] bg-white shadow-sm">
-												<table className="w-full min-w-[22rem] border-collapse text-left text-xs text-[#1f3b63] sm:text-[13px]">
-													<thead>
-														<tr className="bg-[#eaf2fd]">
-															<th scope="col" className="w-24 px-2.5 py-2 font-semibold text-[#5b7290]"><span className="sr-only">Feature</span></th>
-															{m.answer!.compare.products.map((p) => (
-																<th key={p.name} scope="col" className="px-2.5 py-2 font-semibold text-[#0b2a5c]">{p.name}</th>
-															))}
-														</tr>
-													</thead>
-													<tbody>
-														{m.answer!.compare.rows.map((r) => (
-															<tr key={r.label} className="border-t border-[#eef3fa] align-top">
-																<th scope="row" className="px-2.5 py-2 font-medium text-[#5b7290]">{r.label}</th>
-																{r.values.map((v, i) => (
-																	<td key={i} className="px-2.5 py-2">{v}</td>
-																))}
-															</tr>
-														))}
-													</tbody>
-												</table>
-											</div>
-										)}
 										{m.answer!.products && (
 											<div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
 												{m.answer!.products.map((p) => (
