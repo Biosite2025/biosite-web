@@ -87,7 +87,8 @@ const STOP = new Set(
 	('a an the is are am do does did you your yours we our ours i me my of for to in on at by with and or ' +
 		'have has had can could would should what which who whom where when how why any some about please ' +
 		'there this that these those it its be been being from as want need looking look show tell know ' +
-		'ba po ang ng mga sa may kayo ko ako niyo nyo si yung meron mayroon na ano paano pwede gusto').split(' '),
+		'ba po ang ng mga sa may kayo ko ako niyo nyo si yung meron mayroon na ano paano pwede gusto ' +
+			'long take takes taking gaano katagal tagal ilang usually normally typically').split(' '),
 );
 
 const norm = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '');
@@ -492,7 +493,9 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 
 	// ---- company facts (About page) ----
 	const fact = (label: RegExp) => data.facts?.find((f) => label.test(f.label))?.value;
-	if (/\b(how long|since when|founded|established|history|how old|kailan|years? (?:in|of) (?:business|service|operation))\b/.test(q)) {
+	// Only questions about the company itself — "how long is delivery" is not one.
+	const aboutCompany = /\b(biosite|company|you|kayo|nyo|business|operating|in operation|existed)\b/.test(q) && !/\b(deliver\w*|shipping|ship|arrive|install\w*|warranty|repair|process\w*|reply|respond|quotation|quote)\b/.test(q);
+	if (/\b(since when|founded|established|how old|years? (?:in|of) (?:business|service|operation))\b/.test(q) || (/\b(how long|history|kailan)\b/.test(q) && aboutCompany)) {
 		const founded = fact(/founded/i);
 		const years = fact(/years/i);
 		if (founded || years) {
@@ -524,7 +527,13 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 
 	// ---- offices / contact ----
 	const cityOffice = data.offices.find((o) => q.includes(norm(o.name)) || (o.name === 'Manila' && /\b(san juan|metro manila|luzon|ncr)\b/.test(q)));
-	if (has(q, /\b(contact|phone|number|call|tawag|email|e-mail|address|location|locations|office|offices|branch|where|saan|visit|hours|open|oras|bukas)\b/) || (cityOffice && words.length <= 3)) {
+	// "shipping to Cebu" is a delivery question, not an office one.
+	const deliveryQ = /\b(deliver\w*|shipping|ship|shipment|courier|padala|arrive)\b/.test(q);
+	if (deliveryQ && !/\b(damage\w*|broken|sira|defect\w*|international\w*|abroad|overseas|outside the philippines)\b/.test(q)) {
+		const a = faqAnswer(data, /how long does delivery/i);
+		if (a) return { text: [a], links: [{ label: 'Contact us', href: '/user/contact' }] };
+	}
+	if (!deliveryQ && (has(q, /\b(contact|phone|number|call|tawag|email|e-mail|address|location|locations|office|offices|branch|where|saan|visit|hours|open|oras|bukas)\b/) || (cityOffice && words.length <= 3))) {
 		const offices = cityOffice ? [cityOffice] : data.offices;
 		const links = [{ label: 'Contact us', href: '/user/contact' }];
 		// Answer exactly what was asked when it's one detail.
