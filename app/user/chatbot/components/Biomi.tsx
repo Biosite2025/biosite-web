@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, easeInOut, AnimatePresence } from "framer-motion";
+import { FAQ_DATA } from "../faqData";
 import { askBiomi, loadBiomi, EMPTY_CONTEXT, STARTER_QUESTIONS, type Answer, type BiomiContext, type Product } from "../lib/biomiSearch";
 import PopOutModal from '../../products/components/shared/PopOutModal';
 import PixelBlast from './PixelBlast';
@@ -87,6 +88,16 @@ export default function BiomiFAQ() {
 	const [typing, setTyping] = useState(false);
 	const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'reply'>('idle');
 	const [openProduct, setOpenProduct] = useState<Product | null>(null);
+	// "Browse topics" mode: the classic FAQ menu (category -> question -> answer) for people who'd rather tap than type.
+	const [mode, setMode] = useState<'chat' | 'topics'>('chat');
+	const [topic, setTopic] = useState<number | null>(null);
+	const [topicQ, setTopicQ] = useState<number | null>(null);
+	const openTopics = () => { setMode('topics'); setTopic(null); setTopicQ(null); };
+	// Carry a browsed answer into the conversation so they can keep asking about it.
+	const continueInChat = (q: string, a: string) => {
+		setMessages((m) => [...m, { id: nextId.current++, from: 'user', text: q }, { id: nextId.current++, from: 'biomi', answer: { text: [a] } }]);
+		setMode('chat');
+	};
 	const closeProduct = useCallback(() => setOpenProduct(null), []);
 	const listRef = useRef<HTMLDivElement>(null);
 	const nextId = useRef(1);
@@ -174,8 +185,32 @@ export default function BiomiFAQ() {
 						</div>
 					</div>
 
-					{/* Conversation */}
+					{/* Mode switch: type questions, or tap through topics */}
+					<div role="tablist" aria-label="How would you like to get answers?" className="flex border-b border-[#e3eaf7] bg-white">
+						{([
+							['chat', '💬 Chat'],
+							['topics', '☰ Browse topics'],
+						] as const).map(([m, label]) => (
+							<button
+								key={m}
+								id={`biomi-tab-${m}`}
+								type="button"
+								role="tab"
+								aria-selected={mode === m}
+								aria-controls={m === 'chat' ? 'biomi-chat' : 'biomi-topics'}
+								onClick={() => (m === 'chat' ? setMode('chat') : openTopics())}
+								className={`flex-1 border-b-2 px-3 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:bg-[#eaf2fd] ${mode === m ? 'border-[#0056D2] text-[#0056D2]' : 'border-transparent text-[#5b7290] hover:text-[#0056D2]'}`}
+							>
+								{label}
+							</button>
+						))}
+					</div>
+
+					{mode === 'chat' ? (
 					<div
+						id="biomi-chat"
+						role="tabpanel"
+						aria-labelledby="biomi-tab-chat"
 						ref={listRef}
 						className="flex h-[min(26rem,58dvh)] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,52dvh)]"
 						aria-live="polite"
@@ -192,6 +227,7 @@ export default function BiomiFAQ() {
 								{STARTER_QUESTIONS.map((q) => (
 									<button key={q} type="button" className={chip} onClick={() => ask(q)}>{q}</button>
 								))}
+								<button type="button" className={chip} onClick={openTopics}>☰ Browse topics</button>
 							</div>
 						)}
 
@@ -279,11 +315,74 @@ export default function BiomiFAQ() {
 							</div>
 						)}
 					</div>
+					) : (
+						/* Browse topics: category -> question -> answer (same FAQ content Biomi searches) */
+						<div
+							id="biomi-topics"
+							role="tabpanel"
+							aria-labelledby="biomi-tab-topics"
+							className="flex h-[min(26rem,58dvh)] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,52dvh)]"
+						>
+							{topic === null && (
+								<>
+									<div className="text-base font-semibold text-[#0056D2] sm:text-lg">What would you like to know about?</div>
+									<div className="grid grid-cols-2 gap-2 sm:gap-3">
+										{FAQ_DATA.map((cat, idx) => (
+											<button
+												key={cat.category}
+												type="button"
+												onClick={() => { setTopic(idx); setTopicQ(null); }}
+												className="flex min-h-[44px] w-full items-center rounded-lg border border-[#e3eaf7] bg-white px-3 py-2 text-left text-[13px] font-semibold leading-snug text-[#0056D2] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/30 sm:rounded-xl sm:px-4 sm:py-3 sm:text-[15px]"
+											>
+												{cat.category}
+											</button>
+										))}
+									</div>
+								</>
+							)}
+
+							{topic !== null && topicQ === null && (
+								<>
+									<button type="button" onClick={() => setTopic(null)} className="w-fit rounded-full bg-[#e3eaf7] px-3 py-1 text-xs font-medium text-[#0056D2] transition hover:bg-[#d0e0fa]">← All topics</button>
+									<div className="text-base font-semibold text-[#0056D2] sm:text-lg">{FAQ_DATA[topic].category}</div>
+									<div className="flex flex-col gap-2">
+										{FAQ_DATA[topic].questions.map((item, idx) => (
+											<button
+												key={item.q}
+												type="button"
+												onClick={() => setTopicQ(idx)}
+												className="rounded-lg border border-[#e3eaf7] bg-white px-3 py-2.5 text-left text-sm font-medium text-[#0056D2] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056D2]/30 sm:rounded-xl sm:px-4 sm:py-3 sm:text-[15px]"
+											>
+												{item.q}
+											</button>
+										))}
+									</div>
+								</>
+							)}
+
+							{topic !== null && topicQ !== null && (
+								<>
+									<button type="button" onClick={() => setTopicQ(null)} className="w-fit rounded-full bg-[#e3eaf7] px-3 py-1 text-xs font-medium text-[#0056D2] transition hover:bg-[#d0e0fa]">← {FAQ_DATA[topic].category}</button>
+									<div className="flex justify-end">
+										<div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-[#0056D2] px-4 py-2.5 text-sm text-white shadow sm:text-[15px]">{FAQ_DATA[topic].questions[topicQ].q}</div>
+									</div>
+									<div className="flex items-start gap-2">
+										<BiomiAvatar size={26} />
+										<div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-[#e3eaf7] bg-white px-4 py-2.5 text-sm leading-relaxed text-[#1f3b63] shadow-sm sm:text-[15px]">{FAQ_DATA[topic].questions[topicQ].a}</div>
+									</div>
+									<div className="ml-9 flex flex-wrap gap-2">
+										<button type="button" className={chip} onClick={() => continueInChat(FAQ_DATA[topic].questions[topicQ].q, FAQ_DATA[topic].questions[topicQ].a)}>💬 Continue in chat</button>
+										<button type="button" className={chip} onClick={() => setTopic(null)}>☰ Other topics</button>
+									</div>
+								</>
+							)}
+						</div>
+					)}
 
 					{/* Input */}
 					<form
 						className="flex items-center gap-2 border-t border-[#e3eaf7] bg-white px-3 py-3 sm:px-5"
-						onSubmit={(e) => { e.preventDefault(); ask(input); }}
+						onSubmit={(e) => { e.preventDefault(); setMode('chat'); ask(input); }}
 					>
 						<label htmlFor="biomi-input" className="sr-only">Ask Biomi a question</label>
 						<input
