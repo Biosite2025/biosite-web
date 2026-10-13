@@ -227,6 +227,7 @@ const CATEGORY_ALIASES: Record<string, string | string[]> = {
 	pipette: 'Pipettors', pipettes: 'Pipettors', incubator: 'Lab Oven & Incubator', incubators: 'Lab Oven & Incubator', oven: 'Lab Oven & Incubator',
 	vortex: 'Dry Bath / Vortex Mixer', dialysis: 'Dialysis / Renal Equipments', endoscopy: 'Gastro / Endo Equipments', endoscope: 'Gastro / Endo Equipments',
 	histopathology: HISTO, histology: HISTO, pathology: HISTO,
+	'operating-room': 'OR Equipment',
 };
 
 function findCategory(data: Index, content: string[]) {
@@ -462,8 +463,10 @@ async function followUp(q: string, words: string[], data: Index, ms: ProductSear
  * Answer a visitor's question using only website content. Pass the
  * `context` from the previous answer so follow-up questions make sense.
  */
-export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTEXT): Promise<Answer> {
+export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CONTEXT): Promise<Answer> {
 	const { data, products, faqs } = await loadBiomi();
+	// "OR equipment" = operating room (otherwise "or" is dropped as a filler word).
+	const question = rawQuestion.replace(/\bOR\b(?=\s+(?:equipments?|tables?|lights?|lamps?|beds?|room)\b)/gi, 'operating-room');
 	const q = norm(question).trim();
 	const words = tokens(question);
 
@@ -528,7 +531,7 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	// ---- offices / contact ----
 	const cityOffice = data.offices.find((o) => q.includes(norm(o.name)) || (o.name === 'Manila' && /\b(san juan|metro manila|luzon|ncr)\b/.test(q)));
 	// "shipping to Cebu" is a delivery question, not an office one.
-	const deliveryQ = /\b(deliver\w*|shipping|ship|shipment|courier|padala|arrive)\b/.test(q);
+	const deliveryQ = /\b(deliver\w*|shipping|ship|shipment|courier|padala|arrive)\b/.test(q) && !/\bdelivery (?:room|bed|table)s?\b/.test(q);
 	if (deliveryQ && !/\b(damage\w*|broken|sira|defect\w*|international\w*|abroad|overseas|outside the philippines)\b/.test(q)) {
 		const a = faqAnswer(data, /how long does delivery/i);
 		if (a) return { text: [a], links: [{ label: 'Contact us', href: '/user/contact' }] };
@@ -583,7 +586,10 @@ export async function askBiomi(question: string, ctx: BiomiContext = EMPTY_CONTE
 	const content = words.filter((w) => !brandTokens.has(w) && !GENERIC.has(w) && !(brand && norm(brand).startsWith(w)));
 	const named = mentionedProducts(data.products, q);
 	const needWords = (w: string) => REASON_WORDS.has(w);
-	const cat = findCategory(data, content.filter((w) => !needWords(w)));
+	// A category named exactly (typed, or tapped from the category list) always wins.
+	const bare = norm(rawQuestion).trim().replace(/[?.!]+$/, '').replace(/^(?:show|list|view|see)\s+(?:me\s+)?(?:the\s+)?/, '').replace(/\s+(?:products?|items?)$/, '');
+	const exact = categoryCounts(data).find((c) => bare === norm(c.name) || bare === norm(c.name).replace(/s$/, '') || bare + 's' === norm(c.name) || bare === norm(c.name) + 's');
+	const cat = exact ? { name: exact.name, leftover: [] as string[], score: 99, group: undefined as string[] | undefined } : findCategory(data, content.filter((w) => !needWords(w)));
 	const inCategory = (name: string) => data.products.filter((p) => p.category === name || (p.alsoIn ?? '').split(', ').includes(name));
 
 	// ---- difficult questions -> sales team ----
