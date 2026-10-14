@@ -42,7 +42,7 @@ const tabs: Tab[] = [
 					{
 						"id": 2,
 						"name": "Autobio BC120",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/autobio-bc120.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/autobio-bc120.webp",
 						"description": "An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design."
 					},
 					{
@@ -54,7 +54,7 @@ const tabs: Tab[] = [
 					{
 						"id": 4,
 						"name": "Autobes BCX",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/autobes bcx.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/autobes-bcx.webp",
 						"description": "An automated blood culture system designed for continuous incubation and rapid detection of microbial growth in blood samples, supporting faster diagnosis of bloodstream infections."
 					}
 				]
@@ -71,7 +71,7 @@ const tabs: Tab[] = [
 					{
 						"id": 5,
 						"name": "Autobio AutoMic i600",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/autobio-automic-i600.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/autobio-automic-i600.webp",
 						"description": "Automated microorganism identification and antimicrobial susceptibility testing analyzer AutoMic-i600 can quickly and accurately identify microorganisms by biochemical and detect antibiotic sensitivity in vitro. The identification results of the bacteria were determined by comparing with the database about biochemical reaction, such as the carbon source utilization, enzyme activity and antibiotic resistance of the bacteria."
 					}
 				]
@@ -88,7 +88,7 @@ const tabs: Tab[] = [
 					{
 						"id": 6,
 						"name": "AutoStreak S1800",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/AutoStreak%20S1800.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/autostreak-s1800.webp",
 						"description": "An automated microbial sample pretreatment and streaking system that standardizes inoculation, improves bacterial isolation, and increases laboratory efficiency while enhancing biosafety."
 					}
 				]
@@ -105,25 +105,25 @@ const tabs: Tab[] = [
 					{
 						"id": 7,
 						"name": "Autof MS1000",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/autof-ms1000.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/autof-ms1000.webp",
 						"description": "The Autobio Autof MS1000 is an automated MALDI-TOF mass spectrometry system designed for rapid, accurate microbial identification (bacteria, fungi, mycobacteria) in clinical and industrial labs. It offers a high-capacity 96-sample target plate, identifying organisms in minutes with a, extensive, updateable database of over 16,000 strains and 5,000 species. "
 					},
 					{
 						"id": 8,
 						"name": "MS1600",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/MS1600.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/ms1600.webp",
 						"description": "The Autof ms1600 is a MALDI-TOF (Matrix-Assisted Laser Desorption/Ionization-Time of Flight) mass spectrometry system for rapid, accurate microbial identification, capable of switching between positive and negative ion modes. It features a large database (>999 genera, >4943 species), 96-sample capacity, and a 1200 x 705 x 450 mm footprint. "
 					},
 					{
 						"id": 9,
 						"name": "MS2600",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/MS2600.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/ms2600.webp",
 						"description": "The Autof MS2600 is a MALDI-TOF mass spectrometry system by Autobio Diagnostics designed for rapid, high-throughput microbial identification. It utilizes a 355 nm solid-state laser at 100 Hz to identify bacteria and yeasts within minutes, featuring a library of over 5,000 species. The system includes a 96-well sample target plate, intelligent vacuum system, and cloud-based database. "
 					},
 					{
 						"id": 10,
 						"name": "TX8 MALDI-TOF MS",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/TX8.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/hd/tx8.webp",
 						"description": "MALDI-TOF MS (Matrix Assisted Laser Desorption/Ionization Time-of-Flight Mass Spectrometry) has been used more and more widely in microbiological clinical laboratory for the identiﬁcation of pathogenic bacteria, especially microaerobes, anaerobes, mycobacteria and fungi with its powerful database and excellent performance."
 					}
 				]
