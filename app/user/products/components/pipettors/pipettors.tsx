@@ -14,9 +14,9 @@ const brands: BrandDef[] = [
 ];
 
 const products: ProductDef[] = [
-	{"id":1,"name":"Micropette Plus","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus.png","description":"Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
-	{"id":2,"name":"Micropette Plus 2","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus2.png","description":"Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
-	{"id":3,"name":"Micropette Plus 3","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/micropette-plus3.png","description":"Micropette Plus 3: Advanced pipettor for demanding laboratory applications.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
+	{"id":1,"name":"Micropette Plus","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/hd/micropette-plus.webp","description":"Micropette Plus: Fixed volume pipettor for routine and repetitive pipetting tasks.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
+	{"id":2,"name":"Micropette Plus 2","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/hd/micropette-plus2.webp","description":"Micropette Plus 2: Enhanced ergonomic pipettor for comfortable and precise pipetting.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
+	{"id":3,"name":"Micropette Plus 3","image":"https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/pipettors/hd/micropette-plus3.webp","description":"Micropette Plus 3: Advanced pipettor for demanding laboratory applications.","brand":"dlab","brandName":"DLAB","brandLogo":"/asset/logo/DLAB.png","brandLogoClass":"h-[24px] sm:h-[28px] max-w-[80px]"},
 ];
 
 export default function Pipettors() {
