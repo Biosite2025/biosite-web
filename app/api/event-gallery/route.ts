@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { cachedJson } from '@/lib/cachedJson';
 // Import ONLY the S3 client. `import AWS from 'aws-sdk'` pulls in every AWS
 // service definition (~100MB on disk) and holds them in heap for the life of
 // the process — we use exactly one service.
@@ -15,7 +16,7 @@ const CDN = 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com';
 const GALLERY_PREFIX = 'biosite-web/events/events-gallery/';
 const OPTIMIZED_PREFIX = 'biosite-web/events/events-gallery-optimized/';
 
-export async function GET() {
+async function load() {
   try {
     console.log('[Event Gallery API] Fetching folders and images from Digital Ocean Spaces...');
     
@@ -102,3 +103,8 @@ export async function GET() {
     );
   }
 }
+
+// Bucket listing is slow (~9 s); serve it from memory and refresh in the background.
+export const GET = cachedJson(load);
+// Never prerender at build time: the cache above lives in the running server.
+export const dynamic = 'force-dynamic';

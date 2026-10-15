@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { cachedJson } from '@/lib/cachedJson';
 // S3-only import — see note in app/api/event-gallery/route.ts.
 import S3 from 'aws-sdk/clients/s3';
 
@@ -10,7 +11,7 @@ const s3 = new S3({
   region: 'sgp1', // Your region
 });
 
-export async function GET() {
+async function load() {
   try {
     console.log('[event-videos] Fetching videos from Digital Ocean Spaces...');
     
@@ -55,3 +56,8 @@ export async function GET() {
     );
   }
 }
+
+// Bucket listing is slow (~9 s); serve it from memory and refresh in the background.
+export const GET = cachedJson(load);
+// Never prerender at build time: the cache above lives in the running server.
+export const dynamic = 'force-dynamic';

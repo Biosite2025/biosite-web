@@ -117,7 +117,7 @@ const tabs: Tab[] = [
 					{
 						"id": 5,
 						"name": "Plasma Thawing",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/Plasma%20Thawing.png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/blood-bank/web/plasma-thawing.webp",
 						"description": "Suitable for use in blood centres and supply institutions, as well as hospital transfusion departments, for thawing and rewarming frozen plasma and cryoprecipitated coagulation factors. It improves operational efficiency, shortens thawing times, and helps ensure blood quality and safety."
 					}
 				]

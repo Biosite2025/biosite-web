@@ -445,6 +445,9 @@ nav[data-topnav="true"] {
   50% { transform: translateY(-10px); }
 }
 .bear-float { animation: bear-float 4.5s ease-in-out infinite; }
+/* About hero slideshow: slow Ken Burns zoom on the compositor (was a per-frame JS animation). */
+@keyframes hero-kenburns { from { transform: scale(1.04); } to { transform: scale(1.12); } }
+.hero-kenburns { animation: hero-kenburns 6.5s linear forwards; will-change: transform; }
 
 /* "Be Our Partner": ring grows/fades over 1.8s, rests 0.8s (2.6s cycle). */
 @keyframes partner-ring {
@@ -461,7 +464,7 @@ nav[data-topnav="true"] {
 .partner-shine { animation: partner-shine 3.7s ease-in-out 1.6s infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-cue, .bear-float, .partner-ring, .partner-shine { animation: none; }
+  .scroll-cue, .bear-float, .partner-ring, .partner-shine, .hero-kenburns { animation: none; }
 }
 
 /* Product modal "stage": gentle idle float for the product photo. */

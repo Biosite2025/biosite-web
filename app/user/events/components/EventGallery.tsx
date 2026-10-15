@@ -432,6 +432,7 @@ const EventGallery: React.FC = () => {
                       >
                         <video
                           src={videoSources[idx]}
+                          preload="none"
                           controls
                           muted
                           playsInline

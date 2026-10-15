@@ -439,14 +439,10 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       container.appendChild(renderer.domElement);
       
       // Force initial sizing after DOM insertion
-      const forceResize = () => {
-        const containerRect = container.getBoundingClientRect();
-        const w = Math.max(containerRect.width || container.clientWidth || container.offsetWidth, 1);
-        const h = Math.max(containerRect.height || container.clientHeight || container.offsetHeight, 1);
-        renderer.setSize(w, h, false);
-      };
+      const forceResize = () => setSize();
       
-      // Use setTimeout to ensure DOM has settled
+      // Use setTimeout to ensure DOM has settled (a no-op when the size is
+      // unchanged — see the guard in setSize below).
       setTimeout(forceResize, 0);
       
       const uniforms = {
@@ -483,12 +479,17 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       const quad = new THREE.Mesh(quadGeom, material);
       scene.add(quad);
       const clock = new THREE.Clock();
+      let lastW = 0, lastH = 0;
+      // (forceResize above runs from a timer, after this is defined.)
       const setSize = () => {
         // Get the actual container dimensions
         const containerRect = container.getBoundingClientRect();
-        const w = Math.max(containerRect.width || container.clientWidth || container.offsetWidth, 1);
-        const h = Math.max(containerRect.height || container.clientHeight || container.offsetHeight, 1);
-        
+        const w = Math.max(Math.round(containerRect.width || container.clientWidth || container.offsetWidth), 1);
+        const h = Math.max(Math.round(containerRect.height || container.clientHeight || container.offsetHeight), 1);
+        // Resizing reallocates the GPU buffers (and the liquid effect's render
+        // targets): skip the repeat calls that report the same size.
+        if (w === lastW && h === lastH) return;
+        lastW = w; lastH = h;
         renderer.setSize(w, h, false);
         uniforms.uResolution.value.set(renderer.domElement.width, renderer.domElement.height);
         if (threeRef.current?.composer)

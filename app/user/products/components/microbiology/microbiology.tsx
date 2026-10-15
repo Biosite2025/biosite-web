@@ -48,7 +48,7 @@ const tabs: Tab[] = [
 					{
 						"id": 3,
 						"name": "BC120 Plus",
-						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/bc120plus%20(1).png",
+						"image": "https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/microbiology/web/bc120plus-1-.webp",
 						"description": "An automated blood culture instrument with high-precision temperature control and a non-invasive optical detection system. It continuously monitors growth, supports up to 120 bottles per cycle, and delivers positive result detection in as little as 3 hours. Built for lab efficiency and accuracy, it features barcode traceability, vibration-based agitation, and safety-focused bottle design."
 					},
 					{

@@ -48,10 +48,13 @@ const HeroSection = () => {
             key={slides[current].src}
             className="absolute inset-0"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, scale: reducedMotion ? 1 : [1.04, 1.12] }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.2, ease: EASE }, scale: { duration: 6.5, ease: 'linear' } }}
+            transition={{ opacity: { duration: 1.2, ease: EASE } }}
           >
+            {/* Ken Burns drift is a CSS animation (globals.css .hero-kenburns),
+                so it runs on the compositor instead of JS every frame. */}
+            <div className="hero-kenburns absolute inset-0">
             <Image
               src={slides[current].src}
               alt={slides[current].alt}
@@ -60,6 +63,7 @@ const HeroSection = () => {
               sizes="100vw"
               className="object-cover object-center"
             />
+            </div>
           </motion.div>
         </AnimatePresence>
         {/* Scrim: keeps the dark-blue headline legible while the building stays visible */}

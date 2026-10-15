@@ -102,14 +102,15 @@ const CoreValues = () => {
     };
   }, [inView, reducedMotion]);
 
-  // Loop slideshow once phase 2 is active
+  // Loop slideshow once phase 2 is active — only while the section is on
+  // screen (each step re-runs several letter/card animations).
   useEffect(() => {
-    if (phase < 2) return;
+    if (phase < 2 || !inView) return;
     const timer = setInterval(() => {
       setCurrentLetterIndex((prev) => (prev + 1) % coreValues.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, [phase]);
+  }, [phase, inView]);
 
   const currentLetterPosition = phase >= 2 ? coreValues[currentLetterIndex]?.letterIndex ?? -1 : -1;
 

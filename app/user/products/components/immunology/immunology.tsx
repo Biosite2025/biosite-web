@@ -619,7 +619,7 @@ export default function Immunology() {
 				brandName: 'DiaSorin',
 				brandLogo: '/asset/logo/DIASORIN.png',
 				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XS.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/web/liaison-xs.webp',
 				description: "A fully automated, easy-to-use benchtop analyzer. Maximize productivity with optimal cost management, no daily maintenance, straightforward integration, and the same capabilities as Diasorin’s high-throughput analyzers."
 			},
 			{
@@ -639,7 +639,7 @@ export default function Immunology() {
 				brandName: 'Werfen',
 				brandLogo: '/asset/logo/WERFEN.png',
 				brandLogoClass: 'h-[24px] sm:h-[28px] max-w-[90px]',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/werfen%20bioflash.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/web/werfen-bioflash.webp',
 				description: "BIO-FLASH is a fully automated, random access chemiluminescent analyzer for any autoimmune laboratory. It delivers enhanced workflow efficiencies, market leading ease-of-use and improved assay performance compared with existing enzyme-based systems. With on-board reagents and stored calibration curves, BIO-FLASH makes even the most specialized autoimmune tests efficient to perform."
 			},
 			{

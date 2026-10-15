@@ -125,19 +125,19 @@ export default function Hiplaas() {
       {
         id: 1,
         name: 'EVO120 SFBT',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO120 SFBT.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/web/evo120-sfbt.webp',
         description: 'The EVO120SFBT is an ideal Grossing Station Countertop with Sink for small laboratories. Its small size allows operators to save valuable space by resting on an existing worktop, but also useful in larger structures as an additional work surface.'
       },
       {
         id: 2,
         name: 'EVO150 FD',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO150 FD.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/web/evo150-fd.webp',
         description: 'The EVO150FD is a Grossing Station Non Elevating 150cm Dualdraft provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
       },
       {
         id: 3,
         name: 'EVO150 ED',
-        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/EVO150 ED.png',
+        image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/hiplaas/web/evo150-ed.webp',
         description: 'The EVO150ED grossing stations elevating 150cm dual draft imaging system provides ample work space and the standard convenience needed to perform the most demanding grossing procedures.'
       },
       {
