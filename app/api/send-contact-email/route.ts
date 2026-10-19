@@ -11,11 +11,25 @@ function isValidEmail(email: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, subject, message, recipient } = body;
+    const { recipient } = body;
+    // Visitor text goes into an HTML email: escape it so it can't inject
+    // markup or links, and cap lengths.
+    const esc = (v: unknown, max: number) =>
+      String(v ?? '').slice(0, max).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    const name = esc(body.name, 200);
+    const email = esc(body.email, 200);
+    const phone = esc(body.phone, 50);
+    const message = esc(body.message, 5000);
+    // Header fields must be single-line plain text.
+    const subject = String(body.subject ?? '').replace(/[\r\n]+/g, ' ').slice(0, 200);
 
-    // Accept single email or array of emails
-    const recipients: string[] = Array.isArray(recipient) ? recipient : [recipient];
+    // Accept single email or array of emails — but only Biosite's own
+    // addresses, so the form can't be used to send mail to anyone else.
+    const recipients: string[] = (Array.isArray(recipient) ? recipient : [recipient]).map((r: unknown) => String(r ?? '').trim().toLowerCase());
     const uniqueRecipients = [...new Set(recipients)];
+    if (uniqueRecipients.length > 5 || !uniqueRecipients.every((r) => r.endsWith('@biositeph.com'))) {
+      return NextResponse.json({ success: false, error: 'Invalid recipient email selected' }, { status: 400 });
+    }
 
     // Validate required fields
     if (!name || !email || !message || uniqueRecipients.length === 0) {
@@ -51,7 +65,7 @@ export async function POST(request: NextRequest) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #2B3990 0%, #2B7CD3 100%); padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">${subject }</h1>
+            <h1 style="color: white; margin: 0;">${esc(subject, 200)}</h1>
           </div>
           
           <div style="background: #f7f9fc; padding: 30px;">
@@ -61,7 +75,7 @@ export async function POST(request: NextRequest) {
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;"><strong style="color: #2B3990;">Subject:</strong></td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">${subject || 'N/A'}</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">${esc(subject, 200) || 'N/A'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;"><strong style="color: #2B3990;">Name:</strong></td>

@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
   },
   // Enable compression
   compress: true,
+  // Don't advertise the framework/version in an X-Powered-By header.
+  poweredByHeader: false,
   // Production optimizations
   reactStrictMode: true,
   // Ships only the files actually needed to run, which trims the container's
@@ -32,6 +34,17 @@ const nextConfig: NextConfig = {
   // trophy is only ever downloaded once per visitor.
   async headers() {
     return [
+      {
+        // Baseline security headers on every response.
+        source: '/:path*',
+        headers: [
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
+        ],
+      },
       {
         source: '/asset/:path*.glb',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],

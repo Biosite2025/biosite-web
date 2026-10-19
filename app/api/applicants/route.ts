@@ -11,7 +11,9 @@ const pool = new Pool({
 
 const HR_EMAIL = 'bmi.hr@biositeph.com';
 
-async function notifyApplicantsRecipients(position: string) {
+async function notifyApplicantsRecipients(rawPosition: string) {
+  // Comes from the public form: escape before putting it into the HTML email.
+  const position = String(rawPosition).slice(0, 200).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
   if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
     console.warn('[Mailer] SMTP credentials not set — skipping applicant notification.');
     return;
@@ -115,53 +117,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const position = searchParams.get('position');
-    const location = searchParams.get('location');
-    const search = searchParams.get('search');
 
-    let query = 'SELECT * FROM applicants WHERE 1=1';
-    const params: any[] = [];
-    let paramCount = 1;
-
-    if (status && status !== 'All') {
-      query += ` AND status = $${paramCount}`;
-      params.push(status);
-      paramCount++;
-    }
-
-    if (position) {
-      query += ` AND position = $${paramCount}`;
-      params.push(position);
-      paramCount++;
-    }
-
-    if (location) {
-      query += ` AND location = $${paramCount}`;
-      params.push(location);
-      paramCount++;
-    }
-
-    if (search) {
-      query += ` AND (name ILIKE $${paramCount} OR email ILIKE $${paramCount} OR phone ILIKE $${paramCount})`;
-      params.push(`%${search}%`);
-      paramCount++;
-    }
-
-    query += ' ORDER BY date_applied DESC';
-
-    const result = await pool.query(query, params);
-    console.log('📊 Returning applicants:', result.rows.length, 'records');
-    console.log('📋 Sample record (first):', result.rows[0]);
-    return NextResponse.json({ success: true, data: result.rows }, { status: 200 });
-  } catch (error) {
-    console.error('Database error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Failed to fetch applicants' },
-      { status: 500 }
-    );
-  }
-}
+// No GET: applicant records (names, contacts, HR notes) are only served by
+// the admin app behind login, never by the public website.
