@@ -133,7 +133,7 @@ export default function RootLayout({
         
         {/* Favicon - Multiple sizes for different devices */}
         <link rel="icon" href="/asset/favicon/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/svg+xml" href="/asset/favicon/favicon.svg" />
+        {/* favicon.svg is a 384 KB embedded bitmap, so browsers get the small ICO/PNG icons instead. */}
         <link rel="shortcut icon" href="/asset/favicon/favicon.ico" />
         <link rel="icon" type="image/png" sizes="96x96" href="/asset/favicon/favicon-96x96.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/asset/favicon/web-app-manifest-192x192.png" />

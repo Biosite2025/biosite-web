@@ -9,7 +9,7 @@ import { EASE, FOCUS_RING } from './motionShared';
 const slides = [
   { src: '/asset/slides/luzonbuilding.jpg', alt: 'Biosite Luzon headquarters building' },
   { src: '/asset/slides/slide_2.webp', alt: 'Biosite office facility' },
-  { src: '/asset/slides/visminbuilding.png', alt: 'Biosite Visayas–Mindanao office building' },
+  { src: '/asset/slides/visminbuilding.webp', alt: 'Biosite Visayas–Mindanao office building' },
 ];
 
 const SLIDE_DURATION = 5000;
