@@ -8,6 +8,7 @@ import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } fr
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 import ProductCard from '../shared/ProductCard';
+import TestMenuTable, { type TestMenu } from '../shared/TestMenuTable';
 
 // Product category
 const category = {
@@ -40,145 +41,33 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 	const isLiaisonXL = product.name === 'LIAISON® XL';
 	const isTosoh = product.brand === 'tosoh';
+	// Tosoh and DiaSorin photos float on their own (no box), like the other product modals.
+	const floatPhoto = isTosoh || product.brand === 'liaison';
 	const isBioFlash = product.name === 'BIO-FLASH';
 	// Products without a test menu use the shared pop-out modal.
 	if (!isLiaisonXL && !isTosoh && !isBioFlash) {
 		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
 	}
 
-	const liaisonTestMenu = (
-		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🦴</span>Bone and Mineral
-				</h4>
-				<p className="text-gray-700 ml-3 md:ml-5">25 OH Vitamin D TOTAL assay</p>
-			</div>
-			
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🔴</span>Epstein-Barr Virus
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>EBV IgM</p>
-					<p>VCA IgG</p>
-					<p>EBNA IgG</p>
-					<p>KAPI IgG</p>
-				</div>
-			</div>
+	// LIAISON® XL test menu (DiaSorin). Markers (*, **, †) are the
+	// manufacturer's notes; see the table footer.
+	const LIAISON_MENU: TestMenu = [
+		['Bone and Mineral', ['25 OH Vitamin D TOTAL']],
+		['Epstein-Barr Virus', ['EBV IgM', 'VCA IgG', 'EBNA IgG', 'KAPI IgG']],
+		['ToRCH', ['Rubella IgG', 'Rubella IgM', 'Cytomegalovirus IgM', 'Cytomegalovirus IgG', 'HSV-1 Type Specific IgG', 'HSV-2 Type Specific IgG']],
+		['Infectious Disease', ['Treponema Assay', 'VZV IgG†', 'Borrelia burgdorferi†', 'Measles IgG†', 'Mumps IgG†']],
+		['Hepatitis', ['Hepatitis A Total Antibodies', 'Hepatitis A IgM*']],
+		['Diabetes', ['Insulin', 'C-Peptide']],
+		['MMRV', ['Measles IgG†', 'Mumps IgG†', 'Rubella IgM', 'Rubella IgG', 'VZV IgG†']],
+		['Growth', ['Human Growth Hormone', 'IGF-1*']],
+		['Hypertension', ['Direct Renin†', 'Aldosterone']],
+		['Fertility', ['FSH', 'LH', 'Prolactin xt', 'Testosterone', 'Estradiol II Gen', 'Progesterone II Gen**', 'hCG']],
+		['Thyroid', ['TSH', 'FT3', 'FT4', 'Anti-TPO*']],
+	];
+	const liaisonTestMenu = <TestMenuTable menu={LIAISON_MENU} footer="Assays marked *, ** or † carry manufacturer notes — ask our team for details" />;
 
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🔵</span>ToRCH
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Rubella IgG</p>
-					<p>Rubella IgM</p>
-					<p>Cytomegalovirus IgM</p>
-					<p>Cytomegalovirus IgG</p>
-					<p>HSV-1 Type Specific IgG</p>
-					<p>HSV-2 Type Specific IgG</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🌍</span>Infectious Disease
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Treponema Assay</p>
-					<p>VZV IgG†</p>
-					<p>Borrelia burgdorferi†</p>
-					<p>Measles IgG†</p>
-					<p>Mumps IgG†</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟡</span>Hepatitis
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Hepatitis A Total Antibodies</p>
-					<p>Hepatitis A IgM*</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟠</span>Diabetes
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Insulin</p>
-					<p>C-Peptid</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🔴</span>MMRV
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Measles IgG†</p>
-					<p>Mumps IgG†</p>
-					<p>Rubella IgM</p>
-					<p>Rubella IgG</p>
-					<p>VZV IgG†</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟤</span>Growth
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Human Growth Hormone</p>
-					<p>IGF-1*</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟡</span>Hypertension
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Direct Renin†</p>
-					<p>Aldosterone</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟢</span>Fertility
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>FSH</p>
-					<p>LH</p>
-					<p>Prolactin xt</p>
-					<p>Testosterone</p>
-					<p>Estradiol II Gen</p>
-					<p>Progesterone II Gen**</p>
-					<p>hCG</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🟢</span>Thyroids
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>TSH</p>
-					<p>FT3</p>
-					<p>FT4</p>
-					<p>Anti-TPO*</p>
-				</div>
-			</div>
-		</div>
-	);
-
-	// Tosoh AIA® test menu as data, rendered as a formal table below.
-	// "*" = not the standard 10-minute incubation (see footnote).
-	const TOSOH_MENU: [string, string[]][] = [
+	// Tosoh AIA® test menu. "*" = not the standard 10-minute incubation.
+	const TOSOH_MENU: TestMenu = [
 		['Tumor Markers', ['AFP', 'CEA', 'PA', '27.29', 'CA125', 'CA19-9']],
 		['Thyroid', ['TSH', 'fT3', 'T4', 'FT3', 'FT4', 'T-U', 'TSH 3rd-Gen *', 'TgAb *']],
 		['Cardiac Markers', ['CK-MB', 'c Tni 2nd-Gen', 'Myoglobin']],
@@ -189,40 +78,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		['Diabetes', ['C-Peptide II', 'IRI']],
 		['Additional', ['ACTH', 'Homocysteine', 'IgE II', 'PAP', '25-OH Vitamin D *']],
 	];
-	const tosohTestMenu = (
-		<div className="flex h-[240px] w-full flex-col overflow-hidden rounded-lg border border-gray-200 md:h-[430px]">
-			<div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-				<table className="w-full table-fixed border-collapse text-left text-[9px] md:text-xs">
-					<colgroup>
-						<col className="w-[38%] md:w-[34%]" />
-						<col />
-					</colgroup>
-					<thead className="sticky top-0 z-10 bg-[#2B3990] text-white">
-						<tr>
-							<th scope="col" className="px-2 py-1.5 font-semibold md:px-3 md:py-2">Panel</th>
-							<th scope="col" className="px-2 py-1.5 font-semibold md:px-3 md:py-2">Assays</th>
-						</tr>
-					</thead>
-					<tbody>
-						{TOSOH_MENU.map(([panel, assays], i) => (
-							<tr key={panel} className={`align-top ${i % 2 ? 'bg-gray-50' : 'bg-white'}`}>
-								<th scope="row" className="border-t border-gray-200 px-2 py-1.5 font-semibold text-[#2B3990] md:px-3 md:py-2">
-									{panel}
-									<span className="ml-1 font-normal text-gray-400">({assays.length})</span>
-								</th>
-								<td className="border-t border-gray-200 px-2 py-1.5 leading-relaxed text-gray-700 md:px-3 md:py-2">
-									{assays.join(' · ')}
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
-			<p className="shrink-0 border-t border-gray-200 bg-gray-50 px-2 py-1.5 text-[8px] italic text-gray-500 md:px-3 md:text-[11px]">
-				10-minute incubation unless marked * · {TOSOH_MENU.reduce((n, [, a]) => n + a.length, 0)} assays
-			</p>
-		</div>
-	);
+	const tosohTestMenu = <TestMenuTable menu={TOSOH_MENU} footer="10-minute incubation unless marked *" />;
 
 	const bioflashTestMenu = (
 		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[300px] overflow-y-auto pr-1 md:pr-2">
@@ -294,7 +150,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 md:gap-6' : 'lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div>div:first-of-type]:mb-0 lg:[&>div>div:first-of-type]:h-[min(22rem,55vh)] lg:[&>div]:contents'}>
 						{isLiaisonXL && (
 							<div className="border-r border-gray-200 pr-2 md:pr-6">
-								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">Test Menu</h3>
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">LIAISON® XL Test Menu</h3>
 								{liaisonTestMenu}
 							</div>
 						)}
@@ -314,16 +170,16 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						)}
 
 						<div>
-							<div className={`relative h-20 md:h-64 lg:h-80 rounded-lg sm:rounded-xl mb-2 md:mb-6 ${isTosoh ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
+							<div className={`relative h-20 md:h-64 lg:h-80 rounded-lg sm:rounded-xl mb-2 md:mb-6 ${floatPhoto ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
 								{/* Tosoh: the product floats on its own (no box), like the other product modals. */}
-								{isTosoh && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
-								<div className={isTosoh ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
-								<HoverZoom stage={isTosoh}>
+								{floatPhoto && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
+								<div className={floatPhoto ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
+								<HoverZoom stage={floatPhoto}>
 <Image
 									src={product.image}
 									alt={product.name}
 									fill
-									className={`object-contain p-1 md:p-6 ${isTosoh ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
+									className={`object-contain p-1 md:p-6 ${floatPhoto ? 'md:pt-14 ' : ''}${floatPhoto ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
 									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
 </HoverZoom>
@@ -577,7 +433,7 @@ export default function Immunology() {
 				brandName: 'DiaSorin',
 				brandLogo: '/asset/logo/DIASORIN.png',
 				brandLogoClass: 'h-[22px] sm:h-[26px] max-w-[110px]',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/LIAISON%C2%AE%20XL.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/hd/liaison-xl.webp',
 				description: "Designed for large laboratories. Combine the benefits of high throughput and high sensitivity within a powerful and fully automated system that can seamlessly connect to facilitate Total Laboratory Automation."
 			},
 			{

@@ -8,6 +8,7 @@ import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } fr
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 import ProductCard from '../shared/ProductCard';
+import TestMenuTable, { type TestMenu } from '../shared/TestMenuTable';
 
 // Custom scrollbar styles
 const scrollbarStyles = `
@@ -53,89 +54,13 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
 	}
 
-	const ilabAriesTestMenu = (
-		<div className="space-y-1.5 sm:space-y-2 text-[9px] sm:text-sm pr-1 sm:pr-2 max-[912px]:space-y-1">
-			<div className="mb-2 sm:mb-3 max-[912px]:mb-1">
-				<h4 className="font-bold text-[#2B3990] text-sm sm:text-base mb-1 sm:mb-2 max-[912px]:text-[10px] max-[912px]:mb-0.5">Test menu</h4>
-			</div>
-
-			<div className="grid grid-cols-3 gap-2 sm:gap-4 max-[912px]:gap-1">
-				{/* Column 1 - Clinical Chemistry */}
-				<div className="space-y-0.5 max-[912px]:space-y-0 [&>p]:px-1 [&>p]:py-0.5 [&>p]:rounded-sm [&>p:nth-of-type(odd)]:bg-gray-50/80">
-					<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">Clinical Chemistry</h5>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Uric Acid</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Albumin</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ALT/GPT</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Amylase</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">AST/GOT</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Direct Bilirubin</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Bilirubin</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Calcium</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CK</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CK-MB</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Chloride</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">HDL Cholesterol</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">LDL Cholesterol</p>
-				</div>
-
-				{/* Column 2 - Continued Clinical Chemistry */}
-				<div className="space-y-0.5 max-[912px]:space-y-0 [&>p]:px-1 [&>p]:py-0.5 [&>p]:rounded-sm [&>p:nth-of-type(odd)]:bg-gray-50/80">
-					<h5 className="font-bold text-transparent text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">.</h5>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Cholesterol</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cholinesterase</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Creatinine</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Iron</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ALP</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">GGT</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Glucose</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Glycated Albumin</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">LDH-P</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Lipase</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Magnesium</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Potassium</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Protein Serum</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total Protein Urine</p>
-				</div>
-
-				{/* Column 3 - Final Tests */}
-				<div className="space-y-0.5 max-[912px]:space-y-0 [&>p]:px-1 [&>p]:py-0.5 [&>p]:rounded-sm [&>p:nth-of-type(odd)]:bg-gray-50/80">
-					<h5 className="font-bold text-transparent text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">.</h5>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Sodium</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Triglycerides</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Total CO<sub>2</sub></p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Urea</p>
-
-					<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mt-2 sm:mt-3 mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mt-1 max-[912px]:mb-0.5">Immunodiagnostics</h5>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">HbA1c</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Rheumatoid Factor</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">ASO</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">CRP</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">C3, C4</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Microalbumin</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">IgA, IgG, IgM</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Transferrin</p>
-				</div>
-			</div>
-
-			{/* Drugs of Abuse Section */}
-			<div className="mt-2 sm:mt-4 pt-2 sm:pt-3 border-t border-gray-200 max-[912px]:mt-1 max-[912px]:pt-1">
-				<h5 className="font-bold text-[#2B3990] text-xs sm:text-sm mb-1 sm:mb-1.5 max-[912px]:text-[9px] max-[912px]:mb-0.5">Drugs of Abuse*</h5>
-				<div className="grid grid-cols-3 gap-1 sm:gap-1.5 max-[912px]:gap-0.5">
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Amphetamines</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Benzodiazepine</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cannabinoid</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Cocaine Metabolite</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Ecstasy</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Ethyl Alcohol</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Methadone</p>
-					<p className="text-gray-700 text-[8px] sm:text-xs max-[912px]:text-[7px]">Opiate</p>
-				</div>
-				<p className="text-gray-500 text-[8px] sm:text-xs italic mt-1 sm:mt-2 max-[912px]:text-[7px] max-[912px]:mt-0.5">
-					* Products may not be available in all countries. Please enquire with your local IL representative.
-				</p>
-			</div>
-		</div>
-	);
+	// ILab test menu, rendered as the shared formal table.
+	const ILAB_MENU: TestMenu = [
+		['Clinical Chemistry', ['Uric Acid', 'Albumin', 'ALT/GPT', 'Amylase', 'AST/GOT', 'Direct Bilirubin', 'Total Bilirubin', 'Calcium', 'CK', 'CK-MB', 'Chloride', 'HDL Cholesterol', 'LDL Cholesterol', 'Total Cholesterol', 'Cholinesterase', 'Creatinine', 'Iron', 'ALP', 'GGT', 'Glucose', 'Glycated Albumin', 'LDH-P', 'Lipase', 'Magnesium', 'Potassium', 'Total Protein Serum', 'Total Protein Urine', 'Sodium', 'Triglycerides', 'Total CO2', 'Urea']],
+		['Immunodiagnostics', ['HbA1c', 'Rheumatoid Factor', 'ASO', 'CRP', 'C3, C4', 'Microalbumin', 'IgA, IgG, IgM', 'Transferrin']],
+		['Drugs of Abuse*', ['Amphetamines', 'Benzodiazepine', 'Cannabinoid', 'Cocaine Metabolite', 'Ecstasy', 'Ethyl Alcohol', 'Methadone', 'Opiate']],
+	];
+	const ilabAriesTestMenu = <TestMenuTable menu={ILAB_MENU} footer="* May not be available in all countries — ask our team" />;
 
 	return (
 		<>
@@ -150,7 +75,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.95, y: 20 }}
 					transition={{ duration: 0.3 }}
-		className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 ${isILabProduct ? 'max-w-6xl max-h-[80vh]' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden lg:max-h-full lg:overflow-y-auto lg:overscroll-contain`}
+		className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 ${isILabProduct ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden lg:max-h-full lg:overflow-y-auto lg:overscroll-contain`}
 					onClick={handleModalContentClick}
 				>
 					<button
@@ -166,22 +91,27 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 <div className={isILabProduct ? 'grid grid-cols-2 gap-6 md:gap-8 max-[912px]:grid-cols-2 max-[912px]:gap-2' : ''}>
 				{isILabProduct && (
-					<div className="border-r border-gray-200 pr-6 md:pr-8 overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:pr-2 max-[912px]:max-h-[60vh]">
+					<div className="border-r border-gray-200 pr-6 md:pr-8 max-[912px]:pr-2">
+						<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">ILab Test Menu</h3>
 						{ilabAriesTestMenu}
 					</div>
 				)}
 
 					<div className="overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:max-h-[60vh]">
-						<div className="relative h-56 sm:h-64 md:h-72 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-4 sm:mb-6 overflow-hidden max-[912px]:h-40">
-						<HoverZoom>
+						<div className={`relative h-56 sm:h-64 md:h-72 rounded-lg sm:rounded-xl mb-4 sm:mb-6 max-[912px]:h-40 ${isILabProduct ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
+						{/* ILab: the product floats on its own (no box), like the other product modals. */}
+						{isILabProduct && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
+						<div className={isILabProduct ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
+						<HoverZoom stage={isILabProduct}>
 <Image
 							src={product.image}
 							alt={product.name}
 							fill
-							className="object-contain p-4 sm:p-6 max-[912px]:p-2"
+							className={`object-contain p-4 sm:p-6 max-[912px]:p-2 ${isILabProduct ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
 						/>
 </HoverZoom>
+						</div>
 
 						{product.brandLogo && (
 							<div className="absolute top-3 right-3">
@@ -387,7 +317,7 @@ export default function ClinicalChemistry() {
 			{
 				id: 1,
 				name: 'ILab Aries',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/ILAB ARIES.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/hd/ilab-aries.webp',
 				brand: 'ilab',
 				brandName: 'ILab',
 				brandLogo: '/asset/clinical-chemistry/ilab-logo.png',
@@ -396,7 +326,7 @@ export default function ClinicalChemistry() {
 			{
 				id: 2,
 				name: 'ILab 650',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/ILAB 650.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/hd/ilab-650.webp',
 				brand: 'ilab',
 				brandName: 'ILab',
 				brandLogo: '/asset/clinical-chemistry/ilab-logo.png',
@@ -405,7 +335,7 @@ export default function ClinicalChemistry() {
 			{
 				id: 3,
 				name: 'ILab Taurus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/ILAB Taurus.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/hd/ilab-taurus.webp',
 				brand: 'ilab',
 				brandName: 'ILab',
 				brandLogo: '/asset/clinical-chemistry/ilab-logo.png',
@@ -414,7 +344,7 @@ export default function ClinicalChemistry() {
 			{
 				id: 4,
 				name: 'ILab Twin Taurus',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/Taurus Twin.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/clinical-chemistry/hd/ilab-taurus-twin.webp',
 				brand: 'ilab',
 				brandName: 'ILab',
 				brandLogo: '/asset/clinical-chemistry/ilab-logo.png',
