@@ -176,106 +176,51 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 		</div>
 	);
 
+	// Tosoh AIA® test menu as data, rendered as a formal table below.
+	// "*" = not the standard 10-minute incubation (see footnote).
+	const TOSOH_MENU: [string, string[]][] = [
+		['Tumor Markers', ['AFP', 'CEA', 'PA', '27.29', 'CA125', 'CA19-9']],
+		['Thyroid', ['TSH', 'fT3', 'T4', 'FT3', 'FT4', 'T-U', 'TSH 3rd-Gen *', 'TgAb *']],
+		['Cardiac Markers', ['CK-MB', 'c Tni 2nd-Gen', 'Myoglobin']],
+		['Anemia', ['FER', 'B12 *', 'FOLATE *', 'RBC FOLATE *']],
+		['Reproductive', ['βHCG', 'HCG', 'DHEA-S', 'E2', 'FSH', 'LH II', 'PRL', 'PROG II', 'PROG III', 'SHBG', 'Testosterone']],
+		['Kidney Markers', ['BMG', 'Cystatin C', 'intact PTH']],
+		['Metabolic', ['CORT', 'hGH']],
+		['Diabetes', ['C-Peptide II', 'IRI']],
+		['Additional', ['ACTH', 'Homocysteine', 'IgE II', 'PAP', '25-OH Vitamin D *']],
+	];
 	const tosohTestMenu = (
-		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2">
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Tumor Markers</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>AFP</p>
-					<p>CEA</p>
-					<p>PA</p>
-					<p>27.29</p>
-					<p>CA125</p>
-					<p>CA19-9</p>
-				</div>
+		<div className="flex h-[240px] w-full flex-col overflow-hidden rounded-lg border border-gray-200 md:h-[430px]">
+			<div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+				<table className="w-full table-fixed border-collapse text-left text-[9px] md:text-xs">
+					<colgroup>
+						<col className="w-[38%] md:w-[34%]" />
+						<col />
+					</colgroup>
+					<thead className="sticky top-0 z-10 bg-[#2B3990] text-white">
+						<tr>
+							<th scope="col" className="px-2 py-1.5 font-semibold md:px-3 md:py-2">Panel</th>
+							<th scope="col" className="px-2 py-1.5 font-semibold md:px-3 md:py-2">Assays</th>
+						</tr>
+					</thead>
+					<tbody>
+						{TOSOH_MENU.map(([panel, assays], i) => (
+							<tr key={panel} className={`align-top ${i % 2 ? 'bg-gray-50' : 'bg-white'}`}>
+								<th scope="row" className="border-t border-gray-200 px-2 py-1.5 font-semibold text-[#2B3990] md:px-3 md:py-2">
+									{panel}
+									<span className="ml-1 font-normal text-gray-400">({assays.length})</span>
+								</th>
+								<td className="border-t border-gray-200 px-2 py-1.5 leading-relaxed text-gray-700 md:px-3 md:py-2">
+									{assays.join(' · ')}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
 			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Thyroid</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>TSH</p>
-					<p>fT3</p>
-					<p>T4</p>
-					<p>FT3</p>
-					<p>FT4</p>
-					<p>T-U</p>
-					<p>TSH 3rd-Gen *</p>
-					<p>TgAb *</p>
-					<p>TgAb *</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Cardiac Markers</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>CK-MB</p>
-					<p>c Tni 2nd-Gen</p>
-					<p>Myoglobin</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Anemia</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>FER</p>
-					<p>B12 *</p>
-					<p>FOLATE *</p>
-					<p>RBC FOLATE *</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Reproductive</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>βHCG</p>
-					<p>HCG</p>
-					<p>DHEA-S</p>
-					<p>E2</p>
-					<p>FSH</p>
-					<p>LH II</p>
-					<p>PRL</p>
-					<p>PROG II</p>
-					<p>PROG III</p>
-					<p>SHBG</p>
-					<p>Testosterone</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Kidney Markers</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>BMG</p>
-					<p>Cystatin C</p>
-					<p>intact PTH</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Metabolic</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>CORT</p>
-					<p>hGH</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Additional</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>ACTH</p>
-					<p>Homocysteine</p>
-					<p>IgE II</p>
-					<p>PAP</p>
-					<p>25-OH Vitamin D *</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1">Diabetes</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>C-Peptide II</p>
-					<p>IRI</p>
-				</div>
-			</div>
+			<p className="shrink-0 border-t border-gray-200 bg-gray-50 px-2 py-1.5 text-[8px] italic text-gray-500 md:px-3 md:text-[11px]">
+				10-minute incubation unless marked * · {TOSOH_MENU.reduce((n, [, a]) => n + a.length, 0)} assays
+			</p>
 		</div>
 	);
 
@@ -356,8 +301,7 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 
 						{isTosoh && (
 							<div className="border-r border-gray-200 pr-2 md:pr-6">
-								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">Tosoh AIA® Test Menu</h3>
-								<p className="text-[9px] md:text-xs italic text-gray-500 mb-1 md:mb-3">(10 minute incubation unless otherwise noted.)</p>
+								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">Tosoh AIA® Test Menu</h3>
 								{tosohTestMenu}
 							</div>
 						)}
@@ -370,16 +314,20 @@ function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 						)}
 
 						<div>
-							<div className="relative h-20 md:h-64 lg:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl mb-2 md:mb-6 overflow-hidden">
-								<HoverZoom>
+							<div className={`relative h-20 md:h-64 lg:h-80 rounded-lg sm:rounded-xl mb-2 md:mb-6 ${isTosoh ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
+								{/* Tosoh: the product floats on its own (no box), like the other product modals. */}
+								{isTosoh && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
+								<div className={isTosoh ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
+								<HoverZoom stage={isTosoh}>
 <Image
 									src={product.image}
 									alt={product.name}
 									fill
-									className="object-contain p-1 md:p-6"
+									className={`object-contain p-1 md:p-6 ${isTosoh ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
 									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
 								/>
 </HoverZoom>
+								</div>
 
 								{/* Brand logo badge (same treatment as the product cards) */}
 								{product.brandLogo && (
@@ -582,7 +530,7 @@ export default function Immunology() {
 				brand: 'tosoh',
 				brandName: 'Tosoh',
 				brandLogo: '/asset/logo/TOSOH.png',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-360.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/hd/tosoh-aia-360.webp',
 				description: "The Tosoh AIA-360's size and affordability make it an excellent fit for POLs and small hospitals, as well as for specialty testing or for use as a back-up analyzer."
 			},
 			{
@@ -591,7 +539,7 @@ export default function Immunology() {
 				brand: 'tosoh',
 				brandName: 'Tosoh',
 				brandLogo: '/asset/logo/TOSOH.png',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/tosoh-aia-900.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/hd/tosoh-aia-900.webp',
 				description: "Tosoh Bioscience's AIA-900 is the new generation stand alone, flexible and fully scalable high throughput immunoassay analyzer."
 			},
 			{
@@ -600,7 +548,7 @@ export default function Immunology() {
 				brand: 'tosoh',
 				brandName: 'Tosoh',
 				brandLogo: '/asset/logo/TOSOH.png',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-2000.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/hd/aia-2000.webp',
 				description: "AIA-2000 is a fully automated immunoassay analyzer has become the new global standard for speed and reliability amongst fully featured immunoassay analyzers. Equipped with a complete line of test menu, the user can load up to 960 tests (48 trays x 20 tests) in a new, easy-to-load hybrid sort; increasing walkaway time to approximately 4 hours."
 			},
 			{
@@ -609,7 +557,7 @@ export default function Immunology() {
 				brand: 'tosoh',
 				brandName: 'Tosoh',
 				brandLogo: '/asset/logo/TOSOH.png',
-				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/AIA-CL300.png',
+				image: 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/products/immunology/hd/aia-cl300.webp',
 				description: "AIA-CL300 utilises the unique CL-AIA Pack twin cup format. With a throughput of up to 30 results per hour, first result within 15 minutes for most assays, this innovative desktop automated analyzer meets the needs from small to large laboratories, to perform routine analysis, esoteric assays, and up to 30 results per hour. Users who experience the unique technology of the AIA-CL series which have already made their proof in terms of ease of use, reliability, and analytical performance."
 			},
 			{
