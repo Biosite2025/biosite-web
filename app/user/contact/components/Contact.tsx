@@ -20,7 +20,7 @@ const locations: LocationData[] = [
     name: "Manila",
     address: "305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila, Philippines",
     phone: "+63 917 111 5008",
-    email: "customerservice@biosite.com.ph",
+    email: "customerservice@biosite.com",
     hours: "Mon - Sat: 8:30am - 5:30pm",
     mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.8942557716846!2d121.0362043!3d14.605099200000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9c697e3dbc5%3A0xb4508f101b56968!2sBiosite%20Medical%20Instruments!5e0!3m2!1sen!2sph!4v1759977055681!5m2!1sen!2sph"
   
@@ -29,7 +29,7 @@ const locations: LocationData[] = [
     name: "Cebu",
     address: "Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu City, Philippines",
     phone: "+63 917 111 5008",
-    email: "customerservice@biosite.com.ph",
+    email: "customerservice@biosite.com",
     hours: "Mon - Sat: 8:30am - 5:30pm",
     mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31401.755228087386!2d123.86957824230191!3d10.324318766011094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a99f07c3f8315b%3A0xcf97a325d3ad40a2!2sBiosite%20Medical%20Instruments!5e0!3m2!1sen!2sph!4v1759977278795!5m2!1sen!2sph"
   },
@@ -38,7 +38,7 @@ const locations: LocationData[] = [
     name: "Davao",
     address: "555 Manga St., Juna Subd, Matina, 8000 Davao City, Philippines",
     phone: "+63 917 111 5008",
-    email: "customerservice@biosite.com.ph",
+    email: "customerservice@biosite.com",
     hours: "Mon - Sat: 8am - 5pm",
     mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d628.9643936654292!2d125.5952493!3d7.0531431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f9729deae3f0e1%3A0x997a35c6f3cea61c!2sBiosite%20Medical%20Instruments%20Inc.!5e0!3m2!1sen!2sph!4v1660000000000!5m2!1sen!2sph"
   }
