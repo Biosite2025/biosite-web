@@ -151,13 +151,13 @@ export default function NikonMicroscopes() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+		<div className="min-h-[calc(var(--vh,1vh)*100)] bg-gradient-to-b from-gray-50 to-white">
 			{/* Hero Section */}
 					<motion.section
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 1 }}
-						className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4"
+						className="relative min-h-[calc(var(--vh,1vh)*100)] flex items-center justify-center bg-gradient-to-br from-[#2B3990] via-[#1e2865] to-[#0f1435] overflow-hidden max-[912px]:min-h-[calc(var(--vh,1vh)*70)] max-[912px]:py-4"
 					>
 									{/* Animated Background Pattern + Particles + Red Overlay */}
 									<div className="absolute inset-0 w-full h-full">

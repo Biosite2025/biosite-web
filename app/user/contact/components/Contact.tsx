@@ -167,27 +167,8 @@ function ContactForm() {
 
   return (
     <>
-      <style>{`
-        /* Short laptop screens (e.g. 1920x1200 laptops at 150% Windows scaling
-           = 1280x~670 in the browser): tighten spacing so the whole Contact
-           block - heading, map and form with its Send button - fits on one
-           screen like it does on a full-HD monitor. Text stays readable. */
-        @media (min-width: 1024px) and (max-height: 800px) {
-          .contact-section { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
-          .contact-section .ct-head { margin-bottom: 1rem !important; }
-          .contact-section .ct-head h1 { font-size: 2.25rem !important; line-height: 2.5rem !important; }
-          #usermap, #userform { min-height: 0 !important; }
-          #userform { padding: 1.25rem 1.5rem !important; }
-          #userform h2 { font-size: 1.5rem !important; line-height: 2rem !important; margin-bottom: 0.25rem !important; }
-          #userform select { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; font-size: 1rem !important; }
-          #userform input, #userform textarea { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
-          #userform textarea { min-height: 64px !important; }
-          #userform form > * + * { margin-top: 0.625rem !important; }
-          #userform button[type="submit"] { padding-top: 0.625rem !important; padding-bottom: 0.625rem !important; }
-        }
-      `}</style>
       <motion.section
-      className="contact-section w-full min-h-[100vh] flex flex-col items-center justify-start bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-2 sm:py-4 md:py-6 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden lg:pt-12 max-[912px]:pt-2"
+      className="contact-section w-full min-h-[calc(var(--vh,1vh)*100)] flex flex-col items-center justify-start bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-2 sm:py-4 md:py-6 lg:py-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden lg:pt-12 max-[912px]:pt-2"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -208,7 +189,7 @@ function ContactForm() {
         // Larger, and sunk 4rem below the section edge: the photo's cropped
         // bottom is always clipped at the footer line, even at the top of the
         // float, so the body reads as continuing behind the footer.
-        style={{ width: 'clamp(220px, calc((100vw - 72rem) / 2 + 9rem), 560px)' }}
+        style={{ width: 'clamp(220px, calc((calc(var(--vw,1vw)*100) - 72rem) / 2 + 9rem), 560px)' }}
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}

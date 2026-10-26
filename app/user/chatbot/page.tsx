@@ -7,7 +7,7 @@ export default function Page() {
   return (
     // overflow-x-clip: Biomi scales its backdrop to 115% on large screens,
     // which would otherwise add a horizontal scrollbar.
-    <div className="min-h-screen overflow-x-clip bg-gradient-to-b from-white to-gray-50 pt-16 lg:pt-0">
+    <div className="min-h-[calc(var(--vh,1vh)*100)] overflow-x-clip bg-gradient-to-b from-white to-gray-50 pt-16 lg:pt-0">
       <Biomi />
       <Footer />
     </div>

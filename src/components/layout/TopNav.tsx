@@ -200,7 +200,7 @@ export function TopNav() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute left-1/2 -translate-x-1/2 top-full -ml-50 mt-0 w-[95vw] max-w-[1400px]  bg-white z-50 rounded-lg shadow-2xl border-t-4 border-[#2B3990]"
+                    className="absolute left-1/2 -translate-x-1/2 top-full -ml-50 mt-0 w-[calc(var(--vw,1vw)*95)] max-w-[1400px]  bg-white z-50 rounded-lg shadow-2xl border-t-4 border-[#2B3990]"
                   >
                     {/* Mega Menu Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-0">

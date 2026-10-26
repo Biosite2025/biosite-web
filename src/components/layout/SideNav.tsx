@@ -246,8 +246,8 @@ export function SideNav() {
 							animate={{ x: 0 }}
 							exit={{ x: "100%" }}
 							transition={{ type: "spring", stiffness: 300, damping: 30 }}
-							className="fixed top-0 right-0 h-screen w-80 max-w-[85vw] bg-white shadow-2xl z-[99999] flex flex-col overflow-hidden"
-							style={{ height: '100vh', minHeight: '100vh' }}
+							className="fixed top-0 right-0 h-[calc(var(--vh,1vh)*100)] w-80 max-w-[calc(var(--vw,1vw)*85)] bg-white shadow-2xl z-[99999] flex flex-col overflow-hidden"
+							style={{ height: 'calc(var(--vh,1vh)*100)', minHeight: 'calc(var(--vh,1vh)*100)' }}
 						>
 							{/* Header */}
 							<div className="flex items-center justify-between p-4 border-b border-gray-200/50 bg-gradient-to-r from-[#2B3990] to-[#3d4db0]">

@@ -39,7 +39,7 @@ const HeroSection = () => {
       ref={sectionRef}
       id="hero"
       aria-labelledby="hero-title"
-      className="relative w-full overflow-hidden lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
+      className="relative w-full overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
     >
       {/* Building slideshow — crossfade + gentle Ken Burns drift (drift off for reduced-motion) */}
       <div className="absolute inset-0">
@@ -94,7 +94,7 @@ const HeroSection = () => {
         <motion.h1
           id="hero-title"
           className="-mt-[50px] sm:-mt-[50px] lg:-mt-[90px] font-extrabold leading-[1.08] tracking-tight text-[#22409A]"
-          style={{ fontSize: 'clamp(1.9rem, 5.2vw, 3.6rem)' }}
+          style={{ fontSize: 'clamp(1.9rem, calc(var(--vw,1vw)*5.2), 3.6rem)' }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}

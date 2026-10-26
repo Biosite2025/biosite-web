@@ -253,7 +253,7 @@ export default function JobListing() {
   return (
     <>
       <motion.section
-        className="w-full min-h-[calc(100svh-4rem)] lg:min-h-[calc(100svh-6rem)] flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 md:py-8 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
+        className="w-full min-h-[calc(calc(var(--vh,1svh)*100)-4rem)] lg:min-h-[calc(calc(var(--vh,1svh)*100)-6rem)] flex items-center justify-center bg-gradient-to-br from-[#f7f9fc] via-gray-50 to-white py-6 md:py-8 px-3 md:px-4 lg:px-6 xl:px-12 2xl:px-16 relative overflow-hidden custom-1280x665-padding"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -269,7 +269,7 @@ export default function JobListing() {
             // photo and the face always sits in the open space. Hidden where
             // the gutter is too narrow for that (below 1800px).
             className="pointer-events-none absolute -bottom-16 left-0 z-0 hidden lg:block"
-            style={{ width: 'clamp(220px, calc((100vw - 80rem) / 2 + 8rem), 560px)' }}
+            style={{ width: 'clamp(220px, calc((calc(var(--vw,1vw)*100) - 80rem) / 2 + 8rem), 560px)' }}
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}

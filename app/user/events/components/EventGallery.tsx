@@ -592,7 +592,7 @@ const EventGallery: React.FC = () => {
                 alt="Event photo"
                 width={dims?.width || 1200}
                 height={dims?.height || 800}
-                className="max-h-[88vh] w-auto rounded-lg shadow-2xl"
+                className="max-h-[calc(var(--vh,1vh)*88)] w-auto rounded-lg shadow-2xl"
                 style={{ objectFit: 'contain' }}
                 quality={95}
                 priority

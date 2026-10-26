@@ -18,7 +18,7 @@ const CONFIG = {
   split: { rest: 50, active: 58, inactive: 42 },
   divider: { width: 4 },
   /** Matches the Stats band's visual height so the two blue bands read as a pair. */
-  band: { height: 'clamp(280px, 34vh, 360px)' },
+  band: { height: 'clamp(280px, calc(var(--vh,1vh)*34), 360px)' },
   ease: {
     enter: [0.16, 1, 0.3, 1] as const,
     exit: [0.7, 0, 0.84, 0] as const,
@@ -44,9 +44,9 @@ const CONFIG = {
    * of reflowing. It also prevents reflow while the column resizes on hover.
    */
   statementMaxWidth: '40em',
-  statementSize: 'clamp(0.85rem, 1.2vw, 1.5rem)',
-  padX: 'clamp(2rem, 6vw, 5rem)',
-  padRight: 'clamp(1.5rem, 3vw, 2.5rem)',
+  statementSize: 'clamp(0.85rem, calc(var(--vw,1vw)*1.2), 1.5rem)',
+  padX: 'clamp(2rem, calc(var(--vw,1vw)*6), 5rem)',
+  padRight: 'clamp(1.5rem, calc(var(--vw,1vw)*3), 2.5rem)',
 } as const;
 
 const PANELS = [
@@ -190,7 +190,7 @@ const Panel = ({ panel, state, isDesktop, fill, variants, onActivate, onDeactiva
         >
           <span
             className="font-extrabold uppercase leading-none text-white"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', letterSpacing: '0.02em' }}
+            style={{ fontSize: 'clamp(2.5rem, calc(var(--vw,1vw)*5), 4.5rem)', letterSpacing: '0.02em' }}
           >
             {panel.label}
           </span>

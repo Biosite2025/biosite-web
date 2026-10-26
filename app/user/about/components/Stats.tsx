@@ -31,7 +31,7 @@ const Stats = () => {
                   instead of floating out of line with the single-line numbers. */}
               <span
                 className="flex items-end justify-center text-center font-extrabold leading-tight text-white"
-                style={{ fontSize: 'clamp(1.5rem, 3.2vw, 2.4rem)', minHeight: '2.5em' }}
+                style={{ fontSize: 'clamp(1.5rem, calc(var(--vw,1vw)*3.2), 2.4rem)', minHeight: '2.5em' }}
               >
                 {s.value}
               </span>

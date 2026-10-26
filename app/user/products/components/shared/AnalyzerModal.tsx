@@ -156,7 +156,7 @@ export default function AnalyzerModal({
 											<div aria-hidden="true" className="absolute inset-x-[18%] bottom-1 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />
 											<div className="nikon-stage-float absolute inset-0">
 												<HoverZoom stage>
-													<Image src={image} alt={name} fill priority sizes="(max-width: 768px) 80vw, 360px" className="object-contain p-2 drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]" />
+													<Image src={image} alt={name} fill priority sizes="(max-width: 768px) calc(var(--vw,1vw)*80), 360px" className="object-contain p-2 drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]" />
 												</HoverZoom>
 											</div>
 										</div>

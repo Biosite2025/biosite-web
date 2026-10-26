@@ -47,6 +47,19 @@ img {
 
 @import "tailwindcss";
 
+/* Laptop scale-to-fit (see the script in app/layout.tsx): when the page is
+   zoomed to a 1920px-wide virtual layout (html[data-fit]), the xl / 2xl
+   breakpoints must match that virtual width, not the physical one, so a
+   1280px laptop gets exactly the 1920px layout, just smaller. */
+@custom-variant xl {
+  @media (width >= 80rem) { @slot; }
+  :where(:root[data-fit]) & { @slot; }
+}
+@custom-variant 2xl {
+  @media (width >= 96rem) { @slot; }
+  :where(:root[data-fit]) & { @slot; }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -63,7 +76,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+  min-height: calc(var(--vh,1vh)*100);
   margin: 0;
   padding: 0;
 }
@@ -79,7 +92,7 @@ body {
 
 @media (max-width: 912px) {
   body {
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    min-height: calc(var(--vh,1dvh)*100); /* Dynamic viewport height for mobile */
   }
 }
 
@@ -103,8 +116,8 @@ body {
 /* Mobile specific preloader adjustments */
 @media (max-width: 912px) {
   .preloader {
-    height: 100dvh; /* Use dynamic viewport height for mobile */
-    min-height: calc(100dvh - 64px); /* Account for mobile nav height */
+    height: calc(var(--vh,1dvh)*100); /* Use dynamic viewport height for mobile */
+    min-height: calc(calc(var(--vh,1dvh)*100) - 64px); /* Account for mobile nav height */
   }
 }
 
@@ -262,7 +275,7 @@ body.overflow-hidden {
 
 @media (min-width: 913px) {
   body.overflow-hidden {
-    height: 100vh !important;
+    height: calc(var(--vh,1vh)*100) !important;
   }
 }
 
@@ -292,7 +305,7 @@ nav[data-topnav="true"] {
 
 @media (min-width: 913px) {
   .no-scroll {
-    height: 100vh !important;
+    height: calc(var(--vh,1vh)*100) !important;
   }
 }
 
@@ -318,12 +331,12 @@ nav[data-topnav="true"] {
   }
   
   body {
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    min-height: calc(var(--vh,1dvh)*100); /* Dynamic viewport height for mobile */
   }
   
   /* Ensure main content fills available space */
   main {
-    min-height: calc(100dvh - 64px); /* Subtract nav height */
+    min-height: calc(calc(var(--vh,1dvh)*100) - 64px); /* Subtract nav height */
     position: relative;
   }
 }

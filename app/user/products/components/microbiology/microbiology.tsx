@@ -204,9 +204,9 @@ export default function Microbiology() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+		<div className="min-h-[calc(var(--vh,1vh)*100)] bg-gradient-to-b from-gray-50 to-white">
 			{/* Hero */}
-			<motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="relative min-h-screen flex items-center justify-center overflow-hidden max-[912px]:min-h-[70vh] max-[912px]:py-4">
+			<motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="relative min-h-[calc(var(--vh,1vh)*100)] flex items-center justify-center overflow-hidden max-[912px]:min-h-[calc(var(--vh,1vh)*70)] max-[912px]:py-4">
 				<div className="absolute inset-0 w-full h-full z-0">
 					<Image src="/asset/logo/background.webp" alt="Microbiology background" fill className="object-cover w-full h-full" priority />
 					<div className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#0b1338]/30 via-[#0b1338]/55 to-[#0b1338]/85" style={{ zIndex: 1 }} />

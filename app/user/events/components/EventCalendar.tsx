@@ -509,7 +509,7 @@ const EventCalendar: React.FC = () => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[85vh] overflow-hidden flex flex-col">
+              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[calc(var(--vh,1vh)*85)] overflow-hidden flex flex-col">
                 <div className="flex justify-between items-start mb-4 flex-shrink-0">
                   <div>
                     <h3 className="text-lg lg:text-xl font-bold text-gray-800">
@@ -607,7 +607,7 @@ const EventCalendar: React.FC = () => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[85vh] overflow-y-auto max-[912px]:max-h-[80vh] max-[912px]:mx-2">
+              <div className="bg-white rounded-xl shadow-2xl p-4 lg:p-6 w-full border-2 border-gray-200 max-h-[calc(var(--vh,1vh)*85)] overflow-y-auto max-[912px]:max-h-[calc(var(--vh,1vh)*80)] max-[912px]:mx-2">
                 {/* Modal Header */}
                 <div className="flex justify-between items-start mb-3 lg:mb-4">
                   <div>

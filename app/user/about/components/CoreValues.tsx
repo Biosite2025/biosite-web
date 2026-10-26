@@ -147,7 +147,7 @@ const CoreValues = () => {
                 <div className="text-center">
                   <p
                     className="font-extrabold uppercase leading-[1.1] tracking-[0.18em] text-[#22409A]"
-                    style={{ fontSize: 'clamp(1.6rem, 5vw, 4rem)' }}
+                    style={{ fontSize: 'clamp(1.6rem, calc(var(--vw,1vw)*5), 4rem)' }}
                   >
                     BIOSITE
                     <br className="sm:hidden" />

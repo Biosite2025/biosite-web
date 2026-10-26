@@ -40,7 +40,7 @@ const Community = () => {
 
             <motion.div
               className="mt-6 space-y-5 leading-relaxed text-[#1F2937]"
-              style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.075rem)' }}
+              style={{ fontSize: 'clamp(0.95rem, calc(var(--vw,1vw)*1.4), 1.075rem)' }}
               variants={staggerParent}
               initial="hidden"
               whileInView="visible"

@@ -92,7 +92,7 @@ const EventShowcase = () => {
     <section
       id="events-hero"
       aria-labelledby="events-hero-title"
-      className="relative w-full overflow-hidden lg:h-screen h-[calc(100vh-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
+      className="relative w-full overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
     >
       {/* Background video */}
       <div className="absolute inset-0">
@@ -122,7 +122,7 @@ const EventShowcase = () => {
         <motion.h1
           id="events-hero-title"
           className="font-extrabold leading-[1.08] tracking-tight"
-          style={{ fontSize: 'clamp(2rem, 5.4vw, 3.6rem)' }}
+          style={{ fontSize: 'clamp(2rem, calc(var(--vw,1vw)*5.4), 3.6rem)' }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
@@ -132,7 +132,7 @@ const EventShowcase = () => {
 
         <motion.p
           className="mt-5 max-w-xl text-blue-50/90"
-          style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.15rem)' }}
+          style={{ fontSize: 'clamp(0.95rem, calc(var(--vw,1vw)*1.6), 1.15rem)' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}

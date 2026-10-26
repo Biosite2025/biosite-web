@@ -123,6 +123,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
+        {/* Laptop/desktop scale-to-fit: the desktop layout is designed at 1920px
+            wide. On screens >= 1024px the whole page is zoomed so every laptop
+            shows the same composition, just scaled to its width (a 1280px
+            laptop renders at 2/3). --vh / --vw carry the real viewport size in
+            the zoomed coordinate space, so full-screen sections still fill the
+            screen. Phones and tablets keep their own responsive layouts.
+            Inline + before paint to avoid a flash of the unscaled layout. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var D=1920,M=1024,MAX=1.5,r=document.documentElement;function fit(){var w=window.innerWidth,h=window.innerHeight,z=w>=M?Math.min(w/D,MAX):1;if(Math.abs(z-1)<0.01){r.style.zoom='';r.style.removeProperty('--vh');r.style.removeProperty('--vw');r.removeAttribute('data-fit');return}r.style.zoom=String(z);r.style.setProperty('--vh',(h/z/100)+'px');r.style.setProperty('--vw',(w/z/100)+'px');r.setAttribute('data-fit','')}fit();window.addEventListener('resize',fit)})();`,
+          }}
+        />
         {/* Primary Meta Tags */}
         <title>Biosite Medical Instruments, INC.</title>
         <meta name="title" content="Biosite Medical Instruments, INC." />
@@ -198,9 +210,9 @@ export default function RootLayout({
           <TopNav />
           
           {/* Main content area */}
-          <div className="relative min-h-screen">
+          <div className="relative min-h-[calc(var(--vh,1vh)*100)]">
             {/* Page content */}
-            <main className={`relative min-h-screen bg-white transition-opacity duration-300 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <main className={`relative min-h-[calc(var(--vh,1vh)*100)] bg-white transition-opacity duration-300 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {children}
             </main>
             

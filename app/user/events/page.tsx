@@ -19,7 +19,7 @@ export default function Page() {
           <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} pauseWhileCoveredBy="#events-hero" />
         </div>
 
-        <main className="relative z-10 min-h-screen pt-16 lg:pt-0">
+        <main className="relative z-10 min-h-[calc(var(--vh,1vh)*100)] pt-16 lg:pt-0">
           <EventShowcase />
           <EventGallery />
           <EventCalendar />

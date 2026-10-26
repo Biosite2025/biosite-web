@@ -147,7 +147,7 @@ export default function BiomiFAQ() {
 
 	return (
 		<>
-			<div id="bg" className="relative mb-6 sm:mb-10 flex justify-center items-center min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-96px)] py-3 sm:py-5 md:py-6 lg:py-8 [@media(max-height:760px)]:lg:py-3 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 pt-8 mt-8 lg:mt-0 lg:pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
+			<div id="bg" className="relative mb-6 sm:mb-10 flex justify-center items-center min-h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:min-h-[calc(calc(var(--vh,1vh)*100)-96px)] py-3 sm:py-5 md:py-6 lg:py-8 [@media(max-height:760px)]:lg:py-3 bg-transparent font-[Inter,Poppins,sans-serif] px-2 sm:px-3 md:px-6 pt-8 mt-8 lg:mt-0 lg:pt-8 max-[912px]:mb-16 max-[912px]:mt-0 max-[912px]:py-0 max-[912px]:pt-0 max-[912px]:pb-0 max-[912px]:px-0 max-[912px]:min-h-0">
 				{/* PixelBlast Animated Background */}
 				<PixelBlast
 					variant="circle"
@@ -212,7 +212,7 @@ export default function BiomiFAQ() {
 						role="tabpanel"
 						aria-labelledby="biomi-tab-chat"
 						ref={listRef}
-						className="flex h-[min(26rem,58dvh)] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,52dvh)]"
+						className="flex h-[min(26rem,calc(var(--vh,1dvh)*58))] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,calc(var(--vh,1dvh)*52))]"
 						aria-live="polite"
 						aria-label="Conversation with Biomi"
 					>
@@ -321,7 +321,7 @@ export default function BiomiFAQ() {
 							id="biomi-topics"
 							role="tabpanel"
 							aria-labelledby="biomi-tab-topics"
-							className="flex h-[min(26rem,58dvh)] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,52dvh)]"
+							className="flex h-[min(26rem,calc(var(--vh,1dvh)*58))] flex-col gap-3 overflow-y-auto overscroll-contain bg-[#f7fafd] px-3 py-4 sm:px-5 [@media(max-height:760px)]:lg:h-[min(22rem,calc(var(--vh,1dvh)*52))]"
 						>
 							{topic === null && (
 								<>

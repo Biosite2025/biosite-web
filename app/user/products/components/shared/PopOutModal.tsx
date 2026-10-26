@@ -104,7 +104,7 @@ export default function PopOutModal({
 			/>
 
 			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center overflow-y-auto px-4 py-6 pointer-events-none [perspective:1600px]">
-				<div className="relative w-full max-w-[22rem] pt-28 sm:max-w-xl sm:pt-40 lg:max-w-4xl lg:pt-[min(11rem,24vh)]">
+				<div className="relative w-full max-w-[22rem] pt-28 sm:max-w-xl sm:pt-40 lg:max-w-4xl lg:pt-[min(11rem,calc(var(--vh,1vh)*24))]">
 					{/* Brand logo — floats above the card */}
 					<motion.div
 						className="pointer-events-none absolute left-1 top-0 z-10 sm:left-2 lg:top-2"
@@ -149,7 +149,7 @@ export default function PopOutModal({
 
 
 						{/* Product — breaks out of the card's top-right corner */}
-						<div className="absolute -top-28 right-2 z-20 h-44 w-40 sm:-top-36 sm:right-4 sm:h-60 sm:w-52 lg:-top-[min(11rem,24vh)] lg:-right-10 lg:h-[min(22rem,48vh)] lg:w-[min(20rem,44vh)]">
+						<div className="absolute -top-28 right-2 z-20 h-44 w-40 sm:-top-36 sm:right-4 sm:h-60 sm:w-52 lg:-top-[min(11rem,calc(var(--vh,1vh)*24))] lg:-right-10 lg:h-[min(22rem,calc(var(--vh,1vh)*48))] lg:w-[min(20rem,calc(var(--vh,1vh)*44))]">
 							{/* brand glow + contact shadow on the card */}
 							<div aria-hidden="true" className="absolute -inset-[10%]" style={{ background: `radial-gradient(closest-side, ${accent}4d, ${accent}1a 55%, transparent)` }} />
 							<div aria-hidden="true" className="absolute -bottom-2 left-1/2 h-6 w-3/4 -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(15,23,42,0.28),transparent)]" />
@@ -223,7 +223,7 @@ export default function PopOutModal({
 								animate={{ width: 56 }}
 								transition={{ duration: 0.5, delay: 0.45, ease: 'easeOut' }}
 							/>
-							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm h-[min(8.5rem,20dvh)] lg:h-[min(9.5rem,22vh)] overflow-y-auto overscroll-contain pr-1 pb-3 [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
+							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm h-[min(8.5rem,calc(var(--vh,1dvh)*20))] lg:h-[min(9.5rem,calc(var(--vh,1vh)*22))] overflow-y-auto overscroll-contain pr-1 pb-3 [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
 								{description}
 							</motion.p>
 							<motion.div {...rise(0.5)} className="mt-5 flex flex-nowrap items-center gap-2 sm:mt-6 sm:gap-3 [@media(max-height:760px)]:lg:mt-4">

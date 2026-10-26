@@ -37,10 +37,10 @@ const COPY = {
   detail: 'mt-4 italic text-[#6B7280]',
 };
 const COPY_SIZE = {
-  year: { fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' },
-  partner: { fontSize: 'clamp(1.4rem, 2.2vw, 2rem)' },
-  title: { fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' },
-  detail: { fontSize: 'clamp(0.9rem, 1.2vw, 1.15rem)' },
+  year: { fontSize: 'clamp(2.5rem, calc(var(--vw,1vw)*5), 4.5rem)' },
+  partner: { fontSize: 'clamp(1.4rem, calc(var(--vw,1vw)*2.2), 2rem)' },
+  title: { fontSize: 'clamp(1rem, calc(var(--vw,1vw)*1.4), 1.35rem)' },
+  detail: { fontSize: 'clamp(0.9rem, calc(var(--vw,1vw)*1.2), 1.15rem)' },
 };
 const pad = (n: number) => String(n + 1).padStart(2, '0');
 
@@ -175,7 +175,7 @@ const AwardsRecognitions = () => {
             <h2
               id="awards-title"
               className="font-extrabold uppercase tracking-wide text-[#111827]"
-              style={{ fontSize: 'clamp(1.1rem, 1.9vw, 1.7rem)' }}
+              style={{ fontSize: 'clamp(1.1rem, calc(var(--vw,1vw)*1.9), 1.7rem)' }}
             >
               Awarded by the brands we represent
             </h2>

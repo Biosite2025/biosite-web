@@ -48,7 +48,7 @@ const SectionHeading = ({
       <h2
         id={titleId}
         className="font-extrabold tracking-tight text-[#111827] leading-[1.1]"
-        style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.5rem)' }}
+        style={{ fontSize: 'clamp(1.6rem, calc(var(--vw,1vw)*3.2), 2.5rem)' }}
       >
         {title}
       </h2>
@@ -56,7 +56,7 @@ const SectionHeading = ({
       {intro && (
         <p
           className={`mt-5 max-w-2xl text-[#1F2937] leading-relaxed ${align === 'center' ? 'mx-auto' : ''}`}
-          style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.125rem)' }}
+          style={{ fontSize: 'clamp(0.95rem, calc(var(--vw,1vw)*1.4), 1.125rem)' }}
         >
           {intro}
         </p>

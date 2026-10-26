@@ -3,7 +3,7 @@ import Footer from './Footer';
 
 export default function Page() {
   return (
-      <div className="min-h-screen pt-16 lg:pt-0">
+      <div className="min-h-[calc(var(--vh,1vh)*100)] pt-16 lg:pt-0">
         <Pipettors  />
         <Footer />
       </div>
