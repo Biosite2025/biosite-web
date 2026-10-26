@@ -3,12 +3,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import PopOutModal from '../shared/PopOutModal';
-import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 import ProductCard from '../shared/ProductCard';
-import TestMenuTable, { type TestMenu } from '../shared/TestMenuTable';
+import AnalyzerModal from '../shared/AnalyzerModal';
+import type { TestMenu } from '../shared/TestMenuTable';
 
 // Product category
 const category = {
@@ -32,190 +32,62 @@ const brands = [
 ];
 
 // Modal component
+// Test menus for the analyzers that have one. Markers (*, **, †) are the
+// manufacturer's notes; see each table's footer.
+const LIAISON_MENU: TestMenu = [
+	['Bone and Mineral', ['25 OH Vitamin D TOTAL']],
+	['Epstein-Barr Virus', ['EBV IgM', 'VCA IgG', 'EBNA IgG', 'KAPI IgG']],
+	['ToRCH', ['Rubella IgG', 'Rubella IgM', 'Cytomegalovirus IgM', 'Cytomegalovirus IgG', 'HSV-1 Type Specific IgG', 'HSV-2 Type Specific IgG']],
+	['Infectious Disease', ['Treponema Assay', 'VZV IgG†', 'Borrelia burgdorferi†', 'Measles IgG†', 'Mumps IgG†']],
+	['Hepatitis', ['Hepatitis A Total Antibodies', 'Hepatitis A IgM*']],
+	['Diabetes', ['Insulin', 'C-Peptide']],
+	['MMRV', ['Measles IgG†', 'Mumps IgG†', 'Rubella IgM', 'Rubella IgG', 'VZV IgG†']],
+	['Growth', ['Human Growth Hormone', 'IGF-1*']],
+	['Hypertension', ['Direct Renin†', 'Aldosterone']],
+	['Fertility', ['FSH', 'LH', 'Prolactin xt', 'Testosterone', 'Estradiol II Gen', 'Progesterone II Gen**', 'hCG']],
+	['Thyroid', ['TSH', 'FT3', 'FT4', 'Anti-TPO*']],
+];
+// "*" = not the standard 10-minute incubation.
+const TOSOH_MENU: TestMenu = [
+	['Tumor Markers', ['AFP', 'CEA', 'PA', '27.29', 'CA125', 'CA19-9']],
+	['Thyroid', ['TSH', 'fT3', 'T4', 'FT3', 'FT4', 'T-U', 'TSH 3rd-Gen *', 'TgAb *']],
+	['Cardiac Markers', ['CK-MB', 'c Tni 2nd-Gen', 'Myoglobin']],
+	['Anemia', ['FER', 'B12 *', 'FOLATE *', 'RBC FOLATE *']],
+	['Reproductive', ['βHCG', 'HCG', 'DHEA-S', 'E2', 'FSH', 'LH II', 'PRL', 'PROG II', 'PROG III', 'SHBG', 'Testosterone']],
+	['Kidney Markers', ['BMG', 'Cystatin C', 'intact PTH']],
+	['Metabolic', ['CORT', 'hGH']],
+	['Diabetes', ['C-Peptide II', 'IRI']],
+	['Additional', ['ACTH', 'Homocysteine', 'IgE II', 'PAP', '25-OH Vitamin D *']],
+];
+const BIOFLASH_MENU: TestMenu = [
+	['ToRCH', ['Toxo IgG', 'Toxo IgM', 'Rubella IgG', 'Rubella IgM', 'CMV IgG', 'CMV IgM', 'HSV-1 IgG', 'HSV-2 IgG', 'HSV IgM*']],
+	['Pre-surgery', ['HBsAg', 'anti-HBs', 'HBeAg*', 'anti-HBe*', 'anti-HBc', 'anti-HCV', 'anti-HIV (1+2)', 'anti-TP']],
+];
+const MARKER_NOTE = 'Assays marked *, ** or † carry manufacturer notes — ask our team for details';
+
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
-
-	const handleModalContentClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-	};
-
-	const isLiaisonXL = product.name === 'LIAISON® XL';
-	const isTosoh = product.brand === 'tosoh';
-	// Tosoh and DiaSorin photos float on their own (no box), like the other product modals.
-	const floatPhoto = isTosoh || product.brand === 'liaison';
-	const isBioFlash = product.name === 'BIO-FLASH';
+	const menu =
+		product.name === 'LIAISON® XL' ? { menu: LIAISON_MENU, title: 'LIAISON® XL Test Menu', footer: MARKER_NOTE }
+		: product.brand === 'tosoh' ? { menu: TOSOH_MENU, title: 'Tosoh AIA® Test Menu', footer: '10-minute incubation unless marked *' }
+		: product.name === 'BIO-FLASH' ? { menu: BIOFLASH_MENU, title: 'BIO-FLASH Test Menu', footer: MARKER_NOTE }
+		: null;
 	// Products without a test menu use the shared pop-out modal.
-	if (!isLiaisonXL && !isTosoh && !isBioFlash) {
+	if (!menu) {
 		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
 	}
-
-	// LIAISON® XL test menu (DiaSorin). Markers (*, **, †) are the
-	// manufacturer's notes; see the table footer.
-	const LIAISON_MENU: TestMenu = [
-		['Bone and Mineral', ['25 OH Vitamin D TOTAL']],
-		['Epstein-Barr Virus', ['EBV IgM', 'VCA IgG', 'EBNA IgG', 'KAPI IgG']],
-		['ToRCH', ['Rubella IgG', 'Rubella IgM', 'Cytomegalovirus IgM', 'Cytomegalovirus IgG', 'HSV-1 Type Specific IgG', 'HSV-2 Type Specific IgG']],
-		['Infectious Disease', ['Treponema Assay', 'VZV IgG†', 'Borrelia burgdorferi†', 'Measles IgG†', 'Mumps IgG†']],
-		['Hepatitis', ['Hepatitis A Total Antibodies', 'Hepatitis A IgM*']],
-		['Diabetes', ['Insulin', 'C-Peptide']],
-		['MMRV', ['Measles IgG†', 'Mumps IgG†', 'Rubella IgM', 'Rubella IgG', 'VZV IgG†']],
-		['Growth', ['Human Growth Hormone', 'IGF-1*']],
-		['Hypertension', ['Direct Renin†', 'Aldosterone']],
-		['Fertility', ['FSH', 'LH', 'Prolactin xt', 'Testosterone', 'Estradiol II Gen', 'Progesterone II Gen**', 'hCG']],
-		['Thyroid', ['TSH', 'FT3', 'FT4', 'Anti-TPO*']],
-	];
-	const liaisonTestMenu = <TestMenuTable menu={LIAISON_MENU} footer="Assays marked *, ** or † carry manufacturer notes — ask our team for details" />;
-
-	// Tosoh AIA® test menu. "*" = not the standard 10-minute incubation.
-	const TOSOH_MENU: TestMenu = [
-		['Tumor Markers', ['AFP', 'CEA', 'PA', '27.29', 'CA125', 'CA19-9']],
-		['Thyroid', ['TSH', 'fT3', 'T4', 'FT3', 'FT4', 'T-U', 'TSH 3rd-Gen *', 'TgAb *']],
-		['Cardiac Markers', ['CK-MB', 'c Tni 2nd-Gen', 'Myoglobin']],
-		['Anemia', ['FER', 'B12 *', 'FOLATE *', 'RBC FOLATE *']],
-		['Reproductive', ['βHCG', 'HCG', 'DHEA-S', 'E2', 'FSH', 'LH II', 'PRL', 'PROG II', 'PROG III', 'SHBG', 'Testosterone']],
-		['Kidney Markers', ['BMG', 'Cystatin C', 'intact PTH']],
-		['Metabolic', ['CORT', 'hGH']],
-		['Diabetes', ['C-Peptide II', 'IRI']],
-		['Additional', ['ACTH', 'Homocysteine', 'IgE II', 'PAP', '25-OH Vitamin D *']],
-	];
-	const tosohTestMenu = <TestMenuTable menu={TOSOH_MENU} footer="10-minute incubation unless marked *" />;
-
-	const bioflashTestMenu = (
-		<div className="divide-y divide-gray-100 [&>div]:py-1.5 md:[&>div]:py-2.5 [&>div:first-child]:pt-0 text-[9px] md:text-xs max-h-[222px] md:max-h-[300px] overflow-y-auto pr-1 md:pr-2">
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🔬</span>ToRCH
-					<span className="text-[8px] md:text-xs font-normal text-gray-500 ml-1">(9)</span>
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>Toxo IgG</p>
-					<p>Toxo IgM</p>
-					<p>Rubella IgG</p>
-					<p>Rubella IgM</p>
-					<p>CMV IgG</p>
-					<p>CMV IgM</p>
-					<p>HSV-1 IgG</p>
-					<p>HSV-2 IgG</p>
-					<p>HSV IgM*</p>
-				</div>
-			</div>
-
-			<div>
-				<h4 className="font-bold text-[#2B3990] mb-0.5 md:mb-1 flex items-center gap-1">
-					<span className="text-sm md:text-lg">🏥</span>Pre-surgery
-					<span className="text-[8px] md:text-xs font-normal text-gray-500 ml-1">(8)</span>
-				</h4>
-				<div className="ml-3 md:ml-5 text-gray-700">
-					<p>HBsAg</p>
-					<p>anti-HBs</p>
-					<p>HBeAg*</p>
-					<p>anti-HBe*</p>
-					<p>anti-HBc</p>
-					<p>anti-HCV</p>
-					<p>anti-HIV（1+2）</p>
-					<p>anti-TP</p>
-				</div>
-			</div>
-		</div>
-	);
-
 	return (
-		<>
-			<div
-				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-				onClick={product.onClose}
-				style={{ cursor: 'pointer' }}
-			></div>
-			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-2">
-				<motion.div
-					initial={{ opacity: 0, scale: 0.9, y: 20 }}
-					animate={{ opacity: 1, scale: 1, y: 0 }}
-					exit={{ opacity: 0, scale: 0.9, y: 20 }}
-					transition={{ duration: 0.3 }}
-					className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${isLiaisonXL || isTosoh || isBioFlash ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[60vh] max-[912px]:overflow-hidden lg:max-h-full lg:overflow-y-auto lg:overscroll-contain`}
-					onClick={handleModalContentClick}
-				>
-					<button
-						onClick={product.onClose}
-						className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100 z-10
-								 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] max-[912px]:top-1.5 max-[912px]:right-1.5"
-						aria-label="Close modal"
-					>
-						<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
-					</button>
-
-					{/* No test menu: photo left / text right on desktop, like the other product modals. */}
-					<div className={isLiaisonXL || isTosoh || isBioFlash ? 'grid grid-cols-2 gap-2 md:gap-6' : 'lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-10 lg:[&>div>div:first-of-type]:mb-0 lg:[&>div>div:first-of-type]:h-[min(22rem,55vh)] lg:[&>div]:contents'}>
-						{isLiaisonXL && (
-							<div className="border-r border-gray-200 pr-2 md:pr-6">
-								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">LIAISON® XL Test Menu</h3>
-								{liaisonTestMenu}
-							</div>
-						)}
-
-						{isTosoh && (
-							<div className="border-r border-gray-200 pr-2 md:pr-6">
-								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">Tosoh AIA® Test Menu</h3>
-								{tosohTestMenu}
-							</div>
-						)}
-
-						{isBioFlash && (
-							<div className="border-r border-gray-200 pr-2 md:pr-6">
-								<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3 border-b border-gray-200 pb-1 md:pb-2">BIO-FLASH Test Menu</h3>
-								{bioflashTestMenu}
-							</div>
-						)}
-
-						<div>
-							<div className={`relative h-20 md:h-64 lg:h-80 rounded-lg sm:rounded-xl mb-2 md:mb-6 ${floatPhoto ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
-								{/* Tosoh: the product floats on its own (no box), like the other product modals. */}
-								{floatPhoto && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
-								<div className={floatPhoto ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
-								<HoverZoom stage={floatPhoto}>
-<Image
-									src={product.image}
-									alt={product.name}
-									fill
-									className={`object-contain p-1 md:p-6 ${floatPhoto ? 'md:pt-14 ' : ''}${floatPhoto ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
-									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 30vw"
-								/>
-</HoverZoom>
-								</div>
-
-								{/* Brand logo badge (same treatment as the product cards) */}
-								{product.brandLogo && (
-									<div className="absolute top-2 right-2 md:top-3 md:right-3 pointer-events-none">
-										<Image
-											src={product.brandLogo}
-											alt={`${product.brandName ?? 'Brand'} logo`}
-											aria-hidden="true"
-											width={460}
-											height={48}
-											className="h-[20px] md:h-[40px] lg:h-[48px] w-auto object-contain drop-shadow-md"
-										/>
-									</div>
-								)}
-							</div>
-
-							<div className="space-y-1 md:space-y-4">
-								<h3 className="text-xs md:text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h3>
-								<p className="text-[10px] md:text-base text-gray-600 leading-snug md:leading-relaxed">
-									{product.description ? product.description : 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in immunology applications.'}
-								</p>
-								<div className="pt-1 md:pt-4 border-t border-gray-200">
-									<p className="text-[9px] md:text-sm text-gray-500 leading-tight">
-										For detailed specifications and pricing information, please contact our sales team.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</motion.div>
-			</div>
-		</>
+		<AnalyzerModal
+			name={product.name}
+			description={product.description}
+			image={product.image}
+			logo={product.brandLogo}
+			brandName={product.brandName}
+			menu={menu.menu}
+			menuTitle={menu.title}
+			menuFooter={menu.footer}
+			onClose={product.onClose}
+		/>
 	);
 }
 

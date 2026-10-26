@@ -3,12 +3,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import PopOutModal from '../shared/PopOutModal';
-import HoverZoom from '../shared/HoverZoom';
 import { motion, AnimatePresence, useAnimation, useInView, useReducedMotion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
 import Preloader from '@/src/components/layout/Preloader';
 import ProductCard from '../shared/ProductCard';
-import TestMenuTable, { type TestMenu } from '../shared/TestMenuTable';
+import AnalyzerModal from '../shared/AnalyzerModal';
+import type { TestMenu } from '../shared/TestMenuTable';
 
 // Custom scrollbar styles
 const scrollbarStyles = `
@@ -41,112 +41,31 @@ const category = {
 };
 
 // Modal component
+// ILab test menu (all ILab analyzers).
+const ILAB_MENU: TestMenu = [
+	['Clinical Chemistry', ['Uric Acid', 'Albumin', 'ALT/GPT', 'Amylase', 'AST/GOT', 'Direct Bilirubin', 'Total Bilirubin', 'Calcium', 'CK', 'CK-MB', 'Chloride', 'HDL Cholesterol', 'LDL Cholesterol', 'Total Cholesterol', 'Cholinesterase', 'Creatinine', 'Iron', 'ALP', 'GGT', 'Glucose', 'Glycated Albumin', 'LDH-P', 'Lipase', 'Magnesium', 'Potassium', 'Total Protein Serum', 'Total Protein Urine', 'Sodium', 'Triglycerides', 'Total CO2', 'Urea']],
+	['Immunodiagnostics', ['HbA1c', 'Rheumatoid Factor', 'ASO', 'CRP', 'C3, C4', 'Microalbumin', 'IgA, IgG, IgM', 'Transferrin']],
+	['Drugs of Abuse*', ['Amphetamines', 'Benzodiazepine', 'Cannabinoid', 'Cocaine Metabolite', 'Ecstasy', 'Ethyl Alcohol', 'Methadone', 'Opiate']],
+];
+
 function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
 	if (!isOpen || !product) return null;
-
-	const handleModalContentClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-	};
-
-	const isILabProduct = product.name?.includes('ILab');
 	// Products without a test menu use the shared pop-out modal.
-	if (!isILabProduct) {
+	if (!product.name?.includes('ILab')) {
 		return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo} brandName={product.brandName} onClose={product.onClose} />;
 	}
-
-	// ILab test menu, rendered as the shared formal table.
-	const ILAB_MENU: TestMenu = [
-		['Clinical Chemistry', ['Uric Acid', 'Albumin', 'ALT/GPT', 'Amylase', 'AST/GOT', 'Direct Bilirubin', 'Total Bilirubin', 'Calcium', 'CK', 'CK-MB', 'Chloride', 'HDL Cholesterol', 'LDL Cholesterol', 'Total Cholesterol', 'Cholinesterase', 'Creatinine', 'Iron', 'ALP', 'GGT', 'Glucose', 'Glycated Albumin', 'LDH-P', 'Lipase', 'Magnesium', 'Potassium', 'Total Protein Serum', 'Total Protein Urine', 'Sodium', 'Triglycerides', 'Total CO2', 'Urea']],
-		['Immunodiagnostics', ['HbA1c', 'Rheumatoid Factor', 'ASO', 'CRP', 'C3, C4', 'Microalbumin', 'IgA, IgG, IgM', 'Transferrin']],
-		['Drugs of Abuse*', ['Amphetamines', 'Benzodiazepine', 'Cannabinoid', 'Cocaine Metabolite', 'Ecstasy', 'Ethyl Alcohol', 'Methadone', 'Opiate']],
-	];
-	const ilabAriesTestMenu = <TestMenuTable menu={ILAB_MENU} footer="* May not be available in all countries — ask our team" />;
-
 	return (
-		<>
-			<div
-				className="fixed inset-0 z-40 bg-white/40 backdrop-blur-md"
-				onClick={product.onClose}
-				style={{ cursor: 'pointer' }}
-			></div>
-			<div className="fixed inset-x-0 bottom-0 top-16 lg:top-24 z-50 flex items-center justify-center px-2 sm:px-4 py-3 sm:py-4 pointer-events-none max-[912px]:px-3">
-				<motion.div
-					initial={{ opacity: 0, scale: 0.95, y: 20 }}
-					animate={{ opacity: 1, scale: 1, y: 0 }}
-					exit={{ opacity: 0, scale: 0.95, y: 20 }}
-					transition={{ duration: 0.3 }}
-		className={`bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 ${isILabProduct ? 'max-w-4xl' : 'max-w-sm sm:max-w-md md:max-w-2xl'} w-full border-2 border-gray-200 mx-auto relative pointer-events-auto max-[912px]:max-w-[95vw] max-[912px]:p-3 max-[912px]:max-h-[85vh] max-[912px]:overflow-hidden lg:max-h-full lg:overflow-y-auto lg:overscroll-contain`}
-					onClick={handleModalContentClick}
-				>
-					<button
-						onClick={product.onClose}
-						className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 text-gray-500 hover:text-gray-800 transition-colors p-2.5 sm:p-3 rounded-full hover:bg-gray-100 z-10
-								 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] max-[912px]:top-1.5 max-[912px]:right-1.5"
-						aria-label="Close modal"
-					>
-						<svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
-					</button>
-
-<div className={isILabProduct ? 'grid grid-cols-2 gap-6 md:gap-8 max-[912px]:grid-cols-2 max-[912px]:gap-2' : ''}>
-				{isILabProduct && (
-					<div className="border-r border-gray-200 pr-6 md:pr-8 max-[912px]:pr-2">
-						<h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-3">ILab Test Menu</h3>
-						{ilabAriesTestMenu}
-					</div>
-				)}
-
-					<div className="overflow-y-auto max-h-[65vh] custom-scrollbar max-[912px]:max-h-[60vh]">
-						<div className={`relative h-56 sm:h-64 md:h-72 rounded-lg sm:rounded-xl mb-4 sm:mb-6 max-[912px]:h-40 ${isILabProduct ? '' : 'bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'}`}>
-						{/* ILab: the product floats on its own (no box), like the other product modals. */}
-						{isILabProduct && <div aria-hidden="true" className="absolute inset-x-[15%] bottom-0 h-5 bg-[radial-gradient(closest-side,rgba(15,23,42,0.22),transparent)]" />}
-						<div className={isILabProduct ? 'nikon-stage-float absolute inset-0' : 'absolute inset-0'}>
-						<HoverZoom stage={isILabProduct}>
-<Image
-							src={product.image}
-							alt={product.name}
-							fill
-							className={`object-contain p-4 sm:p-6 max-[912px]:p-2 ${isILabProduct ? 'drop-shadow-[0_14px_10px_rgba(15,23,42,0.18)]' : ''}`}
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-						/>
-</HoverZoom>
-						</div>
-
-						{product.brandLogo && (
-							<div className="absolute top-3 right-3">
-								<Image
-									src={product.brandLogo}
-									alt={`${product.brandName ?? 'Brand'} logo`}
-									aria-hidden="true"
-									width={460}
-									height={48}
-									// 👇 adjust logo zoom here: raise/lower the h-[Npx] value (w-auto keeps aspect ratio)
-									className="h-[40px] sm:h-[48px] w-auto object-contain drop-shadow-md"
-								/>
-							</div>
-						)}
-					</div>
-
-					<div className="space-y-3 sm:space-y-4 max-[912px]:space-y-2">
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 max-[912px]:text-lg">{product.name}</h3>
-
-						<div className="max-h-32 overflow-y-auto pr-2 custom-scrollbar max-[912px]:max-h-24">
-							<p className="text-sm sm:text-base text-gray-600 leading-relaxed max-[912px]:text-xs">
-								{product.description || 'Professional-grade laboratory equipment designed for precision, reliability, and superior performance in clinical chemistry applications.'}
-							</p>
-						</div>
-						<div className="pt-3 sm:pt-4 border-t border-gray-200 max-[912px]:pt-2">
-							<p className="text-xs sm:text-sm text-gray-500 max-[912px]:text-xs">
-								For detailed specifications and pricing information, please contact our sales team.
-							</p>
-						</div>
-					</div>
-					</div>
-				</div>
-				</motion.div>
-			</div>
-		</>
+		<AnalyzerModal
+			name={product.name}
+			description={product.description}
+			image={product.image}
+			logo={product.brandLogo}
+			brandName={product.brandName}
+			menu={ILAB_MENU}
+			menuTitle="ILab Test Menu"
+			menuFooter="* May not be available in all countries — ask our team"
+			onClose={product.onClose}
+		/>
 	);
 }
 
