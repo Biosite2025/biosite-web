@@ -170,13 +170,13 @@ export default function AnalyzerModal({
 												<button
 													type="button"
 													onClick={() => setTab('menu')}
-													className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border-2 border-[#2B3990] px-4 py-2 sm:flex-none text-sm font-semibold text-[#2B3990] transition hover:bg-[#2B3990] hover:text-white"
+													className="bevel bevel-outline inline-flex flex-1 items-center justify-center gap-2 px-4 py-2 sm:flex-none text-sm font-semibold text-[#2B3990] transition hover:text-white"
 												>
 													View test menu ({assays})
 												</button>
 												<Link
 													href={`/contact?product=${encodeURIComponent(name)}`}
-													className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#2B3990] px-4 py-2 sm:flex-none text-sm font-semibold text-white shadow-lg shadow-[#2B3990]/25 transition hover:bg-[#1f2a6b]"
+													className="bevel inline-flex flex-1 items-center justify-center gap-2 bg-[#2B3990] px-4 py-2 sm:flex-none text-sm font-semibold text-white transition hover:bg-[#1f2a6b]"
 												>
 													Request a Quote →
 												</Link>

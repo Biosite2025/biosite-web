@@ -293,8 +293,8 @@ export default function NikonMicroscopes() {
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
-							className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
-										hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+							className="bevel bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 font-bold text-sm sm:text-base md:text-lg 
+										hover:bg-gray-100 transition-all duration-300 inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
 							type="button"
 						>
 							Contact Our Experts

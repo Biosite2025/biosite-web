@@ -229,7 +229,7 @@ export default function PopOutModal({
 							<motion.div {...rise(0.5)} className="mt-5 flex flex-nowrap items-center gap-2 sm:mt-6 sm:gap-3 [@media(max-height:760px)]:lg:mt-4">
 								<Link
 									href={`/contact?product=${encodeURIComponent(name)}`}
-									className="group inline-flex items-center gap-2 shrink-0 rounded-full bg-[#2B3990] px-5 py-2.5 text-sm sm:px-6 sm:py-3 font-semibold text-white shadow-lg shadow-[#2B3990]/25 transition hover:-translate-y-0.5 hover:bg-[#1f2a6b] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+									className="bevel group inline-flex items-center gap-2 shrink-0 bg-[#2B3990] px-5 py-2.5 text-sm sm:px-6 sm:py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#1f2a6b]"
 								>
 									Request a Quote
 									<svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
@@ -239,7 +239,7 @@ export default function PopOutModal({
 								<button
 									type="button"
 									onClick={onClose}
-									className="shrink-0 rounded-full px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3 transition hover:bg-gray-100 hover:text-gray-900"
+									className="bevel shrink-0 px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3 transition hover:bg-gray-100 hover:text-gray-900"
 								>
 									{backLabel}
 								</button>

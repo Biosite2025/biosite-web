@@ -56,9 +56,8 @@ export default function ProductCard({
 			type="button"
 			whileTap={{ scale: 0.97 }}
 			onClick={onViewDetails}
-			className="w-full border-2 border-[#2B3990] text-[#2B3990] bg-transparent py-1.5 sm:py-3 rounded-lg font-semibold text-xs sm:text-base
-					 hover:bg-[#2B3990] hover:text-white transition-colors duration-200
-					 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+			className="bevel bevel-outline w-full text-[#2B3990] py-1.5 sm:py-3 font-semibold text-xs sm:text-base
+					 hover:text-white transition-colors duration-200"
 		>
 			View Details
 		</motion.button>
