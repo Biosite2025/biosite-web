@@ -474,27 +474,19 @@ html[data-modal-open] .partner-shine { animation-play-state: paused; }
 .biomi-blink { animation: biomi-blink 3.5s infinite; transform-box: fill-box; transform-origin: center; }
 @media (prefers-reduced-motion: reduce) { .biomi-sway, .biomi-blink { animation: none; } }
 
-/* Corner-bevelled buttons. clip-path also cuts box-shadow and outside outlines,
-   so the focus ring sits inside the button. */
+/* Raised product buttons: a hard offset shadow that presses in on hover. */
 .bevel {
-  --bevel: 10px;
-  clip-path: polygon(var(--bevel) 0, calc(100% - var(--bevel)) 0, 100% var(--bevel), 100% calc(100% - var(--bevel)), calc(100% - var(--bevel)) 100%, var(--bevel) 100%, 0 calc(100% - var(--bevel)), 0 var(--bevel));
+  background: #eef1f6;
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 #a3b1c6, -6px -6px 0 #fff;
+  transition: all .22s ease;
 }
-.bevel:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
-
-/* Outlined version: a border would be cut at the corners, so a white layer sits
-   inside a navy fill and fades out to fill the button on hover. */
-.bevel-outline { position: relative; isolation: isolate; border: 2px solid transparent; background: #2B3990; }
-.bevel-outline::before {
-  --inner: calc(var(--bevel) - 1.17px); /* keeps the diagonal edge as thick as the 2px sides */
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: #fff;
-  clip-path: polygon(var(--inner) 0, calc(100% - var(--inner)) 0, 100% var(--inner), 100% calc(100% - var(--inner)), calc(100% - var(--inner)) 100%, var(--inner) 100%, 0 calc(100% - var(--inner)), 0 var(--inner));
-  transition: opacity 200ms;
+@media (hover: hover) {
+  .bevel:hover {
+    color: #c2410c;
+    border-radius: 14px;
+    box-shadow: 3px 3px 0 #a3b1c6, -3px -3px 0 #fff;
+    transform: translate(2px, 2px);
+  }
 }
-@media (hover: hover) { .bevel-outline:hover::before { opacity: 0; } }
-.bevel-outline:focus-visible { color: #fff; }
-.bevel-outline:focus-visible::before { opacity: 0; }
+.bevel:focus-visible { outline: 2px solid #2B3990; outline-offset: 2px; }

@@ -226,10 +226,10 @@ export default function PopOutModal({
 							<motion.p {...rise(0.4)} className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-[15px] [@media(max-height:760px)]:lg:text-sm h-[min(8.5rem,calc(var(--vh,1dvh)*20))] lg:h-[min(9.5rem,calc(var(--vh,1vh)*22))] overflow-y-auto overscroll-contain pr-1 pb-3 [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
 								{description}
 							</motion.p>
-							<motion.div {...rise(0.5)} className="mt-5 flex flex-nowrap items-center gap-2 sm:mt-6 sm:gap-3 [@media(max-height:760px)]:lg:mt-4">
+							<motion.div {...rise(0.5)} className="mt-5 flex flex-wrap items-center gap-4 sm:mt-6 sm:flex-nowrap [@media(max-height:760px)]:lg:mt-4">
 								<Link
 									href={`/contact?product=${encodeURIComponent(name)}`}
-									className="bevel group inline-flex items-center gap-2 shrink-0 bg-[#2B3990] px-5 py-2.5 text-sm sm:px-6 sm:py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#1f2a6b]"
+									className="bevel group inline-flex items-center gap-2 shrink-0 px-5 py-2.5 text-sm sm:px-6 sm:py-3 font-semibold text-[#2B3990]"
 								>
 									Request a Quote
 									<svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
@@ -239,7 +239,7 @@ export default function PopOutModal({
 								<button
 									type="button"
 									onClick={onClose}
-									className="bevel shrink-0 px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3 transition hover:bg-gray-100 hover:text-gray-900"
+									className="bevel shrink-0 px-3 py-2.5 text-sm font-semibold text-gray-600 sm:px-5 sm:py-3"
 								>
 									{backLabel}
 								</button>

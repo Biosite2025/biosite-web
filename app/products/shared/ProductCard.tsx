@@ -49,18 +49,14 @@ export default function ProductCard({
 	const reducedMotion = useReducedMotion();
 	const tiltEnabled = !isTouch && !reducedMotion;
 
-	// Ghost/outline default that fills solid navy on hover — keeps the product
-	// image as the hero of the card instead of a wall of blue bars.
 	const viewDetailsButton = (
-		<motion.button
+		<button
 			type="button"
-			whileTap={{ scale: 0.97 }}
 			onClick={onViewDetails}
-			className="bevel bevel-outline w-full text-[#2B3990] py-1.5 sm:py-3 font-semibold text-xs sm:text-base
-					 hover:text-white transition-colors duration-200"
+			className="bevel w-full text-[#2B3990] py-2 sm:py-3.5 font-semibold text-xs sm:text-base"
 		>
 			View Details
-		</motion.button>
+		</button>
 	);
 
 	const productImage = (

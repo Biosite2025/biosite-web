@@ -290,15 +290,13 @@ export default function NikonMicroscopes() {
 						Our team of specialists is ready to help you find the perfect microscopy solution for your research needs.
 					</p>
 					<Link href="/contact">
-						<motion.button
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-							className="bevel bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 font-bold text-sm sm:text-base md:text-lg 
-										hover:bg-gray-100 transition-all duration-300 inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+						<button
+							className="bevel text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 font-bold text-sm sm:text-base md:text-lg 
+										inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
 							type="button"
 						>
 							Contact Our Experts
-						</motion.button>
+						</button>
 					</Link>
 				</div>
 			</motion.section>

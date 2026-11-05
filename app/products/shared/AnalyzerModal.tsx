@@ -166,17 +166,17 @@ export default function AnalyzerModal({
 									</div>
 									<div className="flex shrink-0 flex-col gap-2 border-t border-gray-100 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-4">
 										<p className="order-2 text-[11px] text-gray-400 sm:order-1 sm:text-xs">For detailed specifications and pricing, our sales team will get back to you.</p>
-										<div className="order-1 flex shrink-0 gap-2 sm:order-2">
+										<div className="order-1 flex shrink-0 gap-4 sm:order-2">
 												<button
 													type="button"
 													onClick={() => setTab('menu')}
-													className="bevel bevel-outline inline-flex flex-1 items-center justify-center gap-2 px-4 py-2 sm:flex-none text-sm font-semibold text-[#2B3990] transition hover:text-white"
+													className="bevel inline-flex flex-1 items-center justify-center gap-2 px-4 py-2 sm:flex-none text-sm font-semibold text-[#2B3990]"
 												>
 													View test menu ({assays})
 												</button>
 												<Link
 													href={`/contact?product=${encodeURIComponent(name)}`}
-													className="bevel inline-flex flex-1 items-center justify-center gap-2 bg-[#2B3990] px-4 py-2 sm:flex-none text-sm font-semibold text-white transition hover:bg-[#1f2a6b]"
+													className="bevel inline-flex flex-1 items-center justify-center gap-2 px-4 py-2 sm:flex-none text-sm font-semibold text-[#2B3990]"
 												>
 													Request a Quote →
 												</Link>
