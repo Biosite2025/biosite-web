@@ -1,0 +1,14 @@
+import SurgicalRehabilation from './surgical-rehabilation';
+import Footer from '@/src/components/layout/Footer';
+import { productMetadata } from '@/lib/productCategories';
+
+export const metadata = productMetadata('surgical-rehabilation');
+
+export default function Page() {
+  return (
+      <div className="min-h-[calc(var(--vh,1vh)*100)] pt-16 lg:pt-0">
+        <SurgicalRehabilation  />
+        <Footer />
+      </div>
+    );
+}

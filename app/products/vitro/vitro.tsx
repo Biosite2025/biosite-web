@@ -1,0 +1,269 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import PopOutModal from '../shared/PopOutModal';
+import HoverZoom from '../shared/HoverZoom';
+import { motion, useAnimation, useInView, useReducedMotion } from 'framer-motion';
+import ParticlesBackground from '../ParticlesBackground';
+import ProductCard from '../shared/ProductCard';
+import { ProductListJsonLd, useProductDeepLink } from '../shared/productLinks';
+import { PRODUCT_CATEGORIES } from '@/lib/productCategories';
+
+// Product category
+const category = {
+	id: 'vitro',
+	title: 'Vitro',
+	description: 'Advanced histopathology staining and ISH systems for molecular diagnostics',
+	folder: 'vitro',
+};
+
+// Every product on this page is Vitro, so the brand logo is applied at render
+// time rather than being duplicated onto each product record.
+const VITRO_BRAND = { name: 'Vitro', logo: '/asset/logo/VITRO.png' };
+const VITRO_HERO_BG = '/asset/logo/bg_vitro.png';
+
+// Modal component
+function Modal({ product, isOpen }: { product: any; isOpen: boolean }) {
+	if (!isOpen || !product) return null;
+	return <PopOutModal name={product.name} description={product.description} image={product.image} logo={product.brandLogo ?? VITRO_BRAND.logo} brandName={product.brandName ?? VITRO_BRAND.name} onClose={product.onClose} />;
+}
+
+// Category section component
+function CategorySection({ category, products, onViewDetails }: { category: any; products: any[]; onViewDetails: (product: any) => void }) {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-50px" });
+	const controls = useAnimation();
+	const reducedMotion = useReducedMotion();
+
+	useEffect(() => {
+		if (isInView) {
+			controls.start("visible");
+		}
+	}, [isInView, controls]);
+
+	return (
+		<section ref={ref} className="mb-12 sm:mb-16 md:mb-20 max-[912px]:mb-8">
+			{/* Section Header */}
+			<motion.div
+				initial={{ opacity: 0, x: -50 }}
+				animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+				transition={{ duration: 0.6 }}
+				className="mb-6 sm:mb-8 md:mb-10 max-[912px]:mb-4"
+			>
+				<div className="relative inline-block">
+					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 max-[912px]:text-xl">
+						{category.title}
+					</h2>
+					<motion.div
+						initial={{ width: 0 }}
+						animate={isInView ? { width: '100%' } : { width: 0 }}
+						transition={{ duration: 0.8, delay: 0.2 }}
+						className="h-0.5 sm:h-1 bg-gradient-to-r from-[#2B3990] to-[#4a5ab8] rounded-full"
+					/>
+				</div>
+				<p className="text-gray-600 mt-2 sm:mt-3 md:mt-4 text-sm sm:text-base md:text-lg max-w-3xl max-[912px]:text-sm">
+					{category.description}
+				</p>
+			</motion.div>
+
+			{/* Products Grid over one large faint Vitro watermark behind every card */}
+			<div className="relative">
+				<div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+					<motion.div
+						className="absolute inset-0"
+						style={{
+							backgroundImage: `url("${VITRO_BRAND.logo}")`,
+							backgroundRepeat: 'no-repeat',
+							backgroundPosition: 'center',
+							backgroundSize: 'contain',
+						}}
+						initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+						animate={{ opacity: 0.05, scale: 1 }}
+						transition={{ duration: reducedMotion ? 0.01 : 0.4, ease: 'easeOut' }}
+					/>
+				</div>
+
+				{/* flex-wrap + justify-center so a partial final row stays centered */}
+				<div className="relative z-10 flex flex-wrap justify-center gap-3 min-[913px]:gap-6">
+					{products.map((product: any, idx: number) => (
+						<div
+							key={product.id}
+							className="w-[calc(50%-0.375rem)] min-[913px]:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]"
+						>
+							<ProductCard
+								index={idx}
+								image={product.image}
+								name={product.name}
+								description={product.description}
+								brandName={VITRO_BRAND.name}
+								brandLogo={VITRO_BRAND.logo}
+								onViewDetails={() => onViewDetails(product)}
+							/>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+}
+
+const productData: any[] = [
+			{ id: 1, name: 'MD-Stainer', image: '/asset/vitro/vitro-new/vitro-md-stainer.png', description: 'The Vitro MD-Stainer is an advanced automated slide staining system designed for high-throughput histology and cytology laboratories, featuring programmable staining protocols with up to 40 reagent positions, precise temperature control, automated slide handling with barcode tracking, and intuitive touchscreen interface that delivers consistent, reproducible staining results while minimizing manual intervention and reducing turnaround time, making it ideal for routine H&E staining, special stains, and immunohistochemistry applications with superior reliability and cost-effectiveness in busy diagnostic laboratories.' },
+			{ id: 4, name: 'VitroStainer 42', image: '/asset/vitro/vitro-new/VitroStainer 42.png', description: 'The VitroStainer 42 is a state-of-the-art automated slide stainer for immunohistochemistry, offering 42 slide positions and 56 reagent positions.' }
+		
+		];
+
+export default function Vitro() {
+	const products = productData;
+	const [selectedProduct, setSelectedProduct] = useState<any>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+	const handleViewDetails = (product: any) => {
+		setSelectedProduct(product);
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		setSelectedProduct(null);
+	};
+
+
+	const productList = products;
+	useProductDeepLink(productList, isModalOpen ? selectedProduct : null, handleViewDetails);
+
+	return (
+		<div className="min-h-[calc(var(--vh,1vh)*100)] bg-gradient-to-b from-gray-50 to-white">
+			<ProductListJsonLd products={productList} />
+			{/* The hero shows the name as a logo image. */}
+			<h1 className="sr-only">{PRODUCT_CATEGORIES['vitro'].title}</h1>
+			{/* Hero Section */}
+			<motion.section
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 1 }}
+				className="relative min-h-[calc(var(--vh,1vh)*100)] flex items-center justify-center overflow-hidden max-[912px]:min-h-[calc(var(--vh,1vh)*70)] max-[912px]:py-4"
+			>
+				{/* Background image with depth gradient: lighter at the top so the
+				    photo shows through, darker toward the bottom where the text sits */}
+				<div className="absolute inset-0 w-full h-full z-0">
+					<Image
+						src={VITRO_HERO_BG}
+						alt="Vitro Background"
+						fill
+						className="object-cover w-full h-full"
+						priority
+					/>
+					<div
+						className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#0b1338]/30 via-[#0b1338]/55 to-[#0b1338]/85"
+						style={{ zIndex: 1 }}
+					/>
+				</div>
+
+				{/* Particles Background Animation */}
+				<div className="absolute inset-0 w-full h-full z-10">
+					<ParticlesBackground containerId="vitro-particles" />
+					<div className="absolute inset-0 w-full h-full bg-[#2B3990] opacity-40 mix-blend-multiply pointer-events-none" style={{ zIndex: 2 }} />
+				</div>
+
+				<div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center max-[912px]:px-3">
+					<motion.div
+						initial={{ y: 30, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{ duration: 0.8, delay: 0.2 }}
+					>
+						<motion.div
+							initial={{ scale: 0.9, opacity: 0, y: 40 }}
+							animate={{ scale: 1, opacity: 1, y: 0 }}
+							transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+							className="mb-4 sm:mb-6 md:mb-8 max-[912px]:mb-3 flex justify-center"
+						>
+							{/* Brand logo in place of the wordmark */}
+							<Image
+								src={VITRO_BRAND.logo}
+								alt="Vitro"
+								width={640}
+								height={200}
+								priority
+								className="w-auto h-24 sm:h-32 md:h-40 lg:h-48 max-[912px]:h-20 object-contain drop-shadow-2xl"
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleX: 0 }}
+							animate={{ scaleX: 1 }}
+							transition={{ duration: 1, delay: 0.7, type: 'spring', stiffness: 60 }}
+							className="h-2 w-56 mx-auto bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-6 sm:mb-8 md:mb-10 max-[912px]:h-1 max-[912px]:w-32 max-[912px]:mb-4"
+						/>
+						<motion.p
+							initial={{ opacity: 0, y: 30 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 1, delay: 1, type: 'spring', stiffness: 60 }}
+							className="text-xl sm:text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed font-medium mb-8 sm:mb-12 md:mb-16 drop-shadow-lg max-[912px]:text-lg max-[912px]:mb-6 max-[912px]:px-2"
+						>
+							Advanced histopathology staining and ISH systems for molecular diagnostics
+						</motion.p>
+					</motion.div>
+
+					{/* Scroll Indicator */}
+					<motion.div
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1, delay: 1.5 }}
+						className="mt-2 max-[912px]:mt-1"
+					>
+						<motion.div
+							className="scroll-cue text-white"
+						>
+							<svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto max-[912px]:w-5 max-[912px]:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+							</svg>
+						</motion.div>
+					</motion.div>
+				</div>
+			</motion.section>
+
+			{/* Main Content */}
+			<div className="max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:px-3 max-[912px]:py-6">
+				<CategorySection
+						category={category}
+						products={products}
+						onViewDetails={handleViewDetails}
+					/>
+			</div>
+
+			{/* Footer CTA Section */}
+			<motion.section
+				initial={{ opacity: 0 }}
+				whileInView={{ opacity: 1 }}
+				transition={{ duration: 0.8 }}
+				viewport={{ once: true }}
+				className="bg-gradient-to-r from-[#2B3990] to-[#1e2865] py-8 sm:py-12 md:py-16 lg:py-20 max-[912px]:py-6"
+			>
+				<div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center max-[912px]:px-3">
+					<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 max-[912px]:text-xl">
+						Ready to Upgrade Your Laboratory?
+					</h2>
+					<p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-6 md:mb-8 max-[912px]:text-sm max-[912px]:mb-4">
+						Our team of specialists is ready to help you find the perfect Vitro staining and ISH solution for your laboratory needs.
+					</p>
+					<motion.a
+						href="/contact"
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.95 }}
+						className="bg-white text-[#2B3990] px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base md:text-lg 
+									hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl inline-block max-[912px]:px-6 max-[912px]:py-3 max-[912px]:text-sm"
+					>
+						Contact Our Experts
+					</motion.a>
+				</div>
+			</motion.section>
+
+			{/* Modal */}
+			{isModalOpen && selectedProduct && (
+				<Modal product={{ ...selectedProduct, onClose: handleCloseModal }} isOpen={isModalOpen} />
+			)}
+		</div>
+	);
+}

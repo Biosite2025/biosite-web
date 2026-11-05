@@ -5,7 +5,7 @@
  *
  *   - products  : every product on the product pages (name, brand, category,
  *                 description, image, page link)
- *   - faqs      : app/user/chatbot/faqData.ts
+ *   - faqs      : app/chatbot/faqData.ts
  *   - offices   : the office list on the Contact page
  *
  * Run: node scripts/build-biomi-index.js   (also runs automatically in `npm run build`)
@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const PRODUCTS_DIR = path.join(ROOT, 'app/user/products/components');
+const PRODUCTS_DIR = path.join(ROOT, 'app/products');
 const OUT = path.join(ROOT, 'public/biomi-index.json');
 
 // ---------- helpers ----------
@@ -76,7 +76,7 @@ for (const folder of fs.readdirSync(PRODUCTS_DIR)) {
   const dir = path.join(PRODUCTS_DIR, folder);
   if (!fs.statSync(dir).isDirectory() || ['shared'].includes(folder)) continue;
   if (folder === 'hamamatsusliderscanner') continue; // page is disabled (404)
-  const url = `/user/products/components/${folder}`;
+  const url = `/products/${folder}`;
   for (const file of fs.readdirSync(dir)) {
     if (!/\.tsx$/.test(file) || /Footer|page\.tsx/.test(file)) continue;
     const src = fs.readFileSync(path.join(dir, file), 'utf8');
@@ -163,7 +163,7 @@ products.length = 0;
 for (const p of byKey.values()) products.push({ ...p, alsoIn: p.alsoIn.join(', ') });
 
 // ---------- FAQs ----------
-const faqSrc = fs.readFileSync(path.join(ROOT, 'app/user/chatbot/faqData.ts'), 'utf8');
+const faqSrc = fs.readFileSync(path.join(ROOT, 'app/chatbot/faqData.ts'), 'utf8');
 const faqs = [];
 const catRe = /category:\s*"((?:\\.|[^"\\])*)"/g;
 const cats = [];
@@ -177,7 +177,7 @@ while ((qm = qaRe.exec(faqSrc))) {
 }
 
 // ---------- offices (Contact page) ----------
-const contactSrc = fs.readFileSync(path.join(ROOT, 'app/user/contact/components/Contact.tsx'), 'utf8');
+const contactSrc = fs.readFileSync(path.join(ROOT, 'app/contact/components/Contact.tsx'), 'utf8');
 const offices = [];
 const offRe = /name:\s*"([^"]+)",\s*address:\s*"([^"]+)",\s*phone:\s*"([^"]+)",\s*email:\s*"([^"]+)",\s*hours:\s*"([^"]+)"/g;
 let om;
@@ -231,7 +231,7 @@ if (fs.existsSync(RESEARCH)) {
 // ---------- social media (site footer) ----------
 const social = [];
 try {
-  const footerSrc = fs.readFileSync(path.join(ROOT, 'app/user/chatbot/components/Footer.tsx'), 'utf8');
+  const footerSrc = fs.readFileSync(path.join(ROOT, 'src/components/layout/Footer.tsx'), 'utf8');
   const NAMES = { facebook: 'Facebook', linkedin: 'LinkedIn', instagram: 'Instagram', youtube: 'YouTube', tiktok: 'TikTok', twitter: 'X (Twitter)', x: 'X (Twitter)' };
   for (const m of footerSrc.matchAll(/https?:\/\/(?:www\.)?(facebook|linkedin|instagram|youtube|tiktok|twitter|x)\.com\/[^"'\s)]+/g)) {
     if (!social.some((s) => s.url === m[0])) social.push({ name: NAMES[m[1]], url: m[0] });
@@ -243,7 +243,7 @@ try {
 // ---------- company facts (About page stats: founded, years, ISO, awards…) ----------
 const facts = [];
 try {
-  const statsSrc = fs.readFileSync(path.join(ROOT, 'app/user/about/components/Stats.tsx'), 'utf8');
+  const statsSrc = fs.readFileSync(path.join(ROOT, 'app/about/components/Stats.tsx'), 'utf8');
   for (const s of statsSrc.matchAll(/\{\s*value:\s*'([^']+)',\s*label:\s*'([^']+)'\s*\}/g)) facts.push({ value: s[1], label: s[2] });
 } catch {
   // About page moved — Biomi just won't answer company-fact questions.

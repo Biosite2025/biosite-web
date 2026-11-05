@@ -144,7 +144,7 @@ export function TopNav() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex h-24 items-center justify-between">
             <div className="flex items-center flex-shrink-0 h-full -ml-[50px] group">
-              <Link href="/user/about" className="flex items-center h-full transform hover:scale-105 transition-transform duration-300 relative">
+              <Link href="/about" className="flex items-center h-full transform hover:scale-105 transition-transform duration-300 relative">
                 <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 " />
                 <Image
                   src="/asset/BMI_logo4.webp"
@@ -162,9 +162,9 @@ export function TopNav() {
             </div>
             <div className="flex scale-90 items-center space-x-6 h-full relative overflow-visible z-50 flex-1 justify-end">
               <Link
-                href="/user/about"
+                href="/about"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 flex items-center justify-center ${
-                  pathname === '/user/about' 
+                  pathname === '/about' 
                     ? 'text-[#2B3990]' 
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}
@@ -212,62 +212,62 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="/user/products/components/clinical-chemistry" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/clinical-chemistry" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Clinical Chemistry
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/hba1c-hplc" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/hba1c-hplc" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               HBA1C - HPLC
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/immunology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/immunology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Immunology
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/coagulation" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/coagulation" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Coagulation & Hemostasis
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/blood-bank" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/blood-bank" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Blood Bank
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/arterial-blood-gas-electrolytes-co-oximetry" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/arterial-blood-gas-electrolytes-co-oximetry" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Arterial Blood Gas, Electrolytes & Co-Oximetry
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/poct" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/poct" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               POCT (Point of Care Testing)
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/microbiology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/microbiology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Microbiology
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/clinical-microscopy" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/clinical-microscopy" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Clinical Microscopy
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/hematology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/hematology" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hematology
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/molecular-diagnostics" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/molecular-diagnostics" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Molecular Diagnostics
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/rapid-testkit" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/rapid-testkit" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Rapid Test Kits
                             </Link>
                           </li>
@@ -281,37 +281,37 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="/user/products/components/sakura" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/sakura" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Sakura
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/dakewe" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/dakewe" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Dakewe
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/hiplaas" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/hiplaas" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hiplaas
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/vitro" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/vitro" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Vitro
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/biogenex" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/biogenex" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Biogenex
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/nikonmicroscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/nikonmicroscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Nikon Microscopes
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/moticsliderscanner" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/moticsliderscanner" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Motic Slide Scanners
                             </Link>
                           </li>
@@ -327,48 +327,48 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="/user/products/components/microscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/microscopes" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Microscopes
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/centrifuges" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/centrifuges" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Centrifuges
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/pipettors" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/pipettors" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Pipettors
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/biorefrigerators" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/biorefrigerators" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Biorefrigerators
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/biomedical-freezers" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/biomedical-freezers" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/biosafety-cabinets" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/biosafety-cabinets" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Biosafety Cabinets & Laminar Flow Cabinets
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/lab-oven-incubator" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/lab-oven-incubator" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Lab Oven, Lab Incubator, CO₂ Incubator
                             </Link>
                           </li>
                           <li>
                             
-                            <Link href="/user/products/components/sterilizer-autoclave" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/sterilizer-autoclave" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Sterilizer & Autoclave
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/dry-bath" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/dry-bath" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station
                             </Link>
                           </li>
@@ -382,37 +382,37 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            {/* <Link href="/user/products/components/medical-diagnostic-imaging" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            {/* <Link href="/products/medical-diagnostic-imaging" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Medical Diagnostic Imaging
                             </Link> */}
-                            <Link href="/user/products/components/RADIOLOGY-DEPARTMENT" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/RADIOLOGY-DEPARTMENT" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Radiology 
                             </Link> 
                           </li>
                           <li>
-                            {/* <Link href="/user/products/components/icu-er-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            {/* <Link href="/products/icu-er-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               ICU / ER Equipments
                             </Link> */}
-                            <Link href="/user/products/components/pulmonary-department" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/pulmonary-department" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Pulmonary 
                             </Link>
                           </li>
                           <li>
-                            {/* <Link href="/user/products/components/or-equipment" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            {/* <Link href="/products/or-equipment" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               OR Equipments
                             </Link> */}
-                            <Link href="/user/products/components/emergency-outpatient" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/emergency-outpatient" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Emergency and Out Patient 
                             </Link>
                           </li>
                           
                            <li>
-                            <Link href="/user/products/components/surgical-rehabilation" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/surgical-rehabilation" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Medical Surgical and Rehabilatation Ward 
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/operating-delivery" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/operating-delivery" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Operating  and Delivery Room 
                             </Link>
                           </li>
@@ -420,7 +420,7 @@ export function TopNav() {
                             {/* <span className="text-sm text-gray-400 cursor-not-allowed block select-none opacity-60">
                               OB Gyn Equipments
                             </span> */}
-                            <Link href="/user/products/components/nicu-picu-icu" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/nicu-picu-icu" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               NICU PICU AND ICU 
                             </Link>
                           </li>
@@ -440,7 +440,7 @@ export function TopNav() {
                             </span>
                           </li>
                           <li>
-                            <Link href="/user/products/components/dialysis-renal-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/dialysis-renal-equipments" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Dialysis / Renal Care Equipments
                             </Link>
                           </li> */}
@@ -454,27 +454,27 @@ export function TopNav() {
                         </h3>
                         <ul className="space-y-2.5">
                           <li>
-                            <Link href="/user/products/components/laboratory-equipements" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/laboratory-equipements" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Laboratory Equipments
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/laboratory-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/laboratory-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Laboratory Disposables
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/hospital-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/hospital-disposables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Hospital Disposables
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/chemicals-consumables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/chemicals-consumables" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Histopathology Chemicals & Consumables
                             </Link>
                           </li>
                           <li>
-                            <Link href="/user/products/components/surgical-disposable" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
+                            <Link href="/products/surgical-disposable" className="text-sm text-gray-700 hover:text-[#2B3990] hover:translate-x-1 transition-all duration-200 block">
                               Surgical Disposables
                             </Link>
                           </li>
@@ -487,9 +487,9 @@ export function TopNav() {
               </div>
                   
               <Link
-                href="/user/events"
+                href="/events"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 ${
-                  pathname === '/user/events' 
+                  pathname === '/events' 
                     ? 'text-[#2B3990]' 
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}
@@ -498,9 +498,9 @@ export function TopNav() {
               </Link>
               
               <Link
-                href="/user/career"
+                href="/career"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 ${
-                  pathname === '/user/career' 
+                  pathname === '/career' 
                     ? 'text-[#2B3990]' 
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}
@@ -508,9 +508,9 @@ export function TopNav() {
                 <span className="relative z-10">Careers</span>
               </Link>
               <Link
-                href="/user/contact"
+                href="/contact"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 ${
-                  pathname === '/user/contact' 
+                  pathname === '/contact' 
                     ? 'text-[#2B3990]' 
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}
@@ -518,9 +518,9 @@ export function TopNav() {
                 <span className="relative z-10">CONTACT</span>
               </Link>
               <Link
-                href="/user/chatbot"
+                href="/chatbot"
                 className={`uppercase font-semibold tracking-wide text-lg transition-all duration-300 relative group transform hover:-translate-y-0.5 ${
-                  pathname === '/user/chatbot' 
+                  pathname === '/chatbot' 
                     ? 'text-[#2B3990]' 
                     : 'text-gray-700 hover:text-[#2B3990]'
                 }`}

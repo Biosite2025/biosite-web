@@ -296,33 +296,6 @@ nav[data-topnav="true"] {
   z-index: 50;
 }
 
-/* Additional scroll prevention */
-.no-scroll {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-}
-
-@media (min-width: 913px) {
-  .no-scroll {
-    height: calc(var(--vh,1vh)*100) !important;
-  }
-}
-
-/* Prevent scrolling during loading - mobile specific */
-@media (max-width: 912px) {
-  .no-scroll {
-    top: 0 !important;
-    bottom: 0 !important;
-  }
-}
-
-.no-scroll body {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-}
-
 /* Mobile specific fixes for bottom white space */
 @media (max-width: 912px) {
   html, body {

@@ -24,11 +24,19 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   // Reduce memory usage
   experimental: {
-    optimizePackageImports: ['framer-motion', 'gsap'],
+    optimizePackageImports: ['framer-motion'],
   },
   // Allow build to succeed with warnings
   typescript: {
     ignoreBuildErrors: false,
+  },
+  // Old /user/... URLs are already indexed and shared; send them to the new ones.
+  async redirects() {
+    return [
+      { source: '/', destination: '/about', statusCode: 301 },
+      { source: '/user/products/components/:slug*', destination: '/products/:slug*', statusCode: 301 },
+      { source: '/user/:page(about|career|contact|events|chatbot)', destination: '/:page', statusCode: 301 },
+    ];
   },
   // 3D models are immutable content-addressed assets — cache them hard so the
   // trophy is only ever downloaded once per visitor.

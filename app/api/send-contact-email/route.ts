@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import axios from 'axios';
+import { rateLimit } from '@/lib/rateLimit';
 
 
 // Simple email validation regex
@@ -9,8 +10,13 @@ function isValidEmail(email: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  const limited = rateLimit(request, 'contact', 5, 10 * 60 * 1000);
+  if (limited) return limited;
+
   try {
     const body = await request.json();
+    // Hidden field real visitors never fill in: pretend success so bots don't adapt.
+    if (body.website) return NextResponse.json({ success: true, message: 'Email sent successfully' });
     const { recipient } = body;
     // Visitor text goes into an HTML email: escape it so it can't inject
     // markup or links, and cap lengths.

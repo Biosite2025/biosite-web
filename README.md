@@ -16,7 +16,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the result.
 This project includes comprehensive memory monitoring for Render's free tier (512MB RAM limit).
 
 ### Quick Access
-- **Health Check:** `https://your-app.onrender.com/api/health`
+- **Health Check:** `https://biositeph.com/api/health` (returns `{"status":"ok"}`)
 - **View Logs:** Render Dashboard → Your Service → Logs tab
 
 ### Documentation
@@ -47,7 +47,7 @@ This project includes comprehensive memory monitoring for Render's free tier (51
 - **UI:** React 19.2.0, Tailwind CSS, Framer Motion
 - **Database:** PostgreSQL (Neon)
 - **Storage:** DigitalOcean Spaces CDN (images, videos, resumes)
-- **Deployment:** Render.com (Free Tier)
+- **Deployment:** DigitalOcean App Platform
 - **Forms:** Web3Forms
 - **Type Safety:** TypeScript
 
@@ -79,20 +79,13 @@ biosite-web/
 
 ## 🚀 Deployment
 
-### Render.com (Configured)
+### DigitalOcean App Platform
 
-The project is pre-configured for Render deployment:
-
-1. **Push to GitHub**
-2. **Connect to Render**
-3. **Deploy automatically** using `render.yaml`
-
-**Build Command:** `npm install && npm run build`
-**Start Command:** `node scripts/start-with-monitoring.js`
+Pushing to `main` deploys the site.
 
 ### Environment Variables
 
-Required in Render:
+Required on the server:
 ```env
 NODE_ENV=production
 DATABASE_URL=your_postgres_url
@@ -140,7 +133,7 @@ npm run lint            # Run ESLint
 
 ### Check Memory Status
 ```bash
-curl https://biosite-web.onrender.com/api/health
+curl https://biositeph.com/api/health
 ```
 
 ### View Render Logs

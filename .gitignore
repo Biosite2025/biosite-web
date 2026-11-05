@@ -43,6 +43,9 @@ next-env.d.ts
 # Ignore SSL certificate
 cert/ca-certificate.crt
 
+# Unused files kept locally for reference
+/archive/
+
 # Original/source design files (not served by the site; web copies live on Spaces)
 /design-sources/
 

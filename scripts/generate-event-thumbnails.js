@@ -21,7 +21,7 @@
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
-const S3 = require('aws-sdk/clients/s3');
+const { S3Client, ListObjectsV2Command, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3');
 
 const envFile = path.join(__dirname, '..', '.env.local');
 if (fs.existsSync(envFile)) {
@@ -41,17 +41,22 @@ const SIZES = [
 ];
 const CONCURRENCY = 4;
 
-const s3 = new S3({
+const s3 = new S3Client({
   endpoint: 'https://sgp1.digitaloceanspaces.com',
-  accessKeyId: process.env.DO_SPACES_KEY,
-  secretAccessKey: process.env.DO_SPACES_SECRET,
+  region: 'sgp1',
+  credentials: {
+    accessKeyId: process.env.DO_SPACES_KEY || '',
+    secretAccessKey: process.env.DO_SPACES_SECRET || '',
+  },
+  requestChecksumCalculation: 'WHEN_REQUIRED',
+  responseChecksumValidation: 'WHEN_REQUIRED',
 });
 
 async function listAll(prefix) {
   const keys = [];
   let token;
   do {
-    const res = await s3.listObjectsV2({ Bucket: BUCKET, Prefix: prefix, ContinuationToken: token }).promise();
+    const res = await s3.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: prefix, ContinuationToken: token }));
     keys.push(...(res.Contents || []).map((o) => o.Key));
     token = res.NextContinuationToken;
   } while (token);
@@ -79,23 +84,22 @@ async function main() {
     while (queue.length) {
       const key = queue.shift();
       try {
-        const original = await s3.getObject({ Bucket: BUCKET, Key: key }).promise();
+        const original = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));
+        const source = Buffer.from(await original.Body.transformToByteArray());
         for (const { suffix, width, quality } of SIZES) {
-          const body = await sharp(original.Body)
+          const body = await sharp(source)
             .rotate() // honour the camera's EXIF orientation
             .resize({ width, withoutEnlargement: true })
             .webp({ quality })
             .toBuffer();
-          await s3
-            .putObject({
-              Bucket: BUCKET,
-              Key: outputKey(key, suffix),
-              Body: body,
-              ACL: 'public-read',
-              ContentType: 'image/webp',
-              CacheControl: 'public, max-age=31536000, immutable',
-            })
-            .promise();
+          await s3.send(new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: outputKey(key, suffix),
+            Body: body,
+            ACL: 'public-read',
+            ContentType: 'image/webp',
+            CacheControl: 'public, max-age=31536000, immutable',
+          }));
           if (suffix === 'thumb') savedBytes += original.ContentLength - body.length;
         }
         done++;

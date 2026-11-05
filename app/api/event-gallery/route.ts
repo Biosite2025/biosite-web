@@ -1,16 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cachedJson } from '@/lib/cachedJson';
-// Import ONLY the S3 client. `import AWS from 'aws-sdk'` pulls in every AWS
-// service definition (~100MB on disk) and holds them in heap for the life of
-// the process — we use exactly one service.
-import S3 from 'aws-sdk/clients/s3';
-
-// Configure Digital Ocean Spaces
-const s3 = new S3({
-  endpoint: 'https://sgp1.digitaloceanspaces.com',
-  accessKeyId: process.env.DO_SPACES_KEY,
-  secretAccessKey: process.env.DO_SPACES_SECRET,
-});
+import { ListObjectsV2Command } from '@aws-sdk/client-s3';
+import { spaces } from '@/lib/spaces';
 
 const CDN = 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com';
 const GALLERY_PREFIX = 'biosite-web/events/events-gallery/';
@@ -27,7 +18,7 @@ async function load() {
       Delimiter: '/',
     };
 
-    const foldersData = await s3.listObjectsV2(foldersParams).promise();
+    const foldersData = await spaces.send(new ListObjectsV2Command(foldersParams));
     
     if (!foldersData.CommonPrefixes || foldersData.CommonPrefixes.length === 0) {
       console.warn('[Event Gallery API] No folders found in events-gallery');
@@ -46,9 +37,9 @@ async function load() {
     const optimizedKeys = new Set<string>();
     let token: string | undefined;
     do {
-      const page = await s3
-        .listObjectsV2({ Bucket: 'biositeassets', Prefix: OPTIMIZED_PREFIX, ContinuationToken: token })
-        .promise();
+      const page = await spaces.send(
+        new ListObjectsV2Command({ Bucket: 'biositeassets', Prefix: OPTIMIZED_PREFIX, ContinuationToken: token }),
+      );
       (page.Contents || []).forEach((o) => o.Key && optimizedKeys.add(o.Key));
       token = page.NextContinuationToken;
     } while (token);
@@ -66,7 +57,7 @@ async function load() {
           Prefix: folderPrefix,
         };
 
-        const imagesData = await s3.listObjectsV2(imagesParams).promise();
+        const imagesData = await spaces.send(new ListObjectsV2Command(imagesParams));
         
         if (!imagesData.Contents) return [];
 

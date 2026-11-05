@@ -110,73 +110,73 @@ export function SideNav() {
 		clinical: {
 			title: "I. Clinical",
 			items: [
-				{ name: "Clinical Chemistry", href: "/user/products/components/clinical-chemistry" },
-				{ name: "HBA1C - HPLC", href: "/user/products/components/hba1c-hplc" },
-				{ name: "Immunology", href: "/user/products/components/immunology" },
-				{ name: "Coagulation", href: "/user/products/components/coagulation" },
-				{ name: "Blood Bank", href: "/user/products/components/blood-bank" },
-				{ name: "Arterial Blood Gas, Electrolytes & Co-Oximetry", href: "/user/products/components/arterial-blood-gas-electrolytes-co-oximetry" },
-				{ name: "POCT (Point of Care Testing)", href: "/user/products/components/poct" },
-				{ name: "Microbiology", href: "/user/products/components/microbiology" },
-				{ name: "Clinical Microscopy", href: "/user/products/components/clinical-microscopy" },
-				{ name: "Hematology", href: "/user/products/components/hematology" },
-				{ name: "Molecular Diagnostics", href: "/user/products/components/molecular-diagnostics" },
-				{ name: "Rapid Test Kits", href: "/user/products/components/rapid-testkit" }
+				{ name: "Clinical Chemistry", href: "/products/clinical-chemistry" },
+				{ name: "HBA1C - HPLC", href: "/products/hba1c-hplc" },
+				{ name: "Immunology", href: "/products/immunology" },
+				{ name: "Coagulation", href: "/products/coagulation" },
+				{ name: "Blood Bank", href: "/products/blood-bank" },
+				{ name: "Arterial Blood Gas, Electrolytes & Co-Oximetry", href: "/products/arterial-blood-gas-electrolytes-co-oximetry" },
+				{ name: "POCT (Point of Care Testing)", href: "/products/poct" },
+				{ name: "Microbiology", href: "/products/microbiology" },
+				{ name: "Clinical Microscopy", href: "/products/clinical-microscopy" },
+				{ name: "Hematology", href: "/products/hematology" },
+				{ name: "Molecular Diagnostics", href: "/products/molecular-diagnostics" },
+				{ name: "Rapid Test Kits", href: "/products/rapid-testkit" }
 			]
 		},
 		histopathology: {
 			title: "II. Histopathology",
 			items: [
-				{ name: "Sakura", href: "/user/products/components/sakura" },
-				{ name: "Dakewe", href: "/user/products/components/dakewe" },
-				{ name: "Hiplaas", href: "/user/products/components/hiplaas" },
-				{ name: "Vitro", href: "/user/products/components/vitro" },
-				{ name: "Biogenex", href: "/user/products/components/biogenex" },
-				{ name: "Nikon Microscopes", href: "/user/products/components/nikonmicroscopes" },
-				{ name: "Motic Slide Scanners", href: "/user/products/components/moticsliderscanner" },
-				// { name: "Hamamatsu Slide Scanners", href: "/user/products/components/hamamatsusliderscanner" },
+				{ name: "Sakura", href: "/products/sakura" },
+				{ name: "Dakewe", href: "/products/dakewe" },
+				{ name: "Hiplaas", href: "/products/hiplaas" },
+				{ name: "Vitro", href: "/products/vitro" },
+				{ name: "Biogenex", href: "/products/biogenex" },
+				{ name: "Nikon Microscopes", href: "/products/nikonmicroscopes" },
+				{ name: "Motic Slide Scanners", href: "/products/moticsliderscanner" },
+				// { name: "Hamamatsu Slide Scanners", href: "/products/hamamatsusliderscanner" },
 				// { name: "Fuji Synapse PACS for Digital Pathology", href: "#" }
 			]
 		},
 		generalLab: {
 			title: "III. General Lab Equipments",
 			items: [
-				{ name: "Microscopes", href: "/user/products/components/microscopes" },
-				{ name: "Centrifuges", href: "/user/products/components/centrifuges" },
-				{ name: "Pipettors", href: "/user/products/components/pipettors" },
-				{ name: "Biorefrigerators", href: "/user/products/components/biorefrigerators" },
-				{ name: "Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage", href: "/user/products/components/biomedical-freezers" },
-				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "/user/products/components/biosafety-cabinets" },
-				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "/user/products/components/lab-oven-incubator" },
-				{ name: "Sterilizer & Autoclave", href: "/user/products/components/sterilizer-autoclave" },
-				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/user/products/components/dry-bath" }
+				{ name: "Microscopes", href: "/products/microscopes" },
+				{ name: "Centrifuges", href: "/products/centrifuges" },
+				{ name: "Pipettors", href: "/products/pipettors" },
+				{ name: "Biorefrigerators", href: "/products/biorefrigerators" },
+				{ name: "Biomedical Freezers, Ultra Low Freezers, Cryo Freezers, Liquid Nitrogen Storage", href: "/products/biomedical-freezers" },
+				{ name: "Biosafety Cabinets & Laminar Flow Cabinets", href: "/products/biosafety-cabinets" },
+				{ name: "Lab Oven, Lab Incubator, CO₂ Incubator", href: "/products/lab-oven-incubator" },
+				{ name: "Sterilizer & Autoclave", href: "/products/sterilizer-autoclave" },
+				{ name: "Dry Bath, Vortex Mixer, Rotator, Pipette Shaker, Passbox, Eye Wash Station", href: "/products/dry-bath" }
 			]
 		},
 		medical: {
 			title: "IV. Medical & Hospital Equipments",
 			items: [
-				// { name: "Medical Diagnostic Imaging", href: "/user/products/components/medical-diagnostic-imaging" },
-				{ name: "Radiology Department", href: "/user/products/components/RADIOLOGY-DEPARTMENT" },
-				// { name: "ICU / ER Equipments", href: "/user/products/components/icu-er-equipments" },
-				{ name: "Pulmonary Department", href: "/user/products/components/pulmonary-department" },
-				{ name: "Emergency and Out Patient ", href: "/user/products/components/emergency-outpatient" },
-				{ name: "Medical Surgical and Rehabilatation Ward ", href: "/user/products/components/surgical-rehabilation" },
-				{ name: "Operating  and Delivery Room", href: "/user/products/components/operating-delivery" },
-				{ name: "NICU PICU AND ICU ", href: "/user/products/components/nicu-picu-icu" },
+				// { name: "Medical Diagnostic Imaging", href: "/products/medical-diagnostic-imaging" },
+				{ name: "Radiology Department", href: "/products/RADIOLOGY-DEPARTMENT" },
+				// { name: "ICU / ER Equipments", href: "/products/icu-er-equipments" },
+				{ name: "Pulmonary Department", href: "/products/pulmonary-department" },
+				{ name: "Emergency and Out Patient ", href: "/products/emergency-outpatient" },
+				{ name: "Medical Surgical and Rehabilatation Ward ", href: "/products/surgical-rehabilation" },
+				{ name: "Operating  and Delivery Room", href: "/products/operating-delivery" },
+				{ name: "NICU PICU AND ICU ", href: "/products/nicu-picu-icu" },
 				// { name: "Autoclave, Plasma Sterilizers, Washers", href: "#" },
 				// { name: "Neonatal Intensive Care Products (NICU)", href: "#" },
 				// { name: "Hospital Medical Furnitures", href: "#" },
-				// { name: "Dialysis / Renal Care Equipments", href: "/user/products/components/dialysis-renal-equipments" }
+				// { name: "Dialysis / Renal Care Equipments", href: "/products/dialysis-renal-equipments" }
 			]
 		},
 		disposables: {
 			title: "V. Disposables / Consumables",
 			items: [
-				{ name: "Laboratory Equipements", href: "/user/products/components/laboratory-equipements" },
-				{ name: "Laboratory Disposables", href: "/user/products/components/laboratory-disposables" },
-				{ name: "Hospital Disposables", href: "/user/products/components/hospital-disposables" },
-				{ name: "Histopathology Chemicals & Consumables", href: "/user/products/components/chemicals-consumables" },
-				{ name: "Surgical Disposables", href: "/user/products/components/surgical-disposable" }
+				{ name: "Laboratory Equipements", href: "/products/laboratory-equipements" },
+				{ name: "Laboratory Disposables", href: "/products/laboratory-disposables" },
+				{ name: "Hospital Disposables", href: "/products/hospital-disposables" },
+				{ name: "Histopathology Chemicals & Consumables", href: "/products/chemicals-consumables" },
+				{ name: "Surgical Disposables", href: "/products/surgical-disposable" }
 			]
 		}
 	};
@@ -197,7 +197,7 @@ export function SideNav() {
 				style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
 			>
 				{/* Logo Section */}
-				<Link href="/user/about" className="flex items-center h-full touch-manipulation">
+				<Link href="/about" className="flex items-center h-full touch-manipulation">
 					   <Image
 						   src="/asset/BMI_logo4.webp"
 						   alt="Biosite Medical Instruments Logo"
@@ -278,9 +278,9 @@ export function SideNav() {
 								<nav className="p-4 space-y-2 pb-20">
 									{/* About Link */}
 									<Link 
-										href="/user/about" 
+										href="/about" 
 										className={`block py-3 px-4 rounded-lg font-semibold transition-all duration-200 mobile-nav-item touch-manipulation ${
-											pathname === '/user/about' 
+											pathname === '/about' 
 												? 'bg-[#2B3990]/10 text-[#2B3990] border-l-4 border-[#2B3990]' 
 												: 'text-gray-700 hover:bg-gray-50 hover:text-[#2B3990] active:bg-gray-100'
 										}`}
@@ -378,9 +378,9 @@ export function SideNav() {
 
 									{/* Other Navigation Links */}
 									<Link 
-										href="/user/events" 
+										href="/events" 
 										className={`block py-3 px-4 rounded-lg font-semibold transition-all duration-200 mobile-nav-item touch-manipulation ${
-											pathname === '/user/events' 
+											pathname === '/events' 
 												? 'bg-[#2B3990]/10 text-[#2B3990] border-l-4 border-[#2B3990]' 
 												: 'text-gray-700 hover:bg-gray-50 hover:text-[#2B3990] active:bg-gray-100'
 										}`}
@@ -390,9 +390,9 @@ export function SideNav() {
 									</Link>
 
 									<Link 
-										href="/user/career" 
+										href="/career" 
 										className={`block py-3 px-4 rounded-lg font-semibold transition-all duration-200 mobile-nav-item touch-manipulation ${
-											pathname === '/user/career' 
+											pathname === '/career' 
 												? 'bg-[#2B3990]/10 text-[#2B3990] border-l-4 border-[#2B3990]' 
 												: 'text-gray-700 hover:bg-gray-50 hover:text-[#2B3990] active:bg-gray-100'
 										}`}
@@ -402,9 +402,9 @@ export function SideNav() {
 									</Link>
 
 									<Link 
-										href="/user/contact" 
+										href="/contact" 
 										className={`block py-3 px-4 rounded-lg font-semibold transition-all duration-200 mobile-nav-item touch-manipulation ${
-											pathname === '/user/contact' 
+											pathname === '/contact' 
 												? 'bg-[#2B3990]/10 text-[#2B3990] border-l-4 border-[#2B3990]' 
 												: 'text-gray-700 hover:bg-gray-50 hover:text-[#2B3990] active:bg-gray-100'
 										}`}
@@ -414,9 +414,9 @@ export function SideNav() {
 									</Link>
 
 									<Link 
-										href="/user/chatbot" 
+										href="/chatbot" 
 										className={`block py-3 px-4 rounded-lg font-semibold transition-all duration-200 mobile-nav-item touch-manipulation ${
-											pathname === '/user/chatbot' 
+											pathname === '/chatbot' 
 												? 'bg-[#2B3990]/10 text-[#2B3990] border-l-4 border-[#2B3990]' 
 												: 'text-gray-700 hover:bg-gray-50 hover:text-[#2B3990] active:bg-gray-100'
 										}`}

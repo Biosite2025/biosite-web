@@ -92,7 +92,7 @@ You can send several products at once, one block each. Units matter (µL, °C, r
 
 ## Blood Bank
 
-_Type: Analyzer · Edit in: `app/user/products/components/blood-bank/blood-bank.tsx`_
+_Type: Analyzer · Edit in: `app/products/blood-bank/blood-bank.tsx`_
 
 - [x] 🔴 **AutoMini 40** — Matrix
   - Need: Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Best for (clinic / lab / hospital)
@@ -380,7 +380,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/blood-bank/blood-bank.
 
 ## Molecular Diagnostics
 
-_Type: Analyzer · Edit in: `app/user/products/components/molecular-diagnostics/molecular-diagnostics.tsx`_
+_Type: Analyzer · Edit in: `app/products/molecular-diagnostics/molecular-diagnostics.tsx`_
 
 - [x] 🔴 **EXM 3000** — Zybio
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity
@@ -502,7 +502,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/molecular-diagnostics/
 
 ## Immunology
 
-_Type: Analyzer · Edit in: `app/user/products/components/immunology/immunology.tsx`_
+_Type: Analyzer · Edit in: `app/products/immunology/immunology.tsx`_
 
 - [x] 🔴 **AIA-2000** — Tosoh
   - Need: Throughput, Sample type, Sample volume, Time to first result, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -633,7 +633,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/immunology/immunology.
 
 ## Histopathology Chemicals & Consumables
 
-_Type: Disposable / consumable · Edit in: `app/user/products/components/chemicals-consumables/chemicals-comsumables.tsx`_
+_Type: Disposable / consumable · Edit in: `app/products/chemicals-consumables/chemicals-comsumables.tsx`_
 
 - [ ] 🔴 **Absolute Ethanol & Denatured Ethanol** — EAM
   - Need: Sizes / variants available, Material, Pack size, Sterile / single-use, Typical use
@@ -687,7 +687,7 @@ _Type: Disposable / consumable · Edit in: `app/user/products/components/chemica
 
 ## Sterilizer & Autoclave
 
-_Type: Lab equipment · Edit in: `app/user/products/components/sterilizer-autoclave/sterilizerautoclave.tsx`_
+_Type: Lab equipment · Edit in: `app/products/sterilizer-autoclave/sterilizerautoclave.tsx`_
 
 - [ ] 🔴 **3870ELV-D** — Tuttnauer
   - Need: Capacity / chamber volume, Temperature range, Key features, Size, Best for (clinic / lab / hospital)
@@ -743,7 +743,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/sterilizer-autocl
 
 ## Hematology
 
-_Type: Analyzer · Edit in: `app/user/products/components/hematology/hematology.tsx`_
+_Type: Analyzer · Edit in: `app/products/hematology/hematology.tsx`_
 
 - [x] 🔴 **DF-55** — Dymind
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -877,7 +877,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/hematology/hematology.
 
 ## Surgical Disposables
 
-_Type: Disposable / consumable · Edit in: `app/user/products/components/surgical-disposable/surgical.tsx`_
+_Type: Disposable / consumable · Edit in: `app/products/surgical-disposable/surgical.tsx`_
 
 - [ ] 🔴 **Disposable Circular Stapler** — CAK
   - Need: Sizes / variants available, Material, Pack size, Sterile / single-use, Typical use
@@ -928,7 +928,7 @@ _Type: Disposable / consumable · Edit in: `app/user/products/components/surgica
 
 ## Clinical Chemistry
 
-_Type: Analyzer · Edit in: `app/user/products/components/clinical-chemistry/clinical-chemistry.tsx`_
+_Type: Analyzer · Edit in: `app/products/clinical-chemistry/clinical-chemistry.tsx`_
 
 - [x] 🔴 **AU5812** — Beckman Coulter
   - Need: Sample type, Sample volume, Time to first result, Size / footprint, Connectivity
@@ -1044,7 +1044,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/clinical-chemistry/cli
 
 ## Radiology
 
-_Type: Imaging · Edit in: `app/user/products/components/RADIOLOGY-DEPARTMENT/radiology.tsx`_
+_Type: Imaging · Edit in: `app/products/RADIOLOGY-DEPARTMENT/radiology.tsx`_
 
 - [ ] 🔴 **DM-2 Digital Mammary X-ray Machine** — WDM
   - Need: Detector / probe specs, Fixed, mobile or portable, Clinical applications, Image quality, Best for (clinic / lab / hospital)
@@ -1104,7 +1104,7 @@ _Type: Imaging · Edit in: `app/user/products/components/RADIOLOGY-DEPARTMENT/ra
 
 ## Biorefrigerators
 
-_Type: Cold storage · Edit in: `app/user/products/components/biorefrigerators/biorefrigerators.tsx`_
+_Type: Cold storage · Edit in: `app/products/biorefrigerators/biorefrigerators.tsx`_
 
 - [ ] 🔴 **HXC-1369** — Haier
   - Need: Temperature range, Capacity, Type, Alarms & monitoring, Size
@@ -1153,7 +1153,7 @@ _Type: Cold storage · Edit in: `app/user/products/components/biorefrigerators/b
 
 ## Microbiology
 
-_Type: Analyzer · Edit in: `app/user/products/components/microbiology/microbiology.tsx`_
+_Type: Analyzer · Edit in: `app/products/microbiology/microbiology.tsx`_
 
 - [ ] 🔴 **Autobes BCX** — Autobio
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -1188,7 +1188,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/microbiology/microbiol
 
 ## Centrifuges
 
-_Type: Centrifuge · Edit in: `app/user/products/components/centrifuges/centrifuges.tsx`_
+_Type: Centrifuge · Edit in: `app/products/centrifuges/centrifuges.tsx`_
 
 - [ ] 🔴 **Floor Standing Low-Speed Refrigerated Centrifuge** — Haier
   - Need: Max speed, Max force, Capacity, Refrigerated?, Rotors included / available, Best for (clinic / lab / hospital)
@@ -1226,7 +1226,7 @@ _Type: Centrifuge · Edit in: `app/user/products/components/centrifuges/centrifu
 
 ## POCT
 
-_Type: Analyzer · Edit in: `app/user/products/components/poct/poct.tsx`_
+_Type: Analyzer · Edit in: `app/products/poct/poct.tsx`_
 
 - [ ] 🔴 **A1CNow Plus** — PTS Diagnostics
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -1258,7 +1258,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/poct/poct.tsx`_
 
 ## Medical Surgical and Rehab Ward
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/surgical-rehabilation/surgical-rehabilation.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/surgical-rehabilation/surgical-rehabilation.tsx`_
 
 - [ ] 🔴 **SKH041 IV Pole** — Saikang
   - Need: Patient type, Key functions / modes, Display / screen, Battery / portability, Clinical setting
@@ -1311,7 +1311,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/surgical
 
 ## Emergency and Out Patient
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/emergency-outpatient/emergency-outpatient.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/emergency-outpatient/emergency-outpatient.tsx`_
 
 - [ ] 🔴 **SD3 Ultrasonic Pocket Doppler** — EDAN
   - Need: Patient type, Key functions / modes, Display / screen, Battery / portability, Clinical setting
@@ -1367,7 +1367,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/emergenc
 
 ## Lab Oven & Incubator
 
-_Type: Lab equipment · Edit in: `app/user/products/components/lab-oven-incubator/lab-oven-incubator.tsx`_
+_Type: Lab equipment · Edit in: `app/products/lab-oven-incubator/lab-oven-incubator.tsx`_
 
 - [ ] 🔴 **Climate Chamber** — Haier
   - Need: Capacity / chamber volume, Temperature range, Type / class, Key features, Size, Best for (clinic / lab / hospital)
@@ -1393,7 +1393,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/lab-oven-incubato
 
 ## Dry Bath / Vortex Mixer
 
-_Type: Lab equipment · Edit in: `app/user/products/components/dry-bath/dry-bath.tsx`_
+_Type: Lab equipment · Edit in: `app/products/dry-bath/dry-bath.tsx`_
 
 - [ ] 🔴 **DSC-300D** — DLAB
   - Need: Capacity / chamber volume, Temperature range, Type / class, Size, Best for (clinic / lab / hospital)
@@ -1422,7 +1422,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/dry-bath/dry-bath
 
 ## Laboratory Equipments
 
-_Type: Lab equipment · Edit in: `app/user/products/components/laboratory-equipements/laboratory-equipements.tsx`_
+_Type: Lab equipment · Edit in: `app/products/laboratory-equipements/laboratory-equipements.tsx`_
 
 - [ ] 🔴 **Biosafety Cabinets, Laminar Flow and Clean Benches** — Haier
   - Need: Capacity / chamber volume, Temperature range, Type / class, Size, Best for (clinic / lab / hospital)
@@ -1451,7 +1451,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/laboratory-equipe
 
 ## Clinical Microscopy
 
-_Type: Analyzer · Edit in: `app/user/products/components/clinical-microscopy/clinical-microscopy.tsx`_
+_Type: Analyzer · Edit in: `app/products/clinical-microscopy/clinical-microscopy.tsx`_
 
 - [ ] 🔴 **KU-F20** — Keyu
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -1477,7 +1477,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/clinical-microscopy/cl
 
 ## Laboratory Disposables
 
-_Type: Disposable / consumable · Edit in: `app/user/products/components/laboratory-disposables/laboratory-disposables.tsx`_
+_Type: Disposable / consumable · Edit in: `app/products/laboratory-disposables/laboratory-disposables.tsx`_
 
 - [ ] 🔴 **ABG Syringe** — Bruner
   - Need: Sizes / variants available, Pack size
@@ -1519,7 +1519,7 @@ _Type: Disposable / consumable · Edit in: `app/user/products/components/laborat
 
 ## Operating and Delivery Room
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/operating-delivery/operating-delivery.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/operating-delivery/operating-delivery.tsx`_
 
 - [ ] 🔴 **Brush Holder 20 Capacity** — Uzumcu
   - Need: Patient type, Key functions / modes, Display / screen, Battery / portability, Clinical setting
@@ -1564,7 +1564,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/operatin
 
 ## Rapid Test Kits
 
-_Type: Rapid test kit · Edit in: `app/user/products/components/rapid-testkit/rapid-testkit.tsx`_
+_Type: Rapid test kit · Edit in: `app/products/rapid-testkit/rapid-testkit.tsx`_
 
 - [ ] 🔴 **Rhelax-CRP** — Tulip Diagnostic
   - Need: Sample type, Time to result, Sensitivity / specificity, Tests per kit / pack size
@@ -1615,7 +1615,7 @@ _Type: Rapid test kit · Edit in: `app/user/products/components/rapid-testkit/ra
 
 ## Coagulation & Hemostasis
 
-_Type: Analyzer · Edit in: `app/user/products/components/coagulation/coagulation.tsx`_
+_Type: Analyzer · Edit in: `app/products/coagulation/coagulation.tsx`_
 
 - [ ] 🔴 **ACL Elite Pro** — Werfen
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint, Connectivity
@@ -1635,7 +1635,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/coagulation/coagulatio
 
 ## Hiplaas Grossing & Autopsy Solutions
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/hiplaas/hiplaas.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/hiplaas/hiplaas.tsx`_
 
 - [ ] 🔴 **ATPTABLE-E300** — Hiplaas
   - Need: Capacity, Throughput / run time, Type / automation level, Key features, Size, Best for (clinic / lab / hospital)
@@ -1655,7 +1655,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/hiplaa
 
 ## Hospital Disposables
 
-_Type: Disposable / consumable · Edit in: `app/user/products/components/hospital-disposables/hospital-disposables.tsx`_
+_Type: Disposable / consumable · Edit in: `app/products/hospital-disposables/hospital-disposables.tsx`_
 
 - [ ] 🔴 **FFP2 NR Particulate Respirator** — Dunhame
   - Need: Sizes / variants available, Material, Pack size, Sterile / single-use, Typical use
@@ -1684,7 +1684,7 @@ _Type: Disposable / consumable · Edit in: `app/user/products/components/hospita
 
 ## Arterial Blood Gas, Electrolytes & Co-Oximetry
 
-_Type: Analyzer · Edit in: `app/user/products/components/arterial-blood-gas-electrolytes-co-oximetry/arterial-blood-gas-electrolytes-co-oximetry.tsx`_
+_Type: Analyzer · Edit in: `app/products/arterial-blood-gas-electrolytes-co-oximetry/arterial-blood-gas-electrolytes-co-oximetry.tsx`_
 
 - [ ] 🔴 **GEM Premier 3500 with iQM** — Werfen
   - Need: Throughput, Sample type, Sample volume, Time to first result, Sample loading capacity / autoloader, Size / footprint
@@ -1701,7 +1701,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/arterial-blood-gas-ele
 
 ## Dakewe
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/dakewe/dakewe.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/dakewe/dakewe.tsx`_
 
 - [ ] 🔴 **MT1 Microtome** — Dakewe
   - Need: Capacity, Throughput / run time, Key features, Size, Best for (clinic / lab / hospital)
@@ -1721,7 +1721,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/dakewe
 
 ## Biomedical Freezers
 
-_Type: Cold storage · Edit in: `app/user/products/components/biomedical-freezers/biomedical-freezers.tsx`_
+_Type: Cold storage · Edit in: `app/products/biomedical-freezers/biomedical-freezers.tsx`_
 
 - [ ] 🟡 **DW-25L262** — Haier
   - Need: Capacity, Alarms & monitoring, Size
@@ -1756,7 +1756,7 @@ _Type: Cold storage · Edit in: `app/user/products/components/biomedical-freezer
 
 ## Medical / Diagnostic Imaging
 
-_Type: Imaging · Edit in: `app/user/products/components/medical-diagnostic-imaging/medical-diagnostic-imaging.tsx`_
+_Type: Imaging · Edit in: `app/products/medical-diagnostic-imaging/medical-diagnostic-imaging.tsx`_
 
 - [ ] 🔴 **FCT iStream 128** — FUJIFILM
   - Need: Detector / probe specs, Fixed, mobile or portable, Clinical applications, Image quality, Best for (clinic / lab / hospital)
@@ -1777,7 +1777,7 @@ _Type: Imaging · Edit in: `app/user/products/components/medical-diagnostic-imag
 
 ## Microscopes
 
-_Type: Microscope / scanner · Edit in: `app/user/products/components/microscopes/microscopes.tsx`_
+_Type: Microscope / scanner · Edit in: `app/products/microscopes/microscopes.tsx`_
 
 - [ ] 🔴 **ECLIPSE E100** — Nikon
   - Need: Microscope type, Objectives / magnification, Illumination, Applications, Camera / digital imaging support, Best for (clinic / lab / hospital)
@@ -1802,7 +1802,7 @@ _Type: Microscope / scanner · Edit in: `app/user/products/components/microscope
 
 ## Pipettors
 
-_Type: Lab equipment · Edit in: `app/user/products/components/pipettors/pipettors.tsx`_
+_Type: Lab equipment · Edit in: `app/products/pipettors/pipettors.tsx`_
 
 - [ ] 🔴 **Micropette Plus** — DLAB
   - Need: Capacity / chamber volume, Temperature range, Type / class, Key features, Size, Best for (clinic / lab / hospital)
@@ -1819,7 +1819,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/pipettors/pipetto
 
 ## Embedding
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🔴 **Floating Bath** — Sakura
   - Need: Capacity, Throughput / run time, Type / automation level, Size, Best for (clinic / lab / hospital)
@@ -1833,7 +1833,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Biosafety Cabinets
 
-_Type: Lab equipment · Edit in: `app/user/products/components/biosafety-cabinets/biosafety-cabinets.tsx`_
+_Type: Lab equipment · Edit in: `app/products/biosafety-cabinets/biosafety-cabinets.tsx`_
 
 - [ ] 🔴 **Class Series** — Haier
   - Need: Capacity / chamber volume, Temperature range, Type / class, Key features, Size, Best for (clinic / lab / hospital)
@@ -1850,7 +1850,7 @@ _Type: Lab equipment · Edit in: `app/user/products/components/biosafety-cabinet
 
 ## HBA1C - HPLC
 
-_Type: Analyzer · Edit in: `app/user/products/components/hba1c-hplc/HBA1C-HPLC.tsx`_
+_Type: Analyzer · Edit in: `app/products/hba1c-hplc/HBA1C-HPLC.tsx`_
 
 - [ ] 🔴 **HLC-723 G11** — Tosoh
   - Need: Throughput, Test menu / parameters measured, Sample type, Sample volume, Sample loading capacity / autoloader, Size / footprint, Connectivity, Best for (clinic / lab / hospital)
@@ -1861,7 +1861,7 @@ _Type: Analyzer · Edit in: `app/user/products/components/hba1c-hplc/HBA1C-HPLC.
 
 ## NICU PICU AND ICU
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/nicu-picu-icu/nicu-picu-icu.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/nicu-picu-icu/nicu-picu-icu.tsx`_
 
 - [ ] 🟡 **CR2q Hospital Bed** — Saikang
   - Need: Patient type, Display / screen, Clinical setting
@@ -1884,7 +1884,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/nicu-pic
 
 ## OR Equipment
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/or-equipment/or-equipments.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/or-equipment/or-equipments.tsx`_
 
 - [ ] 🔴 **4K Laparoscopy System**
   - Need: Patient type, Key functions / modes, Display / screen, Battery / portability, Clinical setting
@@ -1898,7 +1898,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/or-equip
 
 ## Microtomy
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🔴 **Tissue-Tek Slide Warmer** — Sakura
   - Need: Capacity, Throughput / run time, Type / automation level, Size, Best for (clinic / lab / hospital)
@@ -1909,7 +1909,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Tissue Processing
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🟡 **Histo-Tek VP1** — Sakura
   - Need: Capacity, Throughput / run time, Size, Best for (clinic / lab / hospital)
@@ -1926,7 +1926,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Biogenex
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/biogenex/biogenex.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/biogenex/biogenex.tsx`_
 
 - [ ] 🔴 **NanoVIP** — Biogenex
   - Need: Capacity, Throughput / run time, Key features, Size, Best for (clinic / lab / hospital)
@@ -1934,7 +1934,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/biogen
 
 ## Coverslipping
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🔴 **Tissue-Tek Film** — Sakura
   - Need: Capacity, Throughput / run time, Key features, Size, Best for (clinic / lab / hospital)
@@ -1942,7 +1942,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Cryotomy
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🔴 **Tissue-Tek Polar** — Sakura
   - Need: Capacity, Throughput / run time, Key features, Size, Best for (clinic / lab / hospital)
@@ -1950,7 +1950,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Cytology
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/sakura/sakura.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/sakura/sakura.tsx`_
 
 - [ ] 🔴 **Cyto-Tek 2500** — Sakura
   - Need: Capacity, Throughput / run time, Key features, Size, Best for (clinic / lab / hospital)
@@ -1958,7 +1958,7 @@ _Type: Histopathology equipment · Edit in: `app/user/products/components/sakura
 
 ## Pulmonary
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/pulmonary-department/pulmonary.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/pulmonary-department/pulmonary.tsx`_
 
 - [ ] 🟡 **Carestation 30** — GE Healthcare
   - Need: Patient type, Display / screen, Battery / portability, Clinical setting
@@ -1969,7 +1969,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/pulmonar
 
 ## Gastro / Endo Equipments
 
-_Type: Patient-care equipment · Edit in: `app/user/products/components/gastro-endo/gastro-endo.tsx`_
+_Type: Patient-care equipment · Edit in: `app/products/gastro-endo/gastro-endo.tsx`_
 
 - [ ] 🟡 **C6 HD / C6A HD** — EDAN
   - Need: Patient type, Display / screen, Battery / portability, Clinical setting
@@ -1977,7 +1977,7 @@ _Type: Patient-care equipment · Edit in: `app/user/products/components/gastro-e
 
 ## Motic Slide Scanners
 
-_Type: Microscope / scanner · Edit in: `app/user/products/components/moticsliderscanner/moticsliderscanner.tsx`_
+_Type: Microscope / scanner · Edit in: `app/products/moticsliderscanner/moticsliderscanner.tsx`_
 
 - [ ] 🟡 **MoticEasyScan Infinity 60** — Motic
   - Need: Illumination, Applications, Camera / digital imaging support
@@ -1985,7 +1985,7 @@ _Type: Microscope / scanner · Edit in: `app/user/products/components/moticslide
 
 ## Vitro
 
-_Type: Histopathology equipment · Edit in: `app/user/products/components/vitro/vitro.tsx`_
+_Type: Histopathology equipment · Edit in: `app/products/vitro/vitro.tsx`_
 
 - [ ] 🟡 **VitroStainer 42** — Vitro
   - Need: Throughput / run time, Size, Best for (clinic / lab / hospital)

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pool } from 'pg';
 import nodemailer from 'nodemailer';
+import { rateLimit } from '@/lib/rateLimit';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -67,8 +68,13 @@ async function notifyApplicantsRecipients(rawPosition: string) {
 }
 
 export async function POST(request: NextRequest) {
+  const limited = rateLimit(request, 'applicants', 5, 10 * 60 * 1000);
+  if (limited) return limited;
+
   try {
     const body = await request.json();
+    // Hidden field real visitors never fill in: pretend success so bots don't adapt.
+    if (body.website) return NextResponse.json({ success: true }, { status: 201 });
     const { name, email, phone, position, location, resumeUrl, resumeFileName, message } = body;
 
     console.log('📝 Received application data:', { 

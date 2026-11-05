@@ -1,17 +1,17 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-// S3-only import — see note in app/api/event-gallery/route.ts.
-import S3 from 'aws-sdk/clients/s3';
-
-const s3 = new S3({
-  endpoint: 'https://sgp1.digitaloceanspaces.com',
-  accessKeyId: process.env.DO_SPACES_KEY,
-  secretAccessKey: process.env.DO_SPACES_SECRET,
-});
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { spaces } from '@/lib/spaces';
+import { rateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: NextRequest) {
+  const limited = rateLimit(request, 'upload-resume', 5, 10 * 60 * 1000);
+  if (limited) return limited;
+
   try {
-    const { file, fileName: rawName } = await request.json();
+    const { file, fileName: rawName, website } = await request.json();
+    // Hidden field real visitors never fill in: pretend success so bots don't adapt.
+    if (website) return NextResponse.json({ success: true, url: '', fileName: '' });
     if (typeof file !== 'string' || typeof rawName !== 'string') {
       return NextResponse.json({ success: false, error: 'Invalid upload' }, { status: 400 });
     }
@@ -37,11 +37,11 @@ export async function POST(request: NextRequest) {
       Bucket: 'biositeassets', // Your Space name
       Key: `admin/applicant-resume/${fileName}`,
       Body: base64Data,
-      ACL: 'public-read', // Or 'private' if you want restricted access
+      ACL: 'public-read' as const, // Or 'private' if you want restricted access
       ContentType: 'application/pdf',
     };
 
-    await s3.putObject(params).promise();
+    await spaces.send(new PutObjectCommand(params));
     const url = `https://biositeassets.sgp1.digitaloceanspaces.com/admin/applicant-resume/${fileName}`;
 
     console.log('✅ Spaces upload successful:', url);
