@@ -490,3 +490,21 @@ html[data-modal-open] .partner-shine { animation-play-state: paused; }
   }
 }
 .bevel:focus-visible { outline: 2px solid #2B3990; outline-offset: 2px; }
+
+/* Contact dropdowns: styled list where the browser supports it, native list elsewhere. */
+@supports (appearance: base-select) {
+  .contact-select, .contact-select::picker(select) { appearance: base-select; }
+  .contact-select::picker-icon { display: none; }
+  .contact-select::picker(select) {
+    margin-top: 4px;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px -8px rgba(43, 57, 144, 0.3);
+  }
+  .contact-select option { padding: 8px 12px; border-radius: 6px; color: #1f2937; }
+  .contact-select option::checkmark { display: none; }
+  .contact-select option:hover, .contact-select option:focus-visible { background: #e8ebf7; color: #2B3990; outline: none; }
+  .contact-select option:checked { background: #2B3990; color: #fff; font-weight: 600; }
+}

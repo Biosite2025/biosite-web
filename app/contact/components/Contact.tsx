@@ -63,10 +63,34 @@ const departmentEmailMap: Record<string, Record<string, string>> = {
   },
 };
 
+const fieldClass = "w-full min-w-0 rounded-lg border border-gray-300 bg-white px-3 sm:px-4 py-2.5 text-sm sm:text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 hover:border-gray-400 focus:border-[#2B3990] focus:outline-none focus:ring-2 focus:ring-[#2B3990]/30";
+
+function Field({ label, htmlFor, required, className, children }: {
+  label: string;
+  htmlFor: string;
+  required?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={className}>
+      <label htmlFor={htmlFor} className="mb-1 block text-xs sm:text-sm font-semibold text-[#2B3990]">
+        {label}
+        {required && <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+const chevron = (
+  <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#2B3990]">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  </span>
+);
+
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
-  const [deptFocused, setDeptFocused] = useState(false);
-  const [locationFocused, setLocationFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -123,7 +147,7 @@ function ContactForm() {
       return;
     }
     if (!form.department) {
-      setError("Please select a Department (To:) before sending.");
+      setError("Please select a Department before sending.");
       setShowErrorPopup(true);
       setTimeout(() => setShowErrorPopup(false), 3500);
       return;
@@ -336,95 +360,9 @@ function ContactForm() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-2 text-center  w-full">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-4 sm:mb-5 text-center w-full">
             Get in Touch
           </h2>
-          {/* Location + Department dropdowns side by side */}
-          <div className="mb-2 sm:mb-3 md:mb-4 flex gap-4">
-            {/* Location Dropdown */}
-            <div className="relative flex-1" style={{ minHeight: '56px' }}>
-              <label
-                htmlFor="location-select"
-                className={`absolute left-0 px-1 transition-all duration-300 ease-in-out
-                  text-[#2B3990] font-semibold pointer-events-none
-                  ${
-                    locationFocused || form.location
-                      ? 'text-xs -top-4 bg-white rounded px-1 py-0.5 shadow-sm'
-                      : 'text-base top-4 sm:top-5'
-                  }
-                `}
-                style={{
-                  transition: 'all 0.28s cubic-bezier(0.4,0,0.2,1)',
-                  background: locationFocused || form.location ? '#fff' : 'transparent',
-                  zIndex: 10,
-                }}
-              >
-                Location:
-              </label>
-              <select
-                id="location-select"
-                name="location"
-                className="appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"
-                value={form.location}
-                onChange={handleChange}
-                onFocus={() => setLocationFocused(true)}
-                onBlur={() => setLocationFocused(false)}
-                required
-                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px' }}
-              >
-                <option value="" disabled hidden></option>
-                <option value="luzon">Luzon</option>
-                <option value="vismin">VisMin</option>
-              </select>
-              <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-[#2B3990] text-lg">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </span>
-            </div>
-
-            {/* Department (To:) Dropdown */}
-            <div className="relative flex-1" style={{ minHeight: '56px' }}>
-              <label
-                htmlFor="department-select"
-                className={`absolute left-0 px-1 transition-all duration-300 ease-in-out
-                  text-[#2B3990] font-semibold pointer-events-none
-                  ${
-                    deptFocused || form.department
-                      ? 'text-xs -top-4 bg-white rounded px-1 py-0.5 shadow-sm'
-                      : 'text-base top-4 sm:top-5'
-                  }
-                `}
-                style={{
-                  transition: 'all 0.28s cubic-bezier(0.4,0,0.2,1)',
-                  background: deptFocused || form.department ? '#fff' : 'transparent',
-                  zIndex: 10,
-                }}
-              >
-                To:
-              </label>
-              <select
-                id="department-select"
-                name="department"
-                className="appearance-none border-0 border-b-2 border-[#2B3990] pr-8 pl-0 py-4 text-base sm:text-lg focus:ring-0 focus:outline-none cursor-pointer w-full bg-transparent text-[#2B3990] font-bold text-left"
-                value={form.department}
-                onChange={handleChange}
-                onFocus={() => setDeptFocused(true)}
-                onBlur={() => setDeptFocused(false)}
-                required
-                style={{ background: 'none', minHeight: '48px', paddingTop: '20px', paddingBottom: '12px' }}
-              >
-                <option value="" disabled hidden></option>
-                <option value="quotation">Quotation</option>
-                <option value="sales">Sales</option>
-                <option value="technical_service">Technical Service</option>
-                <option value="marketing">Marketing</option>
-              </select>
-              <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-[#2B3990] text-lg">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </span>
-            </div>
-          </div>
-          
-
       {/* Error Popup Modal */}
       <AnimatePresence>
         {showErrorPopup && error && (
@@ -471,50 +409,58 @@ function ContactForm() {
               className="absolute left-[-9999px] h-0 w-0 opacity-0"
               ref={honeypot}
             />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-              {/* Subject first on mobile/tablet, normal on desktop */}
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-1 lg:order-4"
-                value={form.subject}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="name" 
-                placeholder="Name"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-2 lg:order-1"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-3"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium order-4"
-                value={form.phone}
-                onChange={handleChange}
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                className="rounded-lg border border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:ring-2 focus:ring-[#2B3990]/40 focus:outline-none transition-all shadow-sm bg-white min-h-[60px] sm:min-h-[80px] md:min-h-[100px] text-[#2B3990] placeholder-[#7a8bbd] placeholder:font-medium lg:col-span-2 order-5"
-                value={form.message}
-                onChange={handleChange}
-                required
-              />
+            <div className="grid grid-cols-6 gap-3 md:gap-4">
+              <Field label="Location" htmlFor="location-select" required className="col-span-3">
+                <div className="relative">
+                  <select
+                    id="location-select"
+                    name="location"
+                    className={`contact-select ${fieldClass} cursor-pointer appearance-none pr-9 ${form.location ? '' : '!text-gray-400'}`}
+                    value={form.location}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled hidden>Select</option>
+                    <option value="luzon">Luzon</option>
+                    <option value="vismin">VisMin</option>
+                  </select>
+                  {chevron}
+                </div>
+              </Field>
+              <Field label="Department" htmlFor="department-select" required className="col-span-3">
+                <div className="relative">
+                  <select
+                    id="department-select"
+                    name="department"
+                    className={`contact-select ${fieldClass} cursor-pointer appearance-none pr-9 ${form.department ? '' : '!text-gray-400'}`}
+                    value={form.department}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled hidden>Select</option>
+                    <option value="quotation">Quotation</option>
+                    <option value="sales">Sales</option>
+                    <option value="technical_service">Technical Service</option>
+                    <option value="marketing">Marketing</option>
+                  </select>
+                  {chevron}
+                </div>
+              </Field>
+              <Field label="Name" htmlFor="contact-name" required className="col-span-6 lg:col-span-3">
+                <input id="contact-name" type="text" name="name" autoComplete="name" className={fieldClass} value={form.name} onChange={handleChange} required />
+              </Field>
+              <Field label="Email" htmlFor="contact-email" required className="col-span-6 lg:col-span-3">
+                <input id="contact-email" type="email" name="email" autoComplete="email" className={fieldClass} value={form.email} onChange={handleChange} required />
+              </Field>
+              <Field label="Phone" htmlFor="contact-phone" className="col-span-6 lg:col-span-2">
+                <input id="contact-phone" type="tel" name="phone" autoComplete="tel" className={fieldClass} value={form.phone} onChange={handleChange} />
+              </Field>
+              <Field label="Subject" htmlFor="contact-subject" className="col-span-6 lg:col-span-4">
+                <input id="contact-subject" type="text" name="subject" className={fieldClass} value={form.subject} onChange={handleChange} />
+              </Field>
+              <Field label="Message" htmlFor="contact-message" required className="col-span-6">
+                <textarea id="contact-message" name="message" placeholder="How can we help?" className={`${fieldClass} block min-h-[80px] md:min-h-[100px]`} value={form.message} onChange={handleChange} required />
+              </Field>
             </div>
             <div className="flex flex-col items-center w-full">
               {/* Only render after mounted is true */}
