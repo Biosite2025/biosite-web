@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import axios from 'axios';
 import { rateLimit } from '@/lib/rateLimit';
+import { CONTACT_FIELDS, REGIONS, validateContact, type ContactValues } from '@/lib/contactValidation';
 
 
-// Simple email validation regex
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+// Both regions' teams receive every message; the region is noted in the subject.
+const DEPARTMENT_EMAILS: Record<string, string[]> = {
+  quotation: ['quotation.luzon@biositeph.com', 'quotation.vismin@biositeph.com'],
+  sales: ['nsm@biositeph.com', 'sheereann.barnes@biositeph.com'],
+  technical_service: ['mnl.servicecoordinator@biositeph.com', 'irisclint.caro@biositeph.com'],
+  marketing: ['customerengagement@biositeph.com'],
+};
 
 export async function POST(request: NextRequest) {
   const limited = rateLimit(request, 'contact', 5, 10 * 60 * 1000);
@@ -17,40 +21,23 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     // Hidden field real visitors never fill in: pretend success so bots don't adapt.
     if (body.website) return NextResponse.json({ success: true, message: 'Email sent successfully' });
-    const { recipient } = body;
-    // Visitor text goes into an HTML email: escape it so it can't inject
-    // markup or links, and cap lengths.
-    const esc = (v: unknown, max: number) =>
-      String(v ?? '').slice(0, max).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-    const name = esc(body.name, 200);
-    const email = esc(body.email, 200);
-    const phone = esc(body.phone, 50);
-    const message = esc(body.message, 5000);
+    const values = Object.fromEntries(
+      CONTACT_FIELDS.map((field) => [field, typeof body[field] === 'string' ? body[field].trim() : '']),
+    ) as ContactValues;
+    const fieldErrors = validateContact(values);
+    if (Object.keys(fieldErrors).length > 0) {
+      return NextResponse.json({ success: false, error: 'Please correct the highlighted fields.', fieldErrors }, { status: 400 });
+    }
+
+    // Visitor text goes into an HTML email: escape it so it can't inject markup or links.
+    const esc = (v: string) =>
+      v.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    const name = esc(values.name);
+    const email = esc(values.email);
+    const phone = esc(values.phone);
+    const message = esc(values.message);
     // Header fields must be single-line plain text.
-    const subject = String(body.subject ?? '').replace(/[\r\n]+/g, ' ').slice(0, 200);
-
-    // Accept single email or array of emails — but only Biosite's own
-    // addresses, so the form can't be used to send mail to anyone else.
-    const recipients: string[] = (Array.isArray(recipient) ? recipient : [recipient]).map((r: unknown) => String(r ?? '').trim().toLowerCase());
-    const uniqueRecipients = [...new Set(recipients)];
-    if (uniqueRecipients.length > 5 || !uniqueRecipients.every((r) => r.endsWith('@biositeph.com'))) {
-      return NextResponse.json({ success: false, error: 'Invalid recipient email selected' }, { status: 400 });
-    }
-
-    // Validate required fields
-    if (!name || !email || !message || uniqueRecipients.length === 0) {
-      return NextResponse.json(
-        { success: false, error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
-
-    if (!uniqueRecipients.every(isValidEmail)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid recipient email selected' },
-        { status: 400 }
-      );
-    }
+    const subject = `${values.subject || 'New Inquiry'} - ${REGIONS[values.location]}`.replace(/[\r\n]+/g, ' ');
 
     // Create transporter
     const transporter = nodemailer.createTransport({
@@ -66,12 +53,12 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: `"biositeph.com" <${process.env.SMTP_USER}>`,
-      to: uniqueRecipients.join(', '),
+      to: DEPARTMENT_EMAILS[values.department].join(', '),
       subject: `${subject }`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #2B3990 0%, #2B7CD3 100%); padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">${esc(subject, 200)}</h1>
+            <h1 style="color: white; margin: 0;">${esc(subject)}</h1>
           </div>
           
           <div style="background: #f7f9fc; padding: 30px;">
@@ -81,7 +68,7 @@ export async function POST(request: NextRequest) {
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;"><strong style="color: #2B3990;">Subject:</strong></td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">${esc(subject, 200) || 'N/A'}</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">${esc(subject)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;"><strong style="color: #2B3990;">Name:</strong></td>
@@ -116,7 +103,7 @@ export async function POST(request: NextRequest) {
           
         </div>
       `,
-      replyTo: email,
+      replyTo: values.email,
     };
 
     // Send email
@@ -130,10 +117,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Email sending error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to send email',
-      },
+      { success: false, error: 'Your message could not be sent. Please try again later.' },
       { status: 500 }
     );
   }

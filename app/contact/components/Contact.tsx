@@ -1,7 +1,8 @@
 "use client";
-      import React, { useState, useEffect, useRef } from "react";
+      import React, { useState } from "react";
   import { motion, AnimatePresence } from "framer-motion";
 import Image from 'next/image';
+import GetInTouchForm from './GetInTouchForm';
 
 
 interface LocationData {
@@ -44,155 +45,16 @@ const locations: LocationData[] = [
   }
 ];
 
-const departmentEmailMap: Record<string, Record<string, string>> = {
-  quotation: {
-    luzon: "quotation.luzon@biositeph.com",
-    vismin: "quotation.vismin@biositeph.com",
-  },
-  sales: {
-    luzon: "nsm@biositeph.com",
-    vismin: "sheereann.barnes@biositeph.com",
-  },
-  technical_service: {
-    luzon: "mnl.servicecoordinator@biositeph.com",
-    vismin: "irisclint.caro@biositeph.com",
-  },
-  marketing: {
-    luzon: "customerengagement@biositeph.com",
-    vismin: "customerengagement@biositeph.com",
-  },
-};
-
-const fieldClass = "w-full min-w-0 rounded-lg border border-gray-300 bg-white px-3 sm:px-4 py-2.5 text-sm sm:text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 hover:border-gray-400 focus:border-[#2B3990] focus:outline-none focus:ring-2 focus:ring-[#2B3990]/30";
-
-function Field({ label, htmlFor, required, className, children }: {
-  label: string;
-  htmlFor: string;
-  required?: boolean;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={className}>
-      <label htmlFor={htmlFor} className="mb-1 block text-xs sm:text-sm font-semibold text-[#2B3990]">
-        {label}
-        {required && <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>}
-      </label>
-      {children}
-    </div>
-  );
-}
-
-const chevron = (
-  <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#2B3990]">
-    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-  </span>
-);
-
 function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
-  const [mounted, setMounted] = useState(false);
-  const honeypot = useRef<HTMLInputElement>(null);
-
-  // Reset form when activeLocation changes
-  useEffect(() => {
-    setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
-    setError("");
-  }, [activeLocation]);
-
-  // "Request a Quote" on a product links here with ?product=<name>. Runs after
-  // the reset above so the prefilled values survive it on first render.
-  useEffect(() => {
-    const product = new URLSearchParams(window.location.search).get("product")?.slice(0, 150);
-    if (!product) return;
-    setForm((f) => ({
-      ...f,
-      department: "quotation",
-      subject: `Quotation request: ${product}`,
-      message: `Hello, I would like to request a quote for the ${product}.`,
-    }));
-  }, []);
-
-  // ...existing code...
-
-  // Ensure proper hydration
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [region, setRegion] = useState("");
 
   const currentLocation = locations.find(loc => loc.id === activeLocation) || locations[2];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setError(""); // Clear error on input change
-  };
-
-  // ...existing code...
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setShowErrorPopup(false);
-
-    if (!form.location) {
-      setError("Please select a Location before sending.");
-      setShowErrorPopup(true);
-      setTimeout(() => setShowErrorPopup(false), 3500);
-      return;
-    }
-    if (!form.department) {
-      setError("Please select a Department before sending.");
-      setShowErrorPopup(true);
-      setTimeout(() => setShowErrorPopup(false), 3500);
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      const locationLabel = form.location === 'luzon' ? 'Luzon' : 'VisMin';
-      const payload = {
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        subject: `${form.subject || 'New Inquiry'} - ${locationLabel}`,
-        message: form.message,
-        website: honeypot.current?.value,
-        recipient: [...new Set([
-          departmentEmailMap[form.department]?.luzon ?? "",
-          departmentEmailMap[form.department]?.vismin ?? "",
-        ].filter(Boolean))],
-      };
-      const response = await fetch("/api/send-contact-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      if (data.success) {
-        setSubmitted(true);
-        setForm({ name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" });
-        setTimeout(() => setSubmitted(false), 3000);
-      } else {
-        setError(data.error || "Failed to send message. Please try again.");
-        setShowErrorPopup(true);
-        setTimeout(() => setShowErrorPopup(false), 3500);
-      }
-    } catch (err) {
-      setError("An error occurred. Please try again later.");
-      setShowErrorPopup(true);
-      setTimeout(() => setShowErrorPopup(false), 3500);
-      console.error("Form submission error:", err);
-    } finally {
-      setSubmitting(false);
-    }
+  const selectLocation = (id: string) => {
+    setActiveLocation(id);
+    setRegion(id === "manila" ? "luzon" : "vismin");
   };
 
   return (
@@ -267,7 +129,7 @@ function ContactForm() {
             {locations.map((location) => (
               <motion.button
                 key={location.id}
-                onClick={() => setActiveLocation(location.id)}
+                onClick={() => selectLocation(location.id)}
                 className={`px-6 py-3 font-semibold text-sm rounded-xl transition-all duration-300 relative flex-initial ${
                   activeLocation === location.id
                     ? 'text-white shadow-md'
@@ -300,7 +162,7 @@ function ContactForm() {
             {locations.map((location) => (
               <motion.button
                 key={location.id}
-                onClick={() => setActiveLocation(location.id)}
+                onClick={() => selectLocation(location.id)}
                 className={`px-4 py-2 font-semibold text-sm rounded-lg transition-all duration-300 relative flex-1 ${
                   activeLocation === location.id
                     ? 'text-white shadow-md'
@@ -351,132 +213,7 @@ function ContactForm() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Contact Form */}
-        <motion.div
-          id="userform"
-          className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-center min-h-[300px] sm:min-h-[350px] lg:min-h-[420px]"
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#2B3990] mb-4 sm:mb-5 text-center w-full">
-            Get in Touch
-          </h2>
-      {/* Error Popup Modal */}
-      <AnimatePresence>
-        {showErrorPopup && error && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowErrorPopup(false)}
-          >
-            <motion.div
-              className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full border border-red-200"
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-center text-red-700 mb-2">
-                {error}
-              </h3>
-              <p className="text-center text-gray-600 mb-6">
-                Please check your input and try again.
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-          
-          <form className="space-y-2 sm:space-y-3 md:space-y-4" onSubmit={handleSubmit}>
-            {/* Spam trap: hidden from people, filled in by bots. */}
-            <input
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              className="absolute left-[-9999px] h-0 w-0 opacity-0"
-              ref={honeypot}
-            />
-            <div className="grid grid-cols-6 gap-3 md:gap-4">
-              <Field label="Location" htmlFor="location-select" required className="col-span-3">
-                <div className="relative">
-                  <select
-                    id="location-select"
-                    name="location"
-                    className={`contact-select ${fieldClass} cursor-pointer appearance-none pr-9 ${form.location ? '' : '!text-gray-400'}`}
-                    value={form.location}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled hidden>Select</option>
-                    <option value="luzon">Luzon</option>
-                    <option value="vismin">VisMin</option>
-                  </select>
-                  {chevron}
-                </div>
-              </Field>
-              <Field label="Department" htmlFor="department-select" required className="col-span-3">
-                <div className="relative">
-                  <select
-                    id="department-select"
-                    name="department"
-                    className={`contact-select ${fieldClass} cursor-pointer appearance-none pr-9 ${form.department ? '' : '!text-gray-400'}`}
-                    value={form.department}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled hidden>Select</option>
-                    <option value="quotation">Quotation</option>
-                    <option value="sales">Sales</option>
-                    <option value="technical_service">Technical Service</option>
-                    <option value="marketing">Marketing</option>
-                  </select>
-                  {chevron}
-                </div>
-              </Field>
-              <Field label="Name" htmlFor="contact-name" required className="col-span-6 lg:col-span-3">
-                <input id="contact-name" type="text" name="name" autoComplete="name" className={fieldClass} value={form.name} onChange={handleChange} required />
-              </Field>
-              <Field label="Email" htmlFor="contact-email" required className="col-span-6 lg:col-span-3">
-                <input id="contact-email" type="email" name="email" autoComplete="email" className={fieldClass} value={form.email} onChange={handleChange} required />
-              </Field>
-              <Field label="Phone" htmlFor="contact-phone" className="col-span-6 lg:col-span-2">
-                <input id="contact-phone" type="tel" name="phone" autoComplete="tel" className={fieldClass} value={form.phone} onChange={handleChange} />
-              </Field>
-              <Field label="Subject" htmlFor="contact-subject" className="col-span-6 lg:col-span-4">
-                <input id="contact-subject" type="text" name="subject" className={fieldClass} value={form.subject} onChange={handleChange} />
-              </Field>
-              <Field label="Message" htmlFor="contact-message" required className="col-span-6">
-                <textarea id="contact-message" name="message" placeholder="How can we help?" className={`${fieldClass} block min-h-[80px] md:min-h-[100px]`} value={form.message} onChange={handleChange} required />
-              </Field>
-            </div>
-            <div className="flex flex-col items-center w-full">
-              {/* Only render after mounted is true */}
-                <motion.button
-                  type="submit"
-                  disabled={submitting}
-                  className={`w-full rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-white font-semibold py-2 sm:py-3 text-base sm:text-lg shadow-md hover:from-blue-700 hover:to-[#2B3990] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#2B3990]/40 mt-3 sm-:mt-2 ${
-                    submitting ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                  whileTap={submitting ? {} : { scale: 0.97 }}
-                >
-                  {submitting ? 'Sending...' : submitted ? 'Sent!' : 'Send Message'}
-                </motion.button>
-            </div>
-          </form>
-        </motion.div>
+        <GetInTouchForm region={region} onRegionChange={setRegion} />
       </div>
       {/* Contact Info Cards */}
       <style>{`
@@ -646,64 +383,6 @@ function ContactForm() {
       </motion.div>
       </motion.section>
 
-      {/* Success Popup Modal */}
-      <AnimatePresence>
-        {submitted && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSubmitted(false)}
-          >
-            <motion.div
-              className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full"
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-             
-            >
-              {/* Success Icon */}
-              <div className="flex justify-center mb-4">
-                <motion.div
-                  className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                >
-                  <svg
-                    className="w-8 h-8 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <motion.path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
-                    />
-                  </svg>
-                </motion.div>
-              </div>
-              
-              {/* Success Message */}
-              <h3 className="text-2xl font-bold text-center text-[#2B3990] mb-2">
-                Message Sent Successfully!
-              </h3>
-              <p className="text-center text-gray-600 mb-6">
-                Thank you for contacting us. We'll get back to you soon.
-              </p>
-              
-              
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
