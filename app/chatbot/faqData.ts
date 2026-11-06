@@ -146,7 +146,7 @@ export const FAQ_DATA = [
 			},
 			{
 				q: "How do I place an order?",
-				a: "Orders can be placed through the 'Contact' page by selecting 'Sales - VisMin or Luzon' or by contacting our sales team directly at +63 917 111 5008 or customerservice@biosite.com.ph.",
+				a: "Orders can be placed through the 'Contact' page by selecting 'Sales - VisMin or Luzon' or by contacting our sales team directly at +63 917 111 5008 or customerservice@biositeph.com.",
 			},
 			{
 				q: "What payment methods do you accept?",
@@ -230,7 +230,7 @@ export const FAQ_DATA = [
 		questions: [
 			{
 				q: "How do I contact Biosite?",
-				a: "Email: customerservice@biosite.com.ph | Phone: +63 917 111 5008 | Visit our 'Contact' page for location-specific details and an interactive contact form with department selection.",
+				a: "Email: customerservice@biositeph.com | Phone: +63 917 111 5008 | Visit our 'Contact' page for location-specific details and an interactive contact form with department selection.",
 			},
 			{
 				q: "What departments can I contact?",
@@ -238,15 +238,15 @@ export const FAQ_DATA = [
 			},
 			{
 				q: "What are the Manila office details?",
-				a: "Address: 305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8:30am-5:30pm",
+				a: "Address: 305 Col. Bonny Serrano Ave, San Juan City, 1500 Metro Manila | Phone: +63 917 111 5008 | Email: customerservice@biositeph.com | Hours: Mon-Sat 8:30am-5:30pm",
 			},
 			{
 				q: "What are the Cebu office details?",
-				a: "Address: Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu City | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8:30am-5:30pm",
+				a: "Address: Block 2 Lot 2 Guadalupe Heights Village, Guadalupe, 6000 Cebu City | Phone: +63 917 111 5008 | Email: customerservice@biositeph.com | Hours: Mon-Sat 8:30am-5:30pm",
 			},
 			{
 				q: "What are the Davao office details?",
-				a: "Address: 555 Manga St., Juna Subd, Matina, 8000 Davao City | Phone: +63 917 111 5008 | Email: customerservice@biosite.com.ph | Hours: Mon-Sat 8am-5pm",
+				a: "Address: 555 Manga St., Juna Subd, Matina, 8000 Davao City | Phone: +63 917 111 5008 | Email: customerservice@biositeph.com | Hours: Mon-Sat 8am-5pm",
 			},
 		],
 	},
