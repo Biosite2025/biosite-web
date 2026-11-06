@@ -15,11 +15,6 @@ import {
 } from "@/lib/contactValidation";
 
 const ICONS = {
-  quotation: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
-  sales: "M4 17l5-5 4 4 7-8M15 8h5v5",
-  technical_service: "M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z",
-  marketing: "M3 11v2a1 1 0 0 0 1 1h3l10 5V5L7 10H4a1 1 0 0 0-1 1zM7 14v4a2 2 0 0 0 2 2h1M20 10v4",
-  region: "M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
   name: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
   email: "M3 6h18v12H3zM3 7l9 7 9-7",
   phone: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z",
@@ -102,7 +97,7 @@ function Field({ name, label, required, error, valid, className, footer, multili
 function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
   name: "department" | "location";
   legend: string;
-  options: { value: string; label: string; icon: string }[];
+  options: { value: string; label: string }[];
   value: string;
   error?: string;
   onChange: (value: string) => void;
@@ -130,11 +125,10 @@ function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
               className="peer sr-only"
             />
             <span
-              className={`flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-lg border px-1 text-xs font-semibold transition-colors duration-200 peer-checked:border-transparent peer-checked:bg-gradient-to-br peer-checked:from-[#2B3990] peer-checked:to-blue-600 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#2B3990]/40 ${
+              className={`flex h-9 items-center justify-center whitespace-nowrap rounded-lg border px-1 text-xs font-semibold transition-colors duration-200 peer-checked:border-transparent peer-checked:bg-gradient-to-br peer-checked:from-[#2B3990] peer-checked:to-blue-600 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#2B3990]/40 ${
                 error ? "border-red-400 text-red-700" : "border-slate-200 bg-slate-50/70 text-slate-600 hover:border-[#2B3990]/40 hover:text-[#2B3990]"
               }`}
             >
-              <Icon path={option.icon} className="h-4 w-4 shrink-0" />
               {option.label}
             </span>
           </label>
@@ -146,12 +140,8 @@ function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
 
 const EMPTY = { name: "", email: "", phone: "", subject: "", message: "", department: "" };
 
-const departmentOptions = Object.entries(DEPARTMENTS).map(([value, label]) => ({
-  value,
-  label,
-  icon: ICONS[value as keyof typeof ICONS],
-}));
-const regionOptions = Object.entries(REGIONS).map(([value, label]) => ({ value, label, icon: ICONS.region }));
+const departmentOptions = Object.entries(DEPARTMENTS).map(([value, label]) => ({ value, label }));
+const regionOptions = Object.entries(REGIONS).map(([value, label]) => ({ value, label }));
 
 /** `region` lives in the parent because the Manila/Cebu/Davao tabs also set it. */
 export default function GetInTouchForm({ region, onRegionChange }: {
