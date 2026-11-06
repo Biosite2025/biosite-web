@@ -48,14 +48,8 @@ const locations: LocationData[] = [
 function ContactForm() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("davao");
-  const [region, setRegion] = useState("");
 
   const currentLocation = locations.find(loc => loc.id === activeLocation) || locations[2];
-
-  const selectLocation = (id: string) => {
-    setActiveLocation(id);
-    setRegion(id === "manila" ? "luzon" : "vismin");
-  };
 
   return (
     <>
@@ -129,7 +123,7 @@ function ContactForm() {
             {locations.map((location) => (
               <motion.button
                 key={location.id}
-                onClick={() => selectLocation(location.id)}
+                onClick={() => setActiveLocation(location.id)}
                 className={`px-6 py-3 font-semibold text-sm rounded-xl transition-all duration-300 relative flex-initial ${
                   activeLocation === location.id
                     ? 'text-white shadow-md'
@@ -162,7 +156,7 @@ function ContactForm() {
             {locations.map((location) => (
               <motion.button
                 key={location.id}
-                onClick={() => selectLocation(location.id)}
+                onClick={() => setActiveLocation(location.id)}
                 className={`px-4 py-2 font-semibold text-sm rounded-lg transition-all duration-300 relative flex-1 ${
                   activeLocation === location.id
                     ? 'text-white shadow-md'
@@ -213,7 +207,7 @@ function ContactForm() {
           </AnimatePresence>
         </motion.div>
 
-        <GetInTouchForm region={region} onRegionChange={setRegion} />
+        <GetInTouchForm />
       </div>
       {/* Contact Info Cards */}
       <style>{`

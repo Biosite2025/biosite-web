@@ -138,16 +138,12 @@ function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
   );
 }
 
-const EMPTY = { name: "", email: "", phone: "", subject: "", message: "", department: "" };
+const EMPTY = { name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" };
 
 const departmentOptions = Object.entries(DEPARTMENTS).map(([value, label]) => ({ value, label }));
 const regionOptions = Object.entries(REGIONS).map(([value, label]) => ({ value, label }));
 
-/** `region` lives in the parent because the Manila/Cebu/Davao tabs also set it. */
-export default function GetInTouchForm({ region, onRegionChange }: {
-  region: string;
-  onRegionChange: (region: string) => void;
-}) {
+export default function GetInTouchForm() {
   const [form, setForm] = useState(EMPTY);
   const [touched, setTouched] = useState<Partial<Record<ContactField, boolean>>>({});
   const [serverErrors, setServerErrors] = useState<ContactErrors>({});
@@ -170,7 +166,7 @@ export default function GetInTouchForm({ region, onRegionChange }: {
     }));
   }, []);
 
-  const values = { ...form, location: region };
+  const values = form;
   const errors = validateContact(values);
   const errorFor = (field: ContactField) => serverErrors[field] || (touched[field] ? errors[field] : undefined);
   const isValid = (field: ContactField) => !!touched[field] && !!values[field].trim() && !errorFor(field);
@@ -219,7 +215,6 @@ export default function GetInTouchForm({ region, onRegionChange }: {
         setSent({ name: form.name.trim().split(/\s+/)[0], team: DEPARTMENTS[form.department] });
         setForm(EMPTY);
         setTouched({});
-        onRegionChange("");
       } else if (data.fieldErrors) {
         setServerErrors(data.fieldErrors);
         showErrors(data.fieldErrors);
@@ -310,12 +305,9 @@ export default function GetInTouchForm({ region, onRegionChange }: {
               name="location"
               legend="Your region"
               options={regionOptions}
-              value={region}
+              value={form.location}
               error={errorFor("location")}
-              onChange={(value) => {
-                onRegionChange(value);
-                clearFor("location");
-              }}
+              onChange={(value) => setField("location", value)}
             />
 
             <div className="grid grid-cols-12 gap-2">
