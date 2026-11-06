@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Pool } from 'pg';
 import nodemailer from 'nodemailer';
 import { rateLimit } from '@/lib/rateLimit';
+import { validateApplication, type ApplicationErrors, type ApplicationValues } from '@/lib/applicationValidation';
+
+// Where /api/upload-resume stores résumés.
+const RESUME_URL_PREFIX = 'https://biositeassets.sgp1.digitaloceanspaces.com/admin/applicant-resume/';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -75,26 +79,35 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     // Hidden field real visitors never fill in: pretend success so bots don't adapt.
     if (body.website) return NextResponse.json({ success: true }, { status: 201 });
-    const { name, email, phone, position, location, resumeUrl, resumeFileName, message } = body;
+    const text = (v: unknown) => (typeof v === 'string' ? v.trim() : '');
+    const values: ApplicationValues = {
+      name: text(body.name),
+      email: text(body.email),
+      phone: text(body.phone),
+      position: text(body.position),
+      location: text(body.location),
+      message: text(body.message),
+    };
+    const fieldErrors: ApplicationErrors = validateApplication(values);
+    // The résumé must be one our upload route stored.
+    const resumeUrl = text(body.resumeUrl);
+    if (!resumeUrl.startsWith(RESUME_URL_PREFIX) || /[\s"'<>]/.test(resumeUrl)) fieldErrors.resume = 'Attach your résumé again';
+    if (Object.keys(fieldErrors).length > 0) {
+      return NextResponse.json({ success: false, error: 'Please correct the highlighted fields.', fieldErrors }, { status: 400 });
+    }
+    const resumeFileName = text(body.resumeFileName).slice(0, 200) || null;
+    const { name, email, phone, position, location, message } = values;
 
-    console.log('📝 Received application data:', { 
-      name, 
-      email, 
-      phone, 
-      position, 
-      location, 
+    console.log('📝 Received application data:', {
+      name,
+      email,
+      phone,
+      position,
+      location,
       resumeUrl,
       resumeFileName,
-      message 
+      message
     });
-
-    // Validate required fields
-    if (!name || !email || !phone || !position || !location) {
-      return NextResponse.json(
-        { success: false, error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
 
     console.log('💾 Saving to database...');
 

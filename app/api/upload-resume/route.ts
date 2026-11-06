@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'File is too large (max 10 MB)' }, { status: 413 });
     }
     if (base64Data.subarray(0, 5).toString('latin1') !== '%PDF-') {
-      return NextResponse.json({ success: false, error: 'Please upload a PDF file' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Attach a PDF file' }, { status: 400 });
     }
     // Safe, unique key: no path characters, and a random prefix so one
     // upload can never overwrite another applicant's résumé.
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('❌ Spaces upload error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to upload resume' },
+      { success: false, error: 'Your résumé could not be uploaded. Please try again.' },
       { status: 500 }
     );
   }

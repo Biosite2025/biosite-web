@@ -33,6 +33,19 @@ const LETTER = /\p{L}/u;
 // One character over and over, such as "aaaaaa".
 const REPEATED = /^([\s\S])\1*$/u;
 
+/** Shared with the careers form. Expects a trimmed value. */
+export function nameError(name: string) {
+  if (!name) return 'Enter your name';
+  if (name.length > MAX_LENGTH.name) return `Use ${MAX_LENGTH.name} characters or fewer`;
+  if (name.length < 2 || !NAME.test(name) || REPEATED.test(name)) return 'Letters only, at least 2';
+}
+
+/** Shared with the careers form. Expects a trimmed value. */
+export function emailError(email: string) {
+  if (!email) return 'Enter your email';
+  if (email.length > MAX_LENGTH.email || !EMAIL.test(email) || /\.\.|^\.|\.@/.test(email)) return 'Enter a valid email address';
+}
+
 export function validateContact(values: ContactValues): ContactErrors {
   const errors: ContactErrors = {};
   const name = values.name.trim();
@@ -44,16 +57,10 @@ export function validateContact(values: ContactValues): ContactErrors {
   if (!Object.hasOwn(DEPARTMENTS, values.department)) errors.department = 'Choose a team';
   if (!Object.hasOwn(REGIONS, values.location)) errors.location = 'Choose your region';
 
-  if (!name) errors.name = 'Enter your name';
-  else if (name.length > MAX_LENGTH.name) errors.name = `Use ${MAX_LENGTH.name} characters or fewer`;
-  else if (name.length < 2 || !NAME.test(name) || REPEATED.test(name)) {
-    errors.name = 'Letters only, at least 2';
-  }
-
-  if (!email) errors.email = 'Enter your email';
-  else if (email.length > MAX_LENGTH.email || !EMAIL.test(email) || /\.\.|^\.|\.@/.test(email)) {
-    errors.email = 'Enter a valid email address';
-  }
+  const nameProblem = nameError(name);
+  if (nameProblem) errors.name = nameProblem;
+  const emailProblem = emailError(email);
+  if (emailProblem) errors.email = emailProblem;
 
   if (phone) {
     const digits = phone.replace(/\D/g, '');

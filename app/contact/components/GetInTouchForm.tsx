@@ -13,85 +13,10 @@ import {
   type ContactErrors,
   type ContactField,
 } from "@/lib/contactValidation";
+import { FORM_ICONS, FloatingField, Icon } from "@/src/components/forms/FloatingField";
 
-const ICONS = {
-  name: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
-  email: "M3 6h18v12H3zM3 7l9 7 9-7",
-  phone: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z",
-  subject: "M4 7h16M4 12h16M4 17h10",
-  message: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-  check: "M5 13l4 4L19 7",
-  alert: "M12 8v5M12 16.5v.5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z",
-  arrow: "M5 12h14M13 6l6 6-6 6",
-};
-
-function Icon({ path, className }: { path: string; className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-      <path d={path} />
-    </svg>
-  );
-}
-
-function Field({ name, label, required, error, valid, className, footer, multiline, ...inputProps }: {
-  name: "name" | "email" | "phone" | "subject" | "message";
-  label: string;
-  required?: boolean;
-  error?: string;
-  valid?: boolean;
-  className?: string;
-  footer?: React.ReactNode;
-  multiline?: boolean;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>, "name">) {
-  const id = `contact-${name}`;
-  const errorId = `${id}-error`;
-  const shared = {
-    id,
-    name,
-    // A blank placeholder lets the label float using :placeholder-shown.
-    placeholder: " ",
-    "aria-required": required,
-    "aria-invalid": !!error,
-    "aria-describedby": error ? errorId : undefined,
-    className: `peer block w-full rounded-lg border bg-slate-50/70 pl-10 pr-8 pt-5 pb-1 text-base lg:text-sm text-gray-900 outline-none transition-colors duration-200 focus:bg-white focus:ring-2 ${
-      error
-        ? "border-red-400 focus:border-red-500 focus:ring-red-500/15"
-        : "border-slate-200 hover:border-slate-300 focus:border-[#2B3990] focus:ring-[#2B3990]/10"
-    } ${multiline ? "h-full min-h-[110px] resize-none pb-5 lg:min-h-0" : "h-12"}`,
-  };
-
-  return (
-    <div className={className}>
-      <div className="relative h-full">
-        {multiline ? <textarea {...inputProps} {...shared} /> : <input {...inputProps} {...shared} />}
-        <Icon path={ICONS[name]} className={`pointer-events-none absolute left-3 top-3.5 h-[18px] w-[18px] transition-colors ${error ? "text-red-500" : "text-slate-400 peer-focus:text-[#2B3990]"}`} />
-        <label
-          htmlFor={id}
-          className={`pointer-events-none absolute left-[41px] right-8 top-1.5 truncate text-[11px] font-semibold transition-all duration-200 ${
-            error
-              ? "text-red-600"
-              : "text-slate-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal peer-focus:top-1.5 peer-focus:text-[11px] peer-focus:font-semibold peer-focus:text-[#2B3990] peer-autofill:top-1.5 peer-autofill:text-[11px]"
-          }`}
-        >
-          {error ? (
-            <>
-              <span className="sr-only">{label}: </span>
-              <span id={errorId}>{error}</span>
-            </>
-          ) : (
-            <>
-              {label}
-              {required && <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>}
-            </>
-          )}
-        </label>
-        {(error || valid) && (
-          <Icon path={error ? ICONS.alert : ICONS.check} className={`pointer-events-none absolute right-2.5 top-3.5 h-[18px] w-[18px] ${error ? "text-red-500" : "text-emerald-600"}`} />
-        )}
-        {footer}
-      </div>
-    </div>
-  );
+function Field({ name, ...props }: { name: "name" | "email" | "phone" | "subject" | "message" } & Omit<React.ComponentProps<typeof FloatingField>, "id" | "icon" | "name">) {
+  return <FloatingField id={`contact-${name}`} name={name} icon={FORM_ICONS[name]} {...props} />;
 }
 
 function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
@@ -257,7 +182,7 @@ export default function GetInTouchForm() {
             transition={{ duration: 0.25 }}
           >
             <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-              <Icon path={ICONS.check} className="h-8 w-8" />
+              <Icon path={FORM_ICONS.check} className="h-8 w-8" />
             </span>
             <h3 className="text-2xl font-bold text-[#2B3990]">Message sent</h3>
             <p className="mt-2 max-w-sm text-gray-600">
@@ -332,7 +257,7 @@ export default function GetInTouchForm() {
 
             {failure && (
               <p role="alert" className="flex items-center gap-1.5 truncate text-xs font-semibold text-red-700">
-                <Icon path={ICONS.alert} className="h-4 w-4 shrink-0" />
+                <Icon path={FORM_ICONS.alert} className="h-4 w-4 shrink-0" />
                 {failure}
               </p>
             )}
@@ -351,7 +276,7 @@ export default function GetInTouchForm() {
               ) : (
                 <>
                   Send Message
-                  <Icon path={ICONS.arrow} className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <Icon path={FORM_ICONS.arrow} className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </>
               )}
             </button>
