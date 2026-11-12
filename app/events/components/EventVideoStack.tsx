@@ -20,14 +20,22 @@ const FLOW = { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const };
 
 type Role = 'current' | 'next' | 'prev';
 
-// Poses, in percent of the card's own size. Sized with the stage so every card,
-// tilt included, stays whole on screen: the front card is 76% of the stage's
-// width and the stage is a little taller than wide, leaving room above and
-// below for the tilted cards, which reach out past the stage to the right.
-const POSES: Record<Role, { x: string; y: string; rotate: number; scale: number; opacity: number }> = {
+type Pose = { x: string; y: string; rotate: number; scale: number; opacity: number };
+
+// Poses, in percent of the card's own size.
+// Phone: everything stays whole on screen (front card 62% wide, 5:4 stage).
+const POSES: Record<Role, Pose> = {
   current: { x: '0%', y: '0%', rotate: 0, scale: 1, opacity: 1 },
   next: { x: '52%', y: '-45%', rotate: 18, scale: 0.85, opacity: 1 },
   prev: { x: '48%', y: '48%', rotate: -14, scale: 0.85, opacity: 1 },
+};
+// Desktop: a bigger stack on the right whose tilted cards run off the right
+// edge of the screen (front card 118% of its column, about half the screen; the stage is tall enough
+// that nothing is cut at the top or bottom).
+const POSES_WIDE: Record<Role, Pose> = {
+  current: { x: '0%', y: '0%', rotate: 0, scale: 1, opacity: 1 },
+  next: { x: '58%', y: '-36%', rotate: 14, scale: 1, opacity: 1 },
+  prev: { x: '55%', y: '38%', rotate: -11, scale: 1, opacity: 1 },
 };
 
 // Cards arrive from beyond the next spot and leave past the previous spot
@@ -45,7 +53,6 @@ const cardVariants: Variants = {
 
 const Z: Record<Role, number> = { current: 3, next: 2, prev: 1 };
 
-const pad = (n: number) => String(n).padStart(2, '0');
 
 /** A readable title from the file name ("1Compress_Luzon Kick Off 2026.mp4"). */
 const videoTitle = (url: string, n: number) => {
@@ -70,7 +77,15 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
   const [dir, setDir] = useState<1 | -1>(1);
   const [paused, setPaused] = useState(false);
   const [pageHidden, setPageHidden] = useState(false);
-  const [progress, setProgress] = useState(0); // 0-1 through the front video's turn
+  // Desktop gets the bigger stack that runs off the right edge.
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
   const stageRef = useRef<HTMLDivElement>(null);
   const playingRef = useRef<HTMLVideoElement | null>(null);
   const touch = useRef<{ x: number; y: number } | null>(null);
@@ -85,7 +100,6 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
   const go = (to: number, d: 1 | -1) => {
     if (n < 2) return;
     setDir(d);
-    setProgress(0);
     setIndex(((to % n) + n) % n);
   };
   const next = () => go(current + 1, 1);
@@ -115,7 +129,6 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
       if (advancedFrom.current === src) return;
       advancedFrom.current = src;
       setDir(1);
-      setProgress(0);
       setIndex((i) => (i + 1) % n);
     }, STALL_LIMIT_MS);
     return () => window.clearTimeout(t);
@@ -142,64 +155,27 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
         <div className="lg:col-span-4">
           <h2
             id="videos-title"
-            className="font-extrabold leading-[1.05] tracking-tight text-[#0d1633] [text-wrap:balance]"
-            style={{ fontSize: 'clamp(1.9rem, calc(var(--vw,1vw)*3.6), 3rem)' }}
+            className="max-w-[9ch] font-extrabold leading-[1.1] tracking-tight text-[#0d1633]"
+            style={{ fontSize: 'clamp(2.1rem, calc(var(--vw,1vw)*3.8), 3.25rem)' }}
           >
-            Event highlights
+            Event Highlights
           </h2>
-          <p className="mt-4 max-w-sm leading-relaxed text-[#374151] [text-wrap:pretty]">
+          <p className="mt-3 max-w-sm leading-relaxed text-[#4B5563] [text-wrap:pretty]">
             Short recaps from our kick-offs, trainings and company days. Each one plays for {PLAY_SECONDS} seconds,
             then the next comes forward.
           </p>
-
-          {n > 0 && (
-            <div className="mt-8 max-w-sm border-t border-[#0d1633]/10 pt-6">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold tabular-nums text-[#6B7280]" aria-hidden="true">
-                  {pad(current + 1)} / {pad(n)}
-                </p>
-                {!reduced && n > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => setPaused((p) => !p)}
-                    aria-pressed={paused}
-                    aria-label={paused ? 'Play the highlight videos' : 'Pause the highlight videos'}
-                    className={`inline-flex size-9 items-center justify-center rounded-full border border-[#22409A]/25 text-[#22409A] transition-[transform,border-color] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-px [@media(hover:hover)_and_(pointer:fine)]:hover:border-[#22409A] active:translate-y-px active:scale-[.985] ${FOCUS_RING}`}
-                  >
-                    {paused ? (
-                      <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M4 2l8 5-8 5z" /></svg>
-                    ) : (
-                      <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 2h3v10H3zM8 2h3v10H8z" /></svg>
-                    )}
-                  </button>
-                )}
-              </div>
-              {/* The title rises out of its mask on each turn. */}
-              <div className="mt-2 overflow-hidden">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.p
-                    key={title + current}
-                    className="text-xl font-bold leading-snug text-[#0d1633] sm:text-2xl"
-                    initial={{ y: '110%' }}
-                    animate={{ y: '0%' }}
-                    exit={{ y: '-110%' }}
-                    transition={{ duration: 0.5, ease: FLOW.ease }}
-                  >
-                    {title}
-                  </motion.p>
-                </AnimatePresence>
-              </div>
-              <p className="sr-only" aria-live="polite">{`Highlight video ${current + 1} of ${n}: ${title}`}</p>
-              {/* How far through this video's turn. */}
-              {!reduced && n > 1 && (
-                <div className="mt-5 h-1 overflow-hidden rounded-full bg-[#0d1633]/10" aria-hidden="true">
-                  <div
-                    className="h-full origin-left rounded-full bg-[#EE232E] transition-transform duration-300 ease-linear"
-                    style={{ transform: `scaleX(${progress})` }}
-                  />
-                </div>
-              )}
-            </div>
+          <p className="sr-only" aria-live="polite">{n > 0 ? `Highlight video ${current + 1} of ${n}: ${title}` : ''}</p>
+          {/* No visible controls: clicking the playing video pauses it. This
+              pause button appears only for keyboard users who tab to it. */}
+          {!reduced && n > 1 && (
+            <button
+              type="button"
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              className={`sr-only focus-visible:not-sr-only focus-visible:mt-4 focus-visible:inline-block focus-visible:rounded-full focus-visible:bg-[#0d1633] focus-visible:px-4 focus-visible:py-2 focus-visible:text-xs focus-visible:font-semibold focus-visible:text-white ${FOCUS_RING}`}
+            >
+              {paused ? 'Play the highlight videos' : 'Pause the highlight videos'}
+            </button>
           )}
         </div>
 
@@ -207,7 +183,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
         <div className="lg:col-span-8">
           <div
             ref={stageRef}
-            className="relative aspect-[5/4] lg:aspect-[20/19]"
+            className="relative aspect-[5/4] lg:aspect-[20/28]"
             style={{ touchAction: 'pan-y' }}
             onTouchStart={(e) => {
               const t = e.touches[0];
@@ -226,7 +202,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
             }}
           >
             {loading ? (
-              <div className="absolute left-[2%] top-1/2 aspect-video w-[62%] -translate-y-1/2 animate-pulse lg:left-0 lg:w-[76%] rounded-2xl bg-[#E5E7EB]" aria-hidden="true" />
+              <div className="absolute left-[2%] top-1/2 aspect-video w-[62%] -translate-y-1/2 animate-pulse lg:left-0 lg:w-[118%] rounded-2xl bg-[#E5E7EB]" aria-hidden="true" />
             ) : (
               <AnimatePresence initial={false} custom={dir}>
                 {roles.map(({ i, role }) => {
@@ -235,14 +211,14 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                   return (
                     <div
                       key={src}
-                      className="pointer-events-none absolute left-[2%] top-1/2 w-[62%] -translate-y-1/2 lg:left-0 lg:w-[76%]"
+                      className="pointer-events-none absolute left-[2%] top-1/2 w-[62%] -translate-y-1/2 lg:left-0 lg:w-[118%]"
                       style={{ zIndex: Z[role] }}
                     >
                       <motion.div
                         custom={dir}
                         variants={cardVariants}
                         initial="enter"
-                        animate={POSES[role]}
+                        animate={(wide ? POSES_WIDE : POSES)[role]}
                         exit="exit"
                         transition={FLOW}
                         className="pointer-events-auto relative aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-[0_24px_50px_-24px_rgba(13,22,51,0.6)] ring-1 ring-black/10"
@@ -264,7 +240,6 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                               className="absolute inset-0 h-full w-full object-cover"
                               onTimeUpdate={(e) => {
                                 const t = e.currentTarget.currentTime;
-                                setProgress(Math.min(1, t / PLAY_SECONDS));
                                 if (reduced || t < PLAY_SECONDS || advancedFrom.current === src) return;
                                 advancedFrom.current = src;
                                 next();
