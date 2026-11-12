@@ -310,8 +310,14 @@ const EventGallery: React.FC = () => {
     <>
       {/* ============ SNAPS GALLERY ============ */}
       <section ref={snapsRef} id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
-        {/* Only the photos show; the heading stays for screen readers. */}
-        <h2 id="snaps-title" className="sr-only">Snaps from our events</h2>
+        {/* The heading, then the photos; same type as "Event Highlights". */}
+        <h2
+          id="snaps-title"
+          className="mx-auto mb-6 max-w-6xl px-4 text-center font-extrabold leading-[1.1] tracking-tight text-[#0d1633] sm:px-6 lg:mb-8 lg:px-8"
+          style={{ fontSize: 'clamp(2.1rem, calc(var(--vw,1vw)*3.8), 3.25rem)' }}
+        >
+          Snaps from Our Events
+        </h2>
 
         {/* Loading skeleton: three empty cards */}
         {imagesLoading && (
