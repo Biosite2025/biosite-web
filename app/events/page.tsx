@@ -6,16 +6,11 @@ import EventShowcase from './components/EventShowcase';
 import EventGallery from './components/EventGallery';
 import EventCalendar from './components/EventCalendar';
 import Footer from '@/src/components/layout/Footer';
-import { useSectionSpotlight } from '@/src/hooks/useSectionSpotlight';
-
-const SPOTLIGHT_SECTIONS = ['events-hero', 'snaps', 'event-videos', 'event-calendar'];
 
 // Shared decorative backdrop (same as the About page) — client-only chunk.
 const FloatingLines = dynamic(() => import('../about/components/FloatingLines'), { ssr: false });
 
 export default function Page() {
-  useSectionSpotlight(SPOTLIGHT_SECTIONS);
-
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative">

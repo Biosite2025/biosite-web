@@ -1,18 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useAnimationFrame, useInView, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
+import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
 import BmiLoader from '@/src/components/ui/BmiLoader';
-import { BUTTON_BASE, EventsHeading, SECTION, WRAP } from './EventsHeading';
 
 const BLUR =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==';
 
-/** Photos on the wall: one large and eight small on desktop, the first seven on a phone. */
-const WALL_SIZE = 9;
-const WALL_SIZE_PHONE = 7;
+const CARD_W_MOBILE = 208; // 192 card + 16 gap
+const CARD_W_DESKTOP = 344; // 320 card + 24 gap
 
 /** Swipe threshold: a short flick or a deliberate drag both count. 1 = next, -1 = prev, 0 = neither. */
 const swipeDirection = (info: PanInfo): 1 | -1 | 0 => {
@@ -21,44 +20,31 @@ const swipeDirection = (info: PanInfo): 1 | -1 | 0 => {
   return 0;
 };
 
-/** Takes photos from each folder in turn, so the wall mixes events. */
-const interleave = (rows: string[][]) => {
-  const out: string[] = [];
-  for (let i = 0; out.length < rows.flat().length; i++) {
-    for (const row of rows) if (i < row.length) out.push(row[i]);
-  }
-  return out;
+/**
+ * Highlight-video carousel: both pairs move together — the new pair slides
+ * in from one side while the old one slides out the other, on one eased curve.
+ */
+const pairVariants = {
+  enter: (dir: 1 | -1) => ({ x: `${dir * 100}%`, opacity: 0.4 }),
+  center: { x: '0%', opacity: 1 },
+  exit: (dir: 1 | -1) => ({ x: `${dir * -100}%`, opacity: 0.4 }),
 };
-
-type Video = { url: string; title: string };
-
-/** A readable title from an uploaded file name ("1Compress_Luzon Kick Off 2026.mp4"). */
-const videoTitle = (name: string, n: number) => {
-  const clean = name
-    .replace(/\.[a-z0-9]+$/i, '')
-    .replace(/^\d+\s*/, '')
-    .replace(/^compress(ed)?[_\s-]*/i, '')
-    .replace(/[_-]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return !clean || /^(my\s*)?video\s*\d*$/i.test(clean) ? `Event highlight ${n}` : clean;
-};
-
-// Taste-skill's photo hover: the picture scales 1.03 inside its frame,
-// 600ms in and 400ms out. No overlay, no dimming, the frame never grows.
-const PHOTO_ZOOM =
-  'transition-transform duration-[400ms] ease-[cubic-bezier(.2,.8,.2,1)] ' +
-  '[@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.03] [@media(hover:hover)_and_(pointer:fine)]:group-hover:duration-[600ms] group-focus-visible:scale-[1.03]';
+// Long, gentle ease-in-out so the slide reads as a glide, not a snap.
+const PAIR_SLIDE = { duration: 1.1, ease: [0.45, 0, 0.2, 1] as const };
 
 const EventGallery: React.FC = () => {
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
   const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
   const [largeOf, setLargeOf] = useState<Record<string, string>>({});
   const [imagesLoading, setImagesLoading] = useState(true);
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videoSources, setVideoSources] = useState<string[]>([]);
   const [videosLoading, setVideosLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
-  // Swipe in the photo viewer is for touch devices only; mouse users keep the arrows.
+  useEffect(() => setIsClient(true), []);
+
+  // Swipe navigation is for touch devices only (iOS/Android phones & tablets);
+  // mouse users keep the arrow buttons.
   const [isTouch, setIsTouch] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
@@ -67,6 +53,11 @@ const EventGallery: React.FC = () => {
     mq.addEventListener('change', sync);
     return () => mq.removeEventListener('change', sync);
   }, []);
+  // Video carousel swipe uses plain touch events rather than framer drag: the
+  // outgoing and incoming pairs are briefly mounted together, and a shared drag
+  // controller could leave framer's global drag lock held, which then blocked
+  // the photo lightbox's swipe.
+  const videoTouch = useRef<{ x: number; y: number } | null>(null);
 
   // ---- data ----
   useEffect(() => {
@@ -74,8 +65,8 @@ const EventGallery: React.FC = () => {
       try {
         const res = await fetch('/api/event-gallery');
         const data = await res.json();
-        // Tiles show the small web copy; the viewer and the large tile use the
-        // large one. Both fall back to the original if no web copy exists.
+        // Rows show the small web copy; the lightbox swaps in the large one.
+        // Both fall back to the original if no web copy has been generated.
         type GalleryItem = { url: string; thumbUrl?: string; largeUrl?: string };
         const thumb = (i: GalleryItem) => i.thumbUrl || i.url;
         const large: Record<string, string> = {};
@@ -96,14 +87,7 @@ const EventGallery: React.FC = () => {
       try {
         const res = await fetch('/api/event-videos');
         const data = await res.json();
-        if (data.videos?.length) {
-          setVideos(
-            data.videos.map((v: { url: string; name?: string }, i: number) => ({
-              url: v.url,
-              title: videoTitle(v.name || v.url.split('/').pop() || '', i + 1),
-            })),
-          );
-        }
+        if (data.videos?.length) setVideoSources(data.videos.map((v: { url: string }) => v.url));
       } catch (err) {
         console.error('[EventGallery] videos fetch failed:', err);
       } finally {
@@ -112,15 +96,52 @@ const EventGallery: React.FC = () => {
     })();
   }, []);
 
-  // ---- photo viewer ----
+  // ---- infinite scroll ----
+  const isMobile = isClient && window.innerWidth < 1024;
+  const imageWidth = isMobile ? CARD_W_MOBILE : CARD_W_DESKTOP;
+  const topLoopWidth = topRowImages.length * imageWidth;
+  const bottomLoopWidth = bottomRowImages.length * imageWidth;
+  const topRowX = useMotionValue(0);
+  const bottomRowX = useMotionValue(0);
+  const [paused, setPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartTime, setDragStartTime] = useState(0);
+
+  useEffect(() => {
+    if (bottomLoopWidth > 0) bottomRowX.set(-bottomLoopWidth);
+  }, [bottomLoopWidth, bottomRowX]);
+
+  // The rows only move while the gallery is on screen — no point animating
+  // dozens of photo cards nobody can see.
+  const snapsRef = useRef<HTMLElement>(null);
+  const snapsInView = useInView(snapsRef, { margin: '200px 0px' });
+
+  useAnimationFrame((_, delta) => {
+    if (paused || !isClient || !snapsInView) return;
+    const speed = 40;
+    if (topLoopWidth > 0) {
+      let next = topRowX.get() - speed * (delta / 1000);
+      if (next <= -topLoopWidth) next += topLoopWidth;
+      topRowX.set(next);
+    }
+    if (bottomLoopWidth > 0) {
+      let next = bottomRowX.get() + speed * (delta / 1000);
+      if (next >= 0) next -= bottomLoopWidth;
+      bottomRowX.set(next);
+    }
+  });
+
+  const pause = () => setPaused(true);
+  const resume = () => setPaused(false);
+
+  // ---- modal ----
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dims, setDims] = useState<{ width: number; height: number } | null>(null);
   const allImages = [...topRowImages, ...bottomRowImages];
-  const wall = interleave([topRowImages, bottomRowImages]).slice(0, WALL_SIZE);
 
   // Full-size gallery images are large; show the BMI loader until one decodes
-  // rather than leaving the viewer blank.
+  // rather than leaving the lightbox blank.
   const [imgLoading, setImgLoading] = useState(false);
 
   const loadDims = (src: string) => {
@@ -137,6 +158,7 @@ const EventGallery: React.FC = () => {
     loadDims(image);
     setSelectedImage(image);
     setIsModalOpen(true);
+    setPaused(true);
     document.body.style.overflow = 'hidden';
   };
   const closeModal = () => {
@@ -144,6 +166,7 @@ const EventGallery: React.FC = () => {
     setSelectedImage(null);
     setDims(null);
     setImgLoading(false);
+    setPaused(false);
     document.body.style.overflow = 'unset';
   };
   const step = (dir: 1 | -1) => {
@@ -166,20 +189,35 @@ const EventGallery: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen, selectedImage]);
 
-  // ---- videos: one player, a playlist beside it ----
-  const [current, setCurrent] = useState(0);
-  // The branded cover shows until the visitor plays the video, and comes back
-  // when another video is picked.
-  const [started, setStarted] = useState(false);
-  const pickVideo = (i: number) => {
-    if (i === current) return;
-    setCurrent(i);
-    setStarted(false);
+  // ---- videos ----
+  const [videoPairIndex, setVideoPairIndex] = useState(0);
+  const totalPairs = Math.ceil(videoSources.length / 2);
+  const [pairDir, setPairDir] = useState<1 | -1>(1);
+  // Every page change remounts the videos (paused, at 0:00), so bring every
+  // cover back too — otherwise a previously played video returns as a bare,
+  // paused black frame.
+  const goToPair = (next: number, dir: 1 | -1) => {
+    setPairDir(dir);
+    setVideoPairIndex(next);
+    setStartedVideos({});
   };
-  const playFromCover = (cover: HTMLElement) => {
+  const prevPair = () => goToPair(videoPairIndex === 0 ? totalPairs - 1 : videoPairIndex - 1, -1);
+  const nextPair = () => goToPair(videoPairIndex === totalPairs - 1 ? 0 : videoPairIndex + 1, 1);
+  // Videos are looked up from the clicked element, not shared refs: during the
+  // pair slide the outgoing and incoming pairs are mounted together, and the
+  // outgoing pair unmounting would null a shared ref the new pair relies on.
+  const toggleVideo = (v: HTMLVideoElement) => {
+    if (v.paused) v.play();
+    else v.pause();
+  };
+  // Videos sit behind a branded cover until played; keyed by src so each
+  // video gets its cover back when it ends or the carousel moves on.
+  const [startedVideos, setStartedVideos] = useState<Record<string, boolean>>({});
+  const setStarted = (src: string, started: boolean) => setStartedVideos((s) => ({ ...s, [src]: started }));
+  const playFromCover = (cover: HTMLElement, src: string) => {
     const v = cover.parentElement?.querySelector('video');
     if (!v) return;
-    setStarted(true);
+    setStarted(src, true);
     v.muted = false; // the visitor chose to play it — let them hear it
     v.play().catch(() => {
       // Some browsers refuse unmuted playback; fall back to muted.
@@ -187,187 +225,290 @@ const EventGallery: React.FC = () => {
       v.play().catch(() => {});
     });
   };
-  const video = videos[current];
+
+  const renderRow = (images: string[], x: MotionValue<number>, loopWidth: number, keyPrefix: string) => (
+    <div
+      className="flex overflow-hidden"
+      onMouseEnter={pause}
+      onMouseLeave={resume}
+    >
+      <motion.div
+        className="flex gap-4 lg:gap-6"
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: -loopWidth + 1000, right: 0 }}
+        dragElastic={0.1}
+        onDragStart={() => {
+          pause();
+          setIsDragging(true);
+          setDragStartTime(Date.now());
+        }}
+        onDragEnd={() => {
+          resume();
+          setTimeout(() => setIsDragging(false), 100);
+        }}
+      >
+        {/* Copies of the set needed for a seamless loop: one extra screen-width
+            past the wrap point. That's 2 for any real gallery (one set is far
+            wider than a screen); 3+ only for very short rows. Rendering a fixed
+            3 copies meant ~100 extra photo cards to lay out on load. */}
+        {Array.from({ length: images.length * Math.max(2, Math.ceil(2560 / Math.max(1, loopWidth)) + 1) }).map((_, index) => {
+          const image = images[index % images.length];
+          return (
+            <button
+              key={`${keyPrefix}-${index}`}
+              type="button"
+              onClick={(e) => {
+                if (isDragging || Date.now() - dragStartTime < 200) {
+                  e.preventDefault();
+                  return;
+                }
+                openModal(image);
+              }}
+              className={`group relative h-32 w-48 flex-shrink-0 overflow-hidden rounded-xl bg-[#E5E7EB] shadow-sm ring-1 ring-black/5 transition-transform duration-300 hover:scale-[1.03] lg:h-56 lg:w-80 ${FOCUS_RING}`}
+              aria-label="Open event photo"
+            >
+              <Image
+                src={image}
+                alt={`Event photo ${(index % images.length) + 1}`}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                sizes="(max-width: 1024px) 192px, 320px"
+                quality={60}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR}
+              />
+              <span className="absolute inset-0 flex items-center justify-center bg-[#22409A]/0 opacity-0 transition-all duration-300 group-hover:bg-[#22409A]/25 group-hover:opacity-100">
+                <span className="rounded-full bg-white/90 p-3 text-[#22409A]">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </motion.div>
+    </div>
+  );
 
   return (
     <>
-      {/* ============ PHOTO WALL ============ */}
-      <section id="snaps" aria-labelledby="snaps-title" className={SECTION}>
-        <div className={WRAP}>
-          <EventsHeading
-            id="snaps-title"
-            title="Snaps from our events"
-            intro="Pick a photo to see it full size, then use the arrows to look through the rest."
-            aside={
-              allImages.length > wall.length && (
-                <button
-                  type="button"
-                  onClick={() => openModal(allImages[0])}
-                  className={`${BUTTON_BASE} bg-[#22409A] text-white [@media(hover:hover)_and_(pointer:fine)]:hover:bg-[#1A3078]`}
-                >
-                  View all {allImages.length} photos
-                </button>
-              )
-            }
+      {/* ============ SNAPS GALLERY ============ */}
+      <section ref={snapsRef} id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
+        <div className="mx-auto mb-12 max-w-6xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+      
+            title="Snaps from Our Events"
+            intro="Capturing the energy, innovation, and connections that make our events truly special."
+            align="center"
+            titleId="snaps-title"
           />
-
-          {imagesLoading && (
-            <div className="grid grid-cols-2 gap-3 lg:h-[calc(var(--vh,1vh)*60)] lg:grid-cols-4 lg:grid-rows-3 lg:gap-4" aria-hidden="true">
-              {Array.from({ length: WALL_SIZE }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`animate-pulse rounded-xl bg-[#E5E7EB] ${i === 0 ? 'col-span-2 aspect-[4/3] lg:row-span-2 lg:aspect-auto' : 'aspect-square lg:aspect-auto'} ${i >= WALL_SIZE_PHONE ? 'hidden lg:block' : ''}`}
-                />
-              ))}
-            </div>
-          )}
-
-          {!imagesLoading && allImages.length === 0 && (
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white/90 p-10 text-center">
-              <p className="font-semibold text-[#111827]">No event photos yet</p>
-              <p className="mt-2 text-sm text-[#4B5563]">Photos from our next event will appear here.</p>
-            </div>
-          )}
-
-          {!imagesLoading && wall.length > 0 && (
-            <ul className="grid grid-cols-2 gap-3 lg:h-[calc(var(--vh,1vh)*60)] lg:grid-cols-4 lg:grid-rows-3 lg:gap-4">
-              {wall.map((image, i) => {
-                const big = i === 0;
-                return (
-                  <li
-                    key={image}
-                    className={`${big ? 'col-span-2 aspect-[4/3] lg:row-span-2 lg:aspect-auto' : 'aspect-square lg:aspect-auto'} ${i >= WALL_SIZE_PHONE ? 'hidden lg:block' : ''}`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => openModal(image)}
-                      aria-label={`Open photo ${allImages.indexOf(image) + 1} of ${allImages.length}`}
-                      className={`group relative block h-full w-full overflow-hidden rounded-xl bg-[#E5E7EB] ${FOCUS_RING}`}
-                    >
-                      <Image
-                        src={big ? largeOf[image] || image : image}
-                        alt=""
-                        fill
-                        className={`object-cover ${PHOTO_ZOOM}`}
-                        sizes={big ? '(max-width: 1024px) 100vw, 50vw' : '(max-width: 1024px) 50vw, 25vw'}
-                        quality={big ? 80 : 60}
-                        priority={big}
-                        loading={big ? undefined : 'lazy'}
-                        placeholder="blur"
-                        blurDataURL={BLUR}
-                      />
-                      {/* Inset hairline so light photos keep an edge on the white page. */}
-                      <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10" aria-hidden="true" />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
         </div>
+
+        {/* Loading skeletons */}
+        {imagesLoading && (
+          <div className="space-y-4 lg:space-y-6" aria-hidden="true">
+            {[0, 1].map((row) => (
+              <div key={row} className="flex gap-4 overflow-hidden lg:gap-6">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="h-32 w-48 flex-shrink-0 animate-pulse rounded-xl bg-[#E5E7EB] lg:h-56 lg:w-80" />
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty / error state (this is what was a blank void on deployed) */}
+        {!imagesLoading && allImages.length === 0 && (
+          <div className="mx-auto max-w-md px-4 text-center">
+            <div className="rounded-2xl border border-[#E5E7EB] bg-white/80 p-8 shadow-sm">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#22409A]/10 text-[#22409A]">
+                <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 6h16v12H4z" />
+                </svg>
+              </div>
+              <p className="font-semibold text-[#111827]">Event photos are on the way</p>
+              <p className="mt-2 text-sm text-[#6B7280]">Check back soon — we&apos;re curating snapshots from our latest events.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Rows */}
+        {!imagesLoading && allImages.length > 0 && (
+          <div className="space-y-4 lg:space-y-6">
+            {topRowImages.length > 0 && renderRow(topRowImages, topRowX, topLoopWidth, 'top')}
+            {bottomRowImages.length > 0 && renderRow(bottomRowImages, bottomRowX, bottomLoopWidth, 'bottom')}
+          </div>
+        )}
       </section>
 
       {/* ============ HIGHLIGHT VIDEOS ============ */}
-      {(videosLoading || videos.length > 0) && (
-        <section id="event-videos" aria-labelledby="videos-title" className={SECTION}>
-          <div className={WRAP}>
-            <EventsHeading
-              id="videos-title"
-              title={videos.length === 1 ? 'Event highlight video' : 'Event highlight videos'}
-              intro={videos.length > 1 ? 'Short recaps of our recent events. Pick one from the list to play it.' : 'A short recap of a recent event.'}
+      {(videosLoading || videoSources.length > 0) && (
+        <section id="event-videos" aria-labelledby="videos-title" className="relative py-16 md:py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              
+              title={`Event Highlight Video${videoSources.length === 1 ? '' : 's'}`}
+              intro="Relive the best moments from our recent events."
+              align="center"
+              titleId="videos-title"
             />
 
             {videosLoading ? (
-              <div className="aspect-video animate-pulse rounded-2xl bg-[#E5E7EB] lg:aspect-auto lg:h-[calc(var(--vh,1vh)*56)]" aria-hidden="true" />
+              <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2" aria-hidden="true">
+                {[0, 1].map((i) => (
+                  <div key={i} className="aspect-video animate-pulse rounded-2xl bg-[#E5E7EB]" />
+                ))}
+              </div>
             ) : (
-              video && (
-                <div>
-                  {/* Player */}
-                  <div className="relative isolate aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-[0_24px_48px_-24px_rgba(13,22,51,0.45)] ring-1 ring-black/5 lg:aspect-auto lg:h-[calc(var(--vh,1vh)*56)]">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.div
-                        key={video.url}
-                        className="absolute inset-0"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
+              <div className="relative mt-12">
+                {totalPairs > 1 && !isTouch && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={prevPair}
+                      aria-label="Previous videos"
+                      className={`absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 text-[#22409A] shadow-md ring-1 ring-black/5 transition hover:bg-blue-50 lg:-left-5 ${FOCUS_RING}`}
+                    >
+                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextPair}
+                      aria-label="Next videos"
+                      className={`absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 text-[#22409A] shadow-md ring-1 ring-black/5 transition hover:bg-blue-50 lg:-right-5 ${FOCUS_RING}`}
+                    >
+                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+
+                {/* Clip the slide; the padding/negative margin keeps card shadows visible. */}
+                <div className="relative -m-4 overflow-hidden p-4">
+                <AnimatePresence mode="popLayout" initial={false} custom={pairDir}>
+                <motion.div
+                  key={videoPairIndex}
+                  custom={pairDir}
+                  variants={pairVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={PAIR_SLIDE}
+                  className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+                  style={isTouch ? { touchAction: 'pan-y' } : undefined}
+                  // Touch: a mostly-horizontal swipe of 50px+ changes pair. Swipes
+                  // that start on a playing video are ignored so scrubbing its
+                  // timeline doesn't flip the page.
+                  onTouchStart={(e) => {
+                    const t = e.touches[0];
+                    videoTouch.current =
+                      isTouch && totalPairs > 1 && !(e.target as HTMLElement).closest('video') ? { x: t.clientX, y: t.clientY } : null;
+                  }}
+                  onTouchEnd={(e) => {
+                    const start = videoTouch.current;
+                    videoTouch.current = null;
+                    if (!start) return;
+                    const t = e.changedTouches[0];
+                    const dx = t.clientX - start.x;
+                    const dy = t.clientY - start.y;
+                    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return; // a tap or a vertical scroll
+                    if (dx < 0) nextPair();
+                    else prevPair();
+                  }}
+                >
+                  {[0, 1].map((offset) => {
+                    const idx = videoPairIndex * 2 + offset;
+                    if (idx >= videoSources.length) return null;
+                    return (
+                      <div
+                        key={videoSources[idx] + idx}
+                        className="group relative isolate aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-lg ring-1 ring-black/5"
                       >
                         <video
-                          src={video.url}
+                          src={videoSources[idx]}
                           preload="none"
                           controls
+                          muted
                           playsInline
-                          aria-label={video.title}
-                          className="absolute inset-0 h-full w-full object-cover"
-                          onPlay={() => setStarted(true)}
-                          onEnded={() => setStarted(false)}
+                          className="absolute inset-0 h-full w-full cursor-pointer object-cover"
+                          onClick={(e) => toggleVideo(e.currentTarget)}
+                          onPlay={() => setStarted(videoSources[idx], true)}
+                          onEnded={() => setStarted(videoSources[idx], false)}
                         />
-                        {/* Branded cover: the Biosite bear poster until the visitor plays it */}
+
+                        {/* Branded cover — the Biosite bear poster until the visitor plays it */}
                         <AnimatePresence>
-                          {!started && (
+                          {!startedVideos[videoSources[idx]] && (
                             <motion.button
                               type="button"
-                              onClick={(e) => playFromCover(e.currentTarget)}
-                              aria-label={`Play ${video.title}`}
+                              onClick={(e) => playFromCover(e.currentTarget, videoSources[idx])}
+                              aria-label="Play event highlight video"
                               className={`group/cover absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-[#0B5CE0] ${FOCUS_RING}`}
                               initial={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
-                              transition={{ duration: 0.3 }}
+                              transition={{ duration: 0.35 }}
                             >
                               <Image
                                 src="/asset/playbuttonbackground.webp"
                                 alt=""
                                 fill
-                                sizes="(max-width: 1024px) 100vw, 66vw"
-                                className="object-cover object-center transition-transform duration-[400ms] ease-[cubic-bezier(.2,.8,.2,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover/cover:scale-[1.03] [@media(hover:hover)_and_(pointer:fine)]:group-hover/cover:duration-[600ms]"
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-cover object-center transition-transform duration-500 group-hover/cover:scale-105"
                               />
-                              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-5 pb-4 pt-12 text-left text-sm font-semibold text-white sm:text-base">
-                                {video.title}
+                              {/* Play icon appears on hover (and keyboard focus); the poster's
+                                  own red button already invites a tap on touch screens. */}
+                              <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/cover:bg-black/25 group-focus-visible/cover:bg-black/25" />
+                              <span className="relative flex h-16 w-16 scale-75 items-center justify-center rounded-full bg-white/95 text-[#22409A] opacity-0 shadow-xl transition-all duration-300 group-hover/cover:scale-100 group-hover/cover:opacity-100 group-focus-visible/cover:scale-100 group-focus-visible/cover:opacity-100 lg:h-20 lg:w-20">
+                                <svg className="ml-1 h-7 w-7 lg:h-9 lg:w-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
+                                </svg>
                               </span>
                             </motion.button>
                           )}
                         </AnimatePresence>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Playlist */}
-                  {videos.length > 1 && (
-                    <div className="mt-4">
-                      <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-3" aria-label="Highlight videos">
-                        {videos.map((v, i) => {
-                          const on = i === current;
-                          return (
-                            <li key={v.url}>
-                              <button
-                                type="button"
-                                onClick={() => pickVideo(i)}
-                                aria-current={on ? 'true' : undefined}
-                                className={`group flex w-full items-center gap-4 rounded-xl border px-4 py-3.5 text-left transition-[background-color,border-color,transform] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] ${FOCUS_RING} ${
-                                  on
-                                    ? 'border-[#22409A] bg-white shadow-[0_8px_20px_-12px_rgba(34,64,154,0.45)]'
-                                    : 'border-[#E5E7EB] bg-white/80 [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-0.5 [@media(hover:hover)_and_(pointer:fine)]:hover:border-[#C7D0EC] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-white'
-                                }`}
-                              >
-                                <span className={`w-6 shrink-0 text-sm font-bold tabular-nums ${on ? 'text-[#EE232E]' : 'text-[#9CA3AF]'}`}>
-                                  {String(i + 1).padStart(2, '0')}
-                                </span>
-                                <span className={`min-w-0 flex-1 truncate text-sm font-semibold ${on ? 'text-[#0d1633]' : 'text-[#374151]'}`}>
-                                  {v.title}
-                                </span>
-                                <span className={`shrink-0 text-xs font-medium ${on ? 'text-[#22409A]' : 'text-[#9CA3AF]'}`}>
-                                  {on ? (started ? 'Playing' : 'Ready') : 'Play'}
-                                </span>
-                              </button>
-                            </li>
-                          );
-                        })}
-                      </ol>
-                    </div>
-                  )}
+                      </div>
+                    );
+                  })}
+                </motion.div>
+                </AnimatePresence>
                 </div>
-              )
+
+                {/* Which pair is showing — every cover is the same poster, so this is
+                    what tells the visitor they've moved to different videos. */}
+                {totalPairs > 1 && isTouch && (
+                  <p className="mt-5 text-center text-xs font-medium text-[#6B7280]">Swipe for more videos</p>
+                )}
+                {totalPairs > 1 && (
+                  <div className={`${isTouch ? 'mt-3' : 'mt-6'} flex items-center justify-center gap-2`} role="group" aria-label="Video pages">
+                    {Array.from({ length: totalPairs }).map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          if (i !== videoPairIndex) goToPair(i, i > videoPairIndex ? 1 : -1);
+                        }}
+                        aria-label={`Show videos ${i * 2 + 1}–${Math.min(i * 2 + 2, videoSources.length)}`}
+                        aria-current={i === videoPairIndex}
+                        className={`relative h-2.5 w-2.5 rounded-full bg-[#22409A]/25 transition-colors hover:bg-[#22409A]/50 ${FOCUS_RING}`}
+                      >
+                        {i === videoPairIndex && (
+                          <motion.span
+                            layoutId="video-pair-dot"
+                            className="absolute inset-y-0 -left-1.5 -right-1.5 rounded-full bg-[#EE232E]"
+                            transition={PAIR_SLIDE}
+                          />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </section>
