@@ -111,14 +111,61 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
     return () => document.removeEventListener('visibilitychange', sync);
   }, []);
 
-  // The front video plays only while it can be seen and isn't paused.
-  const shouldPlay = !reduced && inView && !paused && !pageHidden;
+  // Clicking the front video opens it full screen with sound and controls.
+  // While it's being watched the stack holds; leaving full screen mutes it
+  // again and the stack carries on.
+  const [watching, setWatching] = useState(false);
+  const stopWatching = () => {
+    const v = playingRef.current;
+    if (v) {
+      v.muted = true;
+      v.controls = !!reduced;
+    }
+    setWatching(false);
+  };
+  const watchFullScreen = () => {
+    const v = playingRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+    if (!v) return;
+    setWatching(true);
+    v.muted = false;
+    v.controls = true;
+    v.play().catch(() => {
+      v.muted = true; // a browser that refuses sound still shows the video
+      v.play().catch(() => {});
+    });
+    if (v.requestFullscreen) {
+      // Refused (e.g. inside an iframe that disallows it): back to normal.
+      v.requestFullscreen().catch(stopWatching);
+    } else if (v.webkitEnterFullscreen) {
+      v.webkitEnterFullscreen(); // iPhone: the native player
+    } else {
+      stopWatching();
+    }
+  };
+  useEffect(() => {
+    if (!watching) return;
+    const v = playingRef.current;
+    const onChange = () => {
+      if (!document.fullscreenElement) stopWatching();
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    v?.addEventListener('webkitendfullscreen', stopWatching);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      v?.removeEventListener('webkitendfullscreen', stopWatching);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watching]);
+
+  // The front video plays only while it can be seen and isn't paused. While
+  // it's being watched full screen the visitor is in charge of it.
+  const shouldPlay = !reduced && inView && !paused && !pageHidden && !watching;
   useEffect(() => {
     const v = playingRef.current;
-    if (!v) return;
+    if (!v || watching) return;
     if (shouldPlay) v.play().catch(() => {});
     else v.pause();
-  }, [shouldPlay, current]);
+  }, [shouldPlay, current, watching]);
 
   // Safety net: a video still buffering after STALL_LIMIT_MS of play time
   // hands over anyway, so a slow connection never freezes the stack.
@@ -237,29 +284,32 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                               autoPlay={shouldPlay}
                               controls={!!reduced}
                               aria-label={videoTitle(src, i + 1)}
-                              className="absolute inset-0 h-full w-full object-cover"
+                              className="absolute inset-0 h-full w-full object-cover [&:fullscreen]:bg-black [&:fullscreen]:object-contain"
                               onTimeUpdate={(e) => {
                                 const t = e.currentTarget.currentTime;
-                                if (reduced || t < PLAY_SECONDS || advancedFrom.current === src) return;
+                                if (reduced || watching || t < PLAY_SECONDS || advancedFrom.current === src) return;
                                 advancedFrom.current = src;
                                 next();
                               }}
                               onEnded={() => {
-                                if (reduced || advancedFrom.current === src) return;
+                                if (reduced || watching || advancedFrom.current === src) return;
                                 advancedFrom.current = src;
                                 next();
                               }}
                             />
-                            {/* Click the playing video to pause or resume the stack. */}
-                            {!reduced && (
+                            {/* Click the playing video to watch it full screen with sound. */}
+                            {!reduced && !watching && (
                               <button
                                 type="button"
-                                onClick={() => setPaused((p) => !p)}
-                                aria-pressed={paused}
-                                aria-label={paused ? 'Play the highlight videos' : 'Pause the highlight videos'}
-                                tabIndex={-1}
-                                className="absolute inset-0 z-[1] cursor-pointer"
-                              />
+                                onClick={watchFullScreen}
+                                aria-label={`Watch ${videoTitle(src, i + 1)} full screen with sound`}
+                                className={`group/play absolute inset-0 z-[1] flex cursor-pointer items-center justify-center ${FOCUS_RING}`}
+                              >
+                                {/* A play mark that shows on hover or keyboard focus. */}
+                                <span className="flex size-16 scale-90 items-center justify-center rounded-full bg-white/95 text-[#22409A] opacity-0 shadow-xl transition-[opacity,transform] duration-200 ease-[cubic-bezier(.2,.8,.2,1)] group-hover/play:scale-100 group-hover/play:opacity-100 group-focus-visible/play:scale-100 group-focus-visible/play:opacity-100" aria-hidden="true">
+                                  <svg className="ml-1 size-7" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" /></svg>
+                                </span>
+                              </button>
                             )}
                           </>
                         ) : (
