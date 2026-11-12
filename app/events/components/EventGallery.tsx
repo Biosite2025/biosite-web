@@ -3,9 +3,9 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { motion, useInView, useReducedMotion, AnimatePresence, type PanInfo, type Variants } from 'framer-motion';
 import Image from 'next/image';
-import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
 import BmiLoader from '@/src/components/ui/BmiLoader';
+import EventVideoStack from './EventVideoStack';
 
 const BLUR =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==';
@@ -57,18 +57,6 @@ const swipeDirection = (info: PanInfo): 1 | -1 | 0 => {
   return 0;
 };
 
-/**
- * Highlight-video carousel: both pairs move together — the new pair slides
- * in from one side while the old one slides out the other, on one eased curve.
- */
-const pairVariants = {
-  enter: (dir: 1 | -1) => ({ x: `${dir * 100}%`, opacity: 0.4 }),
-  center: { x: '0%', opacity: 1 },
-  exit: (dir: 1 | -1) => ({ x: `${dir * -100}%`, opacity: 0.4 }),
-};
-// Long, gentle ease-in-out so the slide reads as a glide, not a snap.
-const PAIR_SLIDE = { duration: 1.1, ease: [0.45, 0, 0.2, 1] as const };
-
 const EventGallery: React.FC = () => {
   const [topRowImages, setTopRowImages] = useState<string[]>([]);
   const [bottomRowImages, setBottomRowImages] = useState<string[]>([]);
@@ -88,11 +76,6 @@ const EventGallery: React.FC = () => {
     mq.addEventListener('change', sync);
     return () => mq.removeEventListener('change', sync);
   }, []);
-  // Video carousel swipe uses plain touch events rather than framer drag: the
-  // outgoing and incoming pairs are briefly mounted together, and a shared drag
-  // controller could leave framer's global drag lock held, which then blocked
-  // the photo lightbox's swipe.
-  const videoTouch = useRef<{ x: number; y: number } | null>(null);
 
   // ---- data ----
   useEffect(() => {
@@ -230,43 +213,6 @@ const EventGallery: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen, selectedImage]);
 
-  // ---- videos ----
-  const [videoPairIndex, setVideoPairIndex] = useState(0);
-  const totalPairs = Math.ceil(videoSources.length / 2);
-  const [pairDir, setPairDir] = useState<1 | -1>(1);
-  // Every page change remounts the videos (paused, at 0:00), so bring every
-  // cover back too — otherwise a previously played video returns as a bare,
-  // paused black frame.
-  const goToPair = (next: number, dir: 1 | -1) => {
-    setPairDir(dir);
-    setVideoPairIndex(next);
-    setStartedVideos({});
-  };
-  const prevPair = () => goToPair(videoPairIndex === 0 ? totalPairs - 1 : videoPairIndex - 1, -1);
-  const nextPair = () => goToPair(videoPairIndex === totalPairs - 1 ? 0 : videoPairIndex + 1, 1);
-  // Videos are looked up from the clicked element, not shared refs: during the
-  // pair slide the outgoing and incoming pairs are mounted together, and the
-  // outgoing pair unmounting would null a shared ref the new pair relies on.
-  const toggleVideo = (v: HTMLVideoElement) => {
-    if (v.paused) v.play();
-    else v.pause();
-  };
-  // Videos sit behind a branded cover until played; keyed by src so each
-  // video gets its cover back when it ends or the carousel moves on.
-  const [startedVideos, setStartedVideos] = useState<Record<string, boolean>>({});
-  const setStarted = (src: string, started: boolean) => setStartedVideos((s) => ({ ...s, [src]: started }));
-  const playFromCover = (cover: HTMLElement, src: string) => {
-    const v = cover.parentElement?.querySelector('video');
-    if (!v) return;
-    setStarted(src, true);
-    v.muted = false; // the visitor chose to play it — let them hear it
-    v.play().catch(() => {
-      // Some browsers refuse unmuted playback; fall back to muted.
-      v.muted = true;
-      v.play().catch(() => {});
-    });
-  };
-
   const renderDeck = () => (
     <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       {/* An invisible frame: cards fall out through its foot and rise in from below
@@ -398,174 +344,7 @@ const EventGallery: React.FC = () => {
       </section>
 
       {/* ============ HIGHLIGHT VIDEOS ============ */}
-      {(videosLoading || videoSources.length > 0) && (
-        <section id="event-videos" aria-labelledby="videos-title" className="relative py-16 md:py-24">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              
-              title={`Event Highlight Video${videoSources.length === 1 ? '' : 's'}`}
-              intro="Relive the best moments from our recent events."
-              align="center"
-              titleId="videos-title"
-            />
-
-            {videosLoading ? (
-              <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2" aria-hidden="true">
-                {[0, 1].map((i) => (
-                  <div key={i} className="aspect-video animate-pulse rounded-2xl bg-[#E5E7EB]" />
-                ))}
-              </div>
-            ) : (
-              <div className="relative mt-12">
-                {totalPairs > 1 && !isTouch && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={prevPair}
-                      aria-label="Previous videos"
-                      className={`absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 text-[#22409A] shadow-md ring-1 ring-black/5 transition hover:bg-blue-50 lg:-left-5 ${FOCUS_RING}`}
-                    >
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={nextPair}
-                      aria-label="Next videos"
-                      className={`absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 text-[#22409A] shadow-md ring-1 ring-black/5 transition hover:bg-blue-50 lg:-right-5 ${FOCUS_RING}`}
-                    >
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </>
-                )}
-
-                {/* Clip the slide; the padding/negative margin keeps card shadows visible. */}
-                <div className="relative -m-4 overflow-hidden p-4">
-                <AnimatePresence mode="popLayout" initial={false} custom={pairDir}>
-                <motion.div
-                  key={videoPairIndex}
-                  custom={pairDir}
-                  variants={pairVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={PAIR_SLIDE}
-                  className="grid grid-cols-1 gap-6 lg:grid-cols-2"
-                  style={isTouch ? { touchAction: 'pan-y' } : undefined}
-                  // Touch: a mostly-horizontal swipe of 50px+ changes pair. Swipes
-                  // that start on a playing video are ignored so scrubbing its
-                  // timeline doesn't flip the page.
-                  onTouchStart={(e) => {
-                    const t = e.touches[0];
-                    videoTouch.current =
-                      isTouch && totalPairs > 1 && !(e.target as HTMLElement).closest('video') ? { x: t.clientX, y: t.clientY } : null;
-                  }}
-                  onTouchEnd={(e) => {
-                    const start = videoTouch.current;
-                    videoTouch.current = null;
-                    if (!start) return;
-                    const t = e.changedTouches[0];
-                    const dx = t.clientX - start.x;
-                    const dy = t.clientY - start.y;
-                    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return; // a tap or a vertical scroll
-                    if (dx < 0) nextPair();
-                    else prevPair();
-                  }}
-                >
-                  {[0, 1].map((offset) => {
-                    const idx = videoPairIndex * 2 + offset;
-                    if (idx >= videoSources.length) return null;
-                    return (
-                      <div
-                        key={videoSources[idx] + idx}
-                        className="group relative isolate aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-lg ring-1 ring-black/5"
-                      >
-                        <video
-                          src={videoSources[idx]}
-                          preload="none"
-                          controls
-                          muted
-                          playsInline
-                          className="absolute inset-0 h-full w-full cursor-pointer object-cover"
-                          onClick={(e) => toggleVideo(e.currentTarget)}
-                          onPlay={() => setStarted(videoSources[idx], true)}
-                          onEnded={() => setStarted(videoSources[idx], false)}
-                        />
-
-                        {/* Branded cover — the Biosite bear poster until the visitor plays it */}
-                        <AnimatePresence>
-                          {!startedVideos[videoSources[idx]] && (
-                            <motion.button
-                              type="button"
-                              onClick={(e) => playFromCover(e.currentTarget, videoSources[idx])}
-                              aria-label="Play event highlight video"
-                              className={`group/cover absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-[#0B5CE0] ${FOCUS_RING}`}
-                              initial={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.35 }}
-                            >
-                              <Image
-                                src="/asset/playbuttonbackground.webp"
-                                alt=""
-                                fill
-                                sizes="(max-width: 1024px) 100vw, 50vw"
-                                className="object-cover object-center transition-transform duration-500 group-hover/cover:scale-105"
-                              />
-                              {/* Play icon appears on hover (and keyboard focus); the poster's
-                                  own red button already invites a tap on touch screens. */}
-                              <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/cover:bg-black/25 group-focus-visible/cover:bg-black/25" />
-                              <span className="relative flex h-16 w-16 scale-75 items-center justify-center rounded-full bg-white/95 text-[#22409A] opacity-0 shadow-xl transition-all duration-300 group-hover/cover:scale-100 group-hover/cover:opacity-100 group-focus-visible/cover:scale-100 group-focus-visible/cover:opacity-100 lg:h-20 lg:w-20">
-                                <svg className="ml-1 h-7 w-7 lg:h-9 lg:w-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                  <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
-                                </svg>
-                              </span>
-                            </motion.button>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-                </AnimatePresence>
-                </div>
-
-                {/* Which pair is showing — every cover is the same poster, so this is
-                    what tells the visitor they've moved to different videos. */}
-                {totalPairs > 1 && isTouch && (
-                  <p className="mt-5 text-center text-xs font-medium text-[#6B7280]">Swipe for more videos</p>
-                )}
-                {totalPairs > 1 && (
-                  <div className={`${isTouch ? 'mt-3' : 'mt-6'} flex items-center justify-center gap-2`} role="group" aria-label="Video pages">
-                    {Array.from({ length: totalPairs }).map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => {
-                          if (i !== videoPairIndex) goToPair(i, i > videoPairIndex ? 1 : -1);
-                        }}
-                        aria-label={`Show videos ${i * 2 + 1}–${Math.min(i * 2 + 2, videoSources.length)}`}
-                        aria-current={i === videoPairIndex}
-                        className={`relative h-2.5 w-2.5 rounded-full bg-[#22409A]/25 transition-colors hover:bg-[#22409A]/50 ${FOCUS_RING}`}
-                      >
-                        {i === videoPairIndex && (
-                          <motion.span
-                            layoutId="video-pair-dot"
-                            className="absolute inset-y-0 -left-1.5 -right-1.5 rounded-full bg-[#EE232E]"
-                            transition={PAIR_SLIDE}
-                          />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      <EventVideoStack videos={videoSources} loading={videosLoading} />
 
       {/* ============ IMAGE MODAL ============ */}
       <AnimatePresence>
