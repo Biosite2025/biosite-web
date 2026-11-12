@@ -142,20 +142,32 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
       stopWatching();
     }
   };
+  // Leaving full screen in any way (Esc, the browser's button, the video's own
+  // control, the iPhone player's Done) turns the sound off again.
   useEffect(() => {
     if (!watching) return;
     const v = playingRef.current;
+    const doc = document as Document & { webkitFullscreenElement?: Element | null };
     const onChange = () => {
-      if (!document.fullscreenElement) stopWatching();
+      if (!doc.fullscreenElement && !doc.webkitFullscreenElement) stopWatching();
     };
     document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
     v?.addEventListener('webkitendfullscreen', stopWatching);
     return () => {
       document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
       v?.removeEventListener('webkitendfullscreen', stopWatching);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watching]);
+
+  // Belt and braces: outside full screen the front video is always silent.
+  useEffect(() => {
+    if (watching) return;
+    const v = playingRef.current;
+    if (v && !v.muted) v.muted = true;
+  });
 
   // The front video plays only while it can be seen and isn't paused. While
   // it's being watched full screen the visitor is in charge of it.
@@ -197,9 +209,12 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
 
   return (
     <section id="event-videos" aria-labelledby="videos-title" className="relative overflow-x-clip py-16 md:py-24">
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+      {/* Desktop: the text is centred in the space left of the video, which keeps
+          the size and place it had (the stack column is 60% of the screen). */}
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:max-w-none lg:grid-cols-[40%_60%] lg:gap-0 lg:px-0">
         {/* ---------- Text ---------- */}
-        <div className="lg:col-span-4">
+        <div className="lg:flex lg:justify-center lg:px-10">
+          <div className="lg:max-w-sm">
           <h2
             id="videos-title"
             className="max-w-[9ch] font-extrabold leading-[1.1] tracking-tight text-[#0d1633]"
@@ -208,12 +223,11 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
             Event Highlights
           </h2>
           <p className="mt-3 max-w-sm leading-relaxed text-[#4B5563] [text-wrap:pretty]">
-            Short recaps from our kick-offs, trainings and company days. Each one plays for {PLAY_SECONDS} seconds,
-            then the next comes forward.
+            Check out the highlights from our recent events. Click a video to watch it full screen.
           </p>
           <p className="sr-only" aria-live="polite">{n > 0 ? `Highlight video ${current + 1} of ${n}: ${title}` : ''}</p>
-          {/* No visible controls: clicking the playing video pauses it. This
-              pause button appears only for keyboard users who tab to it. */}
+          {/* No visible controls: clicking the playing video opens it full
+              screen. This pause button appears only for keyboard users who tab to it. */}
           {!reduced && n > 1 && (
             <button
               type="button"
@@ -224,13 +238,14 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
               {paused ? 'Play the highlight videos' : 'Pause the highlight videos'}
             </button>
           )}
+          </div>
         </div>
 
         {/* ---------- Stack ---------- */}
-        <div className="lg:col-span-8">
+        <div>
           <div
             ref={stageRef}
-            className="relative aspect-[5/4] lg:aspect-[20/28]"
+            className="relative aspect-[5/4] lg:aspect-[8/7]"
             style={{ touchAction: 'pan-y' }}
             onTouchStart={(e) => {
               const t = e.touches[0];
@@ -249,7 +264,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
             }}
           >
             {loading ? (
-              <div className="absolute left-[2%] top-1/2 aspect-video w-[62%] -translate-y-1/2 animate-pulse lg:left-0 lg:w-[118%] rounded-2xl bg-[#E5E7EB]" aria-hidden="true" />
+              <div className="absolute left-[2%] top-1/2 aspect-video w-[62%] -translate-y-1/2 animate-pulse lg:left-[1%] lg:w-[73%] rounded-2xl bg-[#E5E7EB]" aria-hidden="true" />
             ) : (
               <AnimatePresence initial={false} custom={dir}>
                 {roles.map(({ i, role }) => {
@@ -258,7 +273,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                   return (
                     <div
                       key={src}
-                      className="pointer-events-none absolute left-[2%] top-1/2 w-[62%] -translate-y-1/2 lg:left-0 lg:w-[118%]"
+                      className="pointer-events-none absolute left-[2%] top-1/2 w-[62%] -translate-y-1/2 lg:left-[1%] lg:w-[73%]"
                       style={{ zIndex: Z[role] }}
                     >
                       <motion.div
