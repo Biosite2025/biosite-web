@@ -39,10 +39,6 @@ const cardVariants: Variants = {
   }),
 };
 
-const DECK_BUTTON =
-  'inline-flex size-11 items-center justify-center rounded-full border border-[#22409A]/25 bg-white text-[#22409A] ' +
-  'transition-[transform,border-color] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] ' +
-  '[@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-px [@media(hover:hover)_and_(pointer:fine)]:hover:border-[#22409A] active:translate-y-px active:scale-[.985]';
 
 /** Takes photos from each folder in turn, so every set mixes events. */
 const interleave = (rows: string[][]) => {
@@ -272,10 +268,11 @@ const EventGallery: React.FC = () => {
   };
 
   const renderDeck = () => (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      {/* The frame: cards fall out through its foot and rise in from below it. */}
+    <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      {/* An invisible frame: cards fall out through its foot and rise in from below
+          it. Its padding leaves room for the card shadows. */}
       <div
-        className="relative overflow-hidden rounded-3xl bg-white/85 p-4 shadow-[0_24px_60px_-30px_rgba(13,22,51,0.35)] ring-1 ring-black/5 backdrop-blur-[2px] sm:p-6 lg:p-8"
+        className="relative overflow-hidden p-4 sm:p-6 lg:p-8"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -313,7 +310,6 @@ const EventGallery: React.FC = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            aria-live="polite"
           >
             {deck.map((image, i) => (
               <motion.li
@@ -345,64 +341,22 @@ const EventGallery: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Controls: previous/next on the left; pause and the rolling step count on the right. */}
-      {stepCount > 1 && (
-        <div className="mt-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            {([-1, 1] as const).map((d) => (
-              <button
-                key={d}
-                type="button"
-                onClick={() => goStep(deckStep + d, d)}
-                aria-label={d < 0 ? 'Previous photos' : 'Next photos'}
-                className={`${DECK_BUTTON} ${FOCUS_RING}`}
-              >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d={d < 0 ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'} />
-                </svg>
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            {!reducedMotion && (
-              <button
-                type="button"
-                onClick={() => setDeckPaused((p) => !p)}
-                aria-pressed={deckPaused}
-                aria-label={deckPaused ? 'Play the photos' : 'Pause the photos'}
-                className={`${DECK_BUTTON} ${FOCUS_RING}`}
-              >
-                {deckPaused ? (
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M4 2l8 5-8 5z" /></svg>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 2h3v10H3zM8 2h3v10H8z" /></svg>
-                )}
-              </button>
-            )}
-            {/* The count rolls like the showcase's "Step 3 of 4" pill. */}
-            <span className="inline-flex h-9 items-center overflow-hidden rounded-full bg-[#0d1633] px-4 text-xs font-semibold tabular-nums text-white">
-              <span className="sr-only">Photos {deckStep * perStep + 1} to {Math.min((deckStep + 1) * perStep, order.length)} of {order.length}</span>
-              <span aria-hidden="true" className="relative inline-flex">
-                Set&nbsp;
-                <AnimatePresence mode="popLayout" initial={false} custom={deckDir}>
-                  <motion.span
-                    key={deckStep}
-                    custom={deckDir}
-                    initial={{ y: deckDir > 0 ? '100%' : '-100%', opacity: 0 }}
-                    animate={{ y: '0%', opacity: 1 }}
-                    exit={{ y: deckDir > 0 ? '-100%' : '100%', opacity: 0 }}
-                    transition={{ duration: 0.5, ease: FLOW_EASE }}
-                    className="inline-block"
-                  >
-                    {deckStep + 1}
-                  </motion.span>
-                </AnimatePresence>
-                &nbsp;of {stepCount}
-              </span>
-            </span>
-          </div>
-        </div>
+      {/* No visible controls. One pause button stays for keyboard users (motion
+          that runs longer than 5 s must be stoppable): hidden until it is
+          tabbed to, and absent under reduced motion, when nothing advances. */}
+      {stepCount > 1 && !reducedMotion && (
+        <button
+          type="button"
+          onClick={() => setDeckPaused((p) => !p)}
+          aria-pressed={deckPaused}
+          className={`sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:bottom-2 focus-visible:right-4 focus-visible:z-10 focus-visible:rounded-full focus-visible:bg-[#0d1633] focus-visible:px-4 focus-visible:py-2 focus-visible:text-xs focus-visible:font-semibold focus-visible:text-white ${FOCUS_RING}`}
+        >
+          {deckPaused ? 'Play the photos' : 'Pause the photos'}
+        </button>
       )}
+      <p className="sr-only" aria-live="polite">
+        Photos {deckStep * perStep + 1} to {Math.min((deckStep + 1) * perStep, order.length)} of {order.length}
+      </p>
     </div>
   );
 
@@ -410,20 +364,13 @@ const EventGallery: React.FC = () => {
     <>
       {/* ============ SNAPS GALLERY ============ */}
       <section ref={snapsRef} id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
-        <div className="mx-auto mb-12 max-w-6xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-      
-            title="Snaps from Our Events"
-            intro="Capturing the energy, innovation, and connections that make our events truly special."
-            align="center"
-            titleId="snaps-title"
-          />
-        </div>
+        {/* Only the photos show; the heading stays for screen readers. */}
+        <h2 id="snaps-title" className="sr-only">Snaps from our events</h2>
 
-        {/* Loading skeleton: the deck's frame with three empty cards */}
+        {/* Loading skeleton: three empty cards */}
         {imagesLoading && (
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" aria-hidden="true">
-            <div className="grid grid-cols-1 gap-4 rounded-3xl bg-white/85 p-4 ring-1 ring-black/5 sm:grid-cols-3 sm:gap-5 sm:p-6 lg:gap-6 lg:p-8">
+            <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3 sm:gap-5 sm:p-6 lg:gap-6 lg:p-8">
               {[0, 1, 2].map((i) => (
                 <div key={i} className={`aspect-[4/3] animate-pulse rounded-2xl bg-[#E5E7EB] sm:aspect-[4/5] ${i > 0 ? 'hidden sm:block' : ''}`} />
               ))}
