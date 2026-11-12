@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { motion, useInView, useReducedMotion, AnimatePresence, type PanInfo, type Variants } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useAnimationFrame, useInView, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
+import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
 import BmiLoader from '@/src/components/ui/BmiLoader';
 import EventVideoStack from './EventVideoStack';
@@ -10,45 +11,8 @@ import EventVideoStack from './EventVideoStack';
 const BLUR =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==';
 
-/**
- * Photo deck flow, matched to taste-skill's before-and-after showcase on
- * tasteskill.dev: cards rise in from below, tilted, and settle over 0.9s on
- * cubic-bezier(0.16, 1, 0.3, 1); on the way out they drop through the foot of
- * the frame, tipping the other way. Each card starts a beat after the last.
- */
-const DECK_HOLD_MS = 4200;
-const FLOW_EASE = [0.16, 1, 0.3, 1] as const;
-const DROP_EASE = [0.7, 0, 0.84, 0] as const;
-const TILT = [-5, 3.5, -2.5];
-
-type CardFlow = { i: number; n: number; dir: 1 | -1 };
-const staggerIndex = ({ i, n, dir }: CardFlow) => (dir > 0 ? i : n - 1 - i);
-const cardVariants: Variants = {
-  enter: ({ i }: CardFlow) => ({ y: '115%', rotate: TILT[i % TILT.length] * 1.4, opacity: 0 }),
-  center: (c: CardFlow) => ({
-    y: '0%',
-    rotate: 0,
-    opacity: 1,
-    transition: { duration: 0.9, ease: FLOW_EASE, delay: staggerIndex(c) * 0.09 },
-  }),
-  exit: (c: CardFlow) => ({
-    y: '125%',
-    rotate: -TILT[c.i % TILT.length],
-    opacity: 0,
-    transition: { duration: 0.5, ease: DROP_EASE, delay: staggerIndex(c) * 0.07 },
-  }),
-};
-
-
-/** Takes photos from each folder in turn, so every set mixes events. */
-const interleave = (rows: string[][]) => {
-  const out: string[] = [];
-  const total = rows.reduce((s, r) => s + r.length, 0);
-  for (let i = 0; out.length < total; i++) {
-    for (const row of rows) if (i < row.length) out.push(row[i]);
-  }
-  return out;
-};
+const CARD_W_MOBILE = 208; // 192 card + 16 gap
+const CARD_W_DESKTOP = 344; // 320 card + 24 gap
 
 /** Swipe threshold: a short flick or a deliberate drag both count. 1 = next, -1 = prev, 0 = neither. */
 const swipeDirection = (info: PanInfo): 1 | -1 | 0 => {
@@ -64,7 +28,9 @@ const EventGallery: React.FC = () => {
   const [imagesLoading, setImagesLoading] = useState(true);
   const [videoSources, setVideoSources] = useState<string[]>([]);
   const [videosLoading, setVideosLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => setIsClient(true), []);
 
   // Swipe navigation is for touch devices only (iOS/Android phones & tablets);
   // mouse users keep the arrow buttons.
@@ -114,49 +80,43 @@ const EventGallery: React.FC = () => {
     })();
   }, []);
 
-  // ---- photo deck ----
-  // The flow of taste-skill's before-and-after showcase (tasteskill.dev): on
-  // each step the cards drop out through the foot of the frame one after
-  // another, tipping slightly, then the next cards rise in from below, tilted,
-  // and settle on the long soft curve. Three photos a step on desktop, one on
-  // a phone; a step every DECK_HOLD_MS while the deck is on screen.
-  const [perStep, setPerStep] = useState(3);
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 640px)');
-    const sync = () => setPerStep(mq.matches ? 3 : 1);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
-
-  const order = useMemo(() => interleave([topRowImages, bottomRowImages]), [topRowImages, bottomRowImages]);
-  const stepCount = Math.max(1, Math.ceil(order.length / perStep));
-  const [stepIndex, setStepIndex] = useState(0);
-  const [deckDir, setDeckDir] = useState<1 | -1>(1);
-  const deckStep = Math.min(stepIndex, stepCount - 1); // stays valid when perStep changes
-  const deck = order.slice(deckStep * perStep, deckStep * perStep + perStep);
-  const goStep = (next: number, dir: 1 | -1) => {
-    setDeckDir(dir);
-    setStepIndex(((next % stepCount) + stepCount) % stepCount);
-  };
-
-  // `paused`: the pointer or focus is on the deck, or the viewer is open.
+  // ---- infinite scroll ----
+  const isMobile = isClient && window.innerWidth < 1024;
+  const imageWidth = isMobile ? CARD_W_MOBILE : CARD_W_DESKTOP;
+  const topLoopWidth = topRowImages.length * imageWidth;
+  const bottomLoopWidth = bottomRowImages.length * imageWidth;
+  const topRowX = useMotionValue(0);
+  const bottomRowX = useMotionValue(0);
   const [paused, setPaused] = useState(false);
-  const [deckPaused, setDeckPaused] = useState(false); // the visitor's pause button
-  const snapsRef = useRef<HTMLElement>(null);
-  const snapsInView = useInView(snapsRef, { amount: 0.3 });
-  const reducedMotion = useReducedMotion();
-  const autoplay = stepCount > 1 && !paused && !deckPaused && snapsInView && !reducedMotion;
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartTime, setDragStartTime] = useState(0);
 
   useEffect(() => {
-    if (!autoplay) return;
-    const t = window.setTimeout(() => goStep(deckStep + 1, 1), DECK_HOLD_MS);
-    return () => window.clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoplay, deckStep, stepCount]);
+    if (bottomLoopWidth > 0) bottomRowX.set(-bottomLoopWidth);
+  }, [bottomLoopWidth, bottomRowX]);
 
-  // Touch: a mostly-horizontal swipe of 50px or more changes step.
-  const deckTouch = useRef<{ x: number; y: number } | null>(null);
+  // The rows only move while the gallery is on screen — no point animating
+  // dozens of photo cards nobody can see.
+  const snapsRef = useRef<HTMLElement>(null);
+  const snapsInView = useInView(snapsRef, { margin: '200px 0px' });
+
+  useAnimationFrame((_, delta) => {
+    if (paused || !isClient || !snapsInView) return;
+    const speed = 40;
+    if (topLoopWidth > 0) {
+      let next = topRowX.get() - speed * (delta / 1000);
+      if (next <= -topLoopWidth) next += topLoopWidth;
+      topRowX.set(next);
+    }
+    if (bottomLoopWidth > 0) {
+      let next = bottomRowX.get() + speed * (delta / 1000);
+      if (next >= 0) next -= bottomLoopWidth;
+      bottomRowX.set(next);
+    }
+  });
+
+  const pause = () => setPaused(true);
+  const resume = () => setPaused(false);
 
   // ---- modal ----
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -213,96 +173,70 @@ const EventGallery: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen, selectedImage]);
 
-  const renderDeck = () => (
-    <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      {/* An invisible frame: cards fall out through its foot and rise in from below
-          it. Its padding leaves room for the card shadows. */}
-      <div
-        className="relative overflow-hidden p-4 sm:p-6 lg:p-8"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={(e) => {
-          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
+  const renderRow = (images: string[], x: MotionValue<number>, loopWidth: number, keyPrefix: string) => (
+    <div
+      className="flex overflow-hidden"
+      onMouseEnter={pause}
+      onMouseLeave={resume}
+    >
+      <motion.div
+        className="flex gap-4 lg:gap-6"
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: -loopWidth + 1000, right: 0 }}
+        dragElastic={0.1}
+        onDragStart={() => {
+          pause();
+          setIsDragging(true);
+          setDragStartTime(Date.now());
         }}
-        onTouchStart={(e) => {
-          const t = e.touches[0];
-          deckTouch.current = stepCount > 1 ? { x: t.clientX, y: t.clientY } : null;
+        onDragEnd={() => {
+          resume();
+          setTimeout(() => setIsDragging(false), 100);
         }}
-        onTouchEnd={(e) => {
-          const start = deckTouch.current;
-          deckTouch.current = null;
-          if (!start) return;
-          const t = e.changedTouches[0];
-          const dx = t.clientX - start.x;
-          const dy = t.clientY - start.y;
-          if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return; // a tap or a vertical scroll
-          goStep(deckStep + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
-        }}
-        style={{ touchAction: 'pan-y' }}
       >
-        {/* Holds the deck's height while one set has left and the next has not arrived. */}
-        <div className={`grid gap-4 sm:gap-5 lg:gap-6 ${perStep === 3 ? 'grid-cols-3' : 'grid-cols-1'}`} aria-hidden="true">
-          {Array.from({ length: perStep }).map((_, i) => (
-            <div key={i} className="aspect-[4/3] sm:aspect-[4/5]" />
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.ul
-            key={`${perStep}-${deckStep}`}
-            className={`absolute inset-4 grid gap-4 sm:inset-6 sm:gap-5 lg:inset-8 lg:gap-6 ${perStep === 3 ? 'grid-cols-3' : 'grid-cols-1'}`}
-            custom={deckDir}
-            initial="enter"
-            animate="center"
-            exit="exit"
-          >
-            {deck.map((image, i) => (
-              <motion.li
-                key={image}
-                custom={{ i, n: deck.length, dir: deckDir }}
-                variants={cardVariants}
-                className="relative"
-              >
-                <button
-                  type="button"
-                  onClick={() => openModal(image)}
-                  aria-label={`Open photo ${allImages.indexOf(image) + 1} of ${allImages.length}`}
-                  className={`group relative block h-full w-full overflow-hidden rounded-2xl bg-[#E5E7EB] shadow-[0_14px_30px_-18px_rgba(13,22,51,0.55)] ring-1 ring-black/5 ${FOCUS_RING}`}
-                >
-                  <Image
-                    src={largeOf[image] || image}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-[400ms] ease-[cubic-bezier(.2,.8,.2,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.03] [@media(hover:hover)_and_(pointer:fine)]:group-hover:duration-[600ms] group-focus-visible:scale-[1.03]"
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                    quality={70}
-                    placeholder="blur"
-                    blurDataURL={BLUR}
-                  />
-                </button>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </AnimatePresence>
-      </div>
-
-      {/* No visible controls. One pause button stays for keyboard users (motion
-          that runs longer than 5 s must be stoppable): hidden until it is
-          tabbed to, and absent under reduced motion, when nothing advances. */}
-      {stepCount > 1 && !reducedMotion && (
-        <button
-          type="button"
-          onClick={() => setDeckPaused((p) => !p)}
-          aria-pressed={deckPaused}
-          className={`sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:bottom-2 focus-visible:right-4 focus-visible:z-10 focus-visible:rounded-full focus-visible:bg-[#0d1633] focus-visible:px-4 focus-visible:py-2 focus-visible:text-xs focus-visible:font-semibold focus-visible:text-white ${FOCUS_RING}`}
-        >
-          {deckPaused ? 'Play the photos' : 'Pause the photos'}
-        </button>
-      )}
-      <p className="sr-only" aria-live="polite">
-        Photos {deckStep * perStep + 1} to {Math.min((deckStep + 1) * perStep, order.length)} of {order.length}
-      </p>
+        {/* Copies of the set needed for a seamless loop: one extra screen-width
+            past the wrap point. That's 2 for any real gallery (one set is far
+            wider than a screen); 3+ only for very short rows. Rendering a fixed
+            3 copies meant ~100 extra photo cards to lay out on load. */}
+        {Array.from({ length: images.length * Math.max(2, Math.ceil(2560 / Math.max(1, loopWidth)) + 1) }).map((_, index) => {
+          const image = images[index % images.length];
+          return (
+            <button
+              key={`${keyPrefix}-${index}`}
+              type="button"
+              onClick={(e) => {
+                if (isDragging || Date.now() - dragStartTime < 200) {
+                  e.preventDefault();
+                  return;
+                }
+                openModal(image);
+              }}
+              className={`group relative h-32 w-48 flex-shrink-0 overflow-hidden rounded-xl bg-[#E5E7EB] shadow-sm ring-1 ring-black/5 transition-transform duration-300 hover:scale-[1.03] lg:h-56 lg:w-80 ${FOCUS_RING}`}
+              aria-label="Open event photo"
+            >
+              <Image
+                src={image}
+                alt={`Event photo ${(index % images.length) + 1}`}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                sizes="(max-width: 1024px) 192px, 320px"
+                quality={60}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR}
+              />
+              <span className="absolute inset-0 flex items-center justify-center bg-[#22409A]/0 opacity-0 transition-all duration-300 group-hover:bg-[#22409A]/25 group-hover:opacity-100">
+                <span className="rounded-full bg-white/90 p-3 text-[#22409A]">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </motion.div>
     </div>
   );
 
@@ -310,23 +244,26 @@ const EventGallery: React.FC = () => {
     <>
       {/* ============ SNAPS GALLERY ============ */}
       <section ref={snapsRef} id="snaps" aria-labelledby="snaps-title" className="relative py-16 md:py-24">
-        {/* The heading, then the photos; same type as "Event Highlights". */}
-        <h2
-          id="snaps-title"
-          className="mx-auto mb-6 max-w-6xl px-4 text-center font-extrabold leading-[1.1] tracking-tight text-[#0d1633] sm:px-6 lg:mb-8 lg:px-8"
-          style={{ fontSize: 'clamp(2.1rem, calc(var(--vw,1vw)*3.8), 3.25rem)' }}
-        >
-          Snaps from Our Events
-        </h2>
+        <div className="mx-auto mb-12 max-w-6xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+      
+            title="Snaps from Our Events"
+            intro="Capturing the energy, innovation, and connections that make our events truly special."
+            align="center"
+            titleId="snaps-title"
+          />
+        </div>
 
-        {/* Loading skeleton: three empty cards */}
+        {/* Loading skeletons */}
         {imagesLoading && (
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" aria-hidden="true">
-            <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3 sm:gap-5 sm:p-6 lg:gap-6 lg:p-8">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className={`aspect-[4/3] animate-pulse rounded-2xl bg-[#E5E7EB] sm:aspect-[4/5] ${i > 0 ? 'hidden sm:block' : ''}`} />
-              ))}
-            </div>
+          <div className="space-y-4 lg:space-y-6" aria-hidden="true">
+            {[0, 1].map((row) => (
+              <div key={row} className="flex gap-4 overflow-hidden lg:gap-6">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="h-32 w-48 flex-shrink-0 animate-pulse rounded-xl bg-[#E5E7EB] lg:h-56 lg:w-80" />
+                ))}
+              </div>
+            ))}
           </div>
         )}
 
@@ -345,8 +282,13 @@ const EventGallery: React.FC = () => {
           </div>
         )}
 
-        {/* The deck */}
-        {!imagesLoading && allImages.length > 0 && renderDeck()}
+        {/* Rows */}
+        {!imagesLoading && allImages.length > 0 && (
+          <div className="space-y-4 lg:space-y-6">
+            {topRowImages.length > 0 && renderRow(topRowImages, topRowX, topLoopWidth, 'top')}
+            {bottomRowImages.length > 0 && renderRow(bottomRowImages, bottomRowX, bottomLoopWidth, 'bottom')}
+          </div>
+        )}
       </section>
 
       {/* ============ HIGHLIGHT VIDEOS ============ */}
