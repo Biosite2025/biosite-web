@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import { FOCUS_RING } from '../../about/components/motionShared';
+import { useSpotlightActive } from '@/src/hooks/useSectionSpotlight';
 
 /**
  * Highlight videos: text on the left, a turning stack of videos on the right.
@@ -93,6 +94,16 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
   // the mark don't skip several videos at once.
   const advancedFrom = useRef<string | null>(null);
   const inView = useInView(stageRef, { amount: 0.4 });
+  // Nothing downloads until the section is within ~600px of the screen: the
+  // videos are large (up to 90 MB) and most visitors never scroll this far.
+  const sectionRef = useRef<HTMLElement>(null);
+  const near = useInView(sectionRef, { margin: "600px 0px", once: true });
+  // Blurred out by the page spotlight: no playing (saves decoding a video
+  // that is drawn blurred).
+  const lit = useSpotlightActive(sectionRef);
+  // The grey still frames on the side cards load only once the front video
+  // has started, so they never compete with it for bandwidth.
+  const [frontStarted, setFrontStarted] = useState(false);
   const reduced = useReducedMotion();
   const n = videos.length;
   const current = n ? index % n : 0;
@@ -171,7 +182,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
 
   // The front video plays only while it can be seen and isn't paused. While
   // it's being watched full screen the visitor is in charge of it.
-  const shouldPlay = !reduced && inView && !paused && !pageHidden && !watching;
+  const shouldPlay = !reduced && inView && lit && !paused && !pageHidden && !watching;
   useEffect(() => {
     const v = playingRef.current;
     if (!v || watching) return;
@@ -208,7 +219,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
   const title = n ? videoTitle(videos[current], current + 1) : '';
 
   return (
-    <section id="event-videos" aria-labelledby="videos-title" className="relative overflow-x-clip py-16 md:py-24">
+    <section ref={sectionRef} id="event-videos" aria-labelledby="videos-title" className="relative overflow-x-clip py-16 md:py-24">
       {/* Desktop: the text is centred in the space left of the video, which keeps
           the size and place it had (the stack column is 60% of the screen). */}
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:max-w-none lg:grid-cols-[40%_60%] lg:gap-0 lg:px-0">
@@ -292,14 +303,15 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                               ref={(el) => {
                                 playingRef.current = el;
                               }}
-                              src={src}
+                              src={near ? src : undefined}
                               muted
                               playsInline
-                              preload="auto"
+                              preload={near ? "auto" : "none"}
                               autoPlay={shouldPlay}
                               controls={!!reduced}
                               aria-label={videoTitle(src, i + 1)}
                               className="absolute inset-0 h-full w-full object-cover [&:fullscreen]:bg-black [&:fullscreen]:object-contain"
+                              onPlaying={() => setFrontStarted(true)}
                               onTimeUpdate={(e) => {
                                 const t = e.currentTarget.currentTime;
                                 if (reduced || watching || t < PLAY_SECONDS || advancedFrom.current === src) return;
@@ -337,7 +349,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                             {/* A still from the video under a grey wash. */}
                             <video
                               key={`${src}-still`}
-                              src={`${src}#t=1`}
+                              src={near && (frontStarted || reduced) ? `${src}#t=1` : undefined}
                               muted
                               playsInline
                               preload="metadata"

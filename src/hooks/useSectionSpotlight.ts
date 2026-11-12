@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import type React from 'react';
 
 /**
  * Keeps the section under the middle of the screen in focus and marks the
@@ -97,4 +98,22 @@ export function useSectionSpotlight(ids: string[]) {
       for (const el of sections()) delete el.dataset.spotlight;
     };
   }, [key]);
+}
+
+/**
+ * True while a section is in the spotlight (or no spotlight is running).
+ * Lets a section pause its own video while it is blurred out.
+ */
+export function useSpotlightActive(ref: React.RefObject<HTMLElement | null>) {
+  const [active, setActive] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const read = () => setActive(el.dataset.spotlight !== 'off');
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(el, { attributes: true, attributeFilter: ['data-spotlight'] });
+    return () => mo.disconnect();
+  }, [ref]);
+  return active;
 }

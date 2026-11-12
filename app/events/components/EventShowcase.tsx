@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EASE, FOCUS_RING } from '../../about/components/motionShared';
+import { useSpotlightActive } from '@/src/hooks/useSectionSpotlight';
 
 /** How long the "See the highlights" scroll takes, in ms. Raise to slow it. */
 const SCROLL_DURATION = 1400;
@@ -66,18 +67,24 @@ const EventShowcase = () => {
     [reducedMotion]
   );
 
-  // Pause the background video while the hero is scrolled out of view (and
-  // resume when it's back), so it isn't decoding frames nobody can see.
+  // The background video plays only while the hero is on screen and not
+  // blurred by the page's spotlight, so it isn't decoding frames nobody sees.
+  const sectionRef = useRef<HTMLElement>(null);
+  const lit = useSpotlightActive(sectionRef);
+  const [onScreen, setOnScreen] = useState(true);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const io = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reducedMotion) return;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) video.play().catch(() => {});
-      else video.pause();
-    });
-    io.observe(video);
-    return () => io.disconnect();
-  }, [reducedMotion]);
+    if (onScreen && lit) video.play().catch(() => {});
+    else video.pause();
+  }, [onScreen, lit, reducedMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -90,6 +97,7 @@ const EventShowcase = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="events-hero"
       aria-labelledby="events-hero-title"
       className="relative w-full overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
