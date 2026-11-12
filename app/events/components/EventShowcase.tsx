@@ -2,7 +2,13 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { EASE, FOCUS_RING } from '../../about/components/motionShared';
+import Image from 'next/image';
+import { EASE } from '../../about/components/motionShared';
+import { BUTTON_BASE, WRAP } from './EventsHeading';
+
+const HERO_POSTER = 'https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/image.webp';
+/** The heading, one entry per line: each line rises out of its own mask. */
+const HERO_LINES = ['Moments that move', 'healthcare forward'];
 
 /** How long the "See the highlights" scroll takes, in ms. Raise to slow it. */
 const SCROLL_DURATION = 1400;
@@ -20,9 +26,9 @@ const EventShowcase = () => {
    * over a fixed duration instead, offset by the sticky nav so the section
    * heading isn't left underneath it.
    */
-  const scrollToHighlights = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
-      const target = document.getElementById('snaps');
+  const glideTo = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      const target = document.getElementById(id);
       if (!target) return; // let the browser handle it normally
       e.preventDefault();
 
@@ -88,72 +94,98 @@ const EventShowcase = () => {
     return () => clearTimeout(t);
   }, [reducedMotion]);
 
+  // The entrance, once on load (taste-skill's hero timing): each line of the
+  // heading rises out of its own mask, 80ms apart; then the lead and the
+  // buttons fade up 12px, 60ms apart; the picture settles from 1.05 to 1.
+  const lineIn = (i: number) => ({
+    initial: { y: '110%' },
+    animate: { y: '0%' },
+    transition: { duration: 0.7, ease: EASE, delay: 0.15 + i * 0.08 },
+  });
+  const fadeUp = (i: number) => ({
+    initial: { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.52, ease: EASE, delay: 0.5 + i * 0.06 },
+  });
+
   return (
     <section
       id="events-hero"
       aria-labelledby="events-hero-title"
-      className="relative w-full overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
+      className="relative flex w-full items-end overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px]"
     >
-      {/* Background video */}
-      <div className="absolute inset-0">
+      {/* Background: the poster photograph shows at once, the video fades in over it. */}
+      <motion.div
+        className="absolute inset-0 bg-[#0d1633]"
+        initial={{ scale: 1.05 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.1, ease: EASE }}
+      >
+        <Image src={HERO_POSTER} alt="" fill priority sizes="100vw" className="object-cover" />
         <video
           ref={videoRef}
-          className={`h-full w-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
           muted
           loop
           playsInline
           preload="metadata"
-          poster="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/image.webp"
+          poster={HERO_POSTER}
           onLoadedData={() => setIsVideoLoaded(true)}
           onCanPlay={() => setIsVideoLoaded(true)}
         >
           <source src="https://biositeassets.sgp1.cdn.digitaloceanspaces.com/biosite-web/assets/events-hero-web.mp4" type="video/mp4" />
         </video>
-        {/* Fallback gradient while the video loads */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-[#22409A] via-[#2B7CD3] to-[#1A3078] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`} />
-        {/* Legibility scrim — dark brand wash */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1633]/70 via-[#0d1633]/55 to-[#0d1633]/80" />
-      </div>
+        {/* Legibility scrim: darkest behind the words at the bottom left. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1633]/90 via-[#0d1633]/45 to-[#0d1633]/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0d1633]/60 via-transparent to-transparent" />
+      </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center text-white">
-        
-
-        <motion.h1
+      {/* Content, on the same left edge as every section below */}
+      <div className={`relative z-10 pb-14 text-white sm:pb-16 lg:pb-24 ${WRAP}`}>
+        <h1
           id="events-hero-title"
-          className="font-extrabold leading-[1.08] tracking-tight"
-          style={{ fontSize: 'clamp(2rem, calc(var(--vw,1vw)*5.4), 3.6rem)' }}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
+          className="max-w-4xl font-extrabold leading-[1.02] tracking-tight"
+          style={{ fontSize: 'clamp(2rem, calc(var(--vw,1vw)*6.2), 5.25rem)' }}
         >
-          Moments that move healthcare forward
-        </motion.h1>
+          {HERO_LINES.map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.08em]">
+              <motion.span className="hero-line block" {...lineIn(i)}>
+                {line}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
 
         <motion.p
-          className="mt-5 max-w-xl text-blue-50/90"
-          style={{ fontSize: 'clamp(0.95rem, calc(var(--vw,1vw)*1.6), 1.15rem)' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}
+          className="mt-6 max-w-xl leading-relaxed text-white/85 [text-wrap:pretty]"
+          style={{ fontSize: 'clamp(1rem, calc(var(--vw,1vw)*1.5), 1.2rem)' }}
+          {...fadeUp(0)}
         >
-          Conferences, trainings, and community outreach capturing the energy, innovation, and
-          connections that make our events truly special.
+          Photos and videos from our trainings, conferences, company days and outreach, and the
+          calendar of what comes next.
         </motion.p>
 
-        <motion.a
-          href="#snaps"
-          onClick={scrollToHighlights}
-          className={`mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#22409A] shadow-lg transition-all duration-300 hover:bg-blue-50 ${FOCUS_RING} focus-visible:ring-offset-transparent`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
-        >
-          See the highlights
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <path d="M12 5v14M6 13l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.a>
+        <div className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.a
+            href="#snaps"
+            onClick={(e) => glideTo(e, 'snaps')}
+            className={`${BUTTON_BASE} bg-white text-[#22409A] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-[#e8edfa] focus-visible:ring-offset-[#0d1633]`}
+            {...fadeUp(1)}
+          >
+            See the photos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M12 5v14M6 13l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.a>
+          <motion.a
+            href="#event-calendar"
+            onClick={(e) => glideTo(e, 'event-calendar')}
+            className={`${BUTTON_BASE} border border-white/50 text-white [@media(hover:hover)_and_(pointer:fine)]:hover:border-white [@media(hover:hover)_and_(pointer:fine)]:hover:bg-white/10 focus-visible:ring-offset-[#0d1633]`}
+            {...fadeUp(2)}
+          >
+            Open the calendar
+          </motion.a>
+        </div>
       </div>
     </section>
   );

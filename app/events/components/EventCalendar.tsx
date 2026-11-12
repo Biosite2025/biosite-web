@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import SectionHeading from '../../about/components/SectionHeading';
+import { EventsHeading, SECTION, WRAP } from './EventsHeading';
 // Removed invalid AutoHeightPlugin import; not needed for auto-resizing
 import type { EventClickArg, EventContentArg } from '@fullcalendar/core';
 
@@ -361,31 +361,21 @@ const EventCalendar: React.FC = () => {
     <section
       id="event-calendar"
       aria-labelledby="calendar-title"
-      className="relative w-full py-16 md:py-24"
+      className={SECTION}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
-      >
-      {/* Header Section */}
-      <div className="mb-10 flex flex-col items-center">
-        <SectionHeading
-         
-          title="Event Calendar"
-          intro="Stay updated with our upcoming activities and programs."
-          align="center"
-          titleId="calendar-title"
-        />
-      </div>
+      <div className={`relative z-10 ${WRAP}`}>
+      <EventsHeading
+        id="calendar-title"
+        title="Event calendar"
+        intro="What's coming up, by month. Pick an event to see its details."
+      />
 
       {/* Event Statistics Cards */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-5 lg:-mt-3 px-2"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-4"
       >
         {getEventStats().map((stat, index) => (
           <motion.div
@@ -414,7 +404,7 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-white rounded-t-xl shadow-lg border border-gray-200 border-b-0 mx-2 lg:mx-0"
+        className="bg-white rounded-t-xl shadow-lg border border-gray-200 border-b-0"
       >
         <div className="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-[#22409A] to-[#1A3078] text-white rounded-t-xl">
           <div className="flex items-center space-x-2 lg:space-x-4">
@@ -455,7 +445,7 @@ const EventCalendar: React.FC = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 mx-2 lg:mx-0 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
+        className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
       >
         <div className="p-1 lg:p-2 pt-0">
           <FullCalendar
@@ -934,7 +924,7 @@ const EventCalendar: React.FC = () => {
           }
         }
       `}</style>
-      </motion.div>
+      </div>
     </section>
   );
 };
