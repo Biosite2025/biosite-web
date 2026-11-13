@@ -436,6 +436,23 @@ const EventCalendar: React.FC = () => {
     const x = Math.min(Math.max(r.left + r.width / 2, half), window.innerWidth - half);
     setHolidayTip({ name: h.name, about: holidayAbout(h.name), x: x / zoom, y: r.top / zoom });
   };
+  // One listener for the whole grid: entering a day box that is a holiday shows
+  // its tooltip (above the holiday label); any other day hides it.
+  const tipFor = useRef<string | null>(null);
+  const onCalendarHover = (e: React.MouseEvent) => {
+    const cell = (e.target as HTMLElement).closest<HTMLElement>('.fc-daygrid-day');
+    const date = cell?.dataset.date ?? null;
+    if (date === tipFor.current) return;
+    tipFor.current = date;
+    const h = date ? holidays[date] : undefined;
+    // Anchored to the top of the whole day box, so it never covers that day.
+    if (h && cell) showHolidayTip(cell, h);
+    else setHolidayTip(null);
+  };
+  useEffect(() => {
+    if (!holidayTip) tipFor.current = null;
+  }, [holidayTip]);
+
   useEffect(() => {
     if (!holidayTip) return;
     const hide = () => setHolidayTip(null);
@@ -457,8 +474,6 @@ const EventCalendar: React.FC = () => {
             className="holiday-chip self-stretch"
             tabIndex={0}
             aria-label={`${holiday.name}. ${holidayAbout(holiday.name)}`}
-            onMouseEnter={(e) => showHolidayTip(e.currentTarget, holiday)}
-            onMouseLeave={() => setHolidayTip(null)}
             onFocus={(e) => showHolidayTip(e.currentTarget, holiday)}
             onBlur={() => setHolidayTip(null)}
           >
@@ -588,7 +603,8 @@ const EventCalendar: React.FC = () => {
         transition={{ duration: 0.5, delay: 0.3 }}
         className={`bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0 overflow-visible transition-opacity duration-300 mx-2 lg:mx-0 ${isLoading ? 'opacity-70' : 'opacity-100'}`}
       >
-        <div className="p-1 lg:p-2 pt-0">
+        {/* Hovering anywhere in a holiday's day box shows its tooltip. */}
+        <div className="p-1 lg:p-2 pt-0" onMouseOver={onCalendarHover} onMouseLeave={() => setHolidayTip(null)}>
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin]}
