@@ -3,6 +3,13 @@ import { cachedJson } from '@/lib/cachedJson';
 import { ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { spaces } from '@/lib/spaces';
 
+/**
+ * File name (in the events-showcase folder) of the video that plays first in
+ * Event Highlights. Change it to feature another video, or set it to '' to
+ * go back to newest first.
+ */
+const FEATURED_VIDEO = 'Compress_VisMin Kick Off 2026.mp4';
+
 async function load() {
   try {
     console.log('[event-videos] Fetching videos from Digital Ocean Spaces...');
@@ -33,8 +40,9 @@ async function load() {
         lastModified: file.LastModified,
       }))
       .sort((a, b) => {
-        // Sort by last modified date (newest first)
-        return (b.lastModified?.getTime() || 0) - (a.lastModified?.getTime() || 0);
+        // The featured video always plays first; the rest go newest first.
+        const featured = Number(b.name === FEATURED_VIDEO) - Number(a.name === FEATURED_VIDEO);
+        return featured || (b.lastModified?.getTime() || 0) - (a.lastModified?.getTime() || 0);
       });
 
     console.log(`[event-videos] Found ${videos.length} videos`);
