@@ -5,6 +5,7 @@ import "./globals.css";
 import { TopNav } from "../src/components/layout/TopNav";
 import React from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { SEASON_SCRIPT } from "@/lib/season";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -96,6 +97,10 @@ export default function RootLayout({
             __html: `(function(){var D=1920,M=1024,MAX=1.5,r=document.documentElement;function fit(){var w=window.innerWidth,h=window.innerHeight,z=w>=M?Math.min(w/D,MAX):1;if(Math.abs(z-1)<0.01){r.style.zoom='';r.style.removeProperty('--vh');r.style.removeProperty('--vw');r.removeAttribute('data-fit');return}r.style.zoom=String(z);r.style.setProperty('--vh',(h/z/100)+'px');r.style.setProperty('--vw',(w/z/100)+'px');r.setAttribute('data-fit','')}fit();window.addEventListener('resize',fit)})();`,
           }}
         />
+        {/* Seasonal artwork (lib/season.ts): marks <html data-season> on the
+            first load of ANY page, so it's already set when the visitor moves
+            to About inside the site (those moves don't reload the page). */}
+        <script dangerouslySetInnerHTML={{ __html: SEASON_SCRIPT }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}

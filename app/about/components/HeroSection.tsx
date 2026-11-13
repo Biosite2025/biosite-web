@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { EASE, FOCUS_RING } from './motionShared';
-import { SEASON_SCRIPT } from '@/lib/season';
+import { isChristmasSeason } from '@/lib/season';
 
 // Building slideshow — three real facilities. Meaningful alt text per slide.
 const slides = [
@@ -19,6 +19,15 @@ const PARTNER_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScR4HEaBgpTHZUr85wM3j-y5vB3TblbZ7BUTt6zjkhahUlYFA/viewform';
 
 const HeroSection = () => {
+  // The season mark is set by app/layout.tsx on the first page load. This
+  // re-checks it before the hero paints (covers a tab left open across the
+  // start or end of the season); useLayoutEffect, so no frame shows the wrong bear.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    if (isChristmasSeason()) root.setAttribute("data-season", "christmas");
+    else root.removeAttribute("data-season");
+  }, []);
+
   const [current, setCurrent] = useState(0);
   const reducedMotion = useReducedMotion();
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -81,9 +90,6 @@ const HeroSection = () => {
         >
           {/* Gentle float is a CSS loop (globals.css) — no per-frame JS. */}
           <motion.div className="bear-float">
-            {/* Marks <html data-season="christmas"> in season (lib/season.ts)
-                before the bear is painted; globals.css then shows the right one. */}
-            <script dangerouslySetInnerHTML={{ __html: SEASON_SCRIPT }} />
             {/* The bear is a background picture chosen in globals.css by the season,
                 so only the bear on show is downloaded. Both files share one
                 1280x905 frame, so the size never changes. */}
