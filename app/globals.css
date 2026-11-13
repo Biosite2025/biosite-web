@@ -523,3 +523,8 @@ html[data-modal-open] .partner-shine { animation-play-state: paused; }
     opacity: 0.6;
   }
 }
+
+/* About hero: seasonal bear (lib/season.ts marks <html data-season> before
+   the hero paints). A background picture, so only the bear on show downloads. */
+.seasonal-bear { background-image: url('/asset/biosite%20Bear%20(1).webp'); }
+html[data-season='christmas'] .seasonal-bear { background-image: url('/asset/biosite-bear-christmas.webp'); }

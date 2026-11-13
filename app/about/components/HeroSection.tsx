@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { EASE, FOCUS_RING } from './motionShared';
+import { SEASON_SCRIPT } from '@/lib/season';
 
 // Building slideshow — three real facilities. Meaningful alt text per slide.
 const slides = [
@@ -80,13 +81,16 @@ const HeroSection = () => {
         >
           {/* Gentle float is a CSS loop (globals.css) — no per-frame JS. */}
           <motion.div className="bear-float">
-            <Image
-              src="/asset/biosite Bear (1).webp"
-              alt="Biosite bear mascot"
-              width={440}
-              height={311}
-              priority
-              className="h-auto w-[250px] sm:w-[540px] lg:w-[640px] object-contain drop-shadow-[0_16px_30px_rgba(34,64,154,0.22)]"
+            {/* Marks <html data-season="christmas"> in season (lib/season.ts)
+                before the bear is painted; globals.css then shows the right one. */}
+            <script dangerouslySetInnerHTML={{ __html: SEASON_SCRIPT }} />
+            {/* The bear is a background picture chosen in globals.css by the season,
+                so only the bear on show is downloaded. Both files share one
+                1280x905 frame, so the size never changes. */}
+            <div
+              role="img"
+              aria-label="Biosite bear mascot"
+              className="seasonal-bear aspect-[1280/905] w-[250px] bg-contain bg-center bg-no-repeat drop-shadow-[0_16px_30px_rgba(34,64,154,0.22)] sm:w-[540px] lg:w-[640px]"
             />
           </motion.div>
         </motion.div>
