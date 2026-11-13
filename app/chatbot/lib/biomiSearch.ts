@@ -1,6 +1,7 @@
 import MiniSearch from 'minisearch';
 import { directSpec, info, mentionedProducts, nameTokens, researchText, salesAnswer } from './biomiReason';
 import { manilaToday } from '@/lib/phHolidays';
+import { buildSpeller, correctQuestion, type Speller } from './biomiSpell';
 
 /**
  * Biomi's "brain": free, in-browser search over the website's own content
@@ -100,7 +101,7 @@ const STOP = new Set(
 const norm = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '');
 const tokens = (s: string) => norm(s).replace(/[^a-z0-9+\- ]/g, ' ').split(/\s+/).filter((t) => t && !STOP.has(t));
 
-let loaded: Promise<{ data: Index; products: MiniSearch<Product & { id: number; researchText?: string }>; faqs: MiniSearch<Faq & { id: number }> }> | null = null;
+let loaded: Promise<{ data: Index; products: MiniSearch<Product & { id: number; researchText?: string }>; faqs: MiniSearch<Faq & { id: number }>; speller: Speller }> | null = null;
 
 /** Load the index once (cached by the browser too). */
 export function loadBiomi() {
@@ -120,7 +121,16 @@ export function loadBiomi() {
 					searchOptions: { boost: { q: 3, category: 1.5, a: 0.8 }, fuzzy: 0.2, prefix: true, combineWith: 'OR' },
 				});
 				faqs.addAll(data.faqs.map((f, id) => ({ ...f, id })));
-				return { data, products, faqs };
+				// Words Biomi knows, for typo correction (biomiSpell.ts).
+				const speller = buildSpeller([
+					...data.products.flatMap((p) => [p.name, p.brand, p.category, p.alsoIn ?? '']),
+					...data.faqs.map((f) => `${f.category} ${f.q}`),
+					...data.offices.map((o) => o.name),
+					...(data.about?.awards ?? []).map((a) => `${a.partner} ${a.title}`),
+					data.about?.mission ?? '',
+					data.about?.vision ?? '',
+				]);
+				return { data, products, faqs, speller };
 			})
 			.catch((e) => {
 				loaded = null;
@@ -197,7 +207,7 @@ const COMPARE = /\b(difference|differences|differ|compare|comparison|vs\.?|versu
 const BEST = /\b(best|recommend|recommended|suitable|ideal|good for|right for|which (?:one|model|analyzer|machine|unit|brand) (?:should|for|is)|what should i (?:get|buy|choose)|should i (?:buy|get|choose)|which\b.*\b(?:should|best|better)|bagay|swak|maganda para)\b/;
 const CHEAP = /\b(cheap|cheapest|cheaper|affordable|budget|low[- ]cost|lowest price|mura|pinakamura|most expensive|expensive)\b/;
 // Questions that need a salesperson, not a lookup.
-const DIFFICULT = /\b(in stock|on stock|available now|availability|lead time|how (?:soon|fast) can (?:you|it) (?:deliver|arrive)|compatib\w*|work with (?:our|my)|integrate with|warranty|how (?:many|long) (?:years? )?(?:of )?warranty|lifespan|life span|how long (?:does it|will it) last|cost per test|running cost|operating cost|maintenance cost|reagent (?:cost|price)|install(?:ation)? (?:cost|fee)|trade[- ]in|second[- ]hand|refurbished|financing|installment|hulugan|lease|rent(?:al)?|alternative to|replace(?:ment)? for|equivalent (?:to|of)|which (?:one|model|unit|brand)|should (?:i|we) (?:buy|get|choose|pick)|advantages?|disadvantages?|pros and cons|is it worth|good enough)\b/;
+const DIFFICULT = /\b(in stock|on stock|out of stock|have stocks?|stocks? (?:available|left)|available stocks?|may stock|meron (?:pa )?(?:bang )?stock|available now|availability|lead time|how (?:soon|fast) can (?:you|it) (?:deliver|arrive)|compatib\w*|work with (?:our|my)|integrate with|warranty|how (?:many|long) (?:years? )?(?:of )?warranty|lifespan|life span|how long (?:does it|will it) last|cost per test|running cost|operating cost|maintenance cost|reagent (?:cost|price)|install(?:ation)? (?:cost|fee)|trade[- ]in|second[- ]hand|refurbished|financing|finance|installments?|hulugan|pay (?:in|by) (?:installments?|terms|parts)|lease|rent(?:al)?|alternative to|replace(?:ment)? for|equivalent (?:to|of)|which (?:one|model|unit|brand)|should (?:i|we) (?:buy|get|choose|pick)|advantages?|disadvantages?|pros and cons|is it worth|good enough)\b/;
 const SPEC_Q =/\b(does|do|can|is|has|have|support|supports|measure|measures|include|includes|test for|detect|kaya|meron|may)\b/;
 const SPEC_VERBS = new Set(['does', 'can', 'support', 'supports', 'measure', 'measures', 'include', 'includes', 'detect', 'detects', 'kaya', 'meron', 'run', 'runs', 'perform', 'performs', 'handle', 'handles', 'parameter', 'parameters', 'test', 'tests', 'it', 'its', 'also']);
 const OFF_TOPIC = /\b(weather|panahon|news|joke|recipe|lottery|bitcoin|crypto|stock market|politic\w*|election|basketball|nba|movie|song|lyrics|homework|translate|write (?:me )?(?:a |an )?(?:code|essay|poem|story)|who is the president)\b|\b(fix|repair|ayusin)\b.*\b(printer|computer|laptop|phone|cellphone|car|aircon|tv|wifi|internet)\b/;
@@ -361,6 +371,7 @@ function aboutProduct(p: Product, q: string, ctx: BiomiContext): Answer {
 	if (PRICE.test(q)) {
 		return {
 			text: [`Pricing for the ${p.name} depends on the configuration you need, so our sales team prepares a quotation for you. Send a request and they'll get back to you.`],
+			products: [p],
 			links: [{ label: 'Request a Quote', href: '/contact' }],
 			suggestions: ['Tell me more about it', 'Other brands?'],
 			context,
@@ -493,16 +504,18 @@ async function followUp(q: string, words: string[], data: Index, ms: ProductSear
  * Answer a visitor's question using only website content. Pass the
  * `context` from the previous answer so follow-up questions make sense.
  */
-export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CONTEXT): Promise<Answer> {
-	const { data, products, faqs } = await loadBiomi();
-	// "OR equipment" = operating room (otherwise "or" is dropped as a filler word).
-	const question = rawQuestion.replace(/\bOR\b(?=\s+(?:equipments?|tables?|lights?|lamps?|beds?|room)\b)/gi, 'operating-room');
+export async function askBiomi(typed: string, ctx: BiomiContext = EMPTY_CONTEXT): Promise<Answer> {
+	const { data, products, faqs, speller } = await loadBiomi();
+	// "OR equipment" needs the capitals, so mark it before the text is lower-cased;
+	// then fix shorthand and typos ("wat r ur upcomming evnts").
+	const rawQuestion = correctQuestion(typed.replace(/\bOR\b(?=\s+(?:equipments?|tables?|lights?|lamps?|beds?|room)\b)/g, 'operating-room'), speller);
+	const question = rawQuestion;
 	const q = norm(question).trim();
 	const words = tokens(question);
 
 	// ---- small talk ----
 	if (/^(hi|hello|hey|good (morning|afternoon|evening)|kumusta|musta)\b/.test(q) && words.length <= 3) {
-		return { text: ['Hello! I can help you find Biosite products, brands, office locations, and more. What are you looking for?'], suggestions: STARTER_QUESTIONS };
+		return { text: ['Hello! I can help you find Biosite products and brands, upcoming events, office locations and more. What are you looking for?'], suggestions: STARTER_QUESTIONS };
 	}
 	if (/\b(thank|thanks|salamat|ty)\b/.test(q) && words.length <= 4) {
 		return { text: ["You're welcome! Anything else I can help you find?"] };
@@ -563,6 +576,165 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 	const productNamed = mentionedProducts(data.products, q).length > 0;
 	// The tagline, as the BMI Cares section quotes it.
 	const tagline = ab.community?.join(' ').match(/"([^"]*best care\.?)"/i)?.[1]?.replace(/\.$/, '') ?? 'Because Every Life Deserves the Best Care';
+
+	const contactLink = [{ label: 'Contact us', href: '/contact' }];
+	const mainOffice = data.offices[0];
+
+	// ---- "I want to talk to a person" ----
+	if (/\b(talk|speak|chat|connect)\b.*\b(person|human|agent|representative|someone|somebody|staff|sales ?(?:person|rep|team|agent)|tao)\b|\b(live agent|real person|customer service|kausap|makausap)\b/.test(q)) {
+		return {
+			text: [
+				'Of course. You can reach our team directly:',
+				...(mainOffice ? [`• Phone: ${mainOffice.phone}`, `• Email: ${mainOffice.email}`] : []),
+				'• Or send a message on our Contact page and choose the team you need (Sales, Technical Support, Quotation, Purchase Order or General Inquiry).',
+				...(mainOffice ? [`We're available ${mainOffice.hours}.`] : []),
+			],
+			links: contactLink,
+		};
+	}
+
+	// ---- suppliers / principals / distributors who want to work with Biosite ----
+	if (/\b(become|be|want to be|interested to be|looking for|apply as|maging)\b.*\b(partners?|distributors?|sub-?distributors?|dealers?|resellers?|suppliers?)\b|\b(partner with (?:you|biosite)|partnership|supply (?:products |items )?to (?:you|biosite)|sell (?:our|my) products (?:to|through) (?:you|biosite)|business proposal|collaborat\w*)\b/.test(q)) {
+		return {
+			text: [
+				'Thank you for your interest in working with Biosite.',
+				'For partnership, supplier or distribution proposals, send us a message on the Contact page under General Inquiry with your company and product details, and the right team will get back to you.',
+			],
+			links: contactLink,
+		};
+	}
+
+	// ---- how to order / purchase orders ----
+	if (/\b(how (?:do|can|to) (?:i |we )?(?:order|buy|purchase|place an order)|place (?:an |a )?orders?|purchase orders?|\bpo\b|send (?:a |our )?po|paano (?:umorder|mag-?order|bumili))\b|^(?:how to )?order[?.!]*$/.test(q)) {
+		return {
+			text: [
+				faqAnswer(data, /how do i place an order/i) ?? 'Orders can be placed through our Contact page or by contacting our sales team.',
+				'If you already have a quotation, choose "Purchase Order" as the inquiry type on the Contact page and attach your PO.',
+			],
+			links: [{ label: 'Place an order', href: '/contact' }],
+			suggestions: ['How can I request a quotation?', 'What are your payment terms?'],
+		};
+	}
+
+	// ---- single units, personal purchases ----
+	if (/\b(one|1|single) (?:unit|piece|pc|box)\b|\b(individuals?|personal use|for myself|walk-?in|retail|private person|isang unit)\b/.test(q) && !PRICE.test(q)) {
+		return {
+			text: [
+				'Our customers are mainly hospitals, laboratories and healthcare institutions.',
+				faqAnswer(data, /minimum order/i) ?? 'Minimum order quantities vary by product.',
+				'For a single unit or a personal purchase, our sales team will confirm what is possible for the product you need.',
+			],
+			links: [{ label: 'Ask our sales team', href: '/contact' }],
+		};
+	}
+
+	// ---- brochures, manuals, datasheets, certificates ----
+	const DOCS = /\b(brochures?|catalogs?|catalogues?|flyers?|pdf|downloads?|manuals?|user guide|datasheets?|data sheets?|spec sheets?|ifu|instructions for use|certificates?|fda|cpr|product registration|ce mark\w*|iso 13485)\b/;
+	if (DOCS.test(q)) {
+		const docProducts = mentionedProducts(data.products, q);
+		const p = docProducts[0];
+		const regulatory = /\b(fda|cpr|product registration|certificates?|ce mark\w*|iso 13485)\b/.test(q);
+		const wholeCatalogue = !p && /\b(catalogs?|catalogues?|brochures?)\b/.test(q);
+		return {
+			text: [
+				p
+					? `The ${p.name}'s details are on its product page${p.sources?.length ? ', with a link to the manufacturer for more information' : ''}.`
+					: wholeCatalogue
+						? `Our full catalogue is on this website: ${data.products.length} products in ${categoryCounts(data).length} categories. Tap a category below to browse it.`
+						: 'Product details are on each product page of this website.',
+				regulatory
+					? 'For regulatory documents such as FDA registration or certificates, please ask our sales team; they will send the current documents for the product.'
+					: 'For brochures, manuals or datasheets, ask our sales team and they will send the latest version.',
+			],
+			products: p ? [p] : undefined,
+			categories: wholeCatalogue ? categoryCounts(data) : undefined,
+			links: [...(p ? [{ label: `View ${p.category}`, href: p.url }, ...(p.sources?.length ? [{ label: 'Manufacturer source', href: p.sources[0] }] : [])] : []), { label: 'Ask our sales team', href: '/contact' }],
+			context: p ? { ...ctx, focus: p, products: [p], category: p.category } : { ...EMPTY_CONTEXT },
+		};
+	}
+
+	// ---- where a brand or product comes from ----
+	const originBrand = findBrand(data, q);
+	if (originBrand && /\b(where (?:is|are) .+ (?:from|based|located)|origin|country|made in|which country|taga saan|gawa (?:sa )?saan|headquarter\w*)\b/.test(q)) {
+		const list = data.products.filter((p) => p.brand === originBrand);
+		return withList(
+			{
+				text: [`Our website doesn't state where ${originBrand} is based, so I won't guess. Our sales team can tell you more about the brand.`, `We carry ${list.length} ${originBrand} product${list.length === 1 ? '' : 's'}:`],
+				links: [{ label: 'Ask our sales team', href: '/contact' }],
+			},
+			list, 4, { brand: originBrand },
+		);
+	}
+
+	// ---- setting up a new lab, clinic or hospital ----
+	const PLACE = String.raw`(?:lab|labs|laboratory|laboratories|clinic|clinics|hospital|hospitals|diagnostic (?:center|centre)|histopath\w*)`;
+	const newSite =
+		new RegExp(String.raw`\b(?:set(?:ting)? ?up|setup|start(?:ing)?|open(?:ing)?|build(?:ing)?|equip(?:ping)?|magtayo|magbukas)\b.*\b${PLACE}\b`).test(q) ||
+		new RegExp(String.raw`\bnew ${PLACE}\b(?!\s+[a-z])`).test(q);
+	if (newSite && !productNamed && !findBrand(data, q)) {
+		const counts = categoryCounts(data);
+		return {
+			text: [
+				'We can help you equip it from the ground up. Our catalogue covers:',
+				'• Clinical laboratory: chemistry, hematology, immunology, coagulation, urinalysis, blood bank, molecular and rapid tests',
+				'• Histopathology: tissue processing, embedding, microtomy, staining and slide scanning',
+				'• General lab equipment: centrifuges, biosafety cabinets, refrigerators, freezers, incubators and autoclaves',
+				'• Hospital equipment: radiology, ICU, emergency, operating room and ward equipment',
+				'• Disposables and consumables',
+				'Tap a category to see its products. For a list matched to your tests, space and budget, our sales team will put together a recommendation and quotation.',
+			],
+			categories: counts,
+			links: [{ label: 'Talk to our sales team', href: '/contact' }],
+			context: { ...EMPTY_CONTEXT },
+		};
+	}
+
+	// ---- tests for a disease ("covid test", "dengue test", "pregnancy test") ----
+	const DISEASE_TESTS: [RegExp, RegExp, string][] = [
+		[/\b(covid(?:-?19)?|sars|corona ?virus|coronavirus)\b/, /sars|cov-?2|covid/i, 'COVID-19'],
+		[/\bdengue\b/, /dengue/i, 'dengue'],
+		[/\b(hiv|aids)\b/, /\bhiv\b/i, 'HIV'],
+		[/\b(hepatitis b|hep b|hbsag)\b/, /hbsag|hepatitis b/i, 'hepatitis B'],
+		[/\b(hepatitis c|hep c|hcv)\b/, /\bhcv\b|hepatitis c/i, 'hepatitis C'],
+		[/\bhepatitis\b/, /hbsag|\bhcv\b|hepatitis/i, 'hepatitis'],
+		[/\bmalaria\b/, /malaria/i, 'malaria'],
+		[/\b(pregnan\w*|hcg)\b/, /pregnan|\bhcg\b/i, 'pregnancy'],
+		[/\b(syphilis|tpha)\b/, /syphil|syphi/i, 'syphilis'],
+		[/\bh\.? ?pylori\b/, /pylori/i, 'H. pylori'],
+		[/\b(troponin|heart attack|cardiac markers?)\b/, /troponin/i, 'troponin (cardiac)'],
+		[/\b(fecal occult|occult blood|fob)\b/, /occult|\bfob\b/i, 'fecal occult blood'],
+		[/\b(crp|c-reactive)\b/, /\bcrp\b|c-reactive/i, 'CRP'],
+		[/\b(aso test|antistreptolysin|streptolysin)\b/, /\baso\b|streptolysin/i, 'ASO'],
+		[/\b(rheumatoid|rf test)\b/, /rheumatoid/i, 'rheumatoid factor'],
+	];
+	const disease = !productNamed ? DISEASE_TESTS.find(([ask]) => ask.test(q)) : undefined;
+	if (disease) {
+		const [, match, label] = disease;
+		const hits = data.products.filter((p) => match.test(`${p.name} ${p.description}`));
+		// Rapid tests by name first: some kit descriptions on the site are copied
+		// from another kit, so a description alone can be misleading.
+		const kits = hits.filter((p) => p.category === 'Rapid Test Kits');
+		const byName = kits.filter((p) => match.test(p.name));
+		// A kit whose name is about a different disease is left out (its
+		// description may be copied); multi-test kits (e.g. Virdict 4) stay.
+		const namesOther = (p: Product) => DISEASE_TESTS.some(([, m]) => m !== match && m.test(p.name)) && !match.test(p.name);
+		const rapid = [...byName, ...kits.filter((p) => !byName.includes(p) && !namesOther(p))];
+		const list = [...rapid, ...hits.filter((p) => p.category !== 'Rapid Test Kits')];
+		const others = list.length - rapid.length;
+		if (list.length) {
+			return withList(
+				{
+					text: [rapid.length ? `Yes, we have ${rapid.length} ${label} rapid test${rapid.length === 1 ? '' : 's'}${others ? ', plus other products that test for it' : ''}:` : `These products on our website test for ${label}:`],
+					links: [{ label: `View ${list[0].category}`, href: list[0].url }],
+				},
+				list, 4,
+			);
+		}
+		return {
+			text: [`I couldn't find a ${label} test on our website. Our sales team can check what's available for you.`],
+			links: [{ label: 'Ask our sales team', href: '/contact' }, { label: 'View Rapid Test Kits', href: data.products.find((p) => p.category === 'Rapid Test Kits')?.url ?? '/contact' }],
+		};
+	}
 
 	// ---- events (the Events page calendar, live) ----
 	const EVENT_Q = /\b(events?|seminars?|webinars?|conferences?|conventions?|symposi\w*|workshops?|summits?|kick ?-?offs?|exhibits?|exhibitions?|expos?|happenings?|ganap|kaganapan|upcoming (?:trainings?|activit\w*))\b/;
@@ -658,6 +830,19 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 		!findBrand(data, q) &&
 		!productNamed
 	) {
+		// "What hematology brands do you carry?" -> the brands in that category.
+		const brandCat = findCategory(data, words.filter((w) => !/^(brands?|partners?|suppliers?|principals?|carry|represent|distribute)$/.test(w) && !GENERIC.has(w) && !REASON_WORDS.has(w) && !FILLER.has(w)));
+		if (brandCat && !brandCat.leftover.length) {
+			const inCat = data.products.filter((p) => p.category === brandCat.name || (p.alsoIn ?? '').split(', ').includes(brandCat.name));
+			const brands = [...new Set(inCat.map((p) => p.brand).filter(Boolean))];
+			if (brands.length) {
+				return {
+					text: [`In ${brandCat.name}, we carry ${brands.length === 1 ? 'one brand' : `${brands.length} brands`}: ${brands.join(', ')}.`],
+					links: [{ label: `View ${brandCat.name}`, href: inCat[0].url }],
+					suggestions: brands.slice(0, 3).map((b) => `${b} ${brandCat.name}`),
+				};
+			}
+		}
 		const counts = new Map<string, number>();
 		for (const p of data.products) if (p.brand) counts.set(p.brand, (counts.get(p.brand) ?? 0) + 1);
 		const top = [...counts.entries()].sort((a, b) => b[1] - a[1]);
@@ -694,7 +879,7 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 	}
 
 	// ---- who we are ----
-	if (ab.intro?.length && /\b(about (?:biosite|bmi|you|your company|the company|yourselves)|tell me about (?:biosite|bmi|your company|the company|yourselves|you)|who (?:is|are) (?:biosite|bmi|you guys)|company (?:profile|background|overview)|what does biosite do|what do you do|introduce)\b/.test(q)) {
+	if (ab.intro?.length && /\b(about (?:biosite|bmi|you|your company|the company|yourselves)|tell me about (?:biosite|bmi|your company|the company|yourselves|you)|who (?:is|are) (?:biosite|bmi|you guys)|company (?:profile|background|overview)|what does biosite do|what (?:is|does) bmi|bmi stand for|what do you do|introduce)\b/.test(q)) {
 		return { text: ab.intro, links: aboutLink, suggestions: ['What is your mission?', 'What awards has Biosite received?', 'Where are your offices?'] };
 	}
 
@@ -762,29 +947,37 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 		const a = faqAnswer(data, /how long does delivery/i);
 		if (a) return { text: [a], links: [{ label: 'Contact us', href: '/contact' }] };
 	}
-	if (!deliveryQ && (has(q, /\b(contact|phone|number|call|tawag|email|e-mail|address|location|locations|office|offices|branch|where|saan|visit|hours|open|oras|bukas)\b/) || (cityOffice && words.length <= 3))) {
+	if (!deliveryQ && (has(q, /\b(contact|phone|number|call|tawag|email|e-mail|address|location|locations|office|offices|branch|branches|where|saan|visit|hours|open|close|closes|closing|closed|sarado|oras|bukas)\b/) || (cityOffice && words.length <= 3))) {
 		const offices = cityOffice ? [cityOffice] : data.offices;
 		const links = [{ label: 'Contact us', href: '/contact' }];
 		// Answer exactly what was asked when it's one detail.
 		const asks = [
 			/\b(phone|number|call|tawag|telephone|landline|mobile|hotline)\b/.test(q) && 'phone',
 			/\b(email|e-mail|mail)\b/.test(q) && 'email',
-			/\b(hours|open|oras|bukas|schedule|time)\b/.test(q) && 'hours',
+			/\b(hours|open|close|closes|closing|closed|sarado|oras|bukas|schedule|time)\b/.test(q) && 'hours',
 		].filter(Boolean) as ('phone' | 'email' | 'hours')[];
 		if (asks.length === 1 && !/\b(address|where|saan|location)\b/.test(q)) {
 			const k = asks[0];
 			const label = { phone: 'Phone', email: 'Email', hours: 'Office hours' }[k];
-			return { text: [`${label}${offices.length > 1 ? ':' : ` (${offices[0].name}):`}`, ...offices.map((o) => (offices.length > 1 ? `• ${o.name}: ${o[k]}` : o[k]))], links };
+			const note =
+				k !== 'hours' ? [] : /\bsunday\b/.test(q) ? ['Our offices are closed on Sundays.'] : /\b(holidays?|christmas|new year|holy week)\b/.test(q) ? ['Our posted hours are Monday to Saturday. For holiday schedules, please call ahead.'] : [];
+			return { text: [...note, `${label}${offices.length > 1 ? ':' : ` (${offices[0].name}):`}`, ...offices.map((o) => (offices.length > 1 ? `• ${o.name}: ${o[k]}` : o[k]))], links };
 		}
+		// "Do you have a branch in Iloilo?" — a city without an office.
+		const askedCity = cityOffice ? undefined : q.match(/\b(?:branch|branches|office|offices)\s+(?:in|sa|at)\s+([a-z][a-z ]{2,20}?)(?:\s+(?:city|po|ba))?[?.!]*$/)?.[1];
+		const title = (s: string) => s.replace(/\b\w/g, (c) => c.toUpperCase());
 		return {
-			text: [cityOffice ? `Here are the details for our ${cityOffice.name} office:` : 'We have offices in Manila, Cebu and Davao:'],
+			text: [
+				...(askedCity ? [`We don't have an office in ${title(askedCity)}, but we serve healthcare institutions nationwide.`] : []),
+				cityOffice ? `Here are the details for our ${cityOffice.name} office:` : 'We have offices in Manila, Cebu and Davao:',
+			],
 			offices,
 			links,
 		};
 	}
 
 	// ---- careers ----
-	if (has(q, /\b(job|jobs|hiring|career|careers|vacanc|opening|openings|apply|trabaho|work with|employment|hire|positions?|posisyon|naghahanap|bakante)\w*/) && !/\b(position(?:ing)?|positioner) (?:of|for) (?:the )?(?:patient|sample)/.test(q)) {
+	if (has(q, /\b(job|jobs|hiring|career|careers|vacanc|opening|openings|apply|trabaho|work with|employment|hire|positions?|posisyon|naghahanap|bakante|intern|internship|ojt|on-the-job|practicum)\w*/) && !/\b(position(?:ing)?|positioner) (?:of|for) (?:the )?(?:patient|sample)/.test(q)) {
 		const links = [{ label: 'Go to Careers', href: '/career' }];
 		const jobs = await jobOpenings();
 		if (jobs === null) {
@@ -823,6 +1016,9 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 
 	// ---- pricing / quotation ----
 	if (has(q, /\b(price|prices|pricing|cost|how much|magkano|presyo|quotation|quote|rfq|discount)\b/)) {
+		// "how much is the DxH 520?" -> about that product, with its card.
+		const priced = mentionedProducts(data.products, q);
+		if (priced.length === 1 && !DIFFICULT.test(q)) return aboutProduct(priced[0], q, ctx);
 		const a = faqAnswer(data, /quotation|quote/i) || faqAnswer(data, /price|pricing/i);
 		return {
 			text: [a || 'Pricing depends on the product and configuration. Please request a quotation and our sales team will get back to you.'],
