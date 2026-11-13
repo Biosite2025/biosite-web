@@ -142,6 +142,12 @@ type FloatingLinesProps = {
    * whole viewport the backdrop is invisible, so drawing is skipped.
    */
   pauseWhileCoveredBy?: string;
+  /**
+   * CSS selector of page sections (marked by useSectionSpotlight). While one of
+   * them is the section in focus, the lines hold still so only that section
+   * moves (e.g. the Events gallery and highlight videos).
+   */
+  stillWhileFocused?: string;
   /** Main / "big" line color (middle wave) — defaults to soft brand blue. */
   lineColor?: string;
   /** Secondary line color (top + bottom waves). */
@@ -179,6 +185,7 @@ export default function FloatingLines({
   lineDistance = 7,
   className = '',
   pauseWhileCoveredBy,
+  stillWhileFocused,
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
@@ -295,10 +302,19 @@ export default function FloatingLines({
       scrollIdle = window.setTimeout(() => (scrolling = false), 150);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Hold still while a section with its own motion is in focus.
+    const focusEls = stillWhileFocused ? Array.from(document.querySelectorAll<HTMLElement>(stillWhileFocused)) : [];
+    let focusBusy = false;
+    const readFocus = () => {
+      focusBusy = focusEls.some((el) => el.dataset.spotlight === 'on');
+    };
+    readFocus();
+    const focusMo = focusEls.length ? new MutationObserver(readFocus) : null;
+    focusEls.forEach((el) => focusMo?.observe(el, { attributes: true, attributeFilter: ['data-spotlight'] }));
     const loop = (now: number) => {
       if (!active) return;
       raf = requestAnimationFrame(loop);
-      if (covered || scrolling || now - lastDraw < FRAME_MS - 1) return;
+      if (covered || scrolling || focusBusy || now - lastDraw < FRAME_MS - 1) return;
       lastDraw = now;
       drawFrame();
     };
@@ -324,6 +340,7 @@ export default function FloatingLines({
       cancelAnimationFrame(raf);
       document.removeEventListener('visibilitychange', onVisibility);
       coverIo?.disconnect();
+      focusMo?.disconnect();
       window.removeEventListener('scroll', onScroll);
       clearTimeout(scrollIdle);
       ro?.disconnect();
@@ -334,7 +351,7 @@ export default function FloatingLines({
       renderer.domElement.parentElement?.removeChild(renderer.domElement);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lineColor, altColor, opacity, altOpacity, animationSpeed, reducedMotion, pauseWhileCoveredBy]);
+  }, [lineColor, altColor, opacity, altOpacity, animationSpeed, reducedMotion, pauseWhileCoveredBy, stillWhileFocused]);
 
   return <div ref={containerRef} aria-hidden="true" className={`h-full w-full overflow-hidden ${className}`} />;
 }

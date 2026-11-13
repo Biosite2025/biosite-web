@@ -22,7 +22,7 @@ export default function Page() {
       <div className="relative">
         {/* Fixed animated backdrop behind every non-hero section. */}
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 bg-white">
-          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} pauseWhileCoveredBy="#events-hero" />
+          <FloatingLines lineColor="#16A4FF" altColor="#005EFF" opacity={0.55} altOpacity={0.5} pauseWhileCoveredBy="#events-hero" stillWhileFocused="#snaps, #event-videos" />
         </div>
 
         <main className="relative z-10 min-h-[calc(var(--vh,1vh)*100)] pt-16 lg:pt-0">

@@ -190,6 +190,17 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
     else v.pause();
   }, [shouldPlay, current, watching]);
 
+  // When the stack turns, the cards that moved to the side stop (holding their
+  // frame) and the new front video carries on from the frame its card already
+  // shows (no jump, no reload). One that already had its turn starts over.
+  useEffect(() => {
+    const front = playingRef.current;
+    stageRef.current?.querySelectorAll('video').forEach((v) => {
+      if (v !== front && !v.paused) v.pause();
+    });
+    if (front && front.currentTime >= PLAY_SECONDS - 2) front.currentTime = 0;
+  }, [current]);
+
   // Safety net: a video still buffering after STALL_LIMIT_MS of play time
   // hands over anyway, so a slow connection never freezes the stack.
   useEffect(() => {
@@ -296,34 +307,46 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                         transition={FLOW}
                         className="pointer-events-auto relative aspect-video overflow-hidden rounded-2xl bg-[#0d1633] shadow-[0_24px_50px_-24px_rgba(13,22,51,0.6)] ring-1 ring-black/10"
                       >
+                        {/* One player per card for its whole life in the stack, so a
+                            video that loaded as the "next" card is ready the moment it
+                            comes to the front, and a card moving back keeps showing its
+                            last frame instead of going blank. */}
+                        <video
+                          ref={(el) => {
+                            if (front) playingRef.current = el;
+                          }}
+                          src={near && (front || frontStarted || reduced) ? src : undefined}
+                          muted
+                          playsInline
+                          // Front: load fully. Next: buffer ahead while the front one
+                          // plays. Previous: just enough for its still frame.
+                          preload={!near ? 'none' : front || (role === 'next' && frontStarted) ? 'auto' : 'metadata'}
+                          autoPlay={front && shouldPlay}
+                          controls={front && !!reduced}
+                          tabIndex={front ? undefined : -1}
+                          aria-hidden={front ? undefined : true}
+                          aria-label={front ? videoTitle(src, i + 1) : undefined}
+                          className={`absolute inset-0 h-full w-full object-cover transition-[filter] duration-700 [&:fullscreen]:bg-black [&:fullscreen]:object-contain ${front ? '' : 'grayscale'}`}
+                          onLoadedMetadata={(e) => {
+                            // A side card shows a frame from 1 s in, not the opening black.
+                            const v = e.currentTarget;
+                            if (!front && v.currentTime < 0.5) v.currentTime = Math.min(1, (v.duration || 2) / 2);
+                          }}
+                          onPlaying={() => front && setFrontStarted(true)}
+                          onTimeUpdate={(e) => {
+                            const t = e.currentTarget.currentTime;
+                            if (!front || reduced || watching || t < PLAY_SECONDS || advancedFrom.current === src) return;
+                            advancedFrom.current = src;
+                            next();
+                          }}
+                          onEnded={() => {
+                            if (!front || reduced || watching || advancedFrom.current === src) return;
+                            advancedFrom.current = src;
+                            next();
+                          }}
+                        />
                         {front ? (
                           <>
-                            <video
-                              key={`${src}-front`}
-                              ref={(el) => {
-                                playingRef.current = el;
-                              }}
-                              src={near ? src : undefined}
-                              muted
-                              playsInline
-                              preload={near ? "auto" : "none"}
-                              autoPlay={shouldPlay}
-                              controls={!!reduced}
-                              aria-label={videoTitle(src, i + 1)}
-                              className="absolute inset-0 h-full w-full object-cover [&:fullscreen]:bg-black [&:fullscreen]:object-contain"
-                              onPlaying={() => setFrontStarted(true)}
-                              onTimeUpdate={(e) => {
-                                const t = e.currentTarget.currentTime;
-                                if (reduced || watching || t < PLAY_SECONDS || advancedFrom.current === src) return;
-                                advancedFrom.current = src;
-                                next();
-                              }}
-                              onEnded={() => {
-                                if (reduced || watching || advancedFrom.current === src) return;
-                                advancedFrom.current = src;
-                                next();
-                              }}
-                            />
                             {/* Click the playing video to watch it full screen with sound. */}
                             {!reduced && !watching && (
                               <button
@@ -346,17 +369,7 @@ export default function EventVideoStack({ videos, loading }: { videos: string[];
                             aria-label={role === 'next' ? 'Next highlight video' : 'Previous highlight video'}
                             className={`absolute inset-0 block cursor-pointer ${FOCUS_RING}`}
                           >
-                            {/* A still from the video under a grey wash. */}
-                            <video
-                              key={`${src}-still`}
-                              src={near && (frontStarted || reduced) ? `${src}#t=1` : undefined}
-                              muted
-                              playsInline
-                              preload="metadata"
-                              tabIndex={-1}
-                              aria-hidden="true"
-                              className="absolute inset-0 h-full w-full object-cover grayscale"
-                            />
+                            {/* The card's still frame (the player above) under a grey wash. */}
                             <span className="absolute inset-0 bg-[#DADBDE]/55" aria-hidden="true" />
                           </button>
                         )}
