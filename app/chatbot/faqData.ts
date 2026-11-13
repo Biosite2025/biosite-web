@@ -70,7 +70,7 @@ export const FAQ_DATA = [
 		questions: [
 			{
 				q: "What histopathology equipment do you offer?",
-				a: "We offer complete histopathology solutions from leading brands: Sakura (tissue processing, embedding, microtomy, staining), Dakewe, Hiplaas, Vitro tissue processors, Biogenex IHC equipment, Nikon Microscopes, Motic Slide Scanners, and Hamamatsu Slide Scanners.",
+				a: "We offer complete histopathology solutions from leading brands: Sakura (tissue processing, embedding, microtomy, staining), Dakewe, Hiplaas, Vitro tissue processors, Biogenex IHC equipment, Nikon Microscopes, and Motic Slide Scanners.",
 			},
 			{
 				q: "What imaging equipment is available?",
@@ -78,7 +78,7 @@ export const FAQ_DATA = [
 			},
 			{
 				q: "Do you offer digital pathology solutions?",
-				a: "Yes, we offer advanced slide scanning systems from Motic, Hamamatsu, and Nikon for digital pathology workflows.",
+				a: "Yes, we offer advanced slide scanning systems from Motic for digital pathology workflows, plus Nikon microscopes.",
 			},
 		],
 	},

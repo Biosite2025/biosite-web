@@ -252,7 +252,7 @@ export default function BiomiFAQ() {
 							<motion.div {...rise} className="m-auto flex w-full flex-col items-center py-1 text-center">
 								<span className="flex [@media(max-height:700px)]:hidden"><BiomiAvatar size={56} /></span>
 								<h3 className="mt-3 text-xl font-bold text-[#2B3990] sm:text-2xl [@media(max-height:700px)]:mt-0">Hi there, how can I help?</h3>
-								<p className="mt-1 text-sm text-[#5b7290] [@media(max-height:700px)]:hidden">Ask me about our products, brands, offices, or careers.</p>
+								<p className="mt-1 text-sm text-[#5b7290] [@media(max-height:700px)]:hidden">Ask me about our products, brands, events, offices, or careers.</p>
 								<div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 [@media(max-height:700px)]:mt-2">
 									{STARTER_QUESTIONS.map((q, i) => (
 										<button

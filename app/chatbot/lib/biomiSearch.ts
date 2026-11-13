@@ -1,5 +1,6 @@
 import MiniSearch from 'minisearch';
 import { directSpec, info, mentionedProducts, nameTokens, researchText, salesAnswer } from './biomiReason';
+import { manilaToday } from '@/lib/phHolidays';
 
 /**
  * Biomi's "brain": free, in-browser search over the website's own content
@@ -17,7 +18,12 @@ export type Product = { name: string; brand: string; category: string; descripti
 };
 export type Faq = { category: string; q: string; a: string };
 export type Office = { name: string; address: string; phone: string; email: string; hours: string };
-type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[]; social?: { name: string; url: string }[] };
+export type Award = { year: string; partner: string; title: string; detail: string };
+/** About page copy, read from the page at build time (scripts/build-biomi-index.js). */
+type About = { intro?: string[]; mission?: string; vision?: string; community?: string[]; awards?: Award[] };
+type Index = { products: Product[]; faqs: Faq[]; offices: Office[]; facts?: { value: string; label: string }[]; social?: { name: string; url: string }[]; about?: About };
+/** An event from the Events page calendar (live, from /api/events). */
+export type BiomiEvent = { title: string; date: string; category: string; time?: string; location?: string; description?: string };
 
 export type Answer = {
 	text: string[];
@@ -137,6 +143,26 @@ async function jobOpenings(): Promise<string[] | null> {
 	}
 }
 
+/** Events on the Events page calendar from today (Philippine time) on, soonest first; null when they can't be loaded. */
+async function upcomingEvents(): Promise<BiomiEvent[] | null> {
+	try {
+		const r = await fetch('/api/events', { cache: 'no-store' });
+		const j = await r.json();
+		if (!j?.success || !Array.isArray(j.data)) return null;
+		const today = manilaToday();
+		return (j.data as BiomiEvent[])
+			.filter((e) => e?.title && typeof e.date === 'string' && e.date.split('T')[0] >= today)
+			.map((e) => ({ title: e.title, date: e.date.split('T')[0], category: e.category, time: e.time || undefined, location: e.location || undefined, description: e.description || undefined }))
+			.sort((a, b) => a.date.localeCompare(b.date));
+	} catch {
+		return null;
+	}
+}
+
+/** "2026-11-20" -> "Friday, November 20, 2026" */
+export const eventDate = (d: string) =>
+	new Date(`${d}T12:00:00+08:00`).toLocaleDateString('en-PH', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'Asia/Manila' });
+
 // Words that only say "jobs" — anything else in a careers question is the job they want.
 const CAREER_WORDS = new Set(['job', 'jobs', 'hiring', 'hire', 'career', 'careers', 'vacancy', 'vacancies', 'opening', 'openings', 'position', 'positions', 'posisyon', 'apply', 'application', 'trabaho', 'work', 'employment', 'list', 'available', 'open', 'current', 'currently', 'still', 'any', 'all', 'naghahanap', 'bakante', 'for', 'as']);
 
@@ -183,7 +209,7 @@ const CATEGORY_KEYWORDS: Record<string, RegExp> = {
 	'Clinical Chemistry': /chemistry|biochem/i,
 	Microscopes: /microscop/i,
 };
-const OVERVIEW = new Set([...GENERIC, 'all', 'catalog', 'catalogue', 'categories', 'category', 'range', 'lines', 'line', 'lahat', 'everything', 'full', 'complete', 'whole', 'give', 'list']);
+const OVERVIEW = new Set([...GENERIC, 'selling', 'offering', 'offerings','all', 'catalog', 'catalogue', 'categories', 'category', 'range', 'lines', 'line', 'lahat', 'everything', 'full', 'complete', 'whole', 'give', 'list']);
 
 /** Every category with how many products are listed under it (A–Z). */
 function categoryCounts(data: Index) {
@@ -515,18 +541,197 @@ export async function askBiomi(rawQuestion: string, ctx: BiomiContext = EMPTY_CO
 		};
 	}
 
-	// ---- company facts (About page) ----
+	// ---- Biomi itself ----
+	if (/^(?:hi |hello )?(?:who|what) are you\b[?!. ]*$|\b(?:what|who) is biomi\b|\bare you (?:a |an )?(?:bot|robot|ai|human|real person|person|chatbot)\b|^(?:sino|ano) ka\b|^biomi[?!. ]*$/.test(q)) {
+		return {
+			text: [
+				"I'm Biomi, Biosite's website assistant. I answer from what's on this website: our products and brands, services, offices, events, careers and company information.",
+				"For anything I can't answer, like prices or advice for your lab, our team is happy to help.",
+			],
+			suggestions: ['What products do you offer?', 'What events are coming up?', 'What is your mission?'],
+			links: [{ label: 'Contact us', href: '/contact' }],
+		};
+	}
+
 	const fact = (label: RegExp) => data.facts?.find((f) => label.test(f.label))?.value;
 	// Only questions about the company itself — "how long is delivery" is not one.
-	const aboutCompany = /\b(biosite|company|you|kayo|nyo|business|operating|in operation|existed)\b/.test(q) && !/\b(deliver\w*|shipping|ship|arrive|install\w*|warranty|repair|process\w*|reply|respond|quotation|quote)\b/.test(q);
-	if (/\b(since when|founded|established|how old|years? (?:in|of) (?:business|service|operation))\b/.test(q) || (/\b(how long|history|kailan)\b/.test(q) && aboutCompany)) {
-		const founded = fact(/founded/i);
-		const years = fact(/years/i);
-		if (founded || years) {
+	const aboutCompany = (s: string) =>
+		/\b(biosite|bmi|company|you|kayo|nyo|business|operating|in operation|existed)\b/.test(s) &&
+		!/\b(deliver\w*|shipping|ship|arrive|install\w*|warranty|repair|process\w*|reply|respond|quotation|quote)\b/.test(s);
+	const ab = data.about ?? {};
+	const aboutLink = [{ label: 'About us', href: '/about' }];
+	const productNamed = mentionedProducts(data.products, q).length > 0;
+	// The tagline, as the BMI Cares section quotes it.
+	const tagline = ab.community?.join(' ').match(/"([^"]*best care\.?)"/i)?.[1]?.replace(/\.$/, '') ?? 'Because Every Life Deserves the Best Care';
+
+	// ---- events (the Events page calendar, live) ----
+	const EVENT_Q = /\b(events?|seminars?|webinars?|conferences?|conventions?|symposi\w*|workshops?|summits?|kick ?-?offs?|exhibits?|exhibitions?|expos?|happenings?|ganap|kaganapan|upcoming (?:trainings?|activit\w*))\b/;
+	const TRAINING_Q = /\b(trainings?|seminars?|workshops?|webinars?)\b/;
+	// "may training ba kayo?" / "any upcoming trainings?" also list what's scheduled.
+	const trainingSchedule = TRAINING_Q.test(q) && /\b(upcoming|schedules?|next|when|kailan|may|meron|any)\b/.test(q);
+	if ((EVENT_Q.test(q) || trainingSchedule) && !productNamed && !/\bdelivery (?:room|bed)\b/.test(q)) {
+		const kind = TRAINING_Q.test(q)
+			? 'training'
+			: /\b(conferences?|conventions?|symposi\w*|summits?|expos?|exhibits?|exhibitions?)\b/.test(q)
+				? 'conference'
+				: /\b(outreach|charity|cares|csr|community)\b/.test(q)
+					? 'outreach'
+					: /\b(corporate|company|kick ?-?offs?)\b/.test(q)
+						? 'corporate'
+						: undefined;
+		const links = [{ label: 'See the Events page', href: '/events' }];
+		const all = await upcomingEvents();
+		if (all === null) {
+			return { text: ["I couldn't load the event calendar just now. You can see every upcoming event on our Events page."], links };
+		}
+		const list = kind ? all.filter((e) => e.category === kind) : all;
+		const line = (e: BiomiEvent) => `• ${e.title}: ${eventDate(e.date)}${e.time ? `, ${e.time}` : ''}${e.location ? ` (${e.location})` : ''}`;
+		const extra =
+			kind === 'training'
+				? [faqAnswer(data, /training for equipment/i)].filter(Boolean) as string[]
+				: kind === 'outreach' && ab.community?.[0]
+					? [ab.community[0]]
+					: [];
+		if (list.length) {
+			const shown = /\bnext\b|\bwhen\b|\bkailan\b/.test(q) ? list.slice(0, 1) : list.slice(0, 4);
+			const label = kind ? `${kind} event` : 'event';
+			const head =
+				shown.length === 1 && list.length === 1
+					? `There's 1 upcoming ${label} on our calendar:`
+					: shown.length === 1
+						? `The next ${label} on our calendar:`
+						: `Here are the next ${shown.length} ${label}s on our calendar${list.length > shown.length ? ` (${list.length} in total)` : ''}:`;
+			const detail = shown.length === 1 && shown[0].description ? [shown[0].description] : [];
+			return { text: [head, ...shown.map(line), ...detail, ...extra], links };
+		}
+		const others = kind ? all.slice(0, 2) : [];
+		return {
+			text: [
+				`There are no upcoming ${kind ? `${kind} ` : ''}events on our calendar right now.`,
+				...(others.length ? ['Coming up on our calendar:', ...others.map(line)] : []),
+				...extra,
+				...(kind || others.length ? [] : ['Photos and videos from our past events are on the Events page.']),
+			],
+			links,
+		};
+	}
+
+	// ---- mission, vision, tagline ----
+	const wantsMission = (/\bmission\b/.test(q) && !productNamed && !/\b(hemopro|hemoglobin|meter|strips?)\b/.test(q)) || /\bmisyon\b/.test(q);
+	const wantsVision = (/\bvision\b/.test(q) && !/\b(night|eye|low|machine|computer)\s+vision\b|\bvision (?:test|chart)\b/.test(q)) || /\bbisyon\b/.test(q);
+	if ((wantsMission && ab.mission) || (wantsVision && ab.vision)) {
+		return {
+			text: [
+				...(wantsMission && ab.mission ? [`Our mission: ${ab.mission}`] : []),
+				...(wantsVision && ab.vision ? [`Our vision: ${ab.vision}`] : []),
+				`Everything we do comes back to one belief: ${tagline}.`,
+			],
+			links: aboutLink,
+			suggestions: [wantsMission && !wantsVision ? 'What is your vision?' : 'What is your mission?', 'What are your core values?'],
+		};
+	}
+	if (/\b(tagline|slogan|motto|guiding principle|catchphrase)\b/.test(q)) {
+		return { text: [`Our guiding principle is “${tagline}.”`], links: aboutLink, suggestions: ['What is your mission?', 'What are your core values?'] };
+	}
+
+	// ---- awards ----
+	if (/\b(awards?|awarded|recogni[sz]\w*|achievements?|accolades?|parangal)\b/.test(q) && ab.awards?.length && !productNamed) {
+		const byPartner = ab.awards.filter((a) => new RegExp(`\\b${esc(norm(a.partner).split(' ')[0])}\\b`).test(q));
+		const byYear = ab.awards.filter((a) => q.includes(a.year));
+		const list = byPartner.length ? byPartner : byYear.length ? byYear : ab.awards;
+		const head =
+			list === ab.awards
+				? `Biosite has received ${ab.awards.length} industry awards from its global partners:`
+				: byPartner.length
+					? `Awards from ${byPartner[0].partner}:`
+					: `Awards in ${byYear[0].year}:`;
+		return {
+			text: [head, ...list.map((a) => `• ${a.year}: ${a.title} (${a.partner}${a.detail ? `, ${a.detail}` : ''})`)],
+			links: aboutLink,
+		};
+	}
+
+	// ---- partner brands ----
+	if (
+		/\b(partners?|principals?|suppliers?|who do you represent|what brands|which brands|list of brands|all (?:the )?brands|brands (?:do you|you) (?:carry|represent|distribute|have|sell|offer)|anong brands?)\b/.test(q) &&
+		!/\b(authori[sz]ed|official|exclusive|channel)\b/.test(q) &&
+		!findBrand(data, q) &&
+		!productNamed
+	) {
+		const counts = new Map<string, number>();
+		for (const p of data.products) if (p.brand) counts.set(p.brand, (counts.get(p.brand) ?? 0) + 1);
+		const top = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+		const awardPartners = [...new Set((ab.awards ?? []).map((a) => a.partner))];
+		return {
+			text: [
+				`We carry ${top.length} brands on our website. The ones with the most products are ${top.slice(0, 10).map(([b]) => b).join(', ')}.`,
+				...(awardPartners.length ? [`Our global partners have also recognized our work: ${awardPartners.join(', ')}.`] : []),
+				'Ask me about any brand to see its products.',
+			],
+			suggestions: top.slice(0, 3).map(([b]) => `What does ${b} offer?`),
+		};
+	}
+
+	// ---- BMI Cares (community outreach) ----
+	if (/\b(csr|outreach|charity|donat\w*|bmi cares|biosite cares|social responsibility|give back|giving back|volunteer\w*|tumulong|tulong sa komunidad|community (?:work|service|program|projects?|activit\w*))\b/.test(q) || (/\bcommunity\b/.test(q) && aboutCompany(q))) {
+		if (ab.community?.length) {
+			return { text: ['BMI Cares is our community outreach.', ...ab.community], links: aboutLink, suggestions: ['What events are coming up?', 'What is your mission?'] };
+		}
+	}
+
+	// ---- details the website doesn't publish (leadership, headcount, clients, registrations) ----
+	const founded = fact(/founded/i);
+	const foundedOn = ab.intro?.join(' ').match(/Founded on ([A-Z][a-z]+ \d{1,2}, \d{4})/)?.[1];
+	if (!productNamed && /\b(ceo|founders?|founded by|who (?:founded|started|owns|runs)|owners?|president|chairman|general manager|managing director|management team|leadership|how many (?:people|staff|employees|workers)|employees|headcount|clients?|your customers|who are your customers|philgeps|sec registration|bir registration|tin number)\b/.test(q)) {
+		return {
+			text: [
+				"That isn't published on our website, so I can't answer it reliably.",
+				...(/\b(founders?|founded by|who (?:founded|started))\b/.test(q) && (foundedOn || founded) ? [`What I can tell you: Biosite was founded on ${foundedOn ?? founded}.`] : []),
+				'Our team will be glad to help with that.',
+			],
+			links: [{ label: 'Contact us', href: '/contact' }],
+		};
+	}
+
+	// ---- who we are ----
+	if (ab.intro?.length && /\b(about (?:biosite|bmi|you|your company|the company|yourselves)|tell me about (?:biosite|bmi|your company|the company|yourselves|you)|who (?:is|are) (?:biosite|bmi|you guys)|company (?:profile|background|overview)|what does biosite do|what do you do|introduce)\b/.test(q)) {
+		return { text: ab.intro, links: aboutLink, suggestions: ['What is your mission?', 'What awards has Biosite received?', 'Where are your offices?'] };
+	}
+
+	// ---- service coverage (Luzon / Visayas / Mindanao) ----
+	if (/\b(mindanao|visayas|vismin|luzon|provinces?|province|nationwide|whole (?:country|philippines)|outside (?:metro )?manila)\b/.test(q) && /\b(service|services|serve|serving|support|cover\w*|install\w*|technicians?|engineers?|repair\w*|maintenance|available|operate|reach)\b/.test(q) && !/\b(cost|price|magkano|fee)\b/.test(q)) {
+		return {
+			text: [
+				'Yes. We serve hospitals, laboratories and healthcare institutions nationwide: our Manila office covers Luzon, and our Cebu and Davao offices cover the Visayas and Mindanao (VisMin).',
+				'For installation, maintenance or repairs in your area, contact our Technical Support team.',
+			],
+			offices: data.offices,
+			links: [{ label: 'Contact Technical Support', href: '/contact' }],
+		};
+	}
+
+	// ---- after-sales: maintenance, calibration, repair, technical support ----
+	if (/\b(calibrat\w*|pms|preventive maintenance|after[- ]?sales?|maintenance|repairs?|servicing|technical support|tech support|service (?:our|my|the|an?) \w+|sira|ayusin|broken|not working|error code)\b/.test(q) && !/\b(cost|price|magkano|fee|contract price)\b/.test(q)) {
+		const answers = [faqAnswer(data, /maintenance and repair/i), faqAnswer(data, /technical support/i)].filter(Boolean) as string[];
+		if (answers.length) {
 			return {
-				text: [`Biosite has been a trusted partner in Philippine healthcare since ${founded ?? 'its founding'}${years ? ` — ${years} years of service` : ''}.`],
-				links: [{ label: 'About us', href: '/about' }],
-				suggestions: ['What are your core values?', 'Where are your offices?'],
+				text: [...answers, 'Tell our Technical Support team the equipment model and what you need, and they will schedule it with you.'],
+				links: [{ label: 'Contact Technical Support', href: '/contact' }],
+			};
+		}
+	}
+
+	// ---- company facts (About page) ----
+	if (/\b(since when|founded|established|how old|years? (?:in|of) (?:business|service|operation))\b/.test(q) || (/\b(how long|history|kailan)\b/.test(q) && aboutCompany(q))) {
+		const years = fact(/years/i);
+		if (founded || years || foundedOn) {
+			return {
+				text: [
+					`Biosite has been a trusted partner in Philippine healthcare since ${foundedOn ?? founded ?? 'its founding'}${years ? `: ${years} years of service` : ''}.`,
+					...(/\bhistory\b/.test(q) && ab.intro?.[1] ? [ab.intro[1]] : []),
+				],
+				links: aboutLink,
+				suggestions: ['What awards has Biosite received?', 'What is your mission?'],
 			};
 		}
 	}

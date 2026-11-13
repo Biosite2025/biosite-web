@@ -249,11 +249,58 @@ try {
   // About page moved — Biomi just won't answer company-fact questions.
 }
 
+// ---------- About page copy (intro, mission, vision, awards, BMI Cares) ----------
+// Read straight from the About components so Biomi says exactly what the page
+// says. Any part that can't be found is simply left out.
+/** Visible text of each <p> / <motion.p> in a component (JSX expressions and tags removed). */
+const paragraphs = (src) =>
+  [...src.matchAll(/<(?:motion\.)?p\b[^>]*>([\s\S]*?)<\/(?:motion\.)?p>/g)]
+    .map((m) =>
+      m[1]
+        .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+        .replace(/\{\s*['"`]\s*['"`]\s*\}/g, ' ')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&#8209;/g, '-').replace(/&apos;/g, "'").replace(/&[lr]dquo;/g, '"').replace(/&amp;/g, '&')
+        .replace(/\s+/g, ' ')
+        .trim(),
+    )
+    .filter((t) => t.length > 40 && !/[{}]/.test(t));
+const readAbout = (name) => {
+  try {
+    return fs.readFileSync(path.join(ROOT, 'app/about/components', name), 'utf8');
+  } catch {
+    return '';
+  }
+};
+const about = {};
+{
+  const intro = paragraphs(readAbout('AboutUs.tsx'));
+  if (intro.length) about.intro = intro;
+  const mv = readAbout('MissionVision.tsx');
+  const statements = [...mv.matchAll(/['"`](To (?:deliver|be|provide|become)[^'"`]{20,})['"`]/g)].map((m) => m[1]);
+  // Order on the page: Mission, then Vision.
+  if (statements[0]) about.mission = statements[0];
+  if (statements[1]) about.vision = statements[1];
+  const community = paragraphs(readAbout('Community.tsx'));
+  if (community.length) about.community = community;
+  const hero = readAbout('HeroSection.tsx');
+  const tagline = hero.match(/Because Every Life Deserves the Best Care/i);
+  if (tagline) about.tagline = tagline[0];
+  const awardsSrc = readAbout('AwardsRecognitions.tsx');
+  const awards = [...awardsSrc.matchAll(/\{\s*year:\s*'(\d{4})',\s*partner:\s*'([^']+)',\s*title:\s*'([^']+)',\s*detail:\s*'([^']*)'\s*\}/g)].map((m) => ({
+    year: m[1],
+    partner: m[2],
+    title: m[3],
+    detail: m[4],
+  }));
+  if (awards.length) about.awards = awards;
+}
+
 // ---------- write ----------
 if (products.length < 50 || faqs.length < 20 || offices.length < 1) {
   console.error(`[biomi-index] Extraction looks broken: ${products.length} products, ${faqs.length} FAQs, ${offices.length} offices.`);
   process.exit(1);
 }
-fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts, social }));
+fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), products, faqs, offices, facts, social, about }));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
-console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts, ${social.length} social links, ${researched} researched -> public/biomi-index.json (${kb} KB)`);
+console.log(`[biomi-index] ${products.length} products (${dupes} duplicates merged), ${faqs.length} FAQs, ${offices.length} offices, ${facts.length} facts, ${social.length} social links, ${Object.keys(about).length} About sections, ${researched} researched -> public/biomi-index.json (${kb} KB)`);
