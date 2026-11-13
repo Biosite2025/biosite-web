@@ -528,3 +528,29 @@ html[data-modal-open] .partner-shine { animation-play-state: paused; }
    the hero paints). A background picture, so only the bear on show downloads. */
 .seasonal-bear { background-image: url('/asset/biosite%20Bear%20(1).webp'); }
 html[data-season='christmas'] .seasonal-bear { background-image: url('/asset/biosite-bear-christmas.webp'); }
+
+/* Events calendar: Philippine holidays (EventCalendar, lib/phHolidays.ts). */
+.fc .fc-daygrid-day-number { width: 100%; }
+.fc .fc-daygrid-day.is-holiday { background: #FEF2F2; }
+.fc .fc-daygrid-day.is-holiday .fc-daygrid-day-number { color: #B91C1C; font-weight: 600; }
+.holiday-chip {
+  display: inline-flex; min-width: 0; max-width: 100%; align-items: center; gap: 4px;
+  color: #B91C1C; font-size: 12px; font-weight: 600; line-height: 1.25; text-align: left;
+}
+.holiday-icon { width: 15px; height: 15px; flex: none; }
+.holiday-name { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; }
+@media (max-width: 639px) {
+  /* Narrow cells: the icon only; the full name is in its tooltip and read aloud. */
+  .holiday-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+/* Today: the navy circle sits on the date number itself (not the whole header
+   cell), so a holiday that falls on today keeps its label. */
+.fc .fc-day-today .fc-daygrid-day-number {
+  background: none !important; color: inherit !important; width: 100% !important; height: auto !important;
+  display: block !important; margin: 0 !important; border-radius: 0 !important;
+}
+.day-num-today {
+  display: inline-flex; flex: none; width: 1.5rem; height: 1.5rem; align-items: center; justify-content: center;
+  border-radius: 50%; background: linear-gradient(135deg, #22409A, #1A3078); color: #fff; font-weight: 600; font-size: 0.75rem;
+}
+@media (min-width: 1024px) { .day-num-today { width: 2rem; height: 2rem; font-size: 0.875rem; } }

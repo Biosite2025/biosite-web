@@ -7,7 +7,31 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import SectionHeading from '../../about/components/SectionHeading';
 // Removed invalid AutoHeightPlugin import; not needed for auto-resizing
-import type { EventClickArg, EventContentArg } from '@fullcalendar/core';
+import type { DayCellContentArg, EventClickArg, EventContentArg } from '@fullcalendar/core';
+import { holidayAbout, manilaToday, type Holiday, type HolidayKind } from '@/lib/phHolidays';
+
+/** How often the calendar re-checks the events list while the tab is open. */
+const EVENTS_REFRESH_MS = 60_000;
+
+/** Line icons for holidays (24px grid, drawn in currentColor). */
+const HOLIDAY_ICON_PATHS: Record<HolidayKind, string> = {
+  // flag on a pole
+  national: 'M5 21V4m0 0h11l-2 4 2 4H5',
+  // church
+  religious: 'M12 3v4m-2-2h4M6 21V11l6-4 6 4v10M10 21v-5h4v5M4 21h16',
+  // four-point star
+  newyear: 'M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z',
+  // briefcase
+  labor: 'M4 8h16v11H4zM9 8V5h6v3M4 13h16',
+  // lantern
+  cultural: 'M12 3v2m-4 2h8m-9 2c0-1 1-2 2-2h6c1 0 2 1 2 2v6c0 1-1 2-2 2H9c-1 0-2-1-2-2zm3 10h4m-2 0v2',
+};
+
+const HolidayIcon = ({ kind }: { kind: HolidayKind }) => (
+  <svg className="holiday-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={HOLIDAY_ICON_PATHS[kind]} />
+  </svg>
+);
 
 interface Event {
   id: string;
@@ -30,13 +54,14 @@ const EventCalendar: React.FC = () => {
   const [selectedDateEvents, setSelectedDateEvents] = useState<Event[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>('');
 
-  // Fetch events from API
+  // Fetch events from the API, then keep them current: every minute while
+  // the tab is open, and straight away when the visitor comes back to it.
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('/api/events');
+        const response = await fetch('/api/events', { cache: 'no-store' });
         const data = await response.json();
-        
+
         if (data.success) {
           // Transform the data to match the Event interface
           const transformedEvents = data.data.map((event: any) => ({
@@ -56,7 +81,53 @@ const EventCalendar: React.FC = () => {
     };
 
     fetchEvents();
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === 'visible') fetchEvents();
+    }, EVENTS_REFRESH_MS);
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') fetchEvents();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
+
+  // "Today" is today in the Philippines, wherever the visitor is, and moves on
+  // at Manila midnight without a reload.
+  const [today, setToday] = useState(() => manilaToday());
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const t = manilaToday();
+      setToday((prev) => (prev === t ? prev : t));
+    }, 30000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  // Philippine holidays for every year the calendar shows, loaded as needed.
+  const [holidays, setHolidays] = useState<Record<string, Holiday>>({});
+  const loadedYears = useRef(new Set<number>());
+  const loadHolidayYears = (years: number[]) => {
+    years
+      .filter((y) => !loadedYears.current.has(y))
+      .forEach(async (y) => {
+        loadedYears.current.add(y);
+        try {
+          const res = await fetch(`/api/ph-holidays?year=${y}`);
+          const data = await res.json();
+          if (!data.success) throw new Error(data.error);
+          setHolidays((prev) => {
+            const next = { ...prev };
+            (data.holidays as Holiday[]).forEach((h) => (next[h.date] = h));
+            return next;
+          });
+        } catch (error) {
+          loadedYears.current.delete(y); // try again next time this year is shown
+          console.error('Error fetching holidays:', error);
+        }
+      });
+  };
 
   // Get category display color (for badges and UI)
   const getCategoryDisplayColor = (category: string) => {
@@ -303,6 +374,10 @@ const EventCalendar: React.FC = () => {
 
   const handleDatesSet = (dateInfo: any) => {
     setCurrentMonth(dateInfo.view.title);
+    // The visible grid can span two years (December/January).
+    const first = new Date(dateInfo.start).getFullYear();
+    const last = new Date(dateInfo.end.getTime() - 1).getFullYear();
+    loadHolidayYears(first === last ? [first] : [first, last]);
   };
 
   const handleMonthChange = (direction: 'prev' | 'next') => {
@@ -327,22 +402,75 @@ const EventCalendar: React.FC = () => {
     setTimeout(() => setIsLoading(false), 300);
   };
 
-  // Get event stats for all events (dynamically from database)
+  // Upcoming events per category (from today in the Philippines on). A card
+  // shows only for a category with something coming up; with none at all,
+  // the row is hidden.
   const getEventStats = () => {
-    // Define all categories to always show
     const allCategories: ('corporate' | 'outreach' | 'training' | 'conference')[] = [
       'corporate',
       'outreach',
       'training',
       'conference'
     ];
-    
-    return allCategories.map(category => ({
-      category,
-      count: events.filter(e => e.category === category).length,
-      color: getCategoryColor(category)
-    }));
+
+    return allCategories
+      .map(category => ({
+        category,
+        count: events.filter(e => e.category === category && e.date.split('T')[0] >= today).length,
+        color: getCategoryColor(category)
+      }))
+      .filter(stat => stat.count > 0);
   };
+  const eventStats = getEventStats();
+
+  // Hovering (or focusing) a holiday shows a small tooltip with one line of
+  // context. It floats above the page so the calendar grid never clips it.
+  const [holidayTip, setHolidayTip] = useState<{ name: string; about: string; x: number; y: number } | null>(null);
+  const showHolidayTip = (el: HTMLElement, h: Holiday) => {
+    const r = el.getBoundingClientRect();
+    // The site scales desktop pages to fit the screen (CSS zoom), so screen
+    // positions are converted back into the page's own units.
+    const zoom = el.offsetWidth ? r.width / el.offsetWidth : 1;
+    // Keep the tooltip (up to 240px wide) fully on screen near the edges.
+    const half = 128 * zoom;
+    const x = Math.min(Math.max(r.left + r.width / 2, half), window.innerWidth - half);
+    setHolidayTip({ name: h.name, about: holidayAbout(h.name), x: x / zoom, y: r.top / zoom });
+  };
+  useEffect(() => {
+    if (!holidayTip) return;
+    const hide = () => setHolidayTip(null);
+    window.addEventListener('scroll', hide, { passive: true });
+    return () => window.removeEventListener('scroll', hide);
+  }, [holidayTip]);
+
+  // Day cells: a holiday shows its name and an icon under the date number.
+  const cellKey = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const renderDayCell = (arg: DayCellContentArg) => {
+    const holiday = holidays[cellKey(arg.date)];
+    return (
+      <div className="flex w-full flex-col items-end gap-1">
+        <span className={arg.isToday ? 'day-num-today' : undefined}>{arg.dayNumberText}</span>
+        {/* Its own line under the date number, so the name gets the full cell width. */}
+        {holiday && (
+          <span
+            className="holiday-chip self-stretch"
+            tabIndex={0}
+            aria-label={`${holiday.name}. ${holidayAbout(holiday.name)}`}
+            onMouseEnter={(e) => showHolidayTip(e.currentTarget, holiday)}
+            onMouseLeave={() => setHolidayTip(null)}
+            onFocus={(e) => showHolidayTip(e.currentTarget, holiday)}
+            onBlur={() => setHolidayTip(null)}
+          >
+            <HolidayIcon kind={holiday.kind} />
+            <span className="holiday-name">{holiday.name}</span>
+          </span>
+        )}
+      </div>
+    );
+  };
+  const dayCellClasses = (arg: DayCellContentArg) =>
+    `hover:bg-gray-50 transition-colors duration-200 cursor-pointer${holidays[cellKey(arg.date)] ? ' is-holiday' : ''}`;
 
   // Custom event content renderer - simplified to show event titles
   const renderEventContent = (eventInfo: EventContentArg) => {
@@ -380,14 +508,16 @@ const EventCalendar: React.FC = () => {
         />
       </div>
 
-      {/* Event Statistics Cards */}
-      <motion.div 
+      {/* Upcoming events per category: only categories with something coming
+          up; hidden entirely when nothing is scheduled. */}
+      {eventStats.length > 0 && (
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-5 lg:-mt-3 px-2"
+        className={`grid gap-3 lg:gap-4 mb-6 lg:mb-5 lg:-mt-3 px-2 ${eventStats.length === 1 ? 'grid-cols-1 max-w-xs' : eventStats.length === 3 ? 'grid-cols-3' : eventStats.length === 2 ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-4'}`}
       >
-        {getEventStats().map((stat, index) => (
+        {eventStats.map((stat, index) => (
           <motion.div
             key={stat.category}
             initial={{ opacity: 0, scale: 0.9 }}
@@ -400,7 +530,7 @@ const EventCalendar: React.FC = () => {
                 <p className="text-xs lg:text-sm text-gray-600 capitalize">{stat.category}</p>
                 <p className="text-xl lg:text-2xl font-bold text-gray-800">{stat.count}</p>
               </div>
-              <div 
+              <div
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: stat.color }}
               />
@@ -408,6 +538,7 @@ const EventCalendar: React.FC = () => {
           </motion.div>
         ))}
       </motion.div>
+      )}
 
       {/* Custom Calendar Header */}
       <motion.div 
@@ -473,7 +604,9 @@ const EventCalendar: React.FC = () => {
             displayEventTime={false}
             moreLinkClick="none" // Completely disable FullCalendar's popover
             dayHeaderClassNames="bg-[#f8fafc] text-[#22409A] font-semibold py-2 lg:py-3 text-xs lg:text-sm uppercase tracking-wide"
-            dayCellClassNames="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+            dayCellClassNames={dayCellClasses}
+            dayCellContent={renderDayCell}
+            now={`${today}T12:00:00`} // today in the Philippines (see manilaToday)
             eventClassNames="hover:opacity-80 hover:scale-105 transition-all duration-200 cursor-pointer rounded-md mx-1 mb-1 shadow-sm"
             buttonText={{
               today: 'Today',
@@ -487,6 +620,18 @@ const EventCalendar: React.FC = () => {
           />
         </div>
       </motion.div>
+
+      {/* Holiday tooltip: name and one line of context, above the holiday. */}
+      {holidayTip && (
+        <div
+          role="tooltip"
+          className="pointer-events-none fixed z-[70] w-max max-w-[240px] -translate-x-1/2 -translate-y-full rounded-lg bg-[#0d1633] px-3 py-2 text-left text-white shadow-lg"
+          style={{ left: holidayTip.x, top: holidayTip.y - 8 }}
+        >
+          <p className="text-xs font-semibold">{holidayTip.name}</p>
+          <p className="mt-0.5 text-xs leading-snug text-white/75">{holidayTip.about}</p>
+        </div>
+      )}
 
       {/* Events List Modal */}
       <AnimatePresence>
