@@ -268,22 +268,37 @@ export default function FloatingLines({
     const FRAME_MS = 1000 / 30;
     let raf = 0;
     let lastDraw = -Infinity;
-    // Skip drawing while an opaque section fully covers the screen (checked on
-    // scroll/resize, not per frame, so it costs nothing while idle).
+    // Skip drawing while an opaque section fully covers the screen. An
+    // IntersectionObserver reports this without reading layout on every scroll
+    // event (that forced extra layout work and made scrolling stutter).
     const coverEl = pauseWhileCoveredBy ? document.querySelector(pauseWhileCoveredBy) : null;
     let covered = false;
-    const checkCovered = () => {
-      if (!coverEl) return;
-      const r = coverEl.getBoundingClientRect();
-      covered = r.top <= 0 && r.bottom >= window.innerHeight;
+    const coverIo =
+      coverEl && typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            ([entry]) => {
+              const root = entry.rootBounds;
+              covered = !!root && entry.intersectionRect.height >= root.height - 1;
+            },
+            { threshold: Array.from({ length: 101 }, (_, i) => i / 100) }
+          )
+        : null;
+    if (coverEl) coverIo?.observe(coverEl);
+    // Hold the lines still while the page is scrolling and resume right after.
+    // They drift slowly, so the pause is not noticeable, and the graphics chip
+    // is free for the scroll itself (smoother on laptops and phones).
+    let scrolling = false;
+    let scrollIdle = 0;
+    const onScroll = () => {
+      scrolling = true;
+      clearTimeout(scrollIdle);
+      scrollIdle = window.setTimeout(() => (scrolling = false), 150);
     };
-    checkCovered();
-    window.addEventListener('scroll', checkCovered, { passive: true });
-    window.addEventListener('resize', checkCovered);
+    window.addEventListener('scroll', onScroll, { passive: true });
     const loop = (now: number) => {
       if (!active) return;
       raf = requestAnimationFrame(loop);
-      if (covered || now - lastDraw < FRAME_MS - 1) return;
+      if (covered || scrolling || now - lastDraw < FRAME_MS - 1) return;
       lastDraw = now;
       drawFrame();
     };
@@ -308,8 +323,9 @@ export default function FloatingLines({
       active = false;
       cancelAnimationFrame(raf);
       document.removeEventListener('visibilitychange', onVisibility);
-      window.removeEventListener('scroll', checkCovered);
-      window.removeEventListener('resize', checkCovered);
+      coverIo?.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(scrollIdle);
       ro?.disconnect();
       geometry.dispose();
       material.dispose();

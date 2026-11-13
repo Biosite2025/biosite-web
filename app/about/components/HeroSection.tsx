@@ -48,6 +48,7 @@ const HeroSection = () => {
     <section
       ref={sectionRef}
       id="hero"
+      data-offscreen={inView ? undefined : ''}
       aria-labelledby="hero-title"
       className="relative w-full overflow-hidden lg:h-[calc(var(--vh,1vh)*100)] h-[calc(calc(var(--vh,1vh)*100)-64px)] lg:mt-0 mt-[-64px] flex items-center justify-center"
     >

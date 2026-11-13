@@ -13,41 +13,31 @@ export function TopNav() {
   const [productsOpen, setProductsOpen] = useState(false);
   const pathname = usePathname();
   const [showNav, setShowNav] = useState(true);
-  const [scrollY, setScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
 
+  // Hide on scroll down, show on scroll up. Only the show/hide flag is state,
+  // and it is set only when it changes, so the menu doesn't re-render on every
+  // scroll frame (that made scrolling stutter on slower laptops).
   React.useEffect(() => {
     let lastScrollY = window.scrollY;
+    let shown = true;
     let ticking = false;
+    const show = (next: boolean) => {
+      if (next === shown) return;
+      shown = next;
+      setShowNav(next);
+    };
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
-          setScrollY(currentScrollY);
-          
-          // On mobile screens, always show nav
-          const isMobile = window.innerWidth < 1024;
-          
-          if (isMobile) {
-            setShowNav(true);
+          if (window.innerWidth < 1024) {
+            show(true);
           } else {
-            // Improved desktop logic with better threshold
             const scrollDifference = Math.abs(currentScrollY - lastScrollY);
-            
-            if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) {
-              // Scrolling down - hide nav
-              setScrollDirection('down');
-              setShowNav(false);
-            } else if (currentScrollY < lastScrollY && scrollDifference > 5) {
-              // Scrolling up - show nav
-              setScrollDirection('up');
-              setShowNav(true);
-            }
-            
+            if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) show(false);
+            else if (currentScrollY < lastScrollY && scrollDifference > 5) show(true);
             // Always show nav when at top
-            if (currentScrollY <= 50) {
-              setShowNav(true);
-            }
+            if (currentScrollY <= 50) show(true);
           }
           lastScrollY = currentScrollY;
           ticking = false;
@@ -136,7 +126,7 @@ export function TopNav() {
           boxShadow: { duration: 0.4, ease: 'easeInOut' }
         }}
         whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
-        className="hidden lg:block bg-white backdrop-blur-md w-full sticky top-0 z-50 border-b border-gray-200/50 shadow-sm hover:shadow-md transition-[transform,box-shadow,background-color] duration-300 will-change-transform h-24 group"
+        className="hidden lg:block bg-white w-full sticky top-0 z-50 border-b border-gray-200/50 shadow-sm hover:shadow-md transition-[transform,box-shadow,background-color] duration-300 will-change-transform h-24 group"
         style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
         onMouseLeave={() => setProductsOpen(false)}
       >

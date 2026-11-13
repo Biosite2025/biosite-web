@@ -64,9 +64,33 @@ const AwardsRecognitions = () => {
   /** Desktop gets drag-to-rotate; touch gets spin-only so page scroll works. */
   const [isDesktop, setIsDesktop] = useState(false);
 
+  // Setting up the 3D trophy (download, parse, shader compile) froze the page
+  // for up to a second when it started as the section scrolled in. Now the
+  // code downloads while the browser is idle after load, and the trophy is set
+  // up in an idle moment while the section is still one screen away.
+  const near = useInView(sectionRef, { margin: '900px 0px', once: true });
   useEffect(() => {
-    if (inView) setMounted3D(true);
-  }, [inView]);
+    const load = () => void import('./TrophyCanvas');
+    if (typeof window.requestIdleCallback !== 'function') { // Safari
+      const t = window.setTimeout(load, 1500);
+      return () => window.clearTimeout(t);
+    }
+    const id = window.requestIdleCallback(load, { timeout: 4000 });
+    return () => window.cancelIdleCallback(id);
+  }, []);
+  useEffect(() => {
+    if (inView) {
+      setMounted3D(true);
+      return;
+    }
+    if (!near || mounted3D) return;
+    const id = typeof window.requestIdleCallback === 'function' ? window.requestIdleCallback(() => setMounted3D(true), { timeout: 1500 }) : 0;
+    const fallback = id ? 0 : window.setTimeout(() => setMounted3D(true), 300);
+    return () => {
+      if (id) window.cancelIdleCallback(id);
+      window.clearTimeout(fallback);
+    };
+  }, [inView, near, mounted3D]);
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');

@@ -13,42 +13,32 @@ export function SideNav() {
 		const pathname = usePathname();
 		// Scroll hide/show logic (exact copy from TopNav)
 		const [showNav, setShowNav] = useState(true);
-		const [scrollY, setScrollY] = useState(0);
-		const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
-		
+
+		// Only the show/hide flag is state, set only when it changes, so the
+		// menu doesn't re-render on every scroll frame.
 		React.useEffect(() => {
 			let lastScrollY = window.scrollY;
+			let shown = true;
 			let ticking = false;
+			const show = (next: boolean) => {
+				if (next === shown) return;
+				shown = next;
+				setShowNav(next);
+			};
 			const handleScroll = () => {
 				if (!ticking) {
 					window.requestAnimationFrame(() => {
 						const currentScrollY = window.scrollY;
-						setScrollY(currentScrollY);
-						
 						// Only apply on mobile screens (lg:hidden), apply to ALL pages
-						const isMobile = window.innerWidth < 1024;
-						
-						if (isMobile) {
-							// Mobile scroll logic - same as TopNav but for mobile screens only
+						if (window.innerWidth < 1024) {
 							const scrollDifference = Math.abs(currentScrollY - lastScrollY);
-							
-							if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) {
-								// Scrolling down - hide nav
-								setScrollDirection('down');
-								setShowNav(false);
-							} else if (currentScrollY < lastScrollY && scrollDifference > 5) {
-								// Scrolling up - show nav
-								setScrollDirection('up');
-								setShowNav(true);
-							}
-							
+							if (currentScrollY > lastScrollY && currentScrollY > 100 && scrollDifference > 5) show(false);
+							else if (currentScrollY < lastScrollY && scrollDifference > 5) show(true);
 							// Always show nav when at top
-							if (currentScrollY <= 50) {
-								setShowNav(true);
-							}
+							if (currentScrollY <= 50) show(true);
 						} else {
 							// Desktop - always show (this component is hidden on desktop anyway)
-							setShowNav(true);
+							show(true);
 						}
 						lastScrollY = currentScrollY;
 						ticking = false;
@@ -193,7 +183,7 @@ export function SideNav() {
 					boxShadow: { duration: 0.4, ease: 'easeInOut' }
 				}}
 				whileHover={{ scale: 1.01, boxShadow: '0 4px 24px 0 rgba(35,86,168,0.12)' }}
-				className="flex lg:hidden items-center justify-between h-16 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm z-50 fixed top-0 w-full sidenav-component"
+				className="flex lg:hidden items-center justify-between h-16 px-4 bg-white border-b border-gray-200/50 shadow-sm z-50 fixed top-0 w-full sidenav-component"
 				style={{ background: '#ffffff', backgroundColor: '#ffffff' }}
 			>
 				{/* Logo Section */}

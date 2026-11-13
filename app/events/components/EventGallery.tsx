@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useAnimationFrame, useInView, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
+import { motion, useMotionValue, useInView, AnimatePresence, type MotionValue, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '../../about/components/SectionHeading';
 import { FOCUS_RING } from '../../about/components/motionShared';
 import BmiLoader from '@/src/components/ui/BmiLoader';
 import EventVideoStack from './EventVideoStack';
+import { useSpotlightActive } from '@/src/hooks/useSectionSpotlight';
 
 const BLUR =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==';
@@ -97,23 +98,39 @@ const EventGallery: React.FC = () => {
 
   // The rows only move while the gallery is on screen — no point animating
   // dozens of photo cards nobody can see.
+  // They also stop while the page's spotlight blurs the gallery: redrawing a
+  // blurred, moving strip of photos every frame is the most expensive thing on
+  // this page and nobody is looking at it.
   const snapsRef = useRef<HTMLElement>(null);
-  const snapsInView = useInView(snapsRef, { margin: '200px 0px' });
+  const snapsInView = useInView(snapsRef);
+  const snapsLit = useSpotlightActive(snapsRef);
 
-  useAnimationFrame((_, delta) => {
-    if (paused || !isClient || !snapsInView) return;
-    const speed = 40;
-    if (topLoopWidth > 0) {
-      let next = topRowX.get() - speed * (delta / 1000);
-      if (next <= -topLoopWidth) next += topLoopWidth;
-      topRowX.set(next);
-    }
-    if (bottomLoopWidth > 0) {
-      let next = bottomRowX.get() + speed * (delta / 1000);
-      if (next >= 0) next -= bottomLoopWidth;
-      bottomRowX.set(next);
-    }
-  });
+  // The frame loop only exists while the rows are moving, so a stopped
+  // gallery costs nothing per frame.
+  const running = !paused && isClient && snapsInView && snapsLit && (topLoopWidth > 0 || bottomLoopWidth > 0);
+  useEffect(() => {
+    if (!running) return;
+    const speed = 40; // px per second
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const delta = Math.min(now - last, 100); // no jump after a stalled frame
+      last = now;
+      if (topLoopWidth > 0) {
+        let next = topRowX.get() - speed * (delta / 1000);
+        if (next <= -topLoopWidth) next += topLoopWidth;
+        topRowX.set(next);
+      }
+      if (bottomLoopWidth > 0) {
+        let next = bottomRowX.get() + speed * (delta / 1000);
+        if (next >= 0) next -= bottomLoopWidth;
+        bottomRowX.set(next);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [running, topLoopWidth, bottomLoopWidth, topRowX, bottomRowX]);
 
   const pause = () => setPaused(true);
   const resume = () => setPaused(false);

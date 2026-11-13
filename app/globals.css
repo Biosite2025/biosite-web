@@ -448,6 +448,8 @@ nav[data-topnav="true"] {
   29.73%, 100% { transform: translateX(450%); }
 }
 .partner-shine { animation: partner-shine 3.7s ease-in-out 1.6s infinite; }
+/* The hero's loops pause while it is scrolled out of view (HeroSection sets data-offscreen). */
+[data-offscreen] :is(.bear-float, .partner-ring, .partner-shine, .hero-kenburns) { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue, .bear-float, .partner-ring, .partner-shine, .hero-kenburns { animation: none; }
