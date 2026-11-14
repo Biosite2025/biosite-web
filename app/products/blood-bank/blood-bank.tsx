@@ -367,9 +367,9 @@ function BrandRow({ group, onViewDetails }: { group: Group; onViewDetails: (p: P
 				<div className="flex-1 h-px bg-gray-200" />
 			</div>
 
-			<div className="flex flex-wrap gap-3 min-[913px]:gap-6">
+			<div className="flex flex-wrap gap-3 min-[913px]:gap-5">
 				{group.products.map((product, idx) => (
-					<div key={product.id} className="w-[calc(50%-0.375rem)] min-[913px]:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]">
+					<div key={product.id} className="w-[calc(50%-0.375rem)] md:w-[calc(33.333%-0.5rem)] min-[913px]:w-[calc(33.333%-0.834rem)] lg:w-[calc(25%-0.9375rem)] xl:w-[calc(20%-1rem)]">
 						<ProductCard
 							index={idx}
 							image={product.image}

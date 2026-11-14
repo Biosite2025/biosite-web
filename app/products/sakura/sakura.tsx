@@ -250,11 +250,11 @@ export default function NikonMicroscopes() {
 							</div>
 
 							{/* flex-wrap + justify-center so a partial final row stays centered */}
-							<div className="relative z-10 flex flex-wrap justify-center gap-3 min-[913px]:gap-6">
+							<div className="relative z-10 flex flex-wrap justify-center gap-3 min-[913px]:gap-5">
 								{Object.values(products).flat().map((product: any, index: number) => (
 									<div
 										key={product.id}
-										className="w-[calc(50%-0.375rem)] min-[913px]:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]"
+										className="w-[calc(50%-0.375rem)] md:w-[calc(33.333%-0.5rem)] min-[913px]:w-[calc(33.333%-0.834rem)] lg:w-[calc(25%-0.9375rem)] xl:w-[calc(20%-1rem)]"
 									>
 										<ProductCard
 											index={index}
