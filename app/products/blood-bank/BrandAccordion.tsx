@@ -74,10 +74,73 @@ export default function BrandAccordion({
 	const names = groups.map((g) => brands[g.brand]?.name ?? g.brand);
 	const transition = reduced ? { duration: 0 } : OPEN;
 
+	// ---- Mouse wheel over the stack steps through it ----
+	// One wheel step = one move: the next product in the open brand's row (when
+	// it has more than fit), otherwise the next brand. At the very first/last
+	// step the wheel is left alone, so the page scrolls on as normal.
+	const stackRef = useRef<HTMLDivElement>(null);
+	const openRef = useRef(open);
+	useEffect(() => {
+		openRef.current = open;
+	}, [open]);
+	useEffect(() => {
+		const stack = stackRef.current;
+		if (!stack) return;
+		let lockedUntil = 0;
+		// Long enough for a brand to finish opening, and for one trackpad swipe
+		// (many small wheel events) to count as a single step.
+		const STEP_MS = reduced ? 250 : 650;
+		const QUIET_MS = 180;
+		const onWheel = (e: WheelEvent) => {
+			if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // pinch-zoom / sideways swipe: native
+			const dir = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
+			if (!dir) return;
+			const now = performance.now();
+			const cur = openRef.current;
+			const row = stack.querySelector<HTMLElement>('[role="region"] [data-product-row]');
+			const rowCanMove =
+				!!row && (dir > 0 ? row.scrollLeft + row.clientWidth < row.scrollWidth - 2 : row.scrollLeft > 2);
+			const brandCanMove = cur === null ? dir > 0 : dir > 0 ? cur < groups.length - 1 : cur > 0;
+			if (!rowCanMove && !brandCanMove) return; // at the end: let the page scroll
+			e.preventDefault();
+			if (now < lockedUntil) {
+				// Still the same gesture (a trackpad keeps sending small events as it
+				// coasts): wait for a short pause before the next step.
+				lockedUntil = Math.max(lockedUntil, now + QUIET_MS);
+				return;
+			}
+			lockedUntil = now + STEP_MS;
+			if (rowCanMove && row) {
+				const card = row.firstElementChild as HTMLElement | null;
+				const step = (card?.offsetWidth ?? row.clientWidth * 0.8) + 16; // card + gap
+				row.scrollBy({ left: dir * step, behavior: reduced ? "auto" : "smooth" });
+				return;
+			}
+			touched.current = true;
+			setOpen(cur === null ? 0 : cur + dir);
+		};
+		stack.addEventListener("wheel", onWheel, { passive: false });
+		return () => stack.removeEventListener("wheel", onWheel);
+	}, [groups.length, reduced]);
+
+	// A brand opened by stepping backwards shows its last products first, so
+	// scrolling up walks back through everything in order.
+	const prevOpen = useRef(open);
+	useEffect(() => {
+		const was = prevOpen.current;
+		prevOpen.current = open;
+		if (open === null || was === null || open >= was) return;
+		const t = window.setTimeout(() => {
+			const row = stackRef.current?.querySelector<HTMLElement>('[role="region"] [data-product-row]');
+			if (row) row.scrollLeft = row.scrollWidth;
+		}, 0);
+		return () => window.clearTimeout(t);
+	}, [open]);
+
 	return (
 		<div ref={sectionRef}>
 			{/* ---------------- Tablet & desktop: horizontal stack ---------------- */}
-			<div className="hidden md:flex h-[480px] items-stretch" role="presentation">
+			<div ref={stackRef} className="hidden md:flex h-[480px] items-stretch overscroll-contain" role="presentation">
 				{/* Title: fills the left until a brand opens, then folds away */}
 				<motion.div
 					initial={false}
@@ -288,6 +351,7 @@ function PanelBody({
 			)}
 			<div
 				ref={rowRef}
+				data-product-row
 				className="-mx-1 flex flex-1 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
 			>
 				{group.products.map((p, idx) => (
