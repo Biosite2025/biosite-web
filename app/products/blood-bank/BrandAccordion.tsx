@@ -129,8 +129,8 @@ export default function BrandAccordion({
 									style={{ paddingLeft: i === 0 ? 0 : OVERLAP }}
 									tabIndex={isOpen ? -1 : 0}
 								>
-									<span className="flex size-11 items-center justify-center rounded-full bg-white shadow-md">
-										{brand && <Image src={brand.logo} alt="" width={80} height={32} className="max-h-5 max-w-8 w-auto object-contain" />}
+									<span className="flex size-12 items-center justify-center rounded-full bg-white shadow-md">
+										{brand && <Image src={brand.logo} alt="" width={80} height={32} className="max-h-6 max-w-9 w-auto object-contain" />}
 									</span>
 									<span className="font-bold tracking-wide text-lg [writing-mode:vertical-rl] rotate-180 whitespace-nowrap">
 										{brand?.name ?? g.brand}
