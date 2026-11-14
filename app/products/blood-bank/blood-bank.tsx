@@ -6,7 +6,7 @@ import PopOutModal from '../shared/PopOutModal';
 import HoverZoom from '../shared/HoverZoom';
 import { motion } from 'framer-motion';
 import ParticlesBackground from '../ParticlesBackground';
-import ProductCard from '../shared/ProductCard';
+import BrandAccordion from './BrandAccordion';
 import { ProductListJsonLd, useProductDeepLink } from '../shared/productLinks';
 
 // This page keeps its original FUNCTION tabs; inside each tab the products are
@@ -352,41 +352,6 @@ function Modal({ product, brand, onClose }: { product: Product; brand: Brand | n
 	return <PopOutModal name={product.name} description={product.description} image={product.image} logo={brand?.logo} brandName={brand?.name} onClose={onClose} />;
 }
 
-// ---------- Brand row (logo header + grid of cards) ----------
-function BrandRow({ group, onViewDetails }: { group: Group; onViewDetails: (p: Product) => void }) {
-	const brand = BRANDS[group.brand];
-	return (
-		<div className="mb-8 sm:mb-10">
-			{/* Row header: brand logo (or a neutral label for unbranded) + divider */}
-			<div className="flex items-center gap-3 mb-4">
-				{brand ? (
-					<Image src={brand.logo} alt={`${brand.name} logo`} width={200} height={64} className={`${brand.cls} w-auto object-contain`} />
-				) : (
-					<span className="text-sm font-semibold uppercase tracking-wide text-gray-500">Other</span>
-				)}
-				<div className="flex-1 h-px bg-gray-200" />
-			</div>
-
-			<div className="flex flex-wrap gap-3 min-[913px]:gap-5">
-				{group.products.map((product, idx) => (
-					<div key={product.id} className="w-[calc(50%-0.375rem)] md:w-[calc(33.333%-0.5rem)] min-[913px]:w-[calc(33.333%-0.834rem)] lg:w-[calc(25%-0.9375rem)] xl:w-[calc(20%-1rem)]">
-						<ProductCard
-							index={idx}
-							image={product.image}
-							name={product.name}
-							description={product.description}
-							brandName={brand?.name}
-							brandLogo={brand?.logo}
-							brandLogoClass={brand?.cls}
-							onViewDetails={() => onViewDetails(product)}
-						/>
-					</div>
-				))}
-			</div>
-		</div>
-	);
-}
-
 const allProducts = tabs.flatMap((t) => t.groups.flatMap((g) => g.products));
 
 export default function BloodBank() {
@@ -460,14 +425,9 @@ export default function BloodBank() {
 					</nav>
 				</div>
 
-				{/* Active tab: brand-grouped rows */}
+				{/* Active tab: brand accordion (opens the first brand on scroll; click a brand to switch) */}
 				<motion.div key={activeTab} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-					<div className="mb-6 sm:mb-8">
-						<h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{tab.title}</h3>
-					</div>
-					{tab.groups.map((g) => (
-						<BrandRow key={g.brand} group={g} onViewDetails={setSelected} />
-					))}
+					<BrandAccordion title={tab.title} groups={tab.groups} brands={BRANDS} onViewDetails={setSelected} />
 				</motion.div>
 			</div>
 
