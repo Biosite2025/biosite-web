@@ -96,19 +96,23 @@ export default function BrandAccordion({
 			const dir = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
 			if (!dir) return;
 			const now = performance.now();
-			const cur = openRef.current;
-			const row = stack.querySelector<HTMLElement>('[role="region"] [data-product-row]');
-			const rowCanMove =
-				!!row && (dir > 0 ? row.scrollLeft + row.clientWidth < row.scrollWidth - 2 : row.scrollLeft > 2);
-			const brandCanMove = cur === null ? dir > 0 : dir > 0 ? cur < groups.length - 1 : cur > 0;
-			if (!rowCanMove && !brandCanMove) return; // at the end: let the page scroll
-			e.preventDefault();
+			// Still the same gesture (a trackpad keeps sending small events as it
+			// coasts, a spun wheel keeps clicking): keep it on the products, even if
+			// the last step just reached the end, and wait for a short pause before
+			// the next step. Only a NEW gesture at the end scrolls the page.
 			if (now < lockedUntil) {
-				// Still the same gesture (a trackpad keeps sending small events as it
-				// coasts): wait for a short pause before the next step.
+				e.preventDefault();
 				lockedUntil = Math.max(lockedUntil, now + QUIET_MS);
 				return;
 			}
+			const cur = openRef.current;
+			const row = stack.querySelector<HTMLElement>('[role="region"] [data-product-row]');
+			// A few pixels of slack: the page's scale-to-fit zoom leaves fractional widths.
+			const rowCanMove =
+				!!row && (dir > 0 ? row.scrollLeft + row.clientWidth < row.scrollWidth - 4 : row.scrollLeft > 4);
+			const brandCanMove = cur === null ? dir > 0 : dir > 0 ? cur < groups.length - 1 : cur > 0;
+			if (!rowCanMove && !brandCanMove) return; // a new gesture at the end: let the page scroll
+			e.preventDefault();
 			lockedUntil = now + STEP_MS;
 			if (rowCanMove && row) {
 				const card = row.firstElementChild as HTMLElement | null;
