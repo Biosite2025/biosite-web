@@ -45,19 +45,35 @@ export default function BiomiFloat() {
 	useEffect(() => {
 		let hideTimer = 0;
 		let frame = 0;
+		// Found once per DOM change (not on every scroll frame): the product
+		// section, whether a product window is open, and the page zoom.
+		let dirty = true;
+		let section: Element | null = null;
+		let modalOpen = false;
+		let z = 1;
+		const locate = () => {
+			dirty = false;
+			z = parseFloat(document.documentElement.style.zoom) || 1;
+			modalOpen = !!document.querySelector('[role="dialog"], [aria-modal="true"]');
+			section = null;
+			const cards = document.querySelectorAll("[data-product-card]");
+			let card: Element | undefined;
+			for (const c of cards) if (c.getClientRects().length) { card = c; break; } // skip hidden layouts
+			if (!card) return;
+			// The product section: the largest block around the cards that holds
+			// neither the page's hero title nor the footer (tabs + grid, up to the
+			// call-to-action band).
+			const h1 = document.querySelector("h1");
+			const footer = document.querySelector("footer");
+			let s: Element = card;
+			for (let p = s.parentElement; p && !(h1 && p.contains(h1)) && !(footer && p.contains(footer)); p = p.parentElement) s = p;
+			section = s;
+		};
 		const update = () => {
 			frame = 0;
-			const cards = document.querySelectorAll("[data-product-card]");
-			const modalOpen = !!document.querySelector('[role="dialog"], [aria-modal="true"]');
+			if (dirty || (section && !section.isConnected)) locate();
 			let show = false;
-			const card = [...cards].find((c) => c.getBoundingClientRect().width > 0); // skip hidden layouts
-			if (card && !modalOpen) {
-				// The product section: the largest block around the cards that holds
-				// neither the page's hero title nor the footer (tabs + grid, up to the
-				// call-to-action band).
-				let section: Element = card;
-				while (section.parentElement && !section.parentElement.querySelector("h1, footer")) section = section.parentElement;
-				const z = parseFloat(document.documentElement.style.zoom) || 1;
+			if (section && !modalOpen) {
 				const vh = window.innerHeight / z;
 				// The button's centre, in the page's (zoomed) coordinates: ~52 real px above the bottom.
 				const spot = vh - 52 / z;
@@ -69,11 +85,15 @@ export default function BiomiFloat() {
 				// call-to-action and footer, so it fades out there.)
 				show = r.top < spot && (seen >= vh * 0.45 || (r.height > 0 && seen >= r.height * 0.85));
 			}
-			window.clearTimeout(hideTimer);
-			if (show) setVisible(true);
+			if (show) {
+				window.clearTimeout(hideTimer);
+				hideTimer = 0;
+				setVisible(true);
+			}
 			// A short grace period, so passing the gap between rows doesn't flicker it.
-			else
+			else if (!hideTimer)
 				hideTimer = window.setTimeout(() => {
+					hideTimer = 0;
 					setVisible(false);
 					setBubble(false);
 				}, 150);
@@ -81,8 +101,20 @@ export default function BiomiFloat() {
 		const schedule = () => {
 			if (!frame) frame = requestAnimationFrame(update);
 		};
+		let titled = false;
 		const onMutate = () => {
-			setPageTitle((t) => t || document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim() || "");
+			if (!titled) {
+				const t = document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim();
+				if (t) {
+					titled = true;
+					setPageTitle(t);
+				}
+			}
+			dirty = true;
+			schedule();
+		};
+		const onResize = () => {
+			dirty = true; // zoom and layouts change with the window
 			schedule();
 		};
 		onMutate();
@@ -90,11 +122,11 @@ export default function BiomiFloat() {
 		const mo = new MutationObserver(onMutate);
 		mo.observe(document.body, { childList: true, subtree: true });
 		window.addEventListener("scroll", schedule, { passive: true });
-		window.addEventListener("resize", schedule);
+		window.addEventListener("resize", onResize);
 		return () => {
 			mo.disconnect();
 			window.removeEventListener("scroll", schedule);
-			window.removeEventListener("resize", schedule);
+			window.removeEventListener("resize", onResize);
 			cancelAnimationFrame(frame);
 			window.clearTimeout(hideTimer);
 		};
