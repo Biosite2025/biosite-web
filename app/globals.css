@@ -475,6 +475,12 @@ html[data-modal-open] .partner-shine { animation-play-state: paused; }
 @keyframes biomi-blink { 0%,85%,89%,100% { transform: scaleY(1); } 87% { transform: scaleY(0.1); } }
 .biomi-blink { animation: biomi-blink 3.5s infinite; transform-box: fill-box; transform-origin: center; }
 @media (prefers-reduced-motion: reduce) { .biomi-sway, .biomi-blink { animation: none; } }
+/* Floating Biomi button (product pages): a slow bob, and a ring that pings twice when it appears. */
+@keyframes biomi-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.biomi-float { animation: biomi-float 3.2s ease-in-out infinite; }
+@keyframes biomi-ping { 0% { transform: scale(1); opacity: .7; } 80%,100% { transform: scale(1.45); opacity: 0; } }
+.biomi-ping { animation: biomi-ping 1.6s cubic-bezier(0,0,.2,1) 2 forwards; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .biomi-float, .biomi-ping { animation: none; } }
 
 /* Raised product buttons: a hard offset shadow that presses in on hover. */
 .bevel {

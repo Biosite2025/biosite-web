@@ -100,6 +100,7 @@ export default function ProductCard({
 			transition={{ duration: 0.5, delay: index * 0.08 }}
 			whileHover={{ y: -4 }}
 			onClick={openProduct}
+			data-product-card
 			className="group relative flex flex-col h-full cursor-pointer bg-white rounded-xl border border-gray-100
 					 shadow-[0_1px_3px_rgba(16,24,40,0.07),0_12px_32px_-12px_rgba(16,24,40,0.14)]
 					 hover:shadow-[0_2px_6px_rgba(16,24,40,0.08),0_20px_48px_-14px_rgba(43,57,144,0.28)]

@@ -7,77 +7,11 @@ import { FAQ_DATA } from "../faqData";
 import { askBiomi, loadBiomi, EMPTY_CONTEXT, STARTER_QUESTIONS, type Answer, type BiomiContext, type Product } from "../lib/biomiSearch";
 import PopOutModal from '../../products/shared/PopOutModal';
 import PixelBlast from './PixelBlast';
+import BiomiAvatar from './BiomiAvatar';
 
 
 
-// Animated 3D Biomi Avatar with Framer Motion
-function BiomiAvatar({ size = 44, animationState = "idle" }) {
-		// Animation variants
-				const headVariants = {
-					// idle sway is a CSS loop (.biomi-sway in globals.css), not a JS animation
-					idle: { rotate: 0, y: 0 },
-					thinking: { rotate: 0, y: 0 },
-					reply: { rotate: [0, 10, 0], y: [0, 2, 0], transition: { duration: 0.6 } },
-				};
-				const eyeVariants = {
-					// idle blink is a CSS loop (.biomi-blink)
-					idle: { scaleY: 1 },
-					thinking: { scaleY: [1, 0.1, 1], transition: { duration: 0.4 } },
-					reply: { scaleY: 1 },
-				};
-				// Robot mascot SVG
-				return (
-					<motion.span
-						className="inline-block bg-white border-2 border-[#b2d6e6] rounded-full overflow-hidden"
-						style={{ width: size, height: size }}
-						initial="idle"
-						animate={animationState}
-					>
-						<motion.svg
-							width={size}
-							height={size}
-							viewBox="0 0 100 100"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							style={{ display: "block" }}
-						>
-							<motion.g variants={headVariants} animate={animationState} className={animationState === 'idle' ? 'biomi-sway' : undefined}>
-								{/* Outer head shape */}
-								<ellipse cx="50" cy="60" rx="38" ry="35" fill="#e6f4fa" stroke="#3a6b7c" strokeWidth="3" />
-								{/* Faceplate */}
-								<ellipse cx="50" cy="60" rx="28" ry="23" fill="#f6fcff" stroke="#3a6b7c" strokeWidth="2.2" />
-								{/* Ears */}
-								<ellipse cx="15" cy="60" rx="6" ry="10" fill="#e6f4fa" stroke="#3a6b7c" strokeWidth="2" />
-								<ellipse cx="85" cy="60" rx="6" ry="10" fill="#e6f4fa" stroke="#3a6b7c" strokeWidth="2" />
-								{/* Antenna */}
-								<rect x="47" y="15" width="6" height="15" rx="3" fill="#e6f4fa" stroke="#3a6b7c" strokeWidth="2" />
-								<circle cx="50" cy="13" r="5" fill="#f6fcff" stroke="#3a6b7c" strokeWidth="2" />
-								{/* Eyes */}
-								<motion.circle
-									cx="40"
-									cy="60"
-									r="3.5"
-									fill="#3a6b7c"
-									variants={eyeVariants}
-									animate={animationState}
-									className={animationState === 'idle' ? 'biomi-blink' : undefined}
-								/>
-								<motion.circle
-									cx="60"
-									cy="60"
-									r="3.5"
-									fill="#3a6b7c"
-									variants={eyeVariants}
-									animate={animationState}
-									className={animationState === 'idle' ? 'biomi-blink' : undefined}
-								/>
-								{/* Smile */}
-								<path d="M43 70 Q50 75 57 70" stroke="#3a6b7c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-							</motion.g>
-						</motion.svg>
-					</motion.span>
-				);
-}
+// The animated face lives in ./BiomiAvatar (shared with the floating button on product pages).
 
 const ICONS = {
 	chat: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
@@ -168,6 +102,47 @@ export default function BiomiFAQ() {
 		setAvatarState('reply');
 		setTimeout(() => setAvatarState('idle'), 700);
 	};
+
+	// Arriving from the floating Biomi on a product page (/chatbot?from=Sakura):
+	// greet with that page's products and a few next questions, instead of an
+	// empty chat.
+	const arrived = useRef(false);
+	useEffect(() => {
+		if (arrived.current) return;
+		arrived.current = true;
+		const from = new URLSearchParams(window.location.search).get('from')?.replace(/\s+/g, ' ').trim().slice(0, 80);
+		if (!from) return;
+		(async () => {
+			setTyping(true);
+			setAvatarState('thinking');
+			const started = Date.now();
+			const ask = (q: string) => askBiomi(q, EMPTY_CONTEXT).catch(() => null);
+			// A brand page ("Sakura Histopathology Systems") lists the whole brand;
+			// otherwise the title itself, then "show <title>" for a category page.
+			const first = from.split(' ')[0];
+			let found = first !== from && first.length > 2 ? await ask(first) : null;
+			if (!found?.text?.[0]?.startsWith('Yes — we carry')) found = await ask(from);
+			if (!found?.products?.length && !found?.categories?.length) found = await ask(`show ${from}`);
+			const hasProducts = !!(found?.products?.length || found?.categories?.length);
+			const nextQuestions = ['How can I request a quotation?', 'What products do you offer?'];
+			const answer: Answer = hasProducts && found
+				? {
+					...found,
+					text: [`Hi! I'm Biomi. You were browsing ${from}, so here are some of its products. Tap one for details, or tell me what you're looking for.`],
+					suggestions: [...new Set([...(found.suggestions ?? []), ...nextQuestions])],
+				}
+				: {
+					text: [`Hi! I'm Biomi. What product are you looking for? Tell me a product name, brand or test, and I'll find it for you.`],
+					suggestions: STARTER_QUESTIONS,
+				};
+			if (hasProducts && found?.context) context.current = found.context;
+			await new Promise((r) => setTimeout(r, Math.max(0, 600 - (Date.now() - started))));
+			setTyping(false);
+			setMessages([{ id: nextId.current++, from: 'biomi', answer }]);
+			setAvatarState('reply');
+			setTimeout(() => setAvatarState('idle'), 700);
+		})();
+	}, []);
 
 	const chip = 'rounded-full border border-[#d9dff0] bg-white px-3 py-1.5 text-xs sm:text-sm font-medium text-[#2B3990] shadow-sm transition-colors hover:border-[#2B3990]/40 hover:bg-[#eef1fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B3990]/40';
 	const rise = { initial: { opacity: 0, y: reducedMotion ? 0 : 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.25, ease: 'easeOut' as const } };
