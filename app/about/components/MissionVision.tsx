@@ -99,7 +99,7 @@ function StatementRow({ row }: { row: Row }) {
         transition={{ duration: reduced ? 0.3 : 1.1, ease: EASE, delay: reduced ? 0 : 0.15 }}
       >
         <div className="flex h-full flex-col justify-center bg-[linear-gradient(135deg,rgba(38,190,226,0.86)_0%,rgba(30,111,214,0.88)_55%,rgba(28,72,190,0.92)_100%)] px-6 py-9 sm:px-10 lg:bg-[linear-gradient(135deg,rgba(38,190,226,0.72)_0%,rgba(30,111,214,0.8)_55%,rgba(28,72,190,0.88)_100%)] lg:px-16 lg:py-0">
-          <motion.h3 className="text-lg font-semibold text-white/90 lg:text-[22px]" {...rise(0.55)}>
+          <motion.h3 className="text-lg font-semibold uppercase tracking-[0.08em] text-white/90 lg:text-[22px]" {...rise(0.55)}>
             {row.heading}
           </motion.h3>
           <motion.span
