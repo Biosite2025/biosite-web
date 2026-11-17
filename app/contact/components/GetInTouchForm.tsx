@@ -13,103 +13,12 @@ import {
   type ContactErrors,
   type ContactField,
 } from "@/lib/contactValidation";
-import { FORM_ICONS, Icon } from "@/src/components/forms/FloatingField";
+import { FORM_ICONS, FormField, FormHeader, Icon, SECONDARY_BUTTON, SUBMIT_BUTTON, SelectField } from "@/src/components/forms/FormField";
 
 type TextName = "name" | "email" | "phone" | "subject" | "message";
 
-const CONTROL =
-  "block w-full rounded-md border bg-white px-3 text-base text-gray-900 placeholder:text-gray-400 outline-none transition-colors duration-150 focus:ring-2 lg:text-sm";
-const controlState = (error?: string) =>
-  error
-    ? "border-red-500 focus:border-red-500 focus:ring-red-500/15"
-    : "border-gray-300 hover:border-gray-400 focus:border-[#2B3990] focus:ring-[#2B3990]/15";
-
-/** Label above the control; an error shows on the same line, so it never moves the layout. */
-function FieldLabel({ htmlFor, label, required, error, errorId }: { htmlFor: string; label: string; required?: boolean; error?: string; errorId: string }) {
-  return (
-    <div className="mb-1 flex items-baseline justify-between gap-2">
-      <label htmlFor={htmlFor} className="shrink-0 text-[13px] font-medium text-gray-700">
-        {label}
-        {required && <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>}
-      </label>
-      {error && <span id={errorId} className="truncate text-xs text-red-600">{error}</span>}
-    </div>
-  );
-}
-
-function Field({ name, label, required, error, valid, multiline, className, footer, ...props }: {
-  name: TextName;
-  label: string;
-  required?: boolean;
-  error?: string;
-  valid?: boolean;
-  multiline?: boolean;
-  className?: string;
-  footer?: React.ReactNode;
-} & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  const id = `contact-${name}`;
-  const errorId = `${id}-error`;
-  const shared = {
-    id,
-    name,
-    "aria-required": required,
-    "aria-invalid": !!error,
-    "aria-describedby": error ? errorId : undefined,
-    "data-valid": valid || undefined,
-  };
-  return (
-    <div className={`flex min-h-0 flex-col ${className ?? ""}`}>
-      <FieldLabel htmlFor={id} label={label} required={required} error={error} errorId={errorId} />
-      <div className="relative min-h-0 flex-1">
-        {multiline ? (
-          <textarea {...props} {...shared} className={`${CONTROL} ${controlState(error)} h-full min-h-[110px] resize-none py-2 pb-5 lg:min-h-0`} />
-        ) : (
-          <input {...props} {...shared} className={`${CONTROL} ${controlState(error)} h-10`} />
-        )}
-        {footer}
-      </div>
-    </div>
-  );
-}
-
-function SelectField({ name, label, placeholder, options, value, error, onChange }: {
-  name: "department" | "location";
-  label: string;
-  placeholder: string;
-  options: { value: string; label: string }[];
-  value: string;
-  error?: string;
-  onChange: (value: string) => void;
-}) {
-  const id = `contact-${name}`;
-  const errorId = `${id}-error`;
-  return (
-    <div>
-      <FieldLabel htmlFor={id} label={label} required error={error} errorId={errorId} />
-      <div className="relative">
-        <select
-          id={id}
-          name={name}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          aria-required
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
-          className={`${CONTROL} ${controlState(error)} h-10 cursor-pointer appearance-none pr-9 ${value ? "" : "text-gray-400"}`}
-        >
-          <option value="" disabled>
-            {placeholder}
-          </option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value} className="text-gray-900">
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <Icon path={FORM_ICONS.chevron} className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-      </div>
-    </div>
-  );
+function Field({ name, ...props }: { name: TextName } & Omit<React.ComponentProps<typeof FormField>, "id" | "name">) {
+  return <FormField id={`contact-${name}`} name={name} {...props} />;
 }
 
 const EMPTY = { name: "", email: "", phone: "", subject: "", message: "", department: "", location: "" };
@@ -212,10 +121,7 @@ export default function GetInTouchForm() {
       viewport={{ once: true }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className="border-b border-gray-200 px-5 pb-3 pt-4">
-        <h2 className="text-xl font-bold leading-tight text-[#2B3990] lg:text-2xl">Get in Touch</h2>
-        <p className="mt-0.5 text-sm text-gray-600">Tell us what you need and the right team will get back to you.</p>
-      </div>
+      <FormHeader title="Get in Touch" subtitle="Tell us what you need and the right team will get back to you." />
 
       <AnimatePresence mode="wait" initial={false}>
         {sent ? (
@@ -238,7 +144,7 @@ export default function GetInTouchForm() {
             <button
               type="button"
               onClick={() => setSent(null)}
-              className="mt-6 rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+              className={SECONDARY_BUTTON}
             >
               Send another message
             </button>
@@ -266,6 +172,7 @@ export default function GetInTouchForm() {
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <SelectField
+                id="contact-department"
                 name="department"
                 label="Team"
                 placeholder="Select a team"
@@ -275,6 +182,7 @@ export default function GetInTouchForm() {
                 onChange={(value) => setField("department", value)}
               />
               <SelectField
+                id="contact-location"
                 name="location"
                 label="Region"
                 placeholder="Select your region"
@@ -313,7 +221,7 @@ export default function GetInTouchForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-md bg-[#2B3990] text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#232f78] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] disabled:cursor-not-allowed disabled:opacity-70"
+              className={SUBMIT_BUTTON}
             >
               {submitting ? (
                 <>
