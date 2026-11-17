@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 /**
@@ -45,12 +45,7 @@ const ROWS = [
 
 type Row = (typeof ROWS)[number];
 
-// The row that isn't in focus: photo blurred and darkened, panel faded back.
-const DIM_PHOTO = 'blur(6px) brightness(0.55) saturate(0.75)';
-const DIM_PANEL = 'blur(2px)';
-const FOCUS_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
-
-function StatementRow({ row, dimmed, rowRef }: { row: Row; dimmed: boolean; rowRef: (el: HTMLDivElement | null) => void }) {
+function StatementRow({ row, rowRef }: { row: Row; rowRef: (el: HTMLDivElement | null) => void }) {
   const reduced = useReducedMotion() ?? false;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -78,13 +73,8 @@ function StatementRow({ row, dimmed, rowRef }: { row: Row; dimmed: boolean; rowR
       <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[16/8] lg:absolute lg:inset-0 lg:aspect-auto">
         <motion.div
           className="absolute inset-x-0 -inset-y-[6%]"
-          style={{
-            y: drift,
-            // CSS scale (separate from the drift transform) hides the blur's soft edges.
-            scale: dimmed ? 1.04 : 1,
-            filter: dimmed ? DIM_PHOTO : 'none',
-            transition: `filter 0.7s ${FOCUS_EASE}, scale 0.7s ${FOCUS_EASE}`,
-          }}
+          data-zoom
+          style={{ y: drift }}
         >
           <motion.img
             src={row.image}
@@ -111,11 +101,6 @@ function StatementRow({ row, dimmed, rowRef }: { row: Row; dimmed: boolean; rowR
 
       {/* Panel */}
       <motion.div
-        style={{
-          opacity: dimmed ? 0.45 : 1,
-          filter: dimmed ? DIM_PANEL : 'none',
-          transition: `opacity 0.7s ${FOCUS_EASE}, filter 0.7s ${FOCUS_EASE}`,
-        }}
         className={`relative z-10 mx-4 -mt-14 sm:mx-8 lg:absolute lg:inset-y-[72px] lg:mx-0 lg:mt-0 lg:w-[44%] ${
           left ? 'lg:left-[6%]' : 'lg:right-[6%]'
         }`}
@@ -146,39 +131,109 @@ function StatementRow({ row, dimmed, rowRef }: { row: Row; dimmed: boolean; rowR
   );
 }
 
+// Spotlight: everything above and below the row in focus (the other row and
+// the neighbouring sections) is blurred and dimmed by two fixed panes. Their
+// strength follows the scroll: full when a row sits in the middle of the
+// screen, easing off as it moves away. Between the two rows the clear gap
+// glides from one to the other instead of jumping.
+const SPOT_RANGE = 0.5; // fraction of the screen height over which a row's spotlight fades
+const ZOOM = 0.06; // the row in focus: its photo eases in by up to 6%
+const FOLLOW_MS = 110; // how softly the panes catch up with the scroll
+const PANE =
+  'pointer-events-none fixed inset-x-0 top-0 z-40 bg-[rgba(8,18,52,0.38)] backdrop-blur-[6px] [will-change:transform,opacity] invisible';
+
 const MissionVision = () => {
   const rows = useRef<(HTMLDivElement | null)[]>([]);
-  // The row nearest the middle of the screen stays sharp; the other one recedes.
-  const [focus, setFocus] = useState(0);
+  const above = useRef<HTMLDivElement>(null);
+  const below = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let frame = 0;
-    const update = () => {
-      frame = 0;
-      const mid = window.innerHeight / 2 / (parseFloat(document.documentElement.style.zoom) || 1);
-      let best = 0;
-      let bestGap = Infinity;
+    let last = 0;
+    // Current (eased) and target values, in on-screen pixels.
+    const cur = { top: 0, bottom: 0, opacity: 0, zoom: [0, 0] };
+    let fresh = true;
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const target = () => {
+      const vh = window.innerHeight;
+      let weight = 0;
+      let top = 0;
+      let bottom = 0;
+      let strength = 0;
+      const zoom = [0, 0];
       rows.current.forEach((el, i) => {
         if (!el) return;
-        const r = el.getBoundingClientRect();
-        const gap = Math.abs((r.top + r.bottom) / 2 - mid);
-        if (gap < bestGap) {
-          bestGap = gap;
-          best = i;
-        }
+        const r = el.getBoundingClientRect(); // on-screen pixels (the page zoom is already applied)
+        const s = Math.max(0, 1 - Math.abs((r.top + r.bottom) / 2 - vh / 2) / (vh * SPOT_RANGE));
+        const w = s * s * (3 - 2 * s); // smoothstep
+        weight += w;
+        top += w * r.top;
+        bottom += w * r.bottom;
+        strength = Math.max(strength, w);
+        zoom[i] = w;
       });
-      setFocus(best);
+      return weight ? { top: top / weight, bottom: bottom / weight, opacity: strength, zoom } : { top: cur.top, bottom: cur.bottom, opacity: 0, zoom };
+    };
+
+    // Written straight to the panes' styles (transform + opacity only): no
+    // React render and no layout per frame.
+    const paint = () => {
+      const a = above.current;
+      const b = below.current;
+      if (!a || !b) return;
+      const z = parseFloat(document.documentElement.style.zoom) || 1;
+      const vh = window.innerHeight;
+      const h = `${vh / z}px`;
+      a.style.height = b.style.height = h;
+      a.style.transform = `translate3d(0, ${(cur.top - vh) / z}px, 0)`;
+      b.style.transform = `translate3d(0, ${cur.bottom / z}px, 0)`;
+      const on = cur.opacity > 0.01;
+      a.style.visibility = on && cur.top > 0 ? 'visible' : 'hidden';
+      b.style.visibility = on && cur.bottom < vh ? 'visible' : 'hidden';
+      a.style.opacity = b.style.opacity = String(cur.opacity);
+      rows.current.forEach((el, i) => {
+        const photo = el?.querySelector<HTMLElement>('[data-zoom]');
+        if (photo) photo.style.scale = still ? '' : String(1 + ZOOM * cur.zoom[i]);
+      });
+    };
+
+    const tick = (now: number) => {
+      frame = 0;
+      const t = target();
+      if (fresh) {
+        Object.assign(cur, t, { zoom: [...t.zoom] });
+        fresh = false;
+      } else {
+        const k = 1 - Math.exp(-Math.min(64, now - last) / FOLLOW_MS);
+        cur.top += (t.top - cur.top) * k;
+        cur.bottom += (t.bottom - cur.bottom) * k;
+        cur.opacity += (t.opacity - cur.opacity) * k;
+        cur.zoom = cur.zoom.map((v, i) => v + (t.zoom[i] - v) * k);
+      }
+      last = now;
+      paint();
+      // Keep easing until the panes have caught up.
+      const settling = Math.abs(t.top - cur.top) > 0.5 || Math.abs(t.bottom - cur.bottom) > 0.5 || Math.abs(t.opacity - cur.opacity) > 0.005 || cur.zoom.some((v, i) => Math.abs(t.zoom[i] - v) > 0.003);
+      if (settling) frame = requestAnimationFrame(tick);
     };
     const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+      if (!frame) {
+        if (!last) last = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
+    };
+    const onResize = () => {
+      fresh = true;
+      schedule();
     };
     schedule();
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
+    window.addEventListener('resize', onResize);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -192,13 +247,15 @@ const MissionVision = () => {
           <StatementRow
             key={row.id}
             row={row}
-            dimmed={focus !== i}
             rowRef={(el) => {
               rows.current[i] = el;
             }}
           />
         ))}
       </div>
+      {/* Feathered edges where the panes meet the row in focus. */}
+      <div ref={above} aria-hidden="true" className={`${PANE} [mask-image:linear-gradient(to_bottom,black_calc(100%-40px),transparent)]`} />
+      <div ref={below} aria-hidden="true" className={`${PANE} [mask-image:linear-gradient(to_top,black_calc(100%-40px),transparent)]`} />
     </section>
   );
 };
