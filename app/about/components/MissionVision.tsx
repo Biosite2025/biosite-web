@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState, type RefObject } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 /**
  * Mission and Vision: two full-width photo rows, each with a translucent blue
@@ -45,6 +45,32 @@ const ROWS = [
 
 type Row = (typeof ROWS)[number];
 
+/**
+ * True once the row is fully on screen (90% of it, or, for a row taller than
+ * the screen, once it fills 85% of the screen). Until then nothing animates.
+ */
+function useFullyInView(ref: RefObject<HTMLElement | null>) {
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || seen) return;
+    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const rootH = entry.rootBounds?.height || window.innerHeight;
+        if (entry.intersectionRatio >= 0.9 || entry.intersectionRect.height >= rootH * 0.85) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { threshold: thresholds },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref, seen]);
+  return seen;
+}
+
 function StatementRow({ row, rowRef }: { row: Row; rowRef: (el: HTMLDivElement | null) => void }) {
   const reduced = useReducedMotion() ?? false;
   const ref = useRef<HTMLDivElement>(null);
@@ -52,8 +78,9 @@ function StatementRow({ row, rowRef }: { row: Row; rowRef: (el: HTMLDivElement |
   const drift = useTransform(scrollYProgress, [0, 1], reduced ? ['0%', '0%'] : ['-5%', '5%']);
   const left = row.side === 'left';
 
-  // One trigger for the whole row (a fully clipped panel never counts as in view itself).
-  const shown = useInView(ref, { once: true, amount: 0.35 });
+  // One trigger for the whole row, once it's fully on screen (a fully clipped
+  // panel never counts as in view itself).
+  const shown = useFullyInView(ref);
   // The panel opens from the photo's outer edge towards the middle.
   const closed = left ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)';
   const rise = (delay: number) =>
@@ -85,9 +112,10 @@ function StatementRow({ row, rowRef }: { row: Row; rowRef: (el: HTMLDivElement |
             decoding="async"
             className="h-full w-full object-cover"
             style={{ objectPosition: row.focus }}
-            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.12 }}
-            animate={shown ? { opacity: 1, scale: 1 } : undefined}
-            transition={{ opacity: { duration: 0.6 }, scale: { duration: 1.8, ease: EASE } }}
+            // The photo is visible while the row scrolls in; it settles from a slight zoom on reveal.
+            initial={reduced ? false : { scale: 1.08 }}
+            animate={shown && !reduced ? { scale: 1 } : undefined}
+            transition={{ duration: 1.6, ease: EASE }}
           />
         </motion.div>
         {/* Deepens the panel side a touch so the panel edge reads against busy photos. */}
@@ -131,91 +159,52 @@ function StatementRow({ row, rowRef }: { row: Row; rowRef: (el: HTMLDivElement |
   );
 }
 
-// Spotlight: everything above and below the row in focus (the other row and
-// the neighbouring sections) is blurred and dimmed by two fixed panes. Their
-// strength follows the scroll: full when a row sits in the middle of the
-// screen, easing off as it moves away. Between the two rows the clear gap
-// glides from one to the other instead of jumping.
-const SPOT_RANGE = 0.5; // fraction of the screen height over which a row's spotlight fades
-const ZOOM = 0.06; // the row in focus: its photo eases in by up to 6%
-const FOLLOW_MS = 110; // how softly the panes catch up with the scroll
-const PANE =
-  'pointer-events-none fixed inset-x-0 top-0 z-40 bg-[rgba(8,18,52,0.38)] backdrop-blur-[6px] [will-change:transform,opacity] invisible';
+// Focus zoom: the photo of the row nearest the middle of the screen eases in
+// by up to 6%, and back out as the row moves away. It follows the scroll with
+// a little easing, so wheel steps glide instead of snapping.
+const ZOOM = 0.06;
+const SPOT_RANGE = 0.5; // fraction of the screen height over which the zoom fades
+const FOLLOW_MS = 110; // how softly the zoom catches up with the scroll
 
 const MissionVision = () => {
   const rows = useRef<(HTMLDivElement | null)[]>([]);
-  const above = useRef<HTMLDivElement>(null);
-  const below = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let frame = 0;
     let last = 0;
-    // Current (eased) and target values, in on-screen pixels.
-    const cur = { top: 0, bottom: 0, opacity: 0, zoom: [0, 0] };
     let fresh = true;
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cur = [0, 0];
 
+    // How centred each row is: 1 in the middle of the screen, 0 far away.
     const target = () => {
       const vh = window.innerHeight;
-      let weight = 0;
-      let top = 0;
-      let bottom = 0;
-      let strength = 0;
-      const zoom = [0, 0];
-      rows.current.forEach((el, i) => {
-        if (!el) return;
+      return rows.current.map((el) => {
+        if (!el) return 0;
         const r = el.getBoundingClientRect(); // on-screen pixels (the page zoom is already applied)
         const s = Math.max(0, 1 - Math.abs((r.top + r.bottom) / 2 - vh / 2) / (vh * SPOT_RANGE));
-        const w = s * s * (3 - 2 * s); // smoothstep
-        weight += w;
-        top += w * r.top;
-        bottom += w * r.bottom;
-        strength = Math.max(strength, w);
-        zoom[i] = w;
-      });
-      return weight ? { top: top / weight, bottom: bottom / weight, opacity: strength, zoom } : { top: cur.top, bottom: cur.bottom, opacity: 0, zoom };
-    };
-
-    // Written straight to the panes' styles (transform + opacity only): no
-    // React render and no layout per frame.
-    const paint = () => {
-      const a = above.current;
-      const b = below.current;
-      if (!a || !b) return;
-      const z = parseFloat(document.documentElement.style.zoom) || 1;
-      const vh = window.innerHeight;
-      const h = `${vh / z}px`;
-      a.style.height = b.style.height = h;
-      a.style.transform = `translate3d(0, ${(cur.top - vh) / z}px, 0)`;
-      b.style.transform = `translate3d(0, ${cur.bottom / z}px, 0)`;
-      const on = cur.opacity > 0.01;
-      a.style.visibility = on && cur.top > 0 ? 'visible' : 'hidden';
-      b.style.visibility = on && cur.bottom < vh ? 'visible' : 'hidden';
-      a.style.opacity = b.style.opacity = String(cur.opacity);
-      rows.current.forEach((el, i) => {
-        const photo = el?.querySelector<HTMLElement>('[data-zoom]');
-        if (photo) photo.style.scale = still ? '' : String(1 + ZOOM * cur.zoom[i]);
+        return s * s * (3 - 2 * s); // smoothstep
       });
     };
 
+    // Written straight to the photos' CSS scale: no React render per frame.
     const tick = (now: number) => {
       frame = 0;
       const t = target();
       if (fresh) {
-        Object.assign(cur, t, { zoom: [...t.zoom] });
+        cur = t;
         fresh = false;
       } else {
         const k = 1 - Math.exp(-Math.min(64, now - last) / FOLLOW_MS);
-        cur.top += (t.top - cur.top) * k;
-        cur.bottom += (t.bottom - cur.bottom) * k;
-        cur.opacity += (t.opacity - cur.opacity) * k;
-        cur.zoom = cur.zoom.map((v, i) => v + (t.zoom[i] - v) * k);
+        cur = cur.map((v, i) => v + ((t[i] ?? 0) - v) * k);
       }
       last = now;
-      paint();
-      // Keep easing until the panes have caught up.
-      const settling = Math.abs(t.top - cur.top) > 0.5 || Math.abs(t.bottom - cur.bottom) > 0.5 || Math.abs(t.opacity - cur.opacity) > 0.005 || cur.zoom.some((v, i) => Math.abs(t.zoom[i] - v) > 0.003);
-      if (settling) frame = requestAnimationFrame(tick);
+      rows.current.forEach((el, i) => {
+        const photo = el?.querySelector<HTMLElement>('[data-zoom]');
+        if (photo) photo.style.scale = String(1 + ZOOM * (cur[i] ?? 0));
+      });
+      // Keep easing until the zoom has caught up.
+      if (cur.some((v, i) => Math.abs((t[i] ?? 0) - v) > 0.003)) frame = requestAnimationFrame(tick);
     };
     const schedule = () => {
       if (!frame) {
@@ -223,17 +212,13 @@ const MissionVision = () => {
         frame = requestAnimationFrame(tick);
       }
     };
-    const onResize = () => {
-      fresh = true;
-      schedule();
-    };
     schedule();
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', schedule);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', schedule);
     };
   }, []);
 
@@ -253,9 +238,6 @@ const MissionVision = () => {
           />
         ))}
       </div>
-      {/* Feathered edges where the panes meet the row in focus. */}
-      <div ref={above} aria-hidden="true" className={`${PANE} [mask-image:linear-gradient(to_bottom,black_calc(100%-40px),transparent)]`} />
-      <div ref={below} aria-hidden="true" className={`${PANE} [mask-image:linear-gradient(to_top,black_calc(100%-40px),transparent)]`} />
     </section>
   );
 };
