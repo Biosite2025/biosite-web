@@ -13,53 +13,102 @@ import {
   type ContactErrors,
   type ContactField,
 } from "@/lib/contactValidation";
-import { FORM_ICONS, FloatingField, Icon } from "@/src/components/forms/FloatingField";
+import { FORM_ICONS, Icon } from "@/src/components/forms/FloatingField";
 
-function Field({ name, ...props }: { name: "name" | "email" | "phone" | "subject" | "message" } & Omit<React.ComponentProps<typeof FloatingField>, "id" | "icon" | "name">) {
-  return <FloatingField id={`contact-${name}`} name={name} icon={FORM_ICONS[name]} {...props} />;
+type TextName = "name" | "email" | "phone" | "subject" | "message";
+
+const CONTROL =
+  "block w-full rounded-md border bg-white px-3 text-base text-gray-900 placeholder:text-gray-400 outline-none transition-colors duration-150 focus:ring-2 lg:text-sm";
+const controlState = (error?: string) =>
+  error
+    ? "border-red-500 focus:border-red-500 focus:ring-red-500/15"
+    : "border-gray-300 hover:border-gray-400 focus:border-[#2B3990] focus:ring-[#2B3990]/15";
+
+/** Label above the control; an error shows on the same line, so it never moves the layout. */
+function FieldLabel({ htmlFor, label, required, error, errorId }: { htmlFor: string; label: string; required?: boolean; error?: string; errorId: string }) {
+  return (
+    <div className="mb-1 flex items-baseline justify-between gap-2">
+      <label htmlFor={htmlFor} className="shrink-0 text-[13px] font-medium text-gray-700">
+        {label}
+        {required && <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>}
+      </label>
+      {error && <span id={errorId} className="truncate text-xs text-red-600">{error}</span>}
+    </div>
+  );
 }
 
-function ChoiceGroup({ name, legend, options, value, error, onChange, wide }: {
+function Field({ name, label, required, error, valid, multiline, className, footer, ...props }: {
+  name: TextName;
+  label: string;
+  required?: boolean;
+  error?: string;
+  valid?: boolean;
+  multiline?: boolean;
+  className?: string;
+  footer?: React.ReactNode;
+} & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const id = `contact-${name}`;
+  const errorId = `${id}-error`;
+  const shared = {
+    id,
+    name,
+    "aria-required": required,
+    "aria-invalid": !!error,
+    "aria-describedby": error ? errorId : undefined,
+    "data-valid": valid || undefined,
+  };
+  return (
+    <div className={`flex min-h-0 flex-col ${className ?? ""}`}>
+      <FieldLabel htmlFor={id} label={label} required={required} error={error} errorId={errorId} />
+      <div className="relative min-h-0 flex-1">
+        {multiline ? (
+          <textarea {...props} {...shared} className={`${CONTROL} ${controlState(error)} h-full min-h-[110px] resize-none py-2 pb-5 lg:min-h-0`} />
+        ) : (
+          <input {...props} {...shared} className={`${CONTROL} ${controlState(error)} h-10`} />
+        )}
+        {footer}
+      </div>
+    </div>
+  );
+}
+
+function SelectField({ name, label, placeholder, options, value, error, onChange }: {
   name: "department" | "location";
-  legend: string;
+  label: string;
+  placeholder: string;
   options: { value: string; label: string }[];
   value: string;
   error?: string;
   onChange: (value: string) => void;
-  wide?: boolean;
 }) {
-  const errorId = `contact-${name}-error`;
+  const id = `contact-${name}`;
+  const errorId = `${id}-error`;
   return (
-    <fieldset aria-describedby={error ? errorId : undefined}>
-      <legend className="mb-1 flex w-full items-baseline justify-between gap-2 text-xs font-semibold text-[#2B3990]">
-        <span>
-          {legend}
-          <span aria-hidden="true" className="ml-0.5 text-red-600">*</span>
-        </span>
-        {error && <span id={errorId} className="truncate font-semibold text-red-600">{error}</span>}
-      </legend>
-      <div className={`grid gap-1.5 ${wide ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2"}`}>
-        {options.map((option) => (
-          <label key={option.value} className="relative block cursor-pointer">
-            <input
-              type="radio"
-              name={name}
-              value={option.value}
-              checked={value === option.value}
-              onChange={() => onChange(option.value)}
-              className="peer sr-only"
-            />
-            <span
-              className={`flex h-9 items-center justify-center whitespace-nowrap rounded-lg border px-1 text-xs font-semibold transition-colors duration-200 peer-checked:border-transparent peer-checked:bg-gradient-to-br peer-checked:from-[#2B3990] peer-checked:to-blue-600 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#2B3990]/40 ${
-                error ? "border-red-400 text-red-700" : "border-slate-200 bg-slate-50/70 text-slate-600 hover:border-[#2B3990]/40 hover:text-[#2B3990]"
-              }`}
-            >
+    <div>
+      <FieldLabel htmlFor={id} label={label} required error={error} errorId={errorId} />
+      <div className="relative">
+        <select
+          id={id}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          aria-required
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
+          className={`${CONTROL} ${controlState(error)} h-10 cursor-pointer appearance-none pr-9 ${value ? "" : "text-gray-400"}`}
+        >
+          <option value="" disabled>
+            {placeholder}
+          </option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value} className="text-gray-900">
               {option.label}
-            </span>
-          </label>
-        ))}
+            </option>
+          ))}
+        </select>
+        <Icon path={FORM_ICONS.chevron} className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
       </div>
-    </fieldset>
+    </div>
   );
 }
 
@@ -157,17 +206,15 @@ export default function GetInTouchForm() {
   return (
     <motion.div
       id="userform"
-      className="relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_24px_60px_-20px_rgba(43,57,144,0.35)] ring-1 ring-slate-200/70 lg:h-[500px]"
-      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      className="relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm lg:h-[500px]"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#2B3990] via-[#2B3990] to-blue-600 px-4 py-3">
-        <span aria-hidden="true" className="absolute -right-10 -top-14 h-40 w-40 rounded-full bg-white/10" />
-        <span aria-hidden="true" className="absolute -bottom-16 right-20 h-28 w-28 rounded-full bg-white/10" />
-        <h2 className="relative text-xl font-bold leading-tight text-white lg:text-2xl">Get in Touch</h2>
-        <p className="relative text-xs text-blue-100 sm:text-sm">Tell us what you need and the right team will get back to you.</p>
+      <div className="border-b border-gray-200 px-5 pb-3 pt-4">
+        <h2 className="text-xl font-bold leading-tight text-[#2B3990] lg:text-2xl">Get in Touch</h2>
+        <p className="mt-0.5 text-sm text-gray-600">Tell us what you need and the right team will get back to you.</p>
       </div>
 
       <AnimatePresence mode="wait" initial={false}>
@@ -176,22 +223,22 @@ export default function GetInTouchForm() {
             key="sent"
             role="status"
             className="flex flex-1 flex-col items-center justify-center px-6 py-14 text-center"
-            initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
+            initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
           >
-            <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-              <Icon path={FORM_ICONS.check} className="h-8 w-8" />
+            <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+              <Icon path={FORM_ICONS.check} className="h-7 w-7" />
             </span>
-            <h3 className="text-2xl font-bold text-[#2B3990]">Message sent</h3>
-            <p className="mt-2 max-w-sm text-gray-600">
+            <h3 className="text-xl font-bold text-gray-900">Message sent</h3>
+            <p className="mt-2 max-w-sm text-sm text-gray-600">
               Thank you, {sent.name}. Your message is on its way to our {sent.team} team, and we&apos;ll get back to you soon.
             </p>
             <button
               type="button"
               onClick={() => setSent(null)}
-              className="mt-6 rounded-xl border border-slate-300 px-5 py-2.5 font-semibold text-[#2B3990] transition-colors hover:border-[#2B3990] hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
+              className="mt-6 rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990]"
             >
               Send another message
             </button>
@@ -202,7 +249,7 @@ export default function GetInTouchForm() {
             ref={formRef}
             noValidate
             onSubmit={handleSubmit}
-            className="flex min-h-0 flex-1 flex-col gap-2.5 p-4"
+            className="flex min-h-0 flex-1 flex-col gap-3 px-5 pb-5 pt-4"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
@@ -217,39 +264,40 @@ export default function GetInTouchForm() {
               ref={honeypot}
             />
 
-            <ChoiceGroup
-              name="department"
-              legend="Which team do you need?"
-              options={departmentOptions}
-              value={form.department}
-              error={errorFor("department")}
-              onChange={(value) => setField("department", value)}
-              wide
-            />
-            <ChoiceGroup
-              name="location"
-              legend="Your region"
-              options={regionOptions}
-              value={form.location}
-              error={errorFor("location")}
-              onChange={(value) => setField("location", value)}
-            />
-
-            <div className="grid grid-cols-12 gap-2">
-              <Field label="Name" required autoComplete="name" className="col-span-12 sm:col-span-6" name="name" {...textProps("name", cleanName)} />
-              <Field label="Email" required type="email" autoComplete="email" autoCapitalize="off" spellCheck={false} className="col-span-12 sm:col-span-6" name="email" {...textProps("email")} />
-              <Field label="Phone" type="tel" autoComplete="tel" className="col-span-12 sm:col-span-5" name="phone" {...textProps("phone", cleanPhone)} />
-              <Field label="Subject" className="col-span-12 sm:col-span-7" name="subject" {...textProps("subject")} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <SelectField
+                name="department"
+                label="Team"
+                placeholder="Select a team"
+                options={departmentOptions}
+                value={form.department}
+                error={errorFor("department")}
+                onChange={(value) => setField("department", value)}
+              />
+              <SelectField
+                name="location"
+                label="Region"
+                placeholder="Select your region"
+                options={regionOptions}
+                value={form.location}
+                error={errorFor("location")}
+                onChange={(value) => setField("location", value)}
+              />
+              <Field label="Name" required autoComplete="name" name="name" {...textProps("name", cleanName)} />
+              <Field label="Email" required type="email" autoComplete="email" autoCapitalize="off" spellCheck={false} name="email" {...textProps("email")} />
+              <Field label="Phone" type="tel" autoComplete="tel" name="phone" {...textProps("phone", cleanPhone)} />
+              <Field label="Subject" name="subject" {...textProps("subject")} />
             </div>
             <Field
-              label="Your message"
+              label="Message"
               required
               multiline
-              className="min-h-0 flex-1"
+              className="flex-1"
               name="message"
+              placeholder="How can we help?"
               {...textProps("message")}
               footer={
-                <span className={`pointer-events-none absolute bottom-1 right-2.5 text-[11px] ${form.message.length >= MAX_LENGTH.message ? "font-semibold text-red-600" : "text-slate-500"}`}>
+                <span className={`pointer-events-none absolute bottom-1 right-2.5 text-[11px] ${form.message.length >= MAX_LENGTH.message ? "font-semibold text-red-600" : "text-gray-400"}`}>
                   {form.message.length} / {MAX_LENGTH.message}
                 </span>
               }
@@ -265,19 +313,15 @@ export default function GetInTouchForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="group relative flex w-full items-center justify-center gap-2 overflow-hidden h-11 shrink-0 rounded-lg bg-gradient-to-r from-[#2B3990] to-blue-600 text-base font-semibold text-white shadow-md shadow-[#2B3990]/25 transition-shadow duration-200 hover:shadow-lg hover:shadow-[#2B3990]/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-md bg-[#2B3990] text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#232f78] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B3990] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              <span aria-hidden="true" className="absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/20 opacity-0 transition-all duration-500 group-hover:left-full group-hover:opacity-100" />
               {submitting ? (
                 <>
-                  <span aria-hidden="true" className="h-5 w-5 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                  <span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
                   Sending...
                 </>
               ) : (
-                <>
-                  Send Message
-                  <Icon path={FORM_ICONS.arrow} className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </>
+                "Send Message"
               )}
             </button>
           </motion.form>
