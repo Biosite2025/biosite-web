@@ -63,6 +63,9 @@ const CoreValues = () => {
   const inView = useInView(sectionRef, { amount: 0.6 });
   const [stage, setStage] = useState<Stage>('title');
   const [index, setIndex] = useState(0);
+  // A value picked from the B-I-O-S-I-T-E row: reached through the same
+  // retract → centre → flip → word transition as the automatic sequence.
+  const [jumpTo, setJumpTo] = useState<number | null>(null);
   // Where the B of the title sits, relative to where the big letter will land:
   // the big letter starts there, so the title's own B travels to the centre.
   const [fromTitle, setFromTitle] = useState<{ x: number; y: number; scale: number } | null>(null);
@@ -73,7 +76,10 @@ const CoreValues = () => {
   useEffect(() => {
     if (!inView) return;
     const timer = window.setTimeout(() => {
-      const next = NEXT[stage];
+      let next = NEXT[stage];
+      const picked = jumpTo !== null && jumpTo !== index ? jumpTo : null;
+      // A letter picked while the letter is centred (zoom, or mid-flip): flip (again) to it.
+      if (picked !== null && (stage === 'zoom' || stage === 'flip')) next = 'flip';
       if (next === 'zoom') {
         const b = titleB.current;
         const st = stageRef.current;
@@ -95,12 +101,13 @@ const CoreValues = () => {
         }
       }
       if (next === 'flip') {
-        setIndex((i) => (i + 1) % coreValues.length);
+        setIndex((i) => picked ?? (i + 1) % coreValues.length);
+        setJumpTo(null);
       }
       setStage(next);
     }, reduced ? Math.min(DURATION[stage], stage === 'detail' ? DURATION.detail : 400) : DURATION[stage]);
     return () => window.clearTimeout(timer);
-  }, [stage, inView, reduced]);
+  }, [stage, index, jumpTo, inView, reduced]);
 
   // Rewind when the section leaves the screen (state is reset outside the effect body).
   const [wasInView, setWasInView] = useState(inView);
@@ -109,6 +116,7 @@ const CoreValues = () => {
     if (!inView) {
       setStage('title');
       setIndex(0);
+      setJumpTo(null);
     }
   }
 
@@ -137,6 +145,16 @@ const CoreValues = () => {
       return () => controls.stop();
     }
   }, [stage, showWord, reduced, lineX]);
+
+  const choose = (i: number) => {
+    if (i === index && jumpTo === null && stage !== 'title') return;
+    setJumpTo(i);
+    // Showing a word: start the retract now. Otherwise the pick is taken up
+    // when the current step ends (the title's B still travels to the centre first).
+    if (stage === 'word' || stage === 'detail') setStage('retract');
+  };
+  // The value the row highlights: the one picked, else the one showing.
+  const current = jumpTo ?? index;
 
   return (
     <section
@@ -275,6 +293,42 @@ const CoreValues = () => {
             )}
           </AnimatePresence>
         </div>
+      </div>
+
+      {/* Progress through B-I-O-S-I-T-E; each letter goes to its value with the
+          same transition. Left / right arrow keys step through them. */}
+      <div className="absolute inset-x-0 bottom-6 flex justify-center sm:bottom-10 lg:bottom-14">
+        <motion.div
+          role="group"
+          aria-label="Core values"
+          className="flex gap-1"
+          initial={false}
+          animate={{ opacity: stage === 'title' ? 0 : 1 }}
+          transition={{ duration: 0.6 }}
+          style={{ pointerEvents: stage === 'title' ? 'none' : 'auto' }}
+        >
+          {coreValues.map((v, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => choose(i)}
+              onKeyDown={(e) => {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                e.preventDefault();
+                const n = (current + (e.key === 'ArrowRight' ? 1 : -1) + coreValues.length) % coreValues.length;
+                choose(n);
+                (e.currentTarget.parentElement?.children[n] as HTMLElement | undefined)?.focus();
+              }}
+              aria-label={`Show ${v.title}`}
+              aria-current={i === current ? 'true' : undefined}
+              tabIndex={i === current ? 0 : -1}
+              className="flex h-10 w-9 items-center justify-center rounded-md text-lg font-extrabold transition-colors duration-500 hover:bg-[#22409A]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#22409A] lg:h-12 lg:w-11 lg:text-2xl"
+              style={{ color: i === current ? ACCENT_RED : 'rgba(34, 64, 154, 0.45)' }}
+            >
+              {v.letter}
+            </button>
+          ))}
+        </motion.div>
       </div>
 
       {/* Semantic, always-present content for assistive tech and crawlers. */}
